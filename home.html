@@ -1,0 +1,3608 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find trusted doctors, book appointments and manage your healthcare with Divinexa.">
+  <title>Divinexa - Find Doctors Near You</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+  <link rel="stylesheet" href="assets/css/find-doctors-reference.css">
+  <link rel="stylesheet" href="assets/css/mobile-nav-dropdown.css?v=20260818-1">
+  <script defer src="assets/js/mobile-nav-dropdown.js?v=20260818-1"></script>
+</head>
+<body class="find-doctors-reference">
+  <div class="page">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="home.html" aria-label="Divinexa patient portal home">
+          <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+          <span class="brand-copy">
+            <strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong>
+            <small>Patient Portal</small>
+          </span>
+        </a>
+
+        <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+          <a class="active" href="#home">Home</a>
+          <a href="doctors.html">Find Doctors</a>
+          <a href="schedule.html">My Schedule</a>
+          <a href="#about">About Us</a>
+          <a href="mailto:support@cliniflow.example">Contact</a>
+          <span class="mobile-auth">
+            <a href="patient-login.html">Login</a>
+            <a href="patient-registration.html">Register</a>
+          </span>
+        </nav>
+
+        <div class="header-actions">
+          <a class="button button-outline" href="patient-login.html">Login</a>
+          <a class="button button-primary" href="patient-registration.html">Register</a>
+        </div>
+
+        <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation" aria-controls="mainNav" aria-expanded="false">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero hero-reference-v2" id="home">
+        <style>
+          #home.hero-reference-v2 {
+            --hero-teal: #008f86;
+            --hero-teal-dark: #007b73;
+            --hero-ink: #10223a;
+            --hero-muted: #526781;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            border-bottom: 1px solid #e7f1f3;
+            background:
+              radial-gradient(circle at 73% 45%, rgba(146, 232, 224, .27), transparent 31%),
+              radial-gradient(circle at 3% 70%, rgba(222, 246, 245, .76), transparent 25%),
+              linear-gradient(115deg, #fff 0%, #fbfefe 48%, #f2fbfc 100%);
+          }
+
+          #home.hero-reference-v2::before {
+            width: 760px;
+            height: 760px;
+            top: 45%;
+            right: 8%;
+            border: 1px dashed rgba(0, 174, 164, .22);
+            border-radius: 50%;
+            background: transparent;
+            filter: none;
+            opacity: 1;
+            animation: none;
+            transform: translateY(-50%);
+          }
+
+          #home.hero-reference-v2::after {
+            width: 330px;
+            height: 330px;
+            right: -100px;
+            bottom: -85px;
+            left: auto;
+            border-radius: 50%;
+            background: rgba(151, 229, 222, .22);
+            filter: blur(76px);
+            opacity: .8;
+            animation: none;
+          }
+
+          #home.hero-reference-v2 .hero-grid {
+            min-height: 690px;
+            grid-template-columns: minmax(480px, .84fr) minmax(620px, 1.16fr);
+            align-items: center;
+            gap: 18px;
+            padding-block: 44px 12px;
+          }
+
+          #home.hero-reference-v2 .hero-copy {
+            align-self: center;
+            padding: 8px 0 20px;
+          }
+
+          #home.hero-reference-v2 .eyebrow {
+            gap: 9px;
+            padding: 10px 16px;
+            color: var(--hero-teal-dark);
+            border: 0;
+            background: #e8f8f6;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: none;
+          }
+
+          #home.hero-reference-v2 .eyebrow i,
+          #home.hero-reference-v2 .eyebrow svg {
+            width: 19px;
+            height: 19px;
+            stroke-width: 2.3;
+          }
+
+          #home.hero-reference-v2 h1 {
+            max-width: 610px;
+            margin: 38px 0 24px;
+            color: var(--hero-ink);
+            font-size: clamp(45px, 3.55vw, 57px);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -.048em;
+          }
+
+          #home.hero-reference-v2 h1 .title-line {
+            min-height: 1.08em;
+            color: var(--hero-ink);
+            white-space: nowrap;
+          }
+
+          #home.hero-reference-v2 h1 .title-accent {
+            color: var(--hero-teal);
+            background: linear-gradient(90deg, #008d83, #00a69a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: none;
+          }
+
+          #home.hero-reference-v2 .hero-lead {
+            max-width: 540px;
+            color: var(--hero-muted);
+            font-size: 18px;
+            line-height: 1.65;
+          }
+
+          #home.hero-reference-v2 .hero-feature-grid {
+            max-width: 540px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin-top: 24px;
+          }
+
+          #home.hero-reference-v2 .hero-feature-pill {
+            position: relative;
+            display: grid;
+            justify-items: center;
+            gap: 9px;
+            padding: 0 14px;
+            color: var(--hero-ink);
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.45;
+            text-align: center;
+          }
+
+          #home.hero-reference-v2 .hero-feature-pill:not(:last-child)::after {
+            position: absolute;
+            top: 15px;
+            right: 0;
+            width: 1px;
+            height: 74px;
+            background: #dcebed;
+            content: "";
+          }
+
+          #home.hero-reference-v2 .hero-feature-pill-icon {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            color: var(--hero-teal);
+            border: 1px solid #d6eded;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #fff, #eaf8f7);
+            box-shadow: 0 8px 20px rgba(27, 117, 114, .06);
+          }
+
+          #home.hero-reference-v2 .hero-feature-pill-icon i,
+          #home.hero-reference-v2 .hero-feature-pill-icon svg {
+            width: 29px;
+            height: 29px;
+            stroke-width: 2;
+          }
+
+          #home.hero-reference-v2 .hero-cta-card {
+            width: min(100%, 540px);
+            min-height: 105px;
+            display: grid;
+            grid-template-columns: 72px minmax(0, 1fr) 42px;
+            align-items: center;
+            gap: 18px;
+            margin-top: 30px;
+            padding: 14px 20px 14px 14px;
+            border: 1px solid #dcecef;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .94);
+            box-shadow: 0 15px 38px rgba(30, 86, 98, .1);
+            transition: transform 180ms ease, box-shadow 180ms ease;
+          }
+
+          #home.hero-reference-v2 .hero-cta-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 44px rgba(30, 86, 98, .14);
+          }
+
+          #home.hero-reference-v2 .hero-cta-card:focus-visible {
+            outline: 3px solid rgba(0, 143, 134, .2);
+            outline-offset: 3px;
+          }
+
+          #home.hero-reference-v2 .hero-cta-icon {
+            width: 72px;
+            height: 72px;
+            display: grid;
+            place-items: center;
+            color: var(--hero-teal);
+            border-radius: 14px;
+            background: #eaf8f7;
+          }
+
+          #home.hero-reference-v2 .hero-cta-icon i,
+          #home.hero-reference-v2 .hero-cta-icon svg {
+            width: 38px;
+            height: 38px;
+            stroke-width: 1.8;
+          }
+
+          #home.hero-reference-v2 .hero-cta-copy {
+            display: grid;
+            gap: 7px;
+          }
+
+          #home.hero-reference-v2 .hero-cta-copy strong {
+            color: var(--hero-teal-dark);
+            font-size: 14px;
+          }
+
+          #home.hero-reference-v2 .hero-cta-copy small {
+            color: var(--hero-muted);
+            font-size: 13px;
+            line-height: 1.55;
+          }
+
+          #home.hero-reference-v2 .hero-cta-arrow {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00a59a, #007e77);
+            box-shadow: 0 8px 18px rgba(0, 143, 134, .25);
+          }
+
+          #home.hero-reference-v2 .hero-cta-arrow i,
+          #home.hero-reference-v2 .hero-cta-arrow svg {
+            width: 20px;
+            height: 20px;
+          }
+
+          #home.hero-reference-v2 .hero-visual {
+            position: relative;
+            align-self: stretch;
+            min-height: 635px;
+          }
+
+          #home.hero-reference-v2 .hero-visual::before {
+            width: 560px;
+            height: 560px;
+            right: auto;
+            bottom: 18px;
+            left: 43%;
+            border-radius: 50%;
+            background:
+              radial-gradient(circle at 52% 44%, rgba(255,255,255,.9) 0 6%, transparent 40%),
+              linear-gradient(145deg, rgba(219, 249, 246, .95), rgba(111, 215, 206, .42));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.66);
+            transform: translateX(-50%);
+            animation: none;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-scene {
+            position: absolute;
+            z-index: 0;
+            width: 650px;
+            height: 650px;
+            bottom: -16px;
+            left: 43%;
+            border: 1px dashed rgba(0, 170, 160, .3);
+            border-radius: 50%;
+            transform: translateX(-50%);
+          }
+
+          #home.hero-reference-v2 .hero-orbit-ring {
+            position: absolute;
+            inset: 45px;
+            border: 1px solid rgba(255, 255, 255, .92);
+            border-radius: 50%;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-ring:nth-child(2) { inset: 92px; }
+          #home.hero-reference-v2 .hero-orbit-ring:nth-child(3) { inset: 140px; }
+          #home.hero-reference-v2 .hero-orbit-ring:nth-child(4) { inset: 188px; }
+
+          #home.hero-reference-v2 .doctor-shape {
+            position: absolute;
+            z-index: 2;
+            width: 535px;
+            height: 635px;
+            top: auto;
+            right: auto;
+            bottom: -1px;
+            left: 43%;
+            overflow: visible;
+            background: transparent;
+            transform: translateX(-50%);
+          }
+
+          #home.hero-reference-v2 .doctor-shape::before,
+          #home.hero-reference-v2 .doctor-shape::after {
+            display: none;
+          }
+
+          #home.hero-reference-v2 .hero-doctor {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+            filter: drop-shadow(0 18px 20px rgba(17, 80, 82, .12));
+          }
+
+          #home.hero-reference-v2 .spark.one { top: 36px; left: 34%; }
+          #home.hero-reference-v2 .spark.two { top: 96px; right: 15%; }
+          #home.hero-reference-v2 .spark.three { right: 3%; bottom: 62px; left: auto; }
+
+          #home.hero-reference-v2 .hero-orbit-badge {
+            position: absolute;
+            z-index: 4;
+            width: 88px;
+            height: 88px;
+            display: grid;
+            place-items: center;
+            align-content: center;
+            gap: 6px;
+            color: var(--hero-ink);
+            border: 1px solid #e1eef0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .96);
+            box-shadow: 0 13px 34px rgba(30, 86, 98, .11);
+            font-size: 9px;
+            font-weight: 700;
+            text-align: center;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-icon {
+            display: grid;
+            place-items: center;
+            color: var(--hero-teal);
+          }
+
+          #home.hero-reference-v2 .hero-orbit-icon i,
+          #home.hero-reference-v2 .hero-orbit-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke-width: 2;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-badge-1 { top: 80px; left: 5%; }
+          #home.hero-reference-v2 .hero-orbit-badge-2 { top: 305px; left: -2%; }
+          #home.hero-reference-v2 .hero-orbit-badge-3 { bottom: 64px; left: 8%; }
+
+          #home.hero-reference-v2 .doctor-note {
+            z-index: 7;
+            width: 280px;
+            min-height: 132px;
+            top: 8px;
+            right: 0;
+            left: auto;
+            gap: 13px;
+            padding: 16px;
+            border-radius: 20px;
+            box-shadow: 0 16px 38px rgba(29, 79, 91, .1);
+          }
+
+          #home.hero-reference-v2 .doctor-note img {
+            width: 74px;
+            height: 94px;
+            flex: 0 0 74px;
+            border-radius: 14px;
+            background: #edf8f8;
+            object-fit: cover;
+            object-position: 69% 8%;
+          }
+
+          #home.hero-reference-v2 .doctor-note strong {
+            color: var(--hero-ink);
+            font-size: 15px;
+            white-space: nowrap;
+          }
+
+          #home.hero-reference-v2 .doctor-note small {
+            color: #324760;
+            font-size: 11px;
+          }
+
+          #home.hero-reference-v2 .hero-doctor-available {
+            width: max-content;
+            margin-top: 7px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: #edf8f2;
+          }
+
+          #home.hero-reference-v2 .hero-doctor-available::before {
+            width: 7px;
+            height: 7px;
+            display: inline-block;
+            margin-right: 6px;
+            border-radius: 50%;
+            background: #46bd42;
+            content: "";
+          }
+
+          #home.hero-reference-v2 .hero-stat-list {
+            position: absolute;
+            z-index: 7;
+            width: 270px;
+            top: 155px;
+            right: 0;
+            display: grid;
+            gap: 11px;
+          }
+
+          #home.hero-reference-v2 .hero-stat-item {
+            min-height: 83px;
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 18px;
+            border: 1px solid #e1edef;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .95);
+            box-shadow: 0 13px 30px rgba(29, 79, 91, .08);
+          }
+
+          #home.hero-reference-v2 .hero-stat-icon,
+          #home.hero-reference-v2 .hero-bottom-icon {
+            width: 50px;
+            height: 50px;
+            display: grid;
+            place-items: center;
+            color: var(--hero-teal);
+            border-radius: 50%;
+            background: #eff9f8;
+          }
+
+          #home.hero-reference-v2 .hero-stat-icon i,
+          #home.hero-reference-v2 .hero-stat-icon svg,
+          #home.hero-reference-v2 .hero-bottom-icon i,
+          #home.hero-reference-v2 .hero-bottom-icon svg {
+            width: 27px;
+            height: 27px;
+            stroke-width: 2;
+          }
+
+          #home.hero-reference-v2 .hero-stat-item > span:last-child,
+          #home.hero-reference-v2 .hero-bottom-stat > span:last-child {
+            display: grid;
+            gap: 4px;
+          }
+
+          #home.hero-reference-v2 .hero-stat-item strong {
+            color: var(--hero-teal);
+            font-size: 21px;
+            line-height: 1;
+          }
+
+          #home.hero-reference-v2 .hero-stat-item small {
+            color: var(--hero-ink);
+            font-size: 11px;
+            font-weight: 600;
+          }
+
+          #home.hero-reference-v2 .hero-bottom-stats {
+            position: relative;
+            z-index: 8;
+            min-height: 116px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            align-items: center;
+            margin: 0 0 30px;
+            padding: 20px 12px;
+            border: 1px solid #e1edef;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .96);
+            box-shadow: 0 18px 44px rgba(29, 79, 91, .1);
+          }
+
+          #home.hero-reference-v2 .hero-bottom-stat {
+            position: relative;
+            min-width: 0;
+            display: grid;
+            grid-template-columns: 56px minmax(0, 1fr);
+            align-items: center;
+            gap: 13px;
+            padding: 0 20px;
+          }
+
+          #home.hero-reference-v2 .hero-bottom-stat:not(:last-child)::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1px;
+            height: 58px;
+            background: #dfebed;
+            content: "";
+          }
+
+          #home.hero-reference-v2 .hero-bottom-icon {
+            width: 54px;
+            height: 54px;
+          }
+
+          #home.hero-reference-v2 .hero-bottom-stat strong {
+            color: var(--hero-teal);
+            font-size: 22px;
+            line-height: 1;
+          }
+
+          #home.hero-reference-v2 .hero-bottom-stat small {
+            overflow: hidden;
+            color: #31465f;
+            font-size: 11px;
+            font-weight: 500;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-scene {
+            animation: dxHeroOrbitTrack 22s linear infinite;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-ring:nth-child(2) {
+            animation: dxHeroRingPulse 4.8s ease-in-out infinite;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-badge {
+            animation: dxHeroBadgeFloat 3.8s ease-in-out infinite;
+            will-change: transform, box-shadow;
+          }
+
+          #home.hero-reference-v2 .hero-orbit-badge-2 { animation-delay: -1.25s; }
+          #home.hero-reference-v2 .hero-orbit-badge-3 { animation-delay: -2.5s; }
+
+          #home.hero-reference-v2 .doctor-note,
+          #home.hero-reference-v2 .hero-stat-item {
+            animation: dxHeroCardEnter .68s cubic-bezier(.22, 1, .36, 1) both;
+          }
+
+          #home.hero-reference-v2 .doctor-note { animation-delay: .12s; }
+          #home.hero-reference-v2 .hero-stat-item:nth-child(1) { animation-delay: .22s; }
+          #home.hero-reference-v2 .hero-stat-item:nth-child(2) { animation-delay: .32s; }
+          #home.hero-reference-v2 .hero-stat-item:nth-child(3) { animation-delay: .42s; }
+          #home.hero-reference-v2 .hero-stat-item:nth-child(4) { animation-delay: .52s; }
+
+          #home.hero-reference-v2 .hero-bottom-stat {
+            animation: dxHeroBottomStatEnter .58s cubic-bezier(.22, 1, .36, 1) both;
+          }
+
+          #home.hero-reference-v2 .hero-bottom-stat:nth-child(1) { animation-delay: .32s; }
+          #home.hero-reference-v2 .hero-bottom-stat:nth-child(2) { animation-delay: .4s; }
+          #home.hero-reference-v2 .hero-bottom-stat:nth-child(3) { animation-delay: .48s; }
+          #home.hero-reference-v2 .hero-bottom-stat:nth-child(4) { animation-delay: .56s; }
+          #home.hero-reference-v2 .hero-bottom-stat:nth-child(5) { animation-delay: .64s; }
+
+          #home.hero-reference-v2 .hero-cta-arrow {
+            transition: transform .2s ease, box-shadow .2s ease;
+          }
+
+          #home.hero-reference-v2 .hero-cta-card:hover .hero-cta-arrow,
+          #home.hero-reference-v2 .hero-cta-card:focus-visible .hero-cta-arrow {
+            box-shadow: 0 10px 22px rgba(0, 143, 134, .34);
+            transform: translateX(4px);
+          }
+
+          @keyframes dxHeroOrbitTrack {
+            to { transform: translateX(-50%) rotate(360deg); }
+          }
+
+          @keyframes dxHeroRingPulse {
+            0%, 100% { opacity: .56; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.025); }
+          }
+
+          @keyframes dxHeroBadgeFloat {
+            0%, 100% {
+              box-shadow: 0 13px 34px rgba(30, 86, 98, .11);
+              transform: translateY(0);
+            }
+            50% {
+              box-shadow: 0 20px 42px rgba(0, 143, 134, .2);
+              transform: translateY(-8px);
+            }
+          }
+
+          @keyframes dxHeroCardEnter {
+            from { opacity: 0; transform: translate3d(32px, 12px, 0) scale(.97); }
+            to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          }
+
+          @keyframes dxHeroBottomStatEnter {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            #home.hero-reference-v2 *,
+            #home.hero-reference-v2 *::before,
+            #home.hero-reference-v2 *::after {
+              animation: none !important;
+              scroll-behavior: auto !important;
+              transition: none !important;
+            }
+          }
+
+          @media (max-width: 1260px) {
+            #home.hero-reference-v2 .hero-grid {
+              grid-template-columns: minmax(445px, .82fr) minmax(535px, 1.08fr);
+            }
+
+            #home.hero-reference-v2 h1 { font-size: 48px; }
+            #home.hero-reference-v2 .doctor-note,
+            #home.hero-reference-v2 .hero-stat-list { right: -8px; }
+            #home.hero-reference-v2 .doctor-shape { width: 490px; }
+            #home.hero-reference-v2 .hero-bottom-stat { padding-inline: 13px; }
+          }
+
+          @media (max-width: 1050px) {
+            #home.hero-reference-v2 .hero-grid {
+              min-height: 650px;
+              grid-template-columns: minmax(410px, .88fr) minmax(470px, 1fr);
+            }
+
+            #home.hero-reference-v2 h1 { font-size: 43px; }
+            #home.hero-reference-v2 .hero-lead { font-size: 16px; }
+            #home.hero-reference-v2 .hero-visual { min-height: 585px; }
+            #home.hero-reference-v2 .doctor-shape { width: 445px; height: 575px; left: 39%; }
+            #home.hero-reference-v2 .hero-visual::before { width: 490px; height: 490px; left: 39%; }
+            #home.hero-reference-v2 .hero-orbit-scene { width: 560px; height: 560px; left: 39%; }
+            #home.hero-reference-v2 .hero-orbit-badge { width: 75px; height: 75px; }
+            #home.hero-reference-v2 .hero-orbit-badge-1 { left: 0; }
+            #home.hero-reference-v2 .hero-orbit-badge-2 { left: -4%; }
+            #home.hero-reference-v2 .hero-orbit-badge-3 { left: 2%; }
+            #home.hero-reference-v2 .doctor-note { width: 228px; }
+            #home.hero-reference-v2 .doctor-note img { width: 58px; height: 80px; flex-basis: 58px; }
+            #home.hero-reference-v2 .doctor-note strong { font-size: 12px; }
+            #home.hero-reference-v2 .hero-stat-list { width: 220px; }
+            #home.hero-reference-v2 .hero-stat-item { min-height: 75px; grid-template-columns: 45px 1fr; padding: 10px 13px; }
+            #home.hero-reference-v2 .hero-stat-icon { width: 43px; height: 43px; }
+            #home.hero-reference-v2 .hero-stat-item strong { font-size: 17px; }
+            #home.hero-reference-v2 .hero-bottom-stat { grid-template-columns: 47px 1fr; gap: 9px; padding-inline: 9px; }
+            #home.hero-reference-v2 .hero-bottom-icon { width: 46px; height: 46px; }
+            #home.hero-reference-v2 .hero-bottom-stat strong { font-size: 18px; }
+          }
+
+          @media (max-width: 900px) {
+            #home.hero-reference-v2 .hero-grid {
+              min-height: 0;
+              grid-template-columns: 1fr;
+              gap: 18px;
+              padding-top: 50px;
+            }
+
+            #home.hero-reference-v2 .hero-copy { text-align: center; }
+            #home.hero-reference-v2 h1,
+            #home.hero-reference-v2 .hero-lead,
+            #home.hero-reference-v2 .hero-feature-grid,
+            #home.hero-reference-v2 .hero-cta-card { margin-inline: auto; }
+            #home.hero-reference-v2 .hero-visual { width: min(720px, 100%); min-height: 650px; margin-inline: auto; }
+            #home.hero-reference-v2 .doctor-shape { width: 520px; height: 640px; left: 43%; }
+            #home.hero-reference-v2 .hero-visual::before { width: 560px; height: 560px; left: 43%; }
+            #home.hero-reference-v2 .hero-orbit-scene { width: 640px; height: 640px; left: 43%; }
+            #home.hero-reference-v2 .doctor-note { right: 0; }
+            #home.hero-reference-v2 .hero-stat-list { right: 0; }
+            #home.hero-reference-v2 .hero-bottom-stats { grid-template-columns: repeat(3, 1fr); gap: 24px 0; }
+            #home.hero-reference-v2 .hero-bottom-stat:nth-child(3)::after { display: none; }
+          }
+
+          @media (max-width: 650px) {
+            #home.hero-reference-v2 h1 { margin-top: 28px; font-size: clamp(36px, 10vw, 46px); }
+            #home.hero-reference-v2 h1 .title-line { white-space: normal; }
+            #home.hero-reference-v2 .hero-feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 0; }
+            #home.hero-reference-v2 .hero-feature-pill:nth-child(2)::after { display: none; }
+            #home.hero-reference-v2 .hero-cta-card { grid-template-columns: 58px 1fr 38px; gap: 12px; padding-right: 13px; text-align: left; }
+            #home.hero-reference-v2 .hero-cta-icon { width: 58px; height: 58px; }
+            #home.hero-reference-v2 .hero-cta-icon i,
+            #home.hero-reference-v2 .hero-cta-icon svg { width: 30px; height: 30px; }
+            #home.hero-reference-v2 .hero-visual { min-height: 560px; }
+            #home.hero-reference-v2 .doctor-shape { width: 430px; height: 540px; left: 50%; }
+            #home.hero-reference-v2 .hero-visual::before { width: 460px; height: 460px; left: 50%; }
+            #home.hero-reference-v2 .hero-orbit-scene { width: 520px; height: 520px; left: 50%; }
+            #home.hero-reference-v2 .doctor-note { width: 220px; min-height: 108px; top: 14px; right: 0; }
+            #home.hero-reference-v2 .hero-stat-list { display: none; }
+            #home.hero-reference-v2 .hero-orbit-badge-1 { top: 82px; left: 2%; }
+            #home.hero-reference-v2 .hero-orbit-badge-2 { top: 290px; left: 0; }
+            #home.hero-reference-v2 .hero-orbit-badge-3 { right: 0; bottom: 55px; left: auto; }
+            #home.hero-reference-v2 .hero-bottom-stats { grid-template-columns: repeat(2, 1fr); padding: 22px 8px; }
+            #home.hero-reference-v2 .hero-bottom-stat:nth-child(2)::after,
+            #home.hero-reference-v2 .hero-bottom-stat:nth-child(4)::after { display: none; }
+            #home.hero-reference-v2 .hero-bottom-stat:nth-child(3)::after { display: block; }
+          }
+
+          @media (max-width: 430px) {
+            #home.hero-reference-v2 .hero-grid { padding-top: 38px; }
+            #home.hero-reference-v2 .eyebrow { font-size: 11px; }
+            #home.hero-reference-v2 h1 { font-size: 35px; }
+            #home.hero-reference-v2 .hero-lead { font-size: 15px; }
+            #home.hero-reference-v2 .hero-cta-copy small { font-size: 11px; }
+            #home.hero-reference-v2 .hero-visual { min-height: 470px; }
+            #home.hero-reference-v2 .doctor-shape { width: 360px; height: 455px; }
+            #home.hero-reference-v2 .hero-visual::before { width: 390px; height: 390px; }
+            #home.hero-reference-v2 .hero-orbit-scene { width: 440px; height: 440px; }
+            #home.hero-reference-v2 .doctor-note { width: 195px; min-height: 96px; padding: 10px; }
+            #home.hero-reference-v2 .doctor-note img { width: 50px; height: 68px; flex-basis: 50px; }
+            #home.hero-reference-v2 .hero-orbit-badge { width: 66px; height: 66px; font-size: 8px; }
+            #home.hero-reference-v2 .hero-orbit-icon i,
+            #home.hero-reference-v2 .hero-orbit-icon svg { width: 23px; height: 23px; }
+            #home.hero-reference-v2 .hero-orbit-badge-1 { left: -4px; }
+            #home.hero-reference-v2 .hero-orbit-badge-2 { top: 255px; left: -5px; }
+            #home.hero-reference-v2 .hero-orbit-badge-3 { display: none; }
+            #home.hero-reference-v2 .hero-bottom-stats { grid-template-columns: 1fr; }
+            #home.hero-reference-v2 .hero-bottom-stat { padding: 10px 18px; }
+            #home.hero-reference-v2 .hero-bottom-stat::after { display: none !important; }
+          }
+
+          @media (min-width: 901px) and (max-height: 900px) {
+            #home.hero-reference-v2 {
+              width: 100%;
+              height: calc(100svh - 86px);
+              min-height: 640px;
+              max-height: 810px;
+            }
+
+            #home.hero-reference-v2 .hero-grid {
+              width: min(100% - 64px, 1360px);
+              height: calc(100% - 100px);
+              min-height: 0;
+              grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr);
+              align-items: center;
+              padding-block: 18px 6px;
+            }
+
+            #home.hero-reference-v2 .hero-copy {
+              min-width: 0;
+              padding-block: 0;
+            }
+
+            #home.hero-reference-v2 .eyebrow {
+              padding: 8px 14px;
+              font-size: 12px;
+            }
+
+            #home.hero-reference-v2 h1 {
+              margin: 22px 0 13px;
+              font-size: clamp(40px, 2.7vw, 49px);
+              line-height: 1.04;
+            }
+
+            #home.hero-reference-v2 h1 .title-line {
+              min-height: 1.04em;
+            }
+
+            #home.hero-reference-v2 .hero-lead {
+              font-size: 16px;
+              line-height: 1.5;
+            }
+
+            #home.hero-reference-v2 .hero-feature-grid {
+              margin-top: 16px;
+            }
+
+            #home.hero-reference-v2 .hero-feature-pill {
+              gap: 6px;
+              font-size: 11px;
+            }
+
+            #home.hero-reference-v2 .hero-feature-pill-icon {
+              width: 50px;
+              height: 50px;
+            }
+
+            #home.hero-reference-v2 .hero-feature-pill-icon i,
+            #home.hero-reference-v2 .hero-feature-pill-icon svg {
+              width: 25px;
+              height: 25px;
+            }
+
+            #home.hero-reference-v2 .hero-feature-pill:not(:last-child)::after {
+              top: 9px;
+              height: 63px;
+            }
+
+            #home.hero-reference-v2 .hero-cta-card {
+              min-height: 80px;
+              grid-template-columns: 58px minmax(0, 1fr) 38px;
+              gap: 13px;
+              margin-top: 17px;
+              padding: 10px 15px 10px 10px;
+            }
+
+            #home.hero-reference-v2 .hero-cta-icon {
+              width: 58px;
+              height: 58px;
+            }
+
+            #home.hero-reference-v2 .hero-cta-icon i,
+            #home.hero-reference-v2 .hero-cta-icon svg {
+              width: 30px;
+              height: 30px;
+            }
+
+            #home.hero-reference-v2 .hero-cta-copy {
+              gap: 4px;
+            }
+
+            #home.hero-reference-v2 .hero-cta-copy small {
+              font-size: 11px;
+            }
+
+            #home.hero-reference-v2 .hero-cta-arrow {
+              width: 36px;
+              height: 36px;
+            }
+
+            #home.hero-reference-v2 .hero-visual {
+              min-width: 0;
+              min-height: 0;
+              height: 100%;
+            }
+
+            #home.hero-reference-v2 .hero-visual::before {
+              width: min(510px, 74%);
+              height: min(510px, 90%);
+              bottom: 0;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-scene {
+              width: min(570px, 82%);
+              height: min(570px, 100%);
+              bottom: -5px;
+            }
+
+            #home.hero-reference-v2 .doctor-shape {
+              width: min(470px, 66%);
+              height: 100%;
+              max-height: 555px;
+              bottom: 0;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-badge {
+              width: 72px;
+              height: 72px;
+              gap: 3px;
+              font-size: 8px;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-icon i,
+            #home.hero-reference-v2 .hero-orbit-icon svg {
+              width: 24px;
+              height: 24px;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-badge-1 { top: 55px; }
+            #home.hero-reference-v2 .hero-orbit-badge-2 { top: 47%; }
+            #home.hero-reference-v2 .hero-orbit-badge-3 { bottom: 36px; }
+
+            #home.hero-reference-v2 .doctor-note {
+              width: 250px;
+              min-height: 106px;
+              top: 0;
+              padding: 11px;
+              border-radius: 17px;
+            }
+
+            #home.hero-reference-v2 .doctor-note img {
+              width: 60px;
+              height: 78px;
+              flex-basis: 60px;
+            }
+
+            #home.hero-reference-v2 .doctor-note strong { font-size: 13px; }
+            #home.hero-reference-v2 .doctor-note small { font-size: 10px; }
+
+            #home.hero-reference-v2 .hero-stat-list {
+              width: 245px;
+              top: 116px;
+              gap: 8px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-item {
+              min-height: 67px;
+              grid-template-columns: 43px 1fr;
+              gap: 10px;
+              padding: 8px 13px;
+              border-radius: 16px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-icon {
+              width: 42px;
+              height: 42px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-icon i,
+            #home.hero-reference-v2 .hero-stat-icon svg {
+              width: 23px;
+              height: 23px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-item strong { font-size: 18px; }
+            #home.hero-reference-v2 .hero-stat-item small { font-size: 10px; }
+
+            #home.hero-reference-v2 .hero-bottom-stats {
+              height: 88px;
+              min-height: 88px;
+              margin-bottom: 12px;
+              padding-block: 12px;
+            }
+
+            #home.hero-reference-v2 .hero-bottom-stat {
+              grid-template-columns: 44px minmax(0, 1fr);
+              gap: 9px;
+              padding-inline: 14px;
+            }
+
+            #home.hero-reference-v2 .hero-bottom-icon {
+              width: 44px;
+              height: 44px;
+            }
+
+            #home.hero-reference-v2 .hero-bottom-icon i,
+            #home.hero-reference-v2 .hero-bottom-icon svg {
+              width: 23px;
+              height: 23px;
+            }
+
+            #home.hero-reference-v2 .hero-bottom-stat:not(:last-child)::after {
+              height: 46px;
+            }
+
+            #home.hero-reference-v2 .hero-bottom-stat strong { font-size: 18px; }
+            #home.hero-reference-v2 .hero-bottom-stat small { font-size: 10px; }
+          }
+
+          @media (min-width: 901px) and (max-height: 700px) {
+            #home.hero-reference-v2 {
+              min-height: 570px;
+            }
+
+            #home.hero-reference-v2 .hero-grid {
+              height: calc(100% - 84px);
+              padding-top: 10px;
+            }
+
+            #home.hero-reference-v2 h1 {
+              margin-block: 13px 9px;
+              font-size: clamp(36px, 2.4vw, 44px);
+            }
+
+            #home.hero-reference-v2 .hero-lead { font-size: 14px; }
+            #home.hero-reference-v2 .hero-feature-grid { margin-top: 10px; }
+            #home.hero-reference-v2 .hero-feature-pill-icon { width: 44px; height: 44px; }
+            #home.hero-reference-v2 .hero-cta-card { min-height: 70px; margin-top: 10px; }
+            #home.hero-reference-v2 .hero-cta-icon { width: 50px; height: 50px; }
+            #home.hero-reference-v2 .hero-bottom-stats { height: 74px; min-height: 74px; margin-bottom: 8px; }
+          }
+
+          /* Exact desktop composition from the supplied 1536 x 1024 reference. */
+          #home.hero-reference-v2 .hero-visual::before,
+          #home.hero-reference-v2 .hero-orbit-scene {
+            display: block;
+          }
+
+          #home.hero-reference-v2 .doctor-shape {
+            width: min(72%, 620px);
+            height: 100%;
+            max-height: 700px;
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 28%;
+            overflow: visible;
+            transform: translateX(-50%);
+          }
+
+          #home.hero-reference-v2 .hero-doctor {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            top: auto;
+            right: auto;
+            bottom: auto;
+            left: auto;
+            margin: 0;
+            object-fit: contain;
+            object-position: center bottom;
+            filter: drop-shadow(0 18px 20px rgba(17, 80, 82, .1));
+          }
+
+          @media (min-width: 1200px) {
+            #home.hero-reference-v2 > .container {
+              width: min(calc(100% - 118px), 1420px);
+            }
+
+            #home.hero-reference-v2 .hero-grid {
+              height: min(735px, calc(100svh - 220px));
+              min-height: 620px;
+              grid-template-columns: 550px minmax(0, 1fr);
+              align-items: stretch;
+              gap: 10px;
+              padding-block: clamp(30px, 5.1vh, 52px) 0;
+            }
+
+            #home.hero-reference-v2 .hero-copy {
+              align-self: center;
+              padding: 0;
+            }
+
+            #home.hero-reference-v2 h1 {
+              max-width: 550px;
+              margin: 38px 0 24px;
+              font-size: 54px;
+              line-height: 1.08;
+            }
+
+            #home.hero-reference-v2 .hero-lead {
+              max-width: 520px;
+              font-size: 18px;
+            }
+
+            #home.hero-reference-v2 .hero-feature-grid,
+            #home.hero-reference-v2 .hero-cta-card {
+              max-width: 550px;
+            }
+
+            #home.hero-reference-v2 .hero-visual {
+              min-height: 0;
+              height: 100%;
+            }
+
+            #home.hero-reference-v2 .hero-visual::before {
+              width: 650px;
+              height: 650px;
+              right: auto;
+              bottom: 0;
+              left: 44%;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-scene {
+              width: 720px;
+              height: 720px;
+              bottom: -24px;
+              left: 44%;
+            }
+
+            #home.hero-reference-v2 .doctor-shape {
+              width: 620px;
+              height: 700px;
+              left: 28%;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-badge {
+              width: 88px;
+              height: 88px;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-badge-1 { top: 42px; left: 8%; }
+            #home.hero-reference-v2 .hero-orbit-badge-2 { top: 270px; left: 0; }
+            #home.hero-reference-v2 .hero-orbit-badge-3 { bottom: 54px; left: 7%; }
+
+            #home.hero-reference-v2 .doctor-note {
+              width: 310px;
+              min-height: 160px;
+              top: 0;
+              right: 0;
+              padding: 16px;
+            }
+
+            #home.hero-reference-v2 .doctor-note img {
+              width: 78px;
+              height: 110px;
+              flex-basis: 78px;
+            }
+
+            #home.hero-reference-v2 .doctor-note strong { font-size: 16px; }
+            #home.hero-reference-v2 .doctor-note small { font-size: 12px; }
+
+            #home.hero-reference-v2 .hero-stat-list {
+              width: 300px;
+              top: 174px;
+              right: 0;
+              gap: 11px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-item {
+              min-height: 94px;
+              grid-template-columns: 58px 1fr;
+              gap: 14px;
+              padding: 13px 19px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-icon {
+              width: 54px;
+              height: 54px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-item strong { font-size: 22px; }
+            #home.hero-reference-v2 .hero-stat-item small { font-size: 11px; }
+
+            #home.hero-reference-v2 .hero-bottom-stats {
+              min-height: 140px;
+              height: 140px;
+              margin: 0 0 32px;
+              padding: 20px 12px;
+            }
+          }
+
+          @media (min-width: 1200px) and (max-height: 960px) {
+            #home.hero-reference-v2 .hero-grid {
+              grid-template-columns: 550px minmax(0, 1fr);
+            }
+
+            #home.hero-reference-v2 h1 {
+              margin-block: 24px 16px;
+              font-size: 48px;
+            }
+
+            #home.hero-reference-v2 .hero-feature-grid { margin-top: 16px; }
+            #home.hero-reference-v2 .hero-cta-card { margin-top: 18px; }
+
+            #home.hero-reference-v2 .hero-visual::before {
+              width: 570px;
+              height: 570px;
+            }
+
+            #home.hero-reference-v2 .hero-orbit-scene {
+              width: 630px;
+              height: 630px;
+            }
+
+            #home.hero-reference-v2 .doctor-shape {
+              width: 540px;
+              height: 100%;
+              left: 30%;
+            }
+
+            #home.hero-reference-v2 .doctor-note {
+              min-height: 126px;
+              top: 0;
+            }
+
+            #home.hero-reference-v2 .doctor-note img {
+              width: 64px;
+              height: 88px;
+              flex-basis: 64px;
+            }
+
+            #home.hero-reference-v2 .hero-stat-list { top: 138px; }
+            #home.hero-reference-v2 .hero-stat-item { min-height: 76px; }
+            #home.hero-reference-v2 .hero-bottom-stats { min-height: 108px; height: 108px; margin-bottom: 14px; }
+          }
+
+          @media (max-width: 900px) {
+            #home.hero-reference-v2 .doctor-shape {
+              left: 34%;
+              width: min(86%, 560px);
+              height: 100%;
+              transform: translateX(-50%);
+            }
+
+            #home.hero-reference-v2 .doctor-note { top: 20px; }
+          }
+        </style>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow"><i data-lucide="shield-check"></i>Trusted AI Care. Closer to You.</span>
+            <h1 aria-label="AI-Powered Healthcare for Smarter Care Decisions">
+              <span class="title-line" aria-hidden="true"><span id="typedLead">AI-Powered Healthcare</span></span>
+              <span class="title-line" aria-hidden="true"><span id="typedBridge">for </span><span id="typedSecond">Smarter</span></span>
+              <span class="title-line" aria-hidden="true"><span class="title-accent" id="typedAccent">Care Decisions</span><span class="typing-caret" id="typingCaret" hidden></span></span>
+            </h1>
+            <p class="hero-lead">Intelligent doctor matching, instant insights and seamless appointments &ndash; all in one place.</p>
+
+            <div class="hero-feature-grid" aria-label="Divinexa key benefits">
+              <div class="hero-feature-pill">
+                <span class="hero-feature-pill-icon"><i data-lucide="brain-circuit"></i></span>
+                <span>AI Doctor<br>Matching</span>
+              </div>
+              <div class="hero-feature-pill">
+                <span class="hero-feature-pill-icon"><i data-lucide="calendar-check"></i></span>
+                <span>Smart<br>Booking</span>
+              </div>
+              <div class="hero-feature-pill">
+                <span class="hero-feature-pill-icon"><i data-lucide="lock-keyhole"></i></span>
+                <span>Secure &amp;<br>Private</span>
+              </div>
+              <div class="hero-feature-pill">
+                <span class="hero-feature-pill-icon"><i data-lucide="trending-up"></i></span>
+                <span>Health<br>Insights</span>
+              </div>
+            </div>
+
+            <a class="hero-cta-card" href="doctors.html">
+              <span class="hero-cta-icon"><i data-lucide="cpu"></i></span>
+              <span class="hero-cta-copy">
+                <strong>Personalized care starts here</strong>
+                <small>AI analyzes your needs and connects you with the right doctor.</small>
+              </span>
+              <span class="hero-cta-arrow" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
+            </a>
+          </div>
+
+          <div class="hero-visual" aria-label="Featured Divinexa doctor">
+            <span class="spark one" aria-hidden="true"></span>
+            <span class="spark two" aria-hidden="true"></span>
+            <span class="spark three" aria-hidden="true"></span>
+
+            <div class="hero-orbit-scene" aria-hidden="true">
+              <span class="hero-orbit-ring"></span>
+              <span class="hero-orbit-ring"></span>
+              <span class="hero-orbit-ring"></span>
+              <span class="hero-orbit-ring"></span>
+            </div>
+
+            <div class="doctor-shape">
+              <img
+                class="hero-doctor"
+                src="assets/images/home-hero-doctor.png"
+                alt="Smiling doctor wearing a white coat and stethoscope"
+              >
+            </div>
+
+            <div class="hero-orbit-badge hero-orbit-badge-1">
+              <span class="hero-orbit-icon"><i data-lucide="brain"></i></span>
+              <span>AI Analysis</span>
+            </div>
+            <div class="hero-orbit-badge hero-orbit-badge-2">
+              <span class="hero-orbit-icon"><i data-lucide="shield-check"></i></span>
+              <span>Trusted Care</span>
+            </div>
+            <div class="hero-orbit-badge hero-orbit-badge-3">
+              <span class="hero-orbit-icon"><i data-lucide="heart-pulse"></i></span>
+              <span>Better Outcomes</span>
+            </div>
+
+            <div class="floating-card doctor-note">
+              <img src="assets/images/home-hero-doctor.png" alt="">
+              <span>
+                <strong>Dr. Ananya Sharma</strong>
+                <small>MBBS, MD (Medicine)</small>
+                <small class="rating"><b>&#9733;</b> 4.9 (128 reviews)</small>
+                <small class="hero-doctor-available">Available Today</small>
+              </span>
+            </div>
+
+            <div class="hero-stat-list">
+              <div class="hero-stat-item">
+                <span class="hero-stat-icon"><i data-lucide="users-round"></i></span>
+                <span><strong data-count-target="15" data-count-suffix="K+">15K+</strong><small>Happy Patients</small></span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-icon"><i data-lucide="badge-check"></i></span>
+                <span><strong>100%</strong><small>Verified Doctors</small></span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-icon"><i data-lucide="headphones"></i></span>
+                <span><strong>24/7</strong><small>Support</small></span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-icon"><i data-lucide="sparkles"></i></span>
+                <span><strong>Fast &amp; Easy</strong><small>Booking</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="hero-bottom-stats" aria-label="Divinexa platform stats">
+            <div class="hero-bottom-stat">
+              <span class="hero-bottom-icon"><i data-lucide="users-round"></i></span>
+              <span><strong data-count-target="15" data-count-suffix="K+">15K+</strong><small>Happy Patients</small></span>
+            </div>
+            <div class="hero-bottom-stat">
+              <span class="hero-bottom-icon"><i data-lucide="badge-check"></i></span>
+              <span><strong data-count-target="100" data-count-suffix="%">100%</strong><small>Verified Doctors</small></span>
+            </div>
+            <div class="hero-bottom-stat">
+              <span class="hero-bottom-icon"><i data-lucide="calendar-check-2"></i></span>
+              <span><strong data-count-target="20" data-count-suffix="K+">20K+</strong><small>Appointments Booked</small></span>
+            </div>
+            <div class="hero-bottom-stat">
+              <span class="hero-bottom-icon"><i data-lucide="thumbs-up"></i></span>
+              <span><strong data-count-target="98" data-count-suffix="%">98%</strong><small>Patient Satisfaction</small></span>
+            </div>
+            <div class="hero-bottom-stat">
+              <span class="hero-bottom-icon"><i data-lucide="clock-3"></i></span>
+              <span><strong data-count-target="24" data-count-suffix="/7">24/7</strong><small>Support</small></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ai-tool-section" id="aiToolWorkspace" aria-label="AI doctor finder tools" hidden>
+        <div class="container">
+          <div class="ai-workspace-shell">
+            <div class="ai-workspace-topbar">
+              <span class="ai-workspace-brand"><i data-lucide="sparkles"></i>Divinexa AI Doctor Finder</span>
+              <button class="ai-workspace-close" id="closeAiWorkspace" type="button">
+                <i data-lucide="arrow-left"></i>Back to search
+              </button>
+            </div>
+
+            <div class="ai-workspace-tabs" role="tablist" aria-label="AI health tools">
+              <button class="ai-workspace-tab" type="button" role="tab" aria-label="Health Check" title="Health Check" aria-selected="true" data-ai-workspace-tab="health">
+                <span><i data-lucide="shield-check"></i></span>
+                <span><strong>Health Check</strong><small>Quick health analysis</small></span>
+              </button>
+              <button class="ai-workspace-tab" type="button" role="tab" aria-label="Voice Search" title="Voice Search" aria-selected="false" data-ai-workspace-tab="voice" tabindex="-1">
+                <span><i data-lucide="mic"></i></span>
+                <span><strong>Voice Search</strong><small>Speak your symptoms</small></span>
+              </button>
+              <button class="ai-workspace-tab" type="button" role="tab" aria-label="Upload Report" title="Upload Report" aria-selected="false" data-ai-workspace-tab="report" tabindex="-1">
+                <span><i data-lucide="file-up"></i></span>
+                <span><strong>Upload Report</strong><small>Lab reports or X-rays</small></span>
+              </button>
+              <button class="ai-workspace-tab" type="button" role="tab" aria-label="Prescription" title="Prescription" aria-selected="false" data-ai-workspace-tab="prescription" tabindex="-1">
+                <span><i data-lucide="file-text"></i></span>
+                <span><strong>Prescription</strong><small>Upload prescription</small></span>
+              </button>
+            </div>
+
+            <div class="ai-workspace-content">
+              <div class="ai-workspace-panel" data-ai-workspace-panel="voice">
+                <article class="workspace-card workspace-center">
+                  <h2>Tell us how you are feeling</h2>
+                  <p class="workspace-subtitle">Speak clearly about your symptoms</p>
+                  <div class="voice-stage">
+                    <button class="voice-orb" id="voiceRecordingButton" type="button" aria-label="Start voice recording">
+                      <i data-lucide="mic"></i>
+                    </button>
+                    <strong id="voiceRecordingStatus">Tap the microphone to speak</strong>
+                    <span class="voice-transcript" id="voiceTranscript">Your spoken symptoms will appear here</span>
+                    <small id="voiceRecordingTimer">Recording: 00:00</small>
+                  </div>
+                  <div class="workspace-actions">
+                    <button class="workspace-button" id="voiceCancelButton" type="button">Cancel</button>
+                    <button class="workspace-button primary" id="voiceAnalyzeButton" type="button">Stop &amp; Analyse</button>
+                  </div>
+                  <p class="workspace-note"><i data-lucide="shield-check"></i>Your voice is secure and encrypted. We do not store your audio.</p>
+                </article>
+                <aside class="workspace-card soft">
+                  <h3>How it works?</h3>
+                  <ol class="steps-list">
+                    <li><b>1</b><span>Speak about your health concern</span></li>
+                    <li><b>2</b><span>AI understands your symptoms</span></li>
+                    <li><b>3</b><span>We recommend the right specialist</span></li>
+                    <li><b>4</b><span>Book an appointment in seconds</span></li>
+                  </ol>
+                </aside>
+              </div>
+
+              <div class="ai-workspace-panel" data-ai-workspace-panel="report" hidden>
+                <article class="workspace-card">
+                  <h2>Upload Medical Report</h2>
+                  <div class="upload-zone">
+                    <i data-lucide="file-up"></i>
+                    <strong>Drag and drop your file here</strong>
+                    <small>PDF, JPG or PNG (Max. 10 MB)</small>
+                    <button class="workspace-button" type="button" data-workspace-toast="Choose a report file from your device.">Browse Files</button>
+                  </div>
+                  <div class="workspace-field">
+                    <label for="reportType">Document Type</label>
+                    <select id="reportType" data-customize>
+                      <option>Lab Report</option>
+                      <option>X-Ray</option>
+                      <option>MRI or CT Scan</option>
+                      <option>Other Medical Report</option>
+                    </select>
+                  </div>
+                  <label class="workspace-check"><input type="checkbox" checked>Use this report to recommend a doctor</label>
+                  <div class="workspace-actions">
+                    <button class="workspace-button" type="button" data-workspace-toast="Report upload cancelled.">Cancel</button>
+                    <button class="workspace-button primary" type="button" data-workspace-toast="Sample report analysed successfully.">Upload &amp; Analyse</button>
+                  </div>
+                </article>
+                <aside class="workspace-card soft">
+                  <h3>Report analysed successfully</h3>
+                  <p class="workspace-subtitle">Detected:</p>
+                  <ul class="result-list">
+                    <li><i data-lucide="circle-check-big"></i>High blood sugar</li>
+                    <li><i data-lucide="circle-check-big"></i>Elevated HbA1c</li>
+                    <li><i data-lucide="circle-check-big"></i>Test date: 20 July 2026</li>
+                  </ul>
+                  <div class="summary-block">
+                    <small>Recommended specialist:</small>
+                    <span class="specialist-pill"><i data-lucide="user-round"></i>Endocrinologist</span>
+                  </div>
+                  <div class="workspace-actions">
+                    <button class="workspace-button" type="button" data-workspace-toast="Report details are ready to edit.">Edit Details</button>
+                    <button class="workspace-button primary" type="button" data-workspace-toast="Showing recommended endocrinologists.">Find Doctors</button>
+                  </div>
+                </aside>
+              </div>
+
+              <div class="ai-workspace-panel" data-ai-workspace-panel="prescription" hidden>
+                <article class="workspace-card">
+                  <h2>Upload Your Prescription</h2>
+                  <div class="prescription-source" id="prescriptionSource">
+                    <i data-lucide="camera"></i>
+                    <img class="prescription-photo-preview" id="prescriptionPhotoPreview" alt="Captured prescription preview" hidden>
+                    <strong id="prescriptionPhotoTitle">Upload or take a photo</strong>
+                    <small id="prescriptionPhotoStatus">of your prescription</small>
+                    <div class="workspace-actions">
+                      <button class="workspace-button" id="openPrescriptionCamera" type="button"><i data-lucide="camera"></i>Camera</button>
+                      <button class="workspace-button" id="browsePrescriptionPhoto" type="button"><i data-lucide="folder-open"></i>Browse File</button>
+                    </div>
+                    <input id="prescriptionPhotoInput" type="file" accept="image/*" hidden>
+                  </div>
+                  <strong>AI will identify:</strong>
+                  <div class="feature-checks">
+                    <span><i data-lucide="circle-check-big"></i>Doctor specialty</span>
+                    <span><i data-lucide="circle-check-big"></i>Medicines</span>
+                    <span><i data-lucide="circle-check-big"></i>Diagnosis notes</span>
+                    <span><i data-lucide="circle-check-big"></i>Follow-up date</span>
+                  </div>
+                  <div class="workspace-actions">
+                    <button class="workspace-button primary" type="button" data-workspace-toast="Sample prescription read successfully.">Upload &amp; Read Prescription</button>
+                  </div>
+                </article>
+                <aside class="workspace-card soft">
+                  <h3>Prescription Summary</h3>
+                  <div class="summary-block">
+                    <small>Previous specialty:</small>
+                    <strong>General Medicine</strong>
+                  </div>
+                  <div class="summary-block">
+                    <small>Medicines detected:</small>
+                    <strong>3</strong>
+                  </div>
+                  <div class="summary-block">
+                    <small>Follow-up recommended:</small>
+                    <em>Within 7 days</em>
+                  </div>
+                  <div class="workspace-actions">
+                    <button class="workspace-button" type="button" data-workspace-toast="Matching the same specialty.">Find Same Specialty</button>
+                    <button class="workspace-button primary" type="button" data-workspace-toast="Showing follow-up doctors.">Find Follow-up Doctor</button>
+                  </div>
+                </aside>
+              </div>
+
+              <div class="ai-workspace-panel" data-ai-workspace-panel="health" hidden>
+                <article class="workspace-card health-wizard" id="healthWizard" data-health-step="1">
+                  <div class="health-wizard-heading">
+                    <span class="health-step-number" id="healthStepNumber">1</span>
+                    <div>
+                      <h2>Quick AI Health Check</h2>
+                      <p class="workspace-subtitle" id="healthStepLabel">Step 1 of 4</p>
+                    </div>
+                  </div>
+                  <div class="health-progress" id="healthProgress" aria-label="Health check progress">
+                    <span class="active"></span><span></span><span></span><span></span>
+                  </div>
+
+                  <section class="health-step department-step" data-health-step-panel="1">
+                    <h3>Which department would you like to consult?</h3>
+                    <p class="department-step-copy">AI will ask relevant questions based on your selection.</p>
+
+                    <label class="department-search">
+                      <i data-lucide="search"></i>
+                      <input id="departmentSearch" type="search" placeholder="Search department..." autocomplete="off" aria-label="Search departments">
+                    </label>
+
+                    <div class="department-section-head">
+                      <strong id="departmentViewTitle">Popular Departments</strong>
+                    </div>
+
+                    <div class="department-filter-row" id="departmentFilters" hidden>
+                      <button class="department-filter-chip" type="button" data-department-view="popular">Popular</button>
+                      <button class="department-filter-chip active" type="button" data-department-filter="all">All Departments</button>
+                      <button class="department-filter-chip" type="button" data-department-filter="a-f">A &ndash; F</button>
+                      <button class="department-filter-chip" type="button" data-department-filter="g-l">G &ndash; L</button>
+                      <button class="department-filter-chip" type="button" data-department-filter="m-r">M &ndash; R</button>
+                      <button class="department-filter-chip" type="button" data-department-filter="s-z">S &ndash; Z</button>
+                    </div>
+
+                    <div class="department-grid" id="popularDepartmentGrid">
+                      <button class="department-card" type="button" data-department="General Physician"><span class="department-icon"><i data-lucide="stethoscope"></i></span><strong>General Physician</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Cardiology"><span class="department-icon"><i data-lucide="heart-pulse"></i></span><strong>Cardiology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Orthopedic"><span class="department-icon"><i data-lucide="bone"></i></span><strong>Orthopedic</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Gynecology"><span class="department-icon"><i data-lucide="user-round"></i></span><strong>Gynecology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Dermatology"><span class="department-icon"><i data-lucide="sparkles"></i></span><strong>Dermatology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Pediatrics"><span class="department-icon"><i data-lucide="baby"></i></span><strong>Pediatrics</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Gastroenterology"><span class="department-icon"><i data-lucide="activity"></i></span><strong>Gastroenterology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="ENT"><span class="department-icon"><i data-lucide="ear"></i></span><strong>ENT</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Neurology"><span class="department-icon"><i data-lucide="brain"></i></span><strong>Neurology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Eye Care"><span class="department-icon"><i data-lucide="eye"></i></span><strong>Eye Care</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Pulmonology"><span class="department-icon"><i data-lucide="wind"></i></span><strong>Pulmonology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Endocrinology"><span class="department-icon"><i data-lucide="network"></i></span><strong>Endocrinology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Rheumatology"><span class="department-icon"><i data-lucide="bone"></i></span><strong>Rheumatology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Nephrology"><span class="department-icon"><i data-lucide="bean"></i></span><strong>Nephrology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Urology"><span class="department-icon"><i data-lucide="hospital"></i></span><strong>Urology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Other Specialty" data-open-all-departments><span class="department-icon"><i data-lucide="ellipsis"></i></span><strong>Other Specialties</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                    </div>
+
+                    <div class="department-grid" id="allDepartmentGrid" hidden>
+                      <button class="department-card" type="button" data-department="Allergy &amp; Immunology"><span class="department-icon"><i data-lucide="shield-check"></i></span><strong>Allergy &amp; Immunology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Anesthesiology"><span class="department-icon"><i data-lucide="syringe"></i></span><strong>Anesthesiology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Bariatric Surgery"><span class="department-icon"><i data-lucide="activity"></i></span><strong>Bariatric Surgery</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Blood Bank &amp; Transfusion"><span class="department-icon"><i data-lucide="droplets"></i></span><strong>Blood Bank &amp; Transfusion</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Clinical Psychology"><span class="department-icon"><i data-lucide="brain"></i></span><strong>Clinical Psychology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Cosmetology"><span class="department-icon"><i data-lucide="sparkles"></i></span><strong>Cosmetology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Critical Care Medicine"><span class="department-icon"><i data-lucide="hospital"></i></span><strong>Critical Care Medicine</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Diet &amp; Nutrition"><span class="department-icon"><i data-lucide="apple"></i></span><strong>Diet &amp; Nutrition</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Emergency Medicine"><span class="department-icon"><i data-lucide="ambulance"></i></span><strong>Emergency Medicine</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Family Medicine"><span class="department-icon"><i data-lucide="users-round"></i></span><strong>Family Medicine</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Geriatrics"><span class="department-icon"><i data-lucide="accessibility"></i></span><strong>Geriatrics</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Hematology"><span class="department-icon"><i data-lucide="microscope"></i></span><strong>Hematology</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Infectious Disease"><span class="department-icon"><i data-lucide="bug"></i></span><strong>Infectious Disease</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Other Specialty"><span class="department-icon"><i data-lucide="ellipsis"></i></span><strong>Other Specialty</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Pain Management"><span class="department-icon"><i data-lucide="zap"></i></span><strong>Pain Management</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <button class="department-card" type="button" data-department="Palliative Care"><span class="department-icon"><i data-lucide="heart-handshake"></i></span><strong>Palliative Care</strong><span class="department-check"><i data-lucide="check"></i></span></button>
+                      <p class="department-empty" id="departmentEmpty" hidden>No departments match your search.</p>
+                    </div>
+
+                    <div class="health-step-actions">
+                      <button class="workspace-button primary health-next" type="button" data-health-next>Next <i data-lucide="arrow-right"></i></button>
+                    </div>
+                  </section>
+
+                  <section class="health-step" data-health-step-panel="2" hidden>
+                    <div class="symptom-step-heading">
+                      <div>
+                        <h3>Tell us about your symptoms</h3>
+                        <p>Please provide the details below for better AI analysis and doctor recommendations.</p>
+                      </div>
+                      <div class="selected-department">
+                        <span><i data-lucide="stethoscope"></i></span>
+                        <span><small>Selected Department</small><strong id="selectedDepartmentLabel">General Physician</strong></span>
+                        <button type="button" data-health-goto="1">Change</button>
+                      </div>
+                    </div>
+
+                    <section class="symptom-form-section">
+                      <h4>1. &nbsp;Chief Complaints &amp; Duration</h4>
+                      <div class="symptom-section-grid primary">
+                        <div class="symptom-choice-group" data-symptom-group="complaint">
+                          <label>Main Complaint <small>(Select one)</small></label>
+                          <div class="symptom-choice-grid">
+                            <button class="symptom-choice selected" type="button" data-symptom-value="Pain"><i data-lucide="sun"></i>Pain</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Fever"><i data-lucide="thermometer"></i>Fever</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Cough"><i data-lucide="wind"></i>Cough</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Dizziness"><i data-lucide="headset"></i>Dizziness</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Weakness"><i data-lucide="sun-dim"></i>Weakness</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Vomiting"><i data-lucide="activity"></i>Vomiting</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Skin Rash"><i data-lucide="sparkles"></i>Skin Rash</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Shortness of Breath"><i data-lucide="wind"></i>Shortness of Breath</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Other"><i data-lucide="ellipsis"></i>Other</button>
+                          </div>
+                        </div>
+
+                        <div class="symptom-choice-group" data-symptom-group="duration">
+                          <label>Duration</label>
+                          <div class="symptom-duration-groups">
+                            <div class="symptom-subgroup"><label>Short-term</label><span>
+                              <button class="symptom-choice" type="button" data-symptom-value="Today / This Morning">Today / This Morning</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="Since Yesterday">Since Yesterday</button>
+                              <button class="symptom-choice selected" type="button" data-symptom-value="For the last 2–3 Days">For the last 2–3 Days</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="For about 1 Week">For about 1 Week</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="For a couple of Weeks">For a couple of Weeks</button>
+                            </span></div>
+                            <div class="symptom-subgroup"><label>Long-term</label><span>
+                              <button class="symptom-choice" type="button" data-symptom-value="About 3 Months">About 3 Months</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="About 6 Months">About 6 Months</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="About 1 Year">About 1 Year</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="Since Childhood">Since Childhood</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="Since Birth">Since Birth</button>
+                            </span></div>
+                            <div class="symptom-subgroup"><label>Intermittent</label><span>
+                              <button class="symptom-choice" type="button" data-symptom-value="Comes and goes">Comes and goes</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="Off and on for a few Months">Off and on for a few Months</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="Off and on for a Year+">Off and on for a Year+</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="Occurs Daily">Occurs Daily</button>
+                              <button class="symptom-choice" type="button" data-symptom-value="Occurs Weekly">Occurs Weekly</button>
+                            </span></div>
+                          </div>
+                        </div>
+
+                        <div class="symptom-choice-group" data-symptom-group="onset">
+                          <label>Onset</label>
+                          <div class="symptom-choice-grid one">
+                            <button class="symptom-choice selected" type="button" data-symptom-value="Suddenly"><i data-lucide="rabbit"></i><span>Suddenly<small>(out of nowhere)</small></span></button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Gradually"><i data-lucide="snail"></i><span>Gradually<small>(getting worse)</small></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="symptom-form-section">
+                      <h4>2. &nbsp;Details of Symptoms &amp; Pain Quality</h4>
+                      <div class="symptom-section-grid details">
+                        <div class="symptom-choice-group" data-symptom-group="location" data-multi="true">
+                          <label>Pain Location <small>(Select all that apply)</small></label>
+                          <div class="symptom-body-figures" aria-label="Front and back body location guides">
+                            <figure>
+                              <img src="assets/images/symptom-body-front.png" alt="Front body pain location guide">
+                              <span class="symptom-body-point front-neck" data-pain-location="Neck" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-shoulder" data-pain-location="Shoulder" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-chest" data-pain-location="Chest" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-abdomen" data-pain-location="Abdomen" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-hip" data-pain-location="Hip" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-thigh" data-pain-location="Thigh" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-knee" data-pain-location="Knee" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-lower" data-pain-location="Leg" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-ankle" data-pain-location="Ankle" aria-hidden="true"></span>
+                              <span class="symptom-body-point front-foot" data-pain-location="Foot" aria-hidden="true"></span>
+                              <figcaption>Front</figcaption>
+                            </figure>
+                            <figure>
+                              <img src="assets/images/symptom-body-back.png" alt="Back body pain location guide">
+                              <span class="symptom-body-point back-upper" data-pain-location="Upper Back" aria-hidden="true"></span>
+                              <span class="symptom-body-point back-lower" data-pain-location="Lower Back" aria-hidden="true"></span>
+                              <span class="symptom-body-point back-leg-one" data-pain-location="Leg" aria-hidden="true"></span>
+                              <span class="symptom-body-point back-leg-two" data-pain-location="Leg" aria-hidden="true"></span>
+                              <figcaption>Back</figcaption>
+                            </figure>
+                          </div>
+                          <div class="symptom-choice-grid locations">
+                            <button class="symptom-choice" type="button" data-symptom-value="Neck">Neck</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Hip">Hip</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Shoulder">Shoulder</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Thigh">Thigh</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Upper Back">Upper Back</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Knee">Knee</button>
+                            <button class="symptom-choice selected" type="button" data-symptom-value="Lower Back">Lower Back</button>
+                            <button class="symptom-choice selected" type="button" data-symptom-value="Leg">Leg</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Chest">Chest</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Ankle">Ankle</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Abdomen">Abdomen</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Foot">Foot</button>
+                          </div>
+                        </div>
+
+                        <div class="symptom-choice-group" data-symptom-group="radiation">
+                          <label>Does pain spread/radiate?</label>
+                          <div class="symptom-choice-grid one">
+                            <button class="symptom-choice" type="button" data-symptom-value="No">No</button>
+                            <button class="symptom-choice selected" type="button" data-symptom-value="To Left Leg">To Left Leg</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="To Right Leg">To Right Leg</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="To Left Arm">To Left Arm</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="To Right Arm">To Right Arm</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Other">Other</button>
+                          </div>
+                        </div>
+
+                        <div class="symptom-choice-group" data-symptom-group="nature">
+                          <label>Pain Nature</label>
+                          <div class="symptom-choice-grid two">
+                            <button class="symptom-choice selected" type="button" data-symptom-value="Sharp"><i data-lucide="zap"></i>Sharp</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Dull Ache">Dull Ache</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Throbbing">Throbbing</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Burning Sensation">Burning Sensation</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Cramping">Cramping</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Pressure-like">Pressure-like</button>
+                          </div>
+                        </div>
+
+                        <div class="symptom-choice-group" data-symptom-group="score">
+                          <label>Pain Score <small>How severe is your pain?</small></label>
+                          <div class="symptom-score-grid">
+                            <button class="symptom-score" type="button" data-symptom-value="1">1</button><button class="symptom-score" type="button" data-symptom-value="2">2</button>
+                            <button class="symptom-score" type="button" data-symptom-value="3">3</button><button class="symptom-score" type="button" data-symptom-value="4">4</button>
+                            <button class="symptom-score" type="button" data-symptom-value="5">5</button><button class="symptom-score" type="button" data-symptom-value="6">6</button>
+                            <button class="symptom-score selected" type="button" data-symptom-value="7">7</button><button class="symptom-score" type="button" data-symptom-value="8">8</button>
+                            <button class="symptom-score" type="button" data-symptom-value="9">9</button><button class="symptom-score" type="button" data-symptom-value="10">10</button>
+                          </div>
+                          <div class="symptom-score-legend"><span>No Pain</span><span>Worst Pain</span></div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="symptom-form-section">
+                      <h4>3. &nbsp;Aggravating / Relieving Factors</h4>
+                      <div class="symptom-section-grid factors">
+                        <div class="symptom-choice-group" data-symptom-group="worse" data-multi="true">
+                          <label>Worse With <small>(Aggravating)</small></label>
+                          <div class="symptom-choice-grid">
+                            <button class="symptom-choice selected" type="button" data-symptom-value="Movement"><i data-lucide="person-standing"></i>Movement</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Walking"><i data-lucide="footprints"></i>Walking</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Sitting">Sitting</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Lying Down"><i data-lucide="bed"></i>Lying Down</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="After Eating">After Eating</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Lifting Weight">Lifting Weight</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Others">Others</button>
+                          </div>
+                        </div>
+                        <div class="symptom-choice-group" data-symptom-group="better" data-multi="true">
+                          <label>Better With <small>(Relieving)</small></label>
+                          <div class="symptom-choice-grid">
+                            <button class="symptom-choice selected" type="button" data-symptom-value="Rest"><i data-lucide="eye"></i>Rest</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Medicine">Medicine</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Ice Pack"><i data-lucide="snowflake"></i>Ice Pack</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Heat Pack"><i data-lucide="thermometer-sun"></i>Heat Pack</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Massage">Massage</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Nothing Helps">Nothing Helps</button>
+                            <button class="symptom-choice" type="button" data-symptom-value="Others">Others</button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <div class="health-step-actions">
+                      <button class="workspace-button health-back" type="button" data-health-prev><i data-lucide="arrow-left"></i>Back</button>
+                      <button class="workspace-button primary health-next" type="button" data-health-next>Continue <i data-lucide="arrow-right"></i></button>
+                    </div>
+                  </section>
+
+                  <section class="health-step" data-health-step-panel="3" hidden>
+                    <h3>Record Your Health (Video)</h3>
+                    <p class="health-step-copy">Record a short video about your symptoms and concerns</p>
+                    <div class="health-video-grid">
+                      <div class="health-record-card">
+                        <div class="health-video-preview">
+                          <span class="health-rec-badge" id="healthRecordingBadge" hidden>● REC</span>
+                          <span id="healthCameraPlaceholder"><i data-lucide="user-round"></i></span>
+                          <video id="healthCameraVideo" muted playsinline hidden></video>
+                        </div>
+                        <div class="health-record-copy">
+                          <strong>Record Your Video</strong>
+                          <small>Please describe your symptoms, how you feel, and any concerns you have.</small>
+                          <button class="workspace-button primary" id="healthRecordingButton" type="button"><i data-lucide="video"></i>Start Recording</button>
+                          <span class="health-video-timer" id="healthVideoTimer">00:00 / 02:00</span>
+                        </div>
+                      </div>
+                      <label class="health-video-upload" for="healthVideoInput">
+                        <strong>Or Upload Video</strong>
+                        <span><i data-lucide="file-video"></i></span>
+                        <span>
+                          <small id="healthVideoUploadStatus">Click to upload video</small>
+                          <small>MP4, MOV (Max. 50MB)</small>
+                        </span>
+                      </label>
+                    </div>
+                    <input id="healthVideoInput" type="file" accept="video/mp4,video/quicktime" hidden>
+                    <div class="health-step-actions">
+                      <button class="workspace-button health-back" type="button" data-health-prev><i data-lucide="arrow-left"></i>Back</button>
+                      <button class="workspace-button primary health-next" type="button" data-health-next>Continue <i data-lucide="arrow-right"></i></button>
+                    </div>
+                  </section>
+
+                  <section class="health-step" data-health-step-panel="4" hidden>
+                    <h3>Review &amp; Submit</h3>
+                    <p class="health-step-copy">Review your information and submit for AI health analysis</p>
+                    <div class="health-review-grid">
+                      <article class="health-review-card">
+                        <span class="health-review-icon"><i data-lucide="user-round"></i></span>
+                        <div>
+                          <h4>Basic Information</h4>
+                          <p>Rahul Sharma<br>32 Years, Male<br>rahul.sharma@email.com</p>
+                          <button type="button" data-health-goto="1">Edit</button>
+                        </div>
+                      </article>
+                      <article class="health-review-card">
+                        <span class="health-review-icon"><i data-lucide="clipboard-plus"></i></span>
+                        <div>
+                          <h4>Symptom Details</h4>
+                          <p id="healthSymptomReview">Pain · For the last 2–3 Days<br>Sharp · Score 7/10<br>Radiates to Left Leg</p>
+                          <button type="button" data-health-goto="2">Edit</button>
+                        </div>
+                      </article>
+                      <article class="health-review-card">
+                        <span class="health-review-icon"><i data-lucide="video"></i></span>
+                        <div>
+                          <h4>Health Video</h4>
+                          <p id="healthVideoSummary">Video ready<br>Duration: 01:45<br>Recorded today</p>
+                          <button type="button" data-health-goto="3">Edit</button>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="health-step-actions">
+                      <button class="workspace-button health-back" type="button" data-health-prev><i data-lucide="arrow-left"></i>Back</button>
+                      <button class="workspace-button primary health-submit" id="healthSubmitButton" type="button">Submit for AI Analysis <i data-lucide="send"></i></button>
+                    </div>
+                  </section>
+                </article>
+                <aside class="symptom-live-panel" id="symptomLivePanel" hidden>
+                  <section class="symptom-live-card">
+                    <h3 class="symptom-live-title"><i data-lucide="sparkles"></i>AI Summary <small>(Live Preview)</small></h3>
+                    <div class="symptom-summary-list">
+                      <div class="symptom-summary-row"><span><i data-lucide="hospital"></i></span><div><small>Department</small><strong id="symptomSummaryDepartment">General Physician</strong></div></div>
+                      <div class="symptom-summary-row"><span><i data-lucide="file-plus-2"></i></span><div><small>Main Complaint</small><strong id="symptomSummaryComplaint">Pain</strong></div></div>
+                      <div class="symptom-summary-row"><span><i data-lucide="clock-3"></i></span><div><small>Duration</small><strong id="symptomSummaryDuration">For the last 2–3 Days</strong></div></div>
+                      <div class="symptom-summary-row"><span><i data-lucide="rabbit"></i></span><div><small>Onset</small><strong id="symptomSummaryOnset">Suddenly</strong></div></div>
+                      <div class="symptom-summary-row"><span><i data-lucide="zap"></i></span><div><small>Pain Nature</small><strong id="symptomSummaryNature">Sharp</strong></div></div>
+                      <div class="symptom-summary-row"><span><i data-lucide="gauge"></i></span><div><small>Pain Score</small><strong id="symptomSummaryScore">7 / 10</strong></div></div>
+                      <div class="symptom-summary-row"><span><i data-lucide="person-standing"></i></span><div><small>Radiation</small><strong id="symptomSummaryRadiation">To Left Leg</strong></div></div>
+                    </div>
+                    <p class="symptom-live-note">Complete remaining details for better AI analysis and accurate doctor recommendations.</p>
+                  </section>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="specialties">
+        <div class="container">
+          <div class="section-heading centered">
+            <div>
+              <h2>Find Doctors By Specialization</h2>
+            </div>
+          </div>
+
+          <div class="specialty-grid">
+            <button class="specialty-card" type="button" data-specialty="General Physician">
+              <span class="specialty-icon"><i data-lucide="user-round"></i></span>
+              <strong>General Physician</strong>
+              <small>120+ Doctors</small>
+            </button>
+            <button class="specialty-card" type="button" data-specialty="Cardiologist">
+              <span class="specialty-icon"><i data-lucide="heart-pulse"></i></span>
+              <strong>Cardiologist</strong>
+              <small>80+ Doctors</small>
+            </button>
+            <button class="specialty-card" type="button" data-specialty="Dermatologist">
+              <span class="specialty-icon"><i data-lucide="sparkles"></i></span>
+              <strong>Dermatologist</strong>
+              <small>60+ Doctors</small>
+            </button>
+            <button class="specialty-card" type="button" data-specialty="Pediatrician">
+              <span class="specialty-icon"><i data-lucide="baby"></i></span>
+              <strong>Pediatrician</strong>
+              <small>70+ Doctors</small>
+            </button>
+            <button class="specialty-card" type="button" data-specialty="Neurologist">
+              <span class="specialty-icon"><i data-lucide="brain"></i></span>
+              <strong>Neurologist</strong>
+              <small>40+ Doctors</small>
+            </button>
+            <button class="specialty-card" type="button" data-specialty="Orthopedic">
+              <span class="specialty-icon"><i data-lucide="bone"></i></span>
+              <strong>Orthopedic</strong>
+              <small>50+ Doctors</small>
+            </button>
+            <button class="specialty-card view-all" type="button" data-scroll="#doctors">
+              <span class="specialty-icon"><i data-lucide="arrow-right"></i></span>
+              <strong>View All</strong>
+              <small>All Specialties</small>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section doctor-section" id="doctors">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <h2>Top Rated Doctors</h2>
+              <p>Connect with highly rated and experienced doctors.</p>
+            </div>
+            <button class="text-link" type="button" data-toast="Showing all available doctors.">View All <i data-lucide="arrow-right"></i></button>
+          </div>
+
+          <div class="doctor-grid">
+            <article class="doctor-card">
+              <button class="favorite active" type="button" aria-label="Remove Dr. Ananya Sharma from favorites"><i data-lucide="heart"></i></button>
+              <img class="doctor-photo" src="https://images.unsplash.com/photo-1678695972687-033fa0bdbac9?auto=format&amp;fit=crop&amp;w=600&amp;q=82" alt="Dr. Ananya Sharma">
+              <div class="doctor-body">
+                <h3 class="doctor-name">Dr. Ananya Sharma</h3>
+                <span class="doctor-specialty">Cardiologist</span>
+                <div class="doctor-meta">
+                  <span><i class="star" data-lucide="star"></i>4.9 (120 reviews)</span>
+                  <span>15+ Years Exp.</span>
+                </div>
+                <button class="button button-primary book-button" type="button" data-book="Dr. Ananya Sharma">Book Appointment</button>
+              </div>
+            </article>
+
+            <article class="doctor-card">
+              <button class="favorite" type="button" aria-label="Add Dr. Rohan Verma to favorites"><i data-lucide="heart"></i></button>
+              <img class="doctor-photo" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=600&amp;q=82" alt="Dr. Rohan Verma">
+              <div class="doctor-body">
+                <h3 class="doctor-name">Dr. Rohan Verma</h3>
+                <span class="doctor-specialty">Neurologist</span>
+                <div class="doctor-meta">
+                  <span><i class="star" data-lucide="star"></i>4.8 (98 reviews)</span>
+                  <span>12+ Years Exp.</span>
+                </div>
+                <button class="button button-primary book-button" type="button" data-book="Dr. Rohan Verma">Book Appointment</button>
+              </div>
+            </article>
+
+            <article class="doctor-card">
+              <button class="favorite" type="button" aria-label="Add Dr. Riya Mehta to favorites"><i data-lucide="heart"></i></button>
+              <img class="doctor-photo" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&amp;fit=crop&amp;w=600&amp;q=82" alt="Dr. Riya Mehta">
+              <div class="doctor-body">
+                <h3 class="doctor-name">Dr. Riya Mehta</h3>
+                <span class="doctor-specialty">Dermatologist</span>
+                <div class="doctor-meta">
+                  <span><i class="star" data-lucide="star"></i>4.7 (86 reviews)</span>
+                  <span>10+ Years Exp.</span>
+                </div>
+                <button class="button button-primary book-button" type="button" data-book="Dr. Riya Mehta">Book Appointment</button>
+              </div>
+            </article>
+
+            <article class="doctor-card">
+              <button class="favorite" type="button" aria-label="Add Dr. Amit Patel to favorites"><i data-lucide="heart"></i></button>
+              <img class="doctor-photo" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&amp;fit=crop&amp;w=600&amp;q=82" alt="Dr. Amit Patel">
+              <div class="doctor-body">
+                <h3 class="doctor-name">Dr. Amit Patel</h3>
+                <span class="doctor-specialty">Orthopedic</span>
+                <div class="doctor-meta">
+                  <span><i class="star" data-lucide="star"></i>4.6 (75 reviews)</span>
+                  <span>14+ Years Exp.</span>
+                </div>
+                <button class="button button-primary book-button" type="button" data-book="Dr. Amit Patel">Book Appointment</button>
+              </div>
+            </article>
+
+            <aside class="support-card" id="about">
+              <i data-lucide="users-round"></i>
+              <div>
+                <h3>Need help finding the right doctor?</h3>
+                <p>Our care team is here to assist you.</p>
+              </div>
+              <a class="button button-outline" href="mailto:support@cliniflow.example"><i data-lucide="headphones"></i>Contact Support</a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="service-strip" id="services" aria-label="Additional healthcare services">
+        <div class="service-item">
+          <span class="service-icon"><i data-lucide="video"></i></span>
+          <span><strong>Online Consultation</strong><small>Consult doctors from anywhere</small></span>
+        </div>
+        <div class="service-item">
+          <span class="service-icon"><i data-lucide="flask-conical"></i></span>
+          <span><strong>Lab Test at Home</strong><small>Book tests and get reports online</small></span>
+        </div>
+        <div class="service-item">
+          <span class="service-icon"><i data-lucide="truck"></i></span>
+          <span><strong>Medicine Delivery</strong><small>Get medicines delivered to you</small></span>
+        </div>
+        <div class="service-item">
+          <span class="service-icon"><i data-lucide="badge-plus"></i></span>
+          <span><strong>Health Packages</strong><small>Affordable packages for your health</small></span>
+        </div>
+      </section>
+
+      <footer class="container site-footer">
+        <span>© 2026 Divinexa. Your health, connected.</span>
+        <div><a href="#">Privacy</a><a href="#">Terms</a><a href="mailto:support@cliniflow.example">Support</a></div>
+      </footer>
+    </main>
+  </div>
+
+  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+  <div class="camera-modal" id="prescriptionCameraModal" role="dialog" aria-modal="true" aria-labelledby="prescriptionCameraTitle" hidden>
+    <div class="camera-dialog">
+      <div class="camera-dialog-header">
+        <h2 id="prescriptionCameraTitle">Take Prescription Photo</h2>
+        <button class="camera-dialog-close" id="closePrescriptionCamera" type="button" aria-label="Close camera">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="camera-stage">
+        <video id="prescriptionCameraVideo" autoplay muted playsinline hidden></video>
+        <canvas id="prescriptionCameraCanvas" hidden></canvas>
+        <p class="camera-message" id="prescriptionCameraMessage">Allow camera access to take a clear photo of your prescription.</p>
+      </div>
+      <div class="camera-dialog-actions">
+        <button class="workspace-button" id="cancelPrescriptionCamera" type="button">Cancel</button>
+        <button class="workspace-button primary" id="capturePrescriptionPhoto" type="button" disabled>
+          <i data-lucide="camera"></i>Capture Photo
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <i data-lucide="circle-check-big"></i>
+    <span></span>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const menuButton = document.getElementById("menuButton");
+      const mainNav = document.getElementById("mainNav");
+      const mobileOverlay = document.getElementById("mobileOverlay");
+      const toast = document.getElementById("toast");
+      const toastText = toast.querySelector("span");
+
+      const buildStaticSelect = (source) => {
+        const wrapper = document.createElement("span");
+        const trigger = document.createElement("button");
+        const value = document.createElement("span");
+        const menu = document.createElement("span");
+        const label = source.closest(".field-copy, .manual-filter-copy, .workspace-field")?.querySelector("label");
+        const triggerId = `${source.id}Trigger`;
+        const menuId = `${source.id}Menu`;
+
+        wrapper.className = "specialty-select";
+        wrapper.dataset.customSelect = "";
+        wrapper.dataset.source = source.id;
+
+        trigger.className = "specialty-trigger";
+        trigger.id = triggerId;
+        trigger.type = "button";
+        trigger.setAttribute("aria-haspopup", "listbox");
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.setAttribute("aria-controls", menuId);
+
+        value.className = "select-value";
+        value.textContent = source.options[source.selectedIndex]?.textContent || "";
+        trigger.append(value);
+
+        const triggerIcon = document.createElement("i");
+        triggerIcon.setAttribute("data-lucide", "chevron-down");
+        trigger.append(triggerIcon);
+
+        menu.className = "specialty-menu";
+        menu.id = menuId;
+        menu.setAttribute("role", "listbox");
+
+        if (label) {
+          label.id ||= `${source.id}Label`;
+          label.htmlFor = triggerId;
+          trigger.setAttribute("aria-labelledby", label.id);
+          menu.setAttribute("aria-labelledby", label.id);
+        }
+
+        [...source.options].forEach((sourceOption) => {
+          const option = document.createElement("button");
+          const optionText = document.createElement("span");
+          const check = document.createElement("i");
+          const selected = sourceOption.value === source.value;
+
+          option.className = `specialty-option${selected ? " selected" : ""}`;
+          option.type = "button";
+          option.setAttribute("role", "option");
+          option.setAttribute("aria-selected", String(selected));
+          option.dataset.value = sourceOption.value;
+          optionText.textContent = sourceOption.textContent;
+          check.className = "option-check";
+          check.setAttribute("data-lucide", "check");
+          option.append(optionText, check);
+          menu.append(option);
+        });
+
+        wrapper.append(trigger, menu);
+        source.classList.add("custom-select-source");
+        source.tabIndex = -1;
+        source.setAttribute("aria-hidden", "true");
+        source.insertAdjacentElement("afterend", wrapper);
+        source.parentElement?.classList.add("has-custom-select");
+      };
+
+      document.querySelectorAll("select[data-customize]").forEach(buildStaticSelect);
+
+      const customSelects = [...document.querySelectorAll("[data-custom-select]")];
+      const specialtySelect = document.getElementById("specialtySelect");
+      // The hero's old search/AI-workspace UI was removed in favor of a
+      // marketing-style hero, but the AI tool workspace section (and a lot
+      // of JS below) still references those element ids. Rather than
+      // untangle ~1,400 lines of interleaved event wiring right now, these
+      // now-missing elements fall back to inert detached stubs so the rest
+      // of this script (mobile nav, counters, icons, chat widget, etc.)
+      // keeps running instead of crashing at the first null reference.
+      const stubEl = (id) => document.getElementById(id) || document.createElement("div");
+      const heroSearchLayout = stubEl("heroSearchLayout");
+      const aiRecommendation = stubEl("aiRecommendation");
+      const searchTabs = [...document.querySelectorAll("[data-search-mode]")];
+      const searchPanels = [...document.querySelectorAll("[data-search-panel]")];
+      const aiSearchPanel = stubEl("aiSearchPanel");
+      const aiDoctorQuery = document.getElementById("aiDoctorQuery") || document.createElement("input");
+      const aiFindDoctor = stubEl("aiFindDoctor");
+      const aiMicButton = stubEl("aiMicButton");
+      const aiInlineWorkspace = stubEl("aiInlineWorkspace");
+      const closeAiInlineWorkspace = stubEl("closeAiInlineWorkspace");
+      const aiToolWorkspace = document.getElementById("aiToolWorkspace") || document.createElement("div");
+      // Only transplant + remove the tool workspace when there's a real
+      // hero panel to move it into. Since the hero panel no longer exists,
+      // skip this entirely and leave #aiToolWorkspace attached (still
+      // `hidden`, so nothing visible changes) — moving its contents into a
+      // detached stub would pull ids like #healthWizard out of the live
+      // document, breaking every later getElementById lookup for them.
+      if (document.getElementById("aiInlineWorkspace")) {
+        aiInlineWorkspace.append(
+          aiToolWorkspace.querySelector(".ai-workspace-tabs"),
+          aiToolWorkspace.querySelector(".ai-workspace-content")
+        );
+        aiInlineWorkspace.hidden = true;
+        aiToolWorkspace.remove();
+      }
+      const aiWorkspaceTabs = [...aiInlineWorkspace.querySelectorAll("[data-ai-workspace-tab]")];
+      const aiWorkspacePanels = [...aiInlineWorkspace.querySelectorAll("[data-ai-workspace-panel]")];
+      const aiOptionButtons = [...document.querySelectorAll(".ai-tools [data-ai-action]")];
+      const aiActionMap = {
+        "Voice Search": "voice",
+        "Upload Report": "report",
+        "Prescription": "prescription",
+        "Health Check": "health",
+      };
+      const concernToType = aiDoctorQuery.value;
+      let concernTypingTimer = null;
+      let concernIsTyping = false;
+      const voiceRecordingButton = document.getElementById("voiceRecordingButton");
+      const voiceRecordingStatus = document.getElementById("voiceRecordingStatus");
+      const voiceTranscript = document.getElementById("voiceTranscript");
+      const voiceRecordingTimer = document.getElementById("voiceRecordingTimer");
+      const voiceCancelButton = document.getElementById("voiceCancelButton");
+      const voiceAnalyzeButton = document.getElementById("voiceAnalyzeButton");
+      const healthWizard = document.getElementById("healthWizard");
+      const healthWorkspacePanel = healthWizard.closest(".ai-workspace-panel");
+      const healthStepPanels = [...healthWizard.querySelectorAll("[data-health-step-panel]")];
+      const healthProgressDots = [...document.querySelectorAll("#healthProgress span")];
+      const healthStepNumber = document.getElementById("healthStepNumber");
+      const healthStepLabel = document.getElementById("healthStepLabel");
+      const healthProgress = document.getElementById("healthProgress");
+      const departmentSearch = document.getElementById("departmentSearch");
+      const departmentViewTitle = document.getElementById("departmentViewTitle");
+      const departmentFilters = document.getElementById("departmentFilters");
+      const popularDepartmentGrid = document.getElementById("popularDepartmentGrid");
+      const allDepartmentGrid = document.getElementById("allDepartmentGrid");
+      const departmentEmpty = document.getElementById("departmentEmpty");
+      const departmentCards = [...healthWizard.querySelectorAll("[data-department]")];
+      const departmentFilterButtons = [...healthWizard.querySelectorAll("[data-department-filter]")];
+      const symptomLivePanel = document.getElementById("symptomLivePanel");
+      const symptomSummaryDock = stubEl("symptomSummaryDock");
+      const selectedDepartmentLabel = document.getElementById("selectedDepartmentLabel");
+      const symptomSummaryDepartment = document.getElementById("symptomSummaryDepartment");
+      const symptomSummaryComplaint = document.getElementById("symptomSummaryComplaint");
+      const symptomSummaryDuration = document.getElementById("symptomSummaryDuration");
+      const symptomSummaryOnset = document.getElementById("symptomSummaryOnset");
+      const symptomSummaryNature = document.getElementById("symptomSummaryNature");
+      const symptomSummaryScore = document.getElementById("symptomSummaryScore");
+      const symptomSummaryRadiation = document.getElementById("symptomSummaryRadiation");
+      symptomSummaryDock.append(symptomLivePanel);
+      const healthSymptomReview = document.getElementById("healthSymptomReview");
+      const symptomChoiceGroups = [...healthWizard.querySelectorAll("[data-symptom-group]")];
+      const symptomBodyPoints = [...healthWizard.querySelectorAll("[data-pain-location]")];
+      const healthVideoInput = document.getElementById("healthVideoInput");
+      const healthVideoUploadStatus = document.getElementById("healthVideoUploadStatus");
+      const healthVideoSummary = document.getElementById("healthVideoSummary");
+      const healthRecordingButton = document.getElementById("healthRecordingButton");
+      const healthVideoTimer = document.getElementById("healthVideoTimer");
+      const healthCameraVideo = document.getElementById("healthCameraVideo");
+      const healthCameraPlaceholder = document.getElementById("healthCameraPlaceholder");
+      const healthRecordingBadge = document.getElementById("healthRecordingBadge");
+      const healthSubmitButton = document.getElementById("healthSubmitButton");
+      const prescriptionSource = document.getElementById("prescriptionSource");
+      const prescriptionPhotoPreview = document.getElementById("prescriptionPhotoPreview");
+      const prescriptionPhotoTitle = document.getElementById("prescriptionPhotoTitle");
+      const prescriptionPhotoStatus = document.getElementById("prescriptionPhotoStatus");
+      const prescriptionPhotoInput = document.getElementById("prescriptionPhotoInput");
+      const openPrescriptionCamera = document.getElementById("openPrescriptionCamera");
+      const browsePrescriptionPhoto = document.getElementById("browsePrescriptionPhoto");
+      const prescriptionCameraModal = document.getElementById("prescriptionCameraModal");
+      const prescriptionCameraVideo = document.getElementById("prescriptionCameraVideo");
+      const prescriptionCameraCanvas = document.getElementById("prescriptionCameraCanvas");
+      const prescriptionCameraMessage = document.getElementById("prescriptionCameraMessage");
+      const capturePrescriptionPhoto = document.getElementById("capturePrescriptionPhoto");
+      const closePrescriptionCamera = document.getElementById("closePrescriptionCamera");
+      const cancelPrescriptionCamera = document.getElementById("cancelPrescriptionCamera");
+      let currentHealthStep = 1;
+      let currentDepartmentView = "popular";
+      let currentDepartmentFilter = "all";
+      let selectedDepartment = "General Physician";
+      let healthRecording = false;
+      let healthRecordingSeconds = 0;
+      let healthRecordingTimer = null;
+      let healthCameraStream = null;
+      let healthMediaRecorder = null;
+      let healthRecordedChunks = [];
+      let healthVideoObjectUrl = "";
+      let prescriptionCameraStream = null;
+      let prescriptionPhotoObjectUrl = "";
+      let voiceStream = null;
+      let voiceMediaRecorder = null;
+      let voiceSpeechRecognition = null;
+      let voiceRecording = false;
+      let voiceRecordingSeconds = 0;
+      let voiceRecordingInterval = null;
+      let voiceFinalTranscript = "";
+      let toastTimer = null;
+
+      const renderIcons = () => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      };
+
+      const showToast = (message) => {
+        window.clearTimeout(toastTimer);
+        toastText.textContent = message;
+        toast.classList.add("show");
+        toastTimer = window.setTimeout(() => toast.classList.remove("show"), 3200);
+      };
+
+      const formatHealthTime = (seconds) => {
+        const minutes = String(Math.floor(seconds / 60)).padStart(2, "0");
+        const remainingSeconds = String(seconds % 60).padStart(2, "0");
+        return `${minutes}:${remainingSeconds}`;
+      };
+
+      const stopMediaStream = (stream) => {
+        stream?.getTracks().forEach((track) => track.stop());
+      };
+
+      const getCameraErrorMessage = (error) => {
+        if (!window.isSecureContext) {
+          return "Camera access requires HTTPS or localhost. Publish the page securely, then try again.";
+        }
+
+        if (!navigator.mediaDevices?.getUserMedia) {
+          return "Camera access is not available in this browser. Try a current version of Chrome or Edge.";
+        }
+
+        if (error?.name === "NotAllowedError" || error?.name === "SecurityError") {
+          return "Camera permission was blocked. Allow camera access in the browser and try again.";
+        }
+
+        if (error?.name === "NotFoundError" || error?.name === "OverconstrainedError") {
+          return "No compatible camera was found on this device.";
+        }
+
+        return "The camera could not be opened. Close other camera apps and try again.";
+      };
+
+      const getMicrophoneErrorMessage = (error) => {
+        if (!window.isSecureContext) {
+          return "Microphone access requires HTTPS or localhost. Publish the page securely, then try again.";
+        }
+
+        if (!navigator.mediaDevices?.getUserMedia) {
+          return "Microphone access is not available in this browser. Try a current version of Chrome or Edge.";
+        }
+
+        if (error?.name === "NotAllowedError" || error?.name === "SecurityError") {
+          return "Microphone permission was blocked. Allow microphone access in the browser and try again.";
+        }
+
+        if (error?.name === "NotFoundError") {
+          return "No microphone was found on this device.";
+        }
+
+        return "The microphone could not be opened. Close other recording apps and try again.";
+      };
+
+      const stopVoiceCapture = ({ analyse = false, reset = false } = {}) => {
+        window.clearInterval(voiceRecordingInterval);
+        voiceRecordingInterval = null;
+        voiceRecording = false;
+
+        if (voiceSpeechRecognition) {
+          voiceSpeechRecognition.onend = null;
+          try {
+            voiceSpeechRecognition.stop();
+          } catch {
+            // Recognition may already have ended after a browser-level timeout.
+          }
+          voiceSpeechRecognition = null;
+        }
+        if (voiceMediaRecorder?.state === "recording") {
+          voiceMediaRecorder.stop();
+        }
+        stopMediaStream(voiceStream);
+        voiceStream = null;
+        voiceRecordingButton.classList.remove("recording");
+        voiceRecordingButton.disabled = false;
+        voiceRecordingButton.innerHTML = '<i data-lucide="mic"></i>';
+        voiceRecordingButton.setAttribute("aria-label", "Start voice recording");
+
+        if (reset) {
+          voiceFinalTranscript = "";
+          voiceTranscript.textContent = "Your spoken symptoms will appear here";
+          voiceRecordingTimer.textContent = "Recording: 00:00";
+          voiceRecordingStatus.textContent = "Tap the microphone to speak";
+          showToast("Voice recording cancelled.");
+        } else {
+          voiceRecordingStatus.textContent = analyse ? "Voice symptoms captured" : "Recording stopped";
+          if (analyse) {
+            const displayedTranscript = voiceTranscript.textContent.trim();
+            const spokenText = voiceFinalTranscript.trim()
+              || (!["Your spoken symptoms will appear here", "Listening…"].includes(displayedTranscript)
+                ? displayedTranscript
+                : "");
+            if (spokenText) {
+              voiceTranscript.textContent = spokenText;
+              aiDoctorQuery.value = spokenText;
+              showToast("Voice symptoms are ready for AI analysis.");
+            } else {
+              showToast("No speech was detected. Please try again or type your symptoms.");
+            }
+          }
+        }
+
+        renderIcons();
+      };
+
+      const startVoiceCapture = async () => {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          showToast(getMicrophoneErrorMessage());
+          return;
+        }
+
+        voiceRecordingButton.disabled = true;
+        voiceRecordingStatus.textContent = "Opening microphone…";
+
+        try {
+          voiceStream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              autoGainControl: true,
+            },
+            video: false,
+          });
+
+          if (window.MediaRecorder) {
+            voiceMediaRecorder = new MediaRecorder(voiceStream);
+            voiceMediaRecorder.start();
+          }
+
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          voiceFinalTranscript = "";
+          if (SpeechRecognition) {
+            voiceSpeechRecognition = new SpeechRecognition();
+            voiceSpeechRecognition.continuous = true;
+            voiceSpeechRecognition.interimResults = true;
+            voiceSpeechRecognition.lang = "en-IN";
+            voiceSpeechRecognition.addEventListener("result", (event) => {
+              let interimTranscript = "";
+
+              for (let index = event.resultIndex; index < event.results.length; index += 1) {
+                const transcript = event.results[index][0].transcript;
+                if (event.results[index].isFinal) {
+                  voiceFinalTranscript += `${transcript} `;
+                } else {
+                  interimTranscript += transcript;
+                }
+              }
+
+              voiceTranscript.textContent = `${voiceFinalTranscript}${interimTranscript}`.trim() || "Listening…";
+            });
+            voiceSpeechRecognition.addEventListener("error", (event) => {
+              if (event.error !== "no-speech" && event.error !== "aborted") {
+                showToast("Speech recognition paused. Your audio is still being recorded.");
+              }
+            });
+            voiceSpeechRecognition.start();
+          } else {
+            voiceTranscript.textContent = "Listening… Browser transcription is unavailable, but audio recording is active.";
+          }
+
+          voiceRecording = true;
+          voiceRecordingSeconds = 0;
+          voiceRecordingButton.disabled = false;
+          voiceRecordingButton.classList.add("recording");
+          voiceRecordingButton.innerHTML = '<i data-lucide="square"></i>';
+          voiceRecordingButton.setAttribute("aria-label", "Stop voice recording");
+          voiceRecordingStatus.textContent = "Listening…";
+          voiceRecordingTimer.textContent = "Recording: 00:00";
+          voiceRecordingInterval = window.setInterval(() => {
+            voiceRecordingSeconds += 1;
+            voiceRecordingTimer.textContent = `Recording: ${formatHealthTime(voiceRecordingSeconds)}`;
+
+            if (voiceRecordingSeconds >= 120) {
+              stopVoiceCapture({ analyse: true });
+            }
+          }, 1000);
+          renderIcons();
+        } catch (error) {
+          stopMediaStream(voiceStream);
+          voiceStream = null;
+          voiceRecording = false;
+          voiceRecordingButton.disabled = false;
+          voiceRecordingButton.innerHTML = '<i data-lucide="mic"></i>';
+          voiceRecordingStatus.textContent = "Tap the microphone to speak";
+          renderIcons();
+          showToast(getMicrophoneErrorMessage(error));
+        }
+      };
+
+      const closePrescriptionCameraView = () => {
+        stopMediaStream(prescriptionCameraStream);
+        prescriptionCameraStream = null;
+        prescriptionCameraVideo.pause();
+        prescriptionCameraVideo.srcObject = null;
+        prescriptionCameraVideo.hidden = true;
+        prescriptionCameraModal.hidden = true;
+        document.body.classList.remove("camera-open");
+        capturePrescriptionPhoto.disabled = true;
+        openPrescriptionCamera.focus();
+      };
+
+      const openPrescriptionCameraView = async () => {
+        prescriptionCameraModal.hidden = false;
+        document.body.classList.add("camera-open");
+        prescriptionCameraMessage.hidden = false;
+        prescriptionCameraMessage.textContent = "Allow camera access to take a clear photo of your prescription.";
+        prescriptionCameraVideo.hidden = true;
+        capturePrescriptionPhoto.disabled = true;
+        closePrescriptionCamera.focus();
+
+        if (!navigator.mediaDevices?.getUserMedia) {
+          prescriptionCameraMessage.textContent = getCameraErrorMessage();
+          return;
+        }
+
+        try {
+          prescriptionCameraStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: "environment" },
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+            },
+            audio: false,
+          });
+          prescriptionCameraVideo.srcObject = prescriptionCameraStream;
+          prescriptionCameraVideo.hidden = false;
+          prescriptionCameraMessage.hidden = true;
+          await prescriptionCameraVideo.play();
+          capturePrescriptionPhoto.disabled = false;
+          capturePrescriptionPhoto.focus();
+        } catch (error) {
+          stopMediaStream(prescriptionCameraStream);
+          prescriptionCameraStream = null;
+          prescriptionCameraMessage.hidden = false;
+          prescriptionCameraMessage.textContent = getCameraErrorMessage(error);
+        }
+      };
+
+      const showPrescriptionPhoto = (url, status) => {
+        if (prescriptionPhotoObjectUrl) {
+          URL.revokeObjectURL(prescriptionPhotoObjectUrl);
+        }
+
+        prescriptionPhotoObjectUrl = url;
+        prescriptionPhotoPreview.src = url;
+        prescriptionPhotoPreview.hidden = false;
+        prescriptionSource.classList.add("has-photo");
+        prescriptionPhotoTitle.textContent = "Prescription photo ready";
+        prescriptionPhotoStatus.textContent = status;
+      };
+
+      const stopHealthRecording = () => {
+        window.clearInterval(healthRecordingTimer);
+        healthRecordingTimer = null;
+        healthRecording = false;
+        healthRecordingButton.innerHTML = '<i data-lucide="video"></i>Start Recording';
+        healthRecordingBadge.hidden = true;
+
+        if (healthMediaRecorder?.state === "recording") {
+          healthMediaRecorder.stop();
+        } else {
+          stopMediaStream(healthCameraStream);
+          healthCameraStream = null;
+        }
+
+        renderIcons();
+      };
+
+      const startHealthRecording = async () => {
+        if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+          showToast(getCameraErrorMessage());
+          return;
+        }
+
+        healthRecordingButton.disabled = true;
+        healthRecordingButton.textContent = "Opening Camera…";
+
+        try {
+          healthCameraStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: "user" },
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+            },
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+            },
+          });
+
+          healthCameraVideo.controls = false;
+          healthCameraVideo.muted = true;
+          healthCameraVideo.autoplay = true;
+          healthCameraVideo.removeAttribute("src");
+          healthCameraVideo.srcObject = healthCameraStream;
+          healthCameraVideo.hidden = false;
+          healthCameraPlaceholder.hidden = true;
+          await healthCameraVideo.play();
+
+          const supportedType = [
+            "video/webm;codecs=vp9,opus",
+            "video/webm;codecs=vp8,opus",
+            "video/webm",
+          ].find((type) => MediaRecorder.isTypeSupported(type));
+          healthRecordedChunks = [];
+          healthMediaRecorder = supportedType
+            ? new MediaRecorder(healthCameraStream, { mimeType: supportedType })
+            : new MediaRecorder(healthCameraStream);
+
+          healthMediaRecorder.addEventListener("dataavailable", (event) => {
+            if (event.data.size > 0) {
+              healthRecordedChunks.push(event.data);
+            }
+          });
+
+          healthMediaRecorder.addEventListener("stop", () => {
+            const recordedTime = Math.max(1, healthRecordingSeconds);
+            const recordedBlob = new Blob(healthRecordedChunks, {
+              type: healthMediaRecorder.mimeType || "video/webm",
+            });
+
+            stopMediaStream(healthCameraStream);
+            healthCameraStream = null;
+            healthCameraVideo.srcObject = null;
+
+            if (recordedBlob.size > 0) {
+              if (healthVideoObjectUrl) {
+                URL.revokeObjectURL(healthVideoObjectUrl);
+              }
+              healthVideoObjectUrl = URL.createObjectURL(recordedBlob);
+              healthCameraVideo.src = healthVideoObjectUrl;
+              healthCameraVideo.controls = true;
+              healthCameraVideo.muted = false;
+              healthCameraVideo.hidden = false;
+              healthCameraVideo.load();
+            } else {
+              healthCameraVideo.hidden = true;
+              healthCameraPlaceholder.hidden = false;
+            }
+
+            healthVideoSummary.textContent = `Video recorded\nDuration: ${formatHealthTime(recordedTime)}\nRecorded today`;
+            healthRecordedChunks = [];
+          }, { once: true });
+
+          healthMediaRecorder.start(500);
+          healthRecording = true;
+          healthRecordingSeconds = 0;
+          healthRecordingBadge.hidden = false;
+          healthRecordingButton.disabled = false;
+          healthRecordingButton.innerHTML = '<i data-lucide="square"></i>Stop Recording';
+          healthVideoTimer.textContent = "00:00 / 02:00";
+          healthRecordingTimer = window.setInterval(() => {
+            healthRecordingSeconds += 1;
+            healthVideoTimer.textContent = `${formatHealthTime(healthRecordingSeconds)} / 02:00`;
+
+            if (healthRecordingSeconds >= 120) {
+              stopHealthRecording();
+              showToast("Two-minute health video saved.");
+            }
+          }, 1000);
+          renderIcons();
+        } catch (error) {
+          stopMediaStream(healthCameraStream);
+          healthCameraStream = null;
+          healthRecording = false;
+          healthCameraVideo.srcObject = null;
+          healthCameraVideo.hidden = true;
+          healthCameraPlaceholder.hidden = false;
+          healthRecordingBadge.hidden = true;
+          healthRecordingButton.disabled = false;
+          healthRecordingButton.innerHTML = '<i data-lucide="video"></i>Start Recording';
+          renderIcons();
+          showToast(getCameraErrorMessage(error));
+        }
+      };
+
+      const postHealthSummaryState = (visible = currentHealthStep === 2) => {
+        if (window.parent === window) {
+          return;
+        }
+
+        window.parent.postMessage({
+          type: "cliniflow-health-summary",
+          visible,
+          summary: {
+            department: symptomSummaryDepartment.textContent,
+            complaint: symptomSummaryComplaint.textContent,
+            duration: symptomSummaryDuration.textContent,
+            onset: symptomSummaryOnset.textContent,
+            nature: symptomSummaryNature.textContent,
+            score: symptomSummaryScore.textContent,
+            radiation: symptomSummaryRadiation.textContent,
+          },
+        }, "*");
+      };
+
+      const setHealthStep = (step) => {
+        const nextStep = Math.max(1, Math.min(4, Number(step)));
+        const symptomStepActive = nextStep === 2;
+
+        if (nextStep !== 3 && healthRecording) {
+          stopHealthRecording();
+        }
+
+        currentHealthStep = nextStep;
+        healthWizard.dataset.healthStep = String(nextStep);
+        healthStepNumber.textContent = String(nextStep);
+        healthStepLabel.textContent = `Step ${nextStep} of 4`;
+        healthProgress.style.setProperty("--health-progress", `${(nextStep - 1) * 33.333}%`);
+        healthProgress.setAttribute("aria-label", `Health check step ${nextStep} of 4`);
+
+        healthStepPanels.forEach((panel) => {
+          panel.hidden = Number(panel.dataset.healthStepPanel) !== nextStep;
+        });
+
+        symptomLivePanel.hidden = !symptomStepActive;
+        symptomSummaryDock.hidden = !symptomStepActive;
+        healthWorkspacePanel.classList.toggle("symptom-step-active", symptomStepActive);
+        document.body.classList.toggle("health-symptoms-open", symptomStepActive);
+        document.body.classList.toggle("health-secondary-cards-hidden", nextStep > 1);
+
+        healthProgressDots.forEach((dot, index) => {
+          const active = index < nextStep;
+          dot.classList.toggle("active", active);
+          dot.setAttribute("aria-current", index === nextStep - 1 ? "step" : "false");
+        });
+
+        renderIcons();
+
+        if (symptomStepActive) {
+          window.requestAnimationFrame(() => {
+            healthWizard.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
+
+        postHealthSummaryState(symptomStepActive);
+      };
+
+      const departmentMatchesRange = (name, range) => {
+        const first = name.trim().charAt(0).toLowerCase();
+        if (range === "a-f") return first >= "a" && first <= "f";
+        if (range === "g-l") return first >= "g" && first <= "l";
+        if (range === "m-r") return first >= "m" && first <= "r";
+        if (range === "s-z") return first >= "s" && first <= "z";
+        return true;
+      };
+
+      const applyDepartmentFilter = () => {
+        const query = departmentSearch.value.trim().toLowerCase();
+        const activeGrid = currentDepartmentView === "popular" ? popularDepartmentGrid : allDepartmentGrid;
+        const cards = [...activeGrid.querySelectorAll("[data-department]")];
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const name = card.dataset.department;
+          const matchesQuery = !query || name.toLowerCase().includes(query);
+          const matchesRange = currentDepartmentView === "popular"
+            || departmentMatchesRange(name, currentDepartmentFilter);
+          const visible = matchesQuery && matchesRange;
+          card.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+
+        if (departmentEmpty) {
+          departmentEmpty.hidden = currentDepartmentView !== "all" || visibleCount > 0;
+        }
+      };
+
+      const showDepartmentView = (view, filter = "all", clearSearch = false) => {
+        currentDepartmentView = view;
+        currentDepartmentFilter = filter;
+        popularDepartmentGrid.hidden = view !== "popular";
+        allDepartmentGrid.hidden = view !== "all";
+        departmentFilters.hidden = view !== "all";
+        departmentViewTitle.textContent = view === "popular" ? "Popular Departments" : "All Departments";
+
+        if (clearSearch) departmentSearch.value = "";
+
+        departmentFilterButtons.forEach((button) => {
+          button.classList.toggle("active", view === "all" && button.dataset.departmentFilter === filter);
+        });
+        healthWizard.querySelector("[data-department-view='popular']")?.classList.toggle("active", view === "popular");
+        applyDepartmentFilter();
+      };
+
+      const selectDepartment = (name) => {
+        selectedDepartment = name;
+        departmentCards.forEach((card) => {
+          const selected = card.dataset.department === name;
+          card.classList.toggle("selected", selected);
+          card.setAttribute("aria-pressed", String(selected));
+        });
+        selectedDepartmentLabel.textContent = name;
+        symptomSummaryDepartment.textContent = name;
+      };
+
+      const selectedSymptomValues = (groupName) => {
+        const group = healthWizard.querySelector(`[data-symptom-group="${groupName}"]`);
+        if (!group) return [];
+        return [...group.querySelectorAll("[data-symptom-value].selected")]
+          .map((button) => button.dataset.symptomValue);
+      };
+
+      const syncSymptomBodyPoints = (locations) => {
+        const selectedLocations = new Set(locations);
+        symptomBodyPoints.forEach((point) => {
+          point.classList.toggle("active", selectedLocations.has(point.dataset.painLocation));
+        });
+      };
+
+      const updateSymptomSummary = () => {
+        const complaint = selectedSymptomValues("complaint")[0] || "Not selected";
+        const locations = selectedSymptomValues("location");
+        syncSymptomBodyPoints(locations);
+        const complaintSummary = complaint === "Pain" && locations.length
+          ? `${locations[0]} Pain`
+          : complaint;
+        const duration = selectedSymptomValues("duration")[0] || "Not selected";
+        const onset = selectedSymptomValues("onset")[0] || "Not selected";
+        const nature = selectedSymptomValues("nature")[0] || "Not selected";
+        const score = selectedSymptomValues("score")[0] || "0";
+        const radiation = selectedSymptomValues("radiation")[0] || "No";
+
+        symptomSummaryComplaint.textContent = complaintSummary;
+        symptomSummaryDuration.textContent = duration;
+        symptomSummaryOnset.textContent = onset;
+        symptomSummaryNature.textContent = nature;
+        symptomSummaryScore.textContent = `${score} / 10`;
+        symptomSummaryRadiation.textContent = radiation;
+        postHealthSummaryState();
+        healthSymptomReview.textContent = `${complaintSummary} · ${duration}\n${nature} · Score ${score}/10\nRadiates ${radiation.toLowerCase()}`;
+      };
+
+      const setSearchMode = (mode, focusPanel = false) => {
+        searchTabs.forEach((tab) => {
+          const selected = tab.dataset.searchMode === mode;
+          tab.setAttribute("aria-selected", String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+
+        searchPanels.forEach((panel) => {
+          panel.hidden = panel.dataset.searchPanel !== mode;
+        });
+
+        const aiActive = mode === "ai";
+        heroSearchLayout.classList.toggle("ai-active", aiActive);
+        aiRecommendation.hidden = !aiActive;
+
+        if (mode === "ai") {
+          closeCustomSelects();
+          if (focusPanel) {
+            window.requestAnimationFrame(() => aiDoctorQuery.focus());
+          }
+        } else {
+          document.body.classList.remove("health-symptoms-open");
+          document.body.classList.remove("health-secondary-cards-hidden");
+          symptomLivePanel.hidden = true;
+          symptomSummaryDock.hidden = true;
+          if (voiceRecording) {
+            stopVoiceCapture();
+          }
+          if (healthRecording) {
+            stopHealthRecording();
+          }
+          aiSearchPanel.classList.remove("ai-inline-ready");
+          aiInlineWorkspace.hidden = true;
+          aiOptionButtons.forEach((button) => button.classList.remove("active"));
+        }
+      };
+
+      const setAiWorkspaceTool = (tool) => {
+        if (tool !== "health") {
+          document.body.classList.remove("health-symptoms-open");
+          document.body.classList.remove("health-secondary-cards-hidden");
+          symptomLivePanel.hidden = true;
+          symptomSummaryDock.hidden = true;
+        }
+        if (tool !== "voice" && voiceRecording) {
+          stopVoiceCapture();
+        }
+        if (tool !== "health" && healthRecording) {
+          stopHealthRecording();
+        }
+
+        aiSearchPanel.classList.add("ai-inline-ready");
+        aiInlineWorkspace.hidden = false;
+        aiOptionButtons.forEach((button) => {
+          button.classList.toggle("active", aiActionMap[button.dataset.aiAction] === tool);
+        });
+
+        aiWorkspaceTabs.forEach((tab) => {
+          const selected = tab.dataset.aiWorkspaceTab === tool;
+          tab.setAttribute("aria-selected", String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+
+        aiWorkspacePanels.forEach((panel) => {
+          panel.hidden = panel.dataset.aiWorkspacePanel !== tool;
+        });
+
+        if (tool === "health") {
+          setHealthStep(1);
+        } else {
+          postHealthSummaryState(false);
+        }
+
+        renderIcons();
+      };
+
+      const openAiWorkspace = (tool) => {
+        setSearchMode("ai");
+        setAiWorkspaceTool(tool);
+      };
+
+      const startHeroTypewriter = () => {
+        const typedLead = document.getElementById("typedLead");
+        const typedBridge = document.getElementById("typedBridge");
+        const typedAccent = document.getElementById("typedAccent");
+        const typedSecond = document.getElementById("typedSecond");
+        const typingCaret = document.getElementById("typingCaret");
+
+        typedLead.textContent = "AI-Powered Healthcare";
+        typedBridge.textContent = "for ";
+        typedSecond.textContent = "Smarter";
+        typedAccent.textContent = "Care Decisions";
+        typingCaret.hidden = true;
+      };
+
+      const startConcernTypewriter = () => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          aiDoctorQuery.value = concernToType;
+          return;
+        }
+
+        aiDoctorQuery.value = "";
+        concernIsTyping = true;
+        let characterIndex = 0;
+
+        const typeNextCharacter = () => {
+          if (!concernIsTyping) {
+            return;
+          }
+
+          characterIndex += 1;
+          aiDoctorQuery.value = concernToType.slice(0, characterIndex);
+
+          if (characterIndex < concernToType.length) {
+            concernTypingTimer = window.setTimeout(typeNextCharacter, 52);
+          } else {
+            concernIsTyping = false;
+          }
+        };
+
+        concernTypingTimer = window.setTimeout(typeNextCharacter, 620);
+      };
+
+      aiDoctorQuery.addEventListener("keydown", () => {
+        if (concernIsTyping) {
+          window.clearTimeout(concernTypingTimer);
+          concernIsTyping = false;
+        }
+      }, { once: true });
+
+      const startPatientCountAnimation = () => {
+        const counters = [...document.querySelectorAll("[data-count-target]")];
+
+        counters.forEach((counter) => {
+          const target = Number(counter.dataset.countTarget);
+          const suffix = counter.dataset.countSuffix || "";
+          if (Number.isFinite(target)) counter.textContent = `${target}${suffix}`;
+        });
+      };
+
+      const startDoctorCardAnimations = () => {
+        const cards = [...document.querySelectorAll(".doctor-card")];
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reducedMotion || !("IntersectionObserver" in window)) {
+          return;
+        }
+
+        cards.forEach((card, index) => {
+          card.style.setProperty("--reveal-delay", `${index * 110}ms`);
+          card.classList.add("reveal-ready");
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            const card = entry.target;
+            const revealDelay = Number.parseInt(card.style.getPropertyValue("--reveal-delay"), 10) || 0;
+            card.classList.add("is-visible");
+            observer.unobserve(card);
+
+            window.setTimeout(() => {
+              card.classList.remove("reveal-ready", "is-visible");
+              card.style.removeProperty("--reveal-delay");
+            }, revealDelay + 760);
+          });
+        }, {
+          threshold: 0.18,
+          rootMargin: "0px 0px -35px",
+        });
+
+        cards.forEach((card) => observer.observe(card));
+      };
+
+      const getSelectParts = (select) => ({
+        trigger: select.querySelector(".specialty-trigger"),
+        menu: select.querySelector(".specialty-menu"),
+        options: [...select.querySelectorAll(".specialty-option")],
+        source: document.getElementById(select.dataset.source),
+        value: select.querySelector(".select-value"),
+      });
+
+      const setCustomSelectOpen = (select, open, focusSelected = false) => {
+        const { trigger, options } = getSelectParts(select);
+        select.classList.toggle("open", open);
+        select.closest(".field, .manual-filter, .workspace-field")?.classList.toggle("dropdown-open", open);
+        trigger.setAttribute("aria-expanded", String(open));
+
+        if (open && focusSelected) {
+          window.requestAnimationFrame(() => {
+            (options.find((option) => option.classList.contains("selected")) || options[0]).focus();
+          });
+        }
+      };
+
+      const closeCustomSelects = (except = null) => {
+        customSelects.forEach((select) => {
+          if (select !== except) {
+            setCustomSelectOpen(select, false);
+          }
+        });
+      };
+
+      const setCustomSelectValue = (select, nextValue) => {
+        const { source, value, options } = getSelectParts(select);
+        const selectedOption = options.find((option) => option.dataset.value === nextValue) || options[0];
+
+        source.value = nextValue;
+        value.textContent = selectedOption.querySelector("span").textContent;
+        options.forEach((option) => {
+          const selected = option === selectedOption;
+          option.classList.toggle("selected", selected);
+          option.setAttribute("aria-selected", String(selected));
+        });
+        source.dispatchEvent(new Event("change", { bubbles: true }));
+      };
+
+      const setSpecialtyValue = (value) => setCustomSelectValue(specialtySelect, value);
+
+      const setMenu = (open) => {
+        mainNav.classList.toggle("open", open);
+        mobileOverlay.classList.toggle("show", open);
+        document.body.classList.toggle("menu-open", open);
+        menuButton.setAttribute("aria-expanded", String(open));
+        menuButton.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+        menuButton.innerHTML = `<i data-lucide="${open ? "x" : "menu"}"></i>`;
+        renderIcons();
+      };
+
+      menuButton.addEventListener("click", () => setMenu(!mainNav.classList.contains("open")));
+      mobileOverlay.addEventListener("click", () => setMenu(false));
+
+      searchTabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+          if (tab.dataset.searchMode === "ai" && aiSearchPanel.classList.contains("ai-inline-ready")) {
+            document.body.classList.remove("health-symptoms-open");
+            aiSearchPanel.classList.remove("ai-inline-ready");
+            aiInlineWorkspace.hidden = true;
+            aiOptionButtons.forEach((button) => button.classList.remove("active"));
+            window.requestAnimationFrame(() => aiDoctorQuery.focus());
+            return;
+          }
+
+          setSearchMode(tab.dataset.searchMode, tab.dataset.searchMode === "ai");
+        });
+
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex = index;
+
+          if (event.key === "ArrowRight") {
+            nextIndex = (index + 1) % searchTabs.length;
+          } else if (event.key === "ArrowLeft") {
+            nextIndex = (index - 1 + searchTabs.length) % searchTabs.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = searchTabs.length - 1;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          const nextTab = searchTabs[nextIndex];
+          setSearchMode(nextTab.dataset.searchMode);
+          nextTab.focus();
+        });
+      });
+
+      customSelects.forEach((select) => {
+        const { trigger, menu, options } = getSelectParts(select);
+
+        trigger.addEventListener("click", () => {
+          const shouldOpen = !select.classList.contains("open");
+          closeCustomSelects(select);
+          setCustomSelectOpen(select, shouldOpen);
+        });
+
+        trigger.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            closeCustomSelects(select);
+            setCustomSelectOpen(select, true, true);
+          }
+        });
+
+        options.forEach((option) => {
+          option.addEventListener("click", () => {
+            setCustomSelectValue(select, option.dataset.value);
+            setCustomSelectOpen(select, false);
+            trigger.focus();
+          });
+        });
+
+        menu.addEventListener("keydown", (event) => {
+          const currentIndex = options.indexOf(document.activeElement);
+          let nextIndex = currentIndex;
+
+          if (event.key === "ArrowDown") {
+            nextIndex = (currentIndex + 1) % options.length;
+          } else if (event.key === "ArrowUp") {
+            nextIndex = (currentIndex - 1 + options.length) % options.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = options.length - 1;
+          } else if (event.key === "Escape") {
+            event.preventDefault();
+            setCustomSelectOpen(select, false);
+            trigger.focus();
+            return;
+          } else if (event.key === "Tab") {
+            setCustomSelectOpen(select, false);
+            return;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          options[nextIndex].focus();
+        });
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest("[data-custom-select]")) {
+          closeCustomSelects();
+        }
+      });
+
+      mainNav.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+          setMenu(false);
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setMenu(false);
+          closeCustomSelects();
+        }
+      });
+
+      document.getElementById("doctorSearch")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const location = document.getElementById("location").value.trim() || "your area";
+        const specialty = document.getElementById("specialization").value || "all specialties";
+        const searchParams = new URLSearchParams({ location, specialty });
+        window.location.href = `doctors.html?${searchParams.toString()}`;
+      });
+
+      aiFindDoctor.addEventListener("click", () => {
+        if (!aiSearchPanel.classList.contains("ai-inline-ready")) {
+          const concern = aiDoctorQuery.value.trim();
+
+          if (!concern) {
+            showToast("Describe your symptoms or health concern first.");
+            aiDoctorQuery.focus();
+            return;
+          }
+
+          const searchParams = new URLSearchParams({ q: concern });
+          window.location.href = `doctors.html?${searchParams.toString()}`;
+          return;
+        }
+
+        const activeTool = aiWorkspaceTabs.find((tab) => tab.getAttribute("aria-selected") === "true");
+        const toolName = activeTool?.getAttribute("aria-label") || "AI health";
+        const searchParams = new URLSearchParams({ tool: toolName });
+        window.location.href = `doctors.html?${searchParams.toString()}`;
+      });
+
+      aiDoctorQuery.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          aiFindDoctor.click();
+        }
+      });
+
+      aiMicButton.addEventListener("click", () => {
+        openAiWorkspace("voice");
+      });
+
+      document.querySelectorAll("[data-ai-action]").forEach((button) => {
+        button.addEventListener("click", () => {
+          openAiWorkspace(aiActionMap[button.dataset.aiAction]);
+        });
+      });
+
+      aiWorkspaceTabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+          setAiWorkspaceTool(tab.dataset.aiWorkspaceTab);
+        });
+
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex = index;
+
+          if (event.key === "ArrowRight") {
+            nextIndex = (index + 1) % aiWorkspaceTabs.length;
+          } else if (event.key === "ArrowLeft") {
+            nextIndex = (index - 1 + aiWorkspaceTabs.length) % aiWorkspaceTabs.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = aiWorkspaceTabs.length - 1;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          const nextTab = aiWorkspaceTabs[nextIndex];
+          setAiWorkspaceTool(nextTab.dataset.aiWorkspaceTab);
+          nextTab.focus();
+        });
+      });
+
+      closeAiInlineWorkspace.addEventListener("click", () => {
+        document.body.classList.remove("health-symptoms-open");
+        document.body.classList.remove("health-secondary-cards-hidden");
+        if (voiceRecording) {
+          stopVoiceCapture();
+        }
+        if (healthRecording) {
+          stopHealthRecording();
+        }
+        aiSearchPanel.classList.remove("ai-inline-ready");
+        aiInlineWorkspace.hidden = true;
+        aiOptionButtons.forEach((button) => button.classList.remove("active"));
+        window.requestAnimationFrame(() => aiDoctorQuery.focus());
+      });
+
+      document.querySelectorAll("[data-workspace-toast]").forEach((button) => {
+        button.addEventListener("click", () => showToast(button.dataset.workspaceToast));
+      });
+
+      voiceRecordingButton.addEventListener("click", () => {
+        if (voiceRecording) {
+          stopVoiceCapture();
+          return;
+        }
+
+        void startVoiceCapture();
+      });
+
+      voiceCancelButton.addEventListener("click", () => {
+        stopVoiceCapture({ reset: true });
+      });
+
+      voiceAnalyzeButton.addEventListener("click", () => {
+        stopVoiceCapture({ analyse: true });
+      });
+
+      openPrescriptionCamera.addEventListener("click", () => {
+        void openPrescriptionCameraView();
+      });
+
+      browsePrescriptionPhoto.addEventListener("click", () => {
+        prescriptionPhotoInput.click();
+      });
+
+      prescriptionPhotoInput.addEventListener("change", () => {
+        const [photoFile] = prescriptionPhotoInput.files;
+        if (!photoFile) {
+          return;
+        }
+
+        showPrescriptionPhoto(URL.createObjectURL(photoFile), photoFile.name);
+        showToast("Prescription photo selected.");
+      });
+
+      capturePrescriptionPhoto.addEventListener("click", () => {
+        const width = prescriptionCameraVideo.videoWidth;
+        const height = prescriptionCameraVideo.videoHeight;
+
+        if (!width || !height) {
+          showToast("The camera is still loading. Please try again.");
+          return;
+        }
+
+        prescriptionCameraCanvas.width = width;
+        prescriptionCameraCanvas.height = height;
+        prescriptionCameraCanvas.getContext("2d").drawImage(prescriptionCameraVideo, 0, 0, width, height);
+        prescriptionCameraCanvas.toBlob((photoBlob) => {
+          if (!photoBlob) {
+            showToast("The photo could not be captured. Please try again.");
+            return;
+          }
+
+          showPrescriptionPhoto(URL.createObjectURL(photoBlob), "Captured from camera");
+          closePrescriptionCameraView();
+          showToast("Prescription photo captured.");
+        }, "image/jpeg", 0.92);
+      });
+
+      closePrescriptionCamera.addEventListener("click", closePrescriptionCameraView);
+      cancelPrescriptionCamera.addEventListener("click", closePrescriptionCameraView);
+      prescriptionCameraModal.addEventListener("click", (event) => {
+        if (event.target === prescriptionCameraModal) {
+          closePrescriptionCameraView();
+        }
+      });
+
+      healthWizard.querySelectorAll("[data-health-next]").forEach((button) => {
+        button.addEventListener("click", () => setHealthStep(currentHealthStep + 1));
+      });
+
+      healthWizard.querySelectorAll("[data-health-prev]").forEach((button) => {
+        button.addEventListener("click", () => setHealthStep(currentHealthStep - 1));
+      });
+
+      healthWizard.querySelectorAll("[data-health-goto]").forEach((button) => {
+        button.addEventListener("click", () => setHealthStep(button.dataset.healthGoto));
+      });
+
+      healthRecordingButton.addEventListener("click", () => {
+        if (healthRecording) {
+          stopHealthRecording();
+          showToast("Health video recording saved.");
+          return;
+        }
+
+        void startHealthRecording();
+      });
+
+      healthVideoInput.addEventListener("change", () => {
+        const [videoFile] = healthVideoInput.files;
+        if (!videoFile) {
+          return;
+        }
+
+        if (healthRecording) {
+          stopHealthRecording();
+        }
+        if (healthVideoObjectUrl) {
+          URL.revokeObjectURL(healthVideoObjectUrl);
+        }
+        healthVideoObjectUrl = URL.createObjectURL(videoFile);
+        healthCameraVideo.srcObject = null;
+        healthCameraVideo.src = healthVideoObjectUrl;
+        healthCameraVideo.controls = true;
+        healthCameraVideo.muted = false;
+        healthCameraVideo.hidden = false;
+        healthCameraPlaceholder.hidden = true;
+        healthRecordingBadge.hidden = true;
+        healthCameraVideo.load();
+        healthVideoUploadStatus.textContent = videoFile.name;
+        healthVideoSummary.textContent = `Video uploaded\n${videoFile.name}\nReady for analysis`;
+        showToast("Health video uploaded.");
+      });
+
+      healthSubmitButton.addEventListener("click", () => {
+        showToast("Health information submitted for AI analysis.");
+      });
+
+      departmentCards.forEach((button) => {
+        button.addEventListener("click", () => {
+          const department = button.dataset.department;
+          selectDepartment(department);
+
+          if (button.hasAttribute("data-open-all-departments")) {
+            showDepartmentView("all", "all", true);
+            showToast("Showing all medical departments.");
+          }
+        });
+      });
+
+      departmentFilterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          showDepartmentView("all", button.dataset.departmentFilter);
+        });
+      });
+
+      healthWizard.querySelector("[data-department-view='popular']")?.addEventListener("click", () => {
+        showDepartmentView("popular", "all", true);
+      });
+
+      departmentSearch.addEventListener("input", () => {
+        const query = departmentSearch.value.trim().toLowerCase();
+
+        if (currentDepartmentView === "popular" && query) {
+          const hasPopularMatch = [...popularDepartmentGrid.querySelectorAll("[data-department]")]
+            .some((card) => card.dataset.department.toLowerCase().includes(query));
+
+          if (!hasPopularMatch) {
+            showDepartmentView("all", "all");
+            return;
+          }
+        }
+
+        applyDepartmentFilter();
+      });
+
+      symptomChoiceGroups.forEach((group) => {
+        group.querySelectorAll("[data-symptom-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            if (group.dataset.multi === "true") {
+              button.classList.toggle("selected");
+            } else {
+              group.querySelectorAll("[data-symptom-value]").forEach((choice) => {
+                choice.classList.toggle("selected", choice === button);
+              });
+            }
+            updateSymptomSummary();
+          });
+        });
+      });
+
+      document.querySelectorAll(".health-option").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".health-option").forEach((option) => option.classList.remove("selected"));
+          button.classList.add("selected");
+        });
+      });
+
+      document.querySelectorAll(".choice-group").forEach((group) => {
+        group.querySelectorAll(".choice-chip").forEach((button) => {
+          button.addEventListener("click", () => {
+            group.querySelectorAll(".choice-chip").forEach((chip) => chip.classList.remove("selected"));
+            button.classList.add("selected");
+          });
+        });
+      });
+
+      selectDepartment(selectedDepartment);
+      updateSymptomSummary();
+      showDepartmentView("popular");
+
+      document.querySelectorAll("[data-specialty]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const specialty = button.dataset.specialty;
+          window.location.href = `doctors.html?${new URLSearchParams({ specialty }).toString()}`;
+        });
+      });
+
+      document.querySelectorAll("[data-scroll]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelector(button.dataset.scroll)?.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+
+      document.querySelectorAll(".favorite").forEach((button) => {
+        button.addEventListener("click", () => {
+          const active = button.classList.toggle("active");
+          const doctorName = button.closest(".doctor-card").querySelector(".doctor-name").textContent;
+          button.classList.remove("heart-beat");
+          void button.offsetWidth;
+          button.classList.add("heart-beat");
+          button.setAttribute("aria-label", `${active ? "Remove" : "Add"} ${doctorName} ${active ? "from" : "to"} favorites`);
+          showToast(`${doctorName} ${active ? "added to" : "removed from"} your favorites.`);
+        });
+      });
+
+      document.querySelectorAll("[data-book]").forEach((button) => {
+        button.addEventListener("click", () => {
+          showToast(`Appointment request started with ${button.dataset.book}.`);
+        });
+      });
+
+      document.querySelectorAll("[data-toast]").forEach((button) => {
+        button.addEventListener("click", () => showToast(button.dataset.toast));
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !prescriptionCameraModal.hidden) {
+          closePrescriptionCameraView();
+        }
+      });
+
+      window.addEventListener("beforeunload", () => {
+        window.clearInterval(voiceRecordingInterval);
+        window.clearInterval(healthRecordingTimer);
+        stopMediaStream(voiceStream);
+        stopMediaStream(healthCameraStream);
+        stopMediaStream(prescriptionCameraStream);
+        if (healthVideoObjectUrl) {
+          URL.revokeObjectURL(healthVideoObjectUrl);
+        }
+        if (prescriptionPhotoObjectUrl) {
+          URL.revokeObjectURL(prescriptionPhotoObjectUrl);
+        }
+      });
+
+      const pageParams = new URLSearchParams(window.location.search);
+      const requestedTool = pageParams.get("tool");
+      const embeddedToolMode = pageParams.get("embed") === "tool";
+
+      if (embeddedToolMode) {
+        document.body.classList.add("tool-embed");
+      }
+
+      if (requestedTool && aiActionMap[requestedTool]) {
+        openAiWorkspace(aiActionMap[requestedTool]);
+      } else {
+        openAiWorkspace("health");
+      }
+
+      if (embeddedToolMode && window.parent !== window) {
+        const reportEmbeddedHeight = () => {
+          const embeddedContent = document.querySelector(".ai-search-panel.ai-inline-ready") || document.body;
+          const contentRect = embeddedContent.getBoundingClientRect();
+
+          window.parent.postMessage({
+            type: "cliniflow-tool-height",
+            height: Math.ceil(contentRect.bottom + window.scrollY + 2),
+          }, "*");
+        };
+
+        window.addEventListener("message", (event) => {
+          if (event.source !== window.parent) {
+            return;
+          }
+
+          if (event.data?.type === "cliniflow-open-tool" && aiActionMap[event.data.tool]) {
+            openAiWorkspace(aiActionMap[event.data.tool]);
+            window.setTimeout(reportEmbeddedHeight, 0);
+            return;
+          }
+
+          if (event.data?.type === "cliniflow-close-tool") {
+            if (voiceRecording) {
+              stopVoiceCapture();
+            }
+            if (healthRecording) {
+              stopHealthRecording();
+            }
+            if (!prescriptionCameraModal.hidden) {
+              closePrescriptionCameraView();
+            }
+          }
+        });
+
+        window.addEventListener("load", reportEmbeddedHeight);
+        new ResizeObserver(reportEmbeddedHeight).observe(aiInlineWorkspace);
+        window.setTimeout(reportEmbeddedHeight, 80);
+      } else {
+        startHeroTypewriter();
+        startConcernTypewriter();
+        startPatientCountAnimation();
+        startDoctorCardAnimations();
+      }
+
+      renderIcons();
+    })();
+  </script>
+
+  <div id="dr-chat-root">
+    <link rel="stylesheet" href="assets/css/dr-chat-widget.css">
+
+    <button type="button" class="dr-chat-bubble" id="drChatToggle" aria-label="Open chat assistant">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </button>
+
+    <div class="dr-chat-panel" id="drChatPanel" role="dialog" aria-label="Chat with Divinexa assistant">
+      <div class="dr-chat-header">
+        <div>
+          <strong>Divinexa Assistant</strong>
+          <small class="dr-chat-status"><span class="dr-status-dot"></span>Online &bull; AI Assistant</small>
+        </div>
+        <button type="button" class="dr-chat-close" id="drChatClose" aria-label="Close chat">&times;</button>
+      </div>
+      <div class="dr-chat-messages" id="drChatMessages"></div>
+      <div class="dr-chat-trust">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 9 4.6-.3 8-4 8-9V5Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+        <span>Your information is safe and secure</span>
+      </div>
+      <div class="dr-pending-attachment" id="drPendingAttachment" hidden>
+        <span class="dr-pending-attachment-icon" id="drPendingAttachmentIcon"></span>
+        <span class="dr-pending-attachment-label" id="drPendingAttachmentLabel"></span>
+        <button type="button" class="dr-pending-attachment-remove" id="drPendingAttachmentRemove" aria-label="Remove attachment">&times;</button>
+      </div>
+      <form class="dr-chat-form" id="drChatForm">
+        <textarea class="dr-chat-input" id="drChatInput" rows="1" placeholder="Type a message..." aria-label="Message"></textarea>
+        <div class="dr-chat-input-icons">
+          <button type="button" class="dr-chat-icon-btn" id="drChatMicBtn" aria-label="Record a voice note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 19v3"></path></svg>
+          </button>
+          <button type="button" class="dr-chat-icon-btn" id="drChatVideoBtn" aria-label="Record a video">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg>
+          </button>
+          <button type="button" class="dr-chat-icon-btn" id="drChatImageBtn" aria-label="Attach an image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg>
+          </button>
+        </div>
+        <button type="submit" class="dr-chat-send" id="drChatSend" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+        </button>
+      </form>
+
+      <div class="dr-recorder-overlay" id="drRecorderOverlay" hidden>
+        <div class="dr-recorder-modal">
+          <div class="dr-recorder-header">
+            <strong>Attach a video or voice note</strong>
+            <button type="button" class="dr-recorder-close" id="drRecorderClose" aria-label="Close">&times;</button>
+          </div>
+
+          <div class="dr-recorder-mode-select" id="drRecorderModeSelect">
+            <button type="button" class="dr-recorder-mode-btn" data-mode="video">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg>
+              <span>Record Video</span>
+            </button>
+            <button type="button" class="dr-recorder-mode-btn" data-mode="audio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 19v3"></path></svg>
+              <span>Record Voice</span>
+            </button>
+          </div>
+
+          <div class="dr-recorder-stage" id="drRecorderStage" hidden>
+            <div class="dr-recorder-waiting" id="drRecorderWaiting">Requesting camera/microphone access&hellip;</div>
+            <video class="dr-recorder-video-preview" id="drRecorderVideoPreview" autoplay muted playsinline hidden></video>
+            <div class="dr-recorder-audio-indicator" id="drRecorderAudioIndicator" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 19v3"></path></svg>
+            </div>
+            <div class="dr-recorder-timer" id="drRecorderTimer" hidden>0:00 / 2:00</div>
+            <button type="button" class="dr-recorder-record-btn" id="drRecorderRecordBtn" hidden>Start Recording</button>
+            <button type="button" class="dr-recorder-gallery-btn" id="drRecorderGalleryBtn" hidden>Choose from Gallery instead</button>
+          </div>
+
+          <div class="dr-recorder-review" id="drRecorderReview" hidden>
+            <video class="dr-recorder-review-video" id="drRecorderReviewVideo" controls hidden></video>
+            <audio class="dr-recorder-review-audio" id="drRecorderReviewAudio" controls hidden></audio>
+            <img class="dr-recorder-review-image" id="drRecorderReviewImage" alt="Captured photo" hidden>
+            <div class="dr-recorder-review-controls">
+              <button type="button" class="dr-recorder-rerecord-btn" id="drRecorderRerecordBtn">Re-record</button>
+              <button type="button" class="dr-recorder-use-btn" id="drRecorderUseBtn">Use This</button>
+            </div>
+          </div>
+
+          <p class="dr-recorder-note" id="drRecorderNote">Stays on this device until you send it &mdash; under 2 minutes.</p>
+          <input type="file" id="drRecorderGalleryInput" accept="image/*" multiple hidden>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/dr-chat-widget.js"></script>
+</body>
+</html>

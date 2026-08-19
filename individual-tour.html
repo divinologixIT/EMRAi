@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Divinexa guided setup tour for individual plans.">
+  <title>Divinexa - Individual Plan Welcome</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #102651;
+      --ink-deep: #091b45;
+      --muted: #60718f;
+      --teal: #0ba397;
+      --teal-dark: #087f76;
+      --teal-soft: #e9f8f6;
+      --line: #dce7e9;
+      --surface: #fff;
+      --surface-soft: #f7fbfb;
+      --purple: #6b4bd2;
+      --shadow: 0 12px 34px rgba(20, 64, 78, .07);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 68% 4%, rgba(78, 190, 177, .08), transparent 24rem),
+        #fff;
+      font-family: "DM Sans", Arial, sans-serif;
+      font-size: 13px;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    svg { display: block; }
+    [hidden] { display: none !important; }
+
+    .topbar {
+      min-height: 68px;
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-panel {
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      border-right: 1px solid var(--line);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 13px;
+      background: linear-gradient(145deg, #12aa9d, #087e75);
+      box-shadow: 0 9px 20px rgba(8,126,117,.2);
+      transform: rotate(45deg);
+    }
+    .brand-mark svg { width: 22px; height: 22px; stroke-width: 3; transform: rotate(-45deg); }
+    .brand-copy strong,
+    .brand-copy small { display: block; }
+    .brand-copy strong {
+      color: var(--teal-dark);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+    .brand-copy small { margin-top: 4px; color: #44576a; font-size: 10px; font-weight: 700; }
+
+    .topbar-main {
+      display: grid;
+      grid-template-columns: minmax(360px, 1fr) auto auto;
+      align-items: center;
+      gap: 28px;
+      padding: 0 27px;
+    }
+
+    .progress-block {
+      max-width: 430px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 20px;
+    }
+    .progress-block strong { grid-column: 1 / -1; font-size: 11px; }
+    .progress-track {
+      height: 7px;
+      align-self: center;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #e2e9eb;
+    }
+    .progress-fill {
+      width: 25%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #0aa397, #07867c);
+      transition: width .28s ease;
+    }
+    .progress-label { font-size: 10px; white-space: nowrap; }
+
+    .top-actions { display: flex; align-items: center; gap: 14px; }
+    .button {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 10px 21px;
+      border: 1px solid transparent;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .button svg { width: 17px; }
+    .button-outline { color: var(--teal-dark); border-color: #8acdc7; background: #fff; }
+    .button-primary {
+      min-width: 100px;
+      color: #fff;
+      background: linear-gradient(135deg, #0ca89a, #078278);
+      box-shadow: 0 9px 20px rgba(7,130,120,.16);
+    }
+    .button-small { min-height: 32px; padding: 6px 14px; font-size: 10px; }
+    .top-actions .button {
+      height: 32px;
+      min-height: 32px;
+      padding-top: 0;
+      padding-bottom: 0;
+      box-sizing: border-box;
+      line-height: 1;
+    }
+
+    .profile-wrap { position: relative; }
+    .profile-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+    .avatar {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 3px solid #edf4f4;
+      border-radius: 50%;
+      color: var(--teal-dark);
+      background: #e4f5f2;
+    }
+    .avatar svg { width: 22px; }
+    .profile-copy strong,
+    .profile-copy small { display: block; white-space: nowrap; }
+    .profile-copy strong { font-size: 10px; }
+    .profile-copy small { margin-top: 3px; color: var(--muted); font-size: 8px; font-weight: 600; }
+    .profile-button > svg { width: 14px; }
+    .profile-menu {
+      min-width: 180px;
+      position: absolute;
+      z-index: 10;
+      top: calc(100% + 10px);
+      right: 0;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .profile-menu a {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .profile-menu a:hover { color: var(--teal-dark); background: var(--teal-soft); }
+    .profile-menu svg { width: 16px; }
+
+    .tour-shell {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+    }
+    .tour-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 28px 24px;
+      border-right: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #fbfefe);
+    }
+
+    .side-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 5px 16px rgba(20,64,78,.025);
+    }
+    .side-card-title {
+      display: block;
+      padding: 17px 18px;
+      border-bottom: 1px solid #e5edef;
+      font-size: 14px;
+    }
+    .steps-list { position: relative; display: grid; padding: 4px 0; }
+    .steps-list::before {
+      width: 1px;
+      position: absolute;
+      top: 34px;
+      bottom: 34px;
+      left: 24px;
+      background: #d7e2e5;
+      content: "";
+    }
+    .tour-step {
+      min-height: 62px;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+      padding: 8px 14px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+    .step-number {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #bac9d1;
+      border-radius: 50%;
+      background: #f8fbfb;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .tour-step strong,
+    .tour-step small { display: block; }
+    .tour-step strong {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      font-size: 11px;
+    }
+    .tour-step strong svg { display: none; }
+    .tour-step small { margin-top: 4px; color: var(--muted); font-size: 9px; }
+    .tour-step.active {
+      width: 100%;
+      margin: 0;
+      color: var(--ink);
+      border-radius: 0;
+      background: #edf9f7;
+      box-shadow: none;
+    }
+    .tour-step.active .step-number {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+    .tour-step.active small { color: var(--muted); }
+    .tour-step.completed .step-number {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+    .tour-step:not(.active):hover { background: #f2faf9; }
+
+    .help-card { margin-top: auto; padding: 18px; }
+    .help-card h3 { margin: 0 0 11px; font-size: 14px; }
+    .help-card p { margin: 0 0 15px; color: var(--muted); font-size: 10px; }
+
+    .tour-content {
+      min-width: 0;
+      padding: 28px 30px 42px;
+    }
+    .tour-view {
+      max-width: 1280px;
+      margin-inline: auto;
+      animation: viewIn .25s ease;
+    }
+    @keyframes viewIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: none; }
+    }
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 290px;
+      gap: 22px;
+      align-items: start;
+    }
+    .content-stack { display: grid; gap: 18px; }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 7px 22px rgba(20,64,78,.035);
+    }
+    .card-pad { padding: 20px; }
+    .page-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 20px;
+    }
+    .page-heading h1 {
+      margin: 0 0 8px;
+      color: var(--ink-deep);
+      font-size: 27px;
+      letter-spacing: -.035em;
+    }
+    .page-heading h1 span { color: var(--teal-dark); }
+    .page-heading p { max-width: 650px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .tip-inline {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      white-space: nowrap;
+      font-size: 10px;
+    }
+    .tip-inline svg { width: 18px; color: #f2ae18; }
+
+    /* Step one */
+    .welcome-hero {
+      min-height: 228px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      align-items: start;
+      gap: 28px;
+    }
+    .feature-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 28px;
+    }
+    .feature {
+      padding: 0 20px;
+      text-align: center;
+    }
+    .feature:first-child { padding-left: 0; }
+    .feature:last-child { padding-right: 0; }
+    .feature + .feature { border-left: 1px solid #dce7e9; }
+    .feature-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 13px;
+      color: var(--teal-dark);
+      border-radius: 50%;
+      background: var(--teal-soft);
+    }
+    .feature-icon svg { width: 29px; }
+    .feature strong,
+    .feature small { display: block; }
+    .feature strong { font-size: 10px; }
+    .feature small { margin-top: 7px; color: var(--muted); font-size: 9px; line-height: 1.6; }
+    .doctor-welcome {
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 120px 40px 100px 50px;
+      background:
+        radial-gradient(circle at 65% 45%, rgba(10,163,151,.15), transparent 10rem),
+        linear-gradient(135deg, #effaf8, #d9f2ee);
+    }
+    .doctor-welcome img {
+      width: 210px;
+      height: 225px;
+      position: absolute;
+      right: 25px;
+      bottom: -4px;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 10px 12px rgba(10,70,79,.1));
+    }
+    .speech {
+      max-width: 112px;
+      position: absolute;
+      z-index: 2;
+      top: 15px;
+      right: 10px;
+      padding: 11px 12px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      font-size: 9px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .info-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      color: var(--teal-dark);
+      border: 1px solid #cae7e4;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #f4fbfa, #eaf8f6);
+      font-size: 11px;
+    }
+    .info-banner svg { width: 20px; }
+
+    .video-card { padding: 18px; }
+    .video-card h2 { margin: 0 0 6px; font-size: 16px; }
+    .video-card > p { margin: 0 0 15px; color: var(--muted); font-size: 10px; }
+    .video-preview {
+      min-height: 260px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      overflow: hidden;
+      position: relative;
+      border: 8px solid #eef3f4;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .video-copy {
+      display: grid;
+      place-content: center;
+      padding: 30px;
+      background: linear-gradient(145deg, #fff, #f7fbfb);
+    }
+    .mini-brand { display: flex; align-items: center; gap: 9px; color: var(--teal-dark); font-size: 19px; font-weight: 800; }
+    .mini-brand .brand-mark { width: 34px; height: 34px; border-radius: 10px; }
+    .mini-brand .brand-mark svg { width: 18px; }
+    .video-copy h3 { margin: 34px 0 0; font-size: 20px; line-height: 1.25; }
+    .dashboard-preview { padding: 18px; background: #f9fbfb; }
+    .preview-label { margin-bottom: 12px; font-size: 9px; font-weight: 700; }
+    .preview-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+    .preview-stat { height: 45px; padding: 9px; border: 1px solid #e3ebed; border-radius: 6px; background: #fff; }
+    .preview-stat span,
+    .preview-stat strong { display: block; }
+    .preview-stat span { color: var(--muted); font-size: 6px; }
+    .preview-stat strong { margin-top: 5px; font-size: 9px; }
+    .preview-chart {
+      height: 135px;
+      position: relative;
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid #e3ebed;
+      border-radius: 6px;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 27px, #edf2f3 28px),
+        #fff;
+    }
+    .chart-line {
+      height: 90px;
+      position: absolute;
+      right: 18px;
+      bottom: 12px;
+      left: 18px;
+      background: linear-gradient(150deg, transparent 0 12%, #19a99e 12% 13%, transparent 13% 25%, #19a99e 25% 26%, transparent 26% 39%, #19a99e 39% 40%, transparent 40% 51%, #19a99e 51% 52%, transparent 52% 65%, #19a99e 65% 66%, transparent 66% 78%, #19a99e 78% 79%, transparent 79%);
+      opacity: .75;
+      transform: skewY(-5deg);
+    }
+    .play-button {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 31%;
+      padding: 0;
+      color: #fff;
+      border: 0;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #0ba99b, #07847a);
+      box-shadow: 0 10px 25px rgba(7,132,122,.28);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .play-button svg { width: 25px; fill: currentColor; }
+    .video-preview.playing .play-button {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(.85);
+    }
+    .video-preview.playing .chart-line {
+      animation: chartPulse 2.4s ease-in-out infinite alternate;
+    }
+    @keyframes chartPulse {
+      from { opacity: .45; transform: skewY(-5deg) translateX(-3px); }
+      to { opacity: 1; transform: skewY(-5deg) translateX(5px); }
+    }
+    .video-controls {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      position: absolute;
+      z-index: 5;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 7px 10px;
+      color: #fff;
+      background: linear-gradient(180deg, transparent, rgba(5,19,42,.88));
+      font-size: 8px;
+    }
+    .video-control-button {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      flex: none;
+      padding: 0;
+      color: #fff;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .video-control-button:hover,
+    .video-control-button:focus-visible { outline: 0; background: rgba(255,255,255,.15); }
+    .video-control-button svg { width: 17px; }
+    .video-clock { min-width: 27px; font-variant-numeric: tabular-nums; text-align: center; }
+    .video-seek {
+      min-width: 70px;
+      height: 4px;
+      flex: 1;
+      accent-color: var(--teal);
+      cursor: pointer;
+    }
+    .video-status {
+      position: absolute;
+      z-index: 4;
+      top: 12px;
+      right: 12px;
+      padding: 5px 8px;
+      color: #fff;
+      border-radius: 4px;
+      background: rgba(7,21,47,.72);
+      font-size: 8px;
+      opacity: 0;
+      transition: opacity .18s ease;
+    }
+    .video-preview.playing .video-status { opacity: 1; }
+    .slide-dots { display: flex; justify-content: center; gap: 11px; margin-top: 16px; }
+    .slide-dots span { width: 10px; height: 10px; border-radius: 50%; background: #d7dfe2; }
+    .slide-dots span.active { background: var(--teal); }
+
+    .right-card { padding: 19px; }
+    .right-card h2 { margin: 0 0 18px; font-size: 15px; }
+    .plan-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .pill {
+      display: inline-flex;
+      padding: 5px 8px;
+      color: var(--teal-dark);
+      border-radius: 6px;
+      background: var(--teal-soft);
+      font-size: 9px;
+      font-weight: 800;
+    }
+    .metric-list { display: grid; gap: 17px; margin-top: 18px; }
+    .metric { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; }
+    .metric strong { color: var(--teal-dark); }
+    .metric strong.danger { color: #b73344; }
+    .quick-list { display: grid; margin-inline: -19px; }
+    .quick-action {
+      display: grid;
+      grid-template-columns: 23px 1fr auto;
+      align-items: center;
+      gap: 9px;
+      min-height: 49px;
+      padding: 10px 19px;
+      border: 0;
+      border-top: 1px solid #e8eff0;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      font-size: 11px;
+    }
+    .quick-action:hover { background: #f4fbfa; }
+    .quick-action svg { width: 18px; color: var(--teal-dark); }
+    .assistant-card {
+      overflow: hidden;
+      position: relative;
+      padding: 19px;
+      border-color: #dfd6f7;
+      background: linear-gradient(135deg, #fbf9ff, #eee8ff);
+    }
+    .assistant-card h2 { display: flex; align-items: center; gap: 9px; margin: 0 0 13px; color: #30206e; font-size: 13px; }
+    .assistant-card h2 svg { width: 19px; color: var(--purple); }
+    .assistant-card p { max-width: 175px; margin: 0 0 16px; color: #544a7e; font-size: 10px; line-height: 1.65; }
+    .assistant-bot {
+      width: 73px;
+      height: 73px;
+      display: grid;
+      place-items: center;
+      position: absolute;
+      right: 13px;
+      bottom: 10px;
+      color: #fff;
+      border: 8px solid #c8b8ff;
+      border-radius: 28px;
+      background: #3d2d86;
+    }
+    .assistant-bot svg { width: 37px; }
+    .tip-card { border-color: #f0dfbd; background: linear-gradient(135deg, #fff, #fffaf0); }
+    .tip-card h2 { display: flex; align-items: center; gap: 9px; }
+    .tip-card h2 svg { width: 19px; color: #f0ac18; }
+    .tip-card p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
+    .security-footer {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 17px 20px;
+      border: 1px solid #c8e5e2;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #f4fbfa, #eaf8f6);
+    }
+    .security-footer .feature-icon { width: 42px; height: 42px; margin: 0; }
+    .security-footer strong,
+    .security-footer small { display: block; }
+    .security-footer strong { font-size: 10px; }
+    .security-footer small { margin-top: 4px; color: var(--muted); font-size: 9px; }
+
+    /* Step two */
+    .setup-layout { grid-template-columns: minmax(0, 1fr) 240px; }
+    .setup-card { padding: 16px; }
+    .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 14px; }
+    .section-heading h2 { margin: 0 0 5px; font-size: 16px; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 11px; }
+    .drag-label { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+    .drag-label svg { width: 16px; }
+    .clinic-cards {
+      display: grid;
+      grid-template-columns: 160px repeat(4, minmax(145px, 1fr));
+      gap: 12px;
+    }
+    .add-clinic,
+    .clinic-card {
+      min-height: 170px;
+      position: relative;
+      padding: 13px;
+      border: 1px solid #d5e3e6;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .add-clinic {
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      border-style: dashed;
+      cursor: pointer;
+      text-align: center;
+    }
+    .add-clinic .feature-icon { width: 48px; height: 48px; margin-bottom: 10px; }
+    .add-clinic strong,
+    .add-clinic small { display: block; }
+    .add-clinic strong { font-size: 10px; }
+    .add-clinic small { margin-top: 7px; color: var(--muted); font-size: 8px; }
+    .clinic-card.selected { border-color: #80cfc7; box-shadow: inset 0 0 0 1px rgba(10,163,151,.08); }
+    .primary-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 3px 6px;
+      color: #008b68;
+      border: 1px solid #5dc9a9;
+      border-radius: 4px;
+      background: #eefff8;
+      font-size: 7px;
+      font-weight: 800;
+    }
+    .clinic-menu { position: absolute; top: 11px; right: 9px; border: 0; background: transparent; cursor: pointer; }
+    .clinic-menu svg { width: 15px; }
+    .clinic-logo {
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      margin: 20px 0 7px;
+      color: var(--teal-dark);
+      border-radius: 50%;
+      background: var(--teal-soft);
+    }
+    .clinic-logo svg { width: 22px; }
+    .clinic-card strong,
+    .clinic-card small { display: block; }
+    .clinic-card > strong { font-size: 10.5px; }
+    .clinic-card > small { min-height: 40px; margin-top: 7px; color: var(--muted); font-size: 8.5px; line-height: 1.6; }
+    .clinic-contact { display: flex; align-items: center; gap: 7px; margin-top: 8px; font-size: 8px; }
+    .clinic-contact svg { width: 13px; color: var(--teal-dark); }
+    .clinic-logo-image {
+      width: 29px;
+      height: 29px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .details-card { padding: 16px; }
+    .details-card h2 { margin: 0 0 16px; font-size: 16px; }
+    .details-card h2 span { margin-left: 8px; color: var(--teal-dark); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px 16px; }
+    .form-grid .wide { grid-column: 1 / -1; }
+    .field label { display: block; margin-bottom: 7px; font-size: 11px; font-weight: 700; }
+    .field label .required { color: #d74c5d; }
+    .field input {
+      width: 100%;
+      height: 32px;
+      padding: 0 12px;
+      color: var(--ink);
+      border: 1px solid #d1e0e4;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 11px;
+    }
+    .logo-upload {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 8px;
+      border: 1px solid #d1e0e4;
+      border-radius: 5px;
+    }
+    .logo-upload .clinic-logo { width: 24px; height: 24px; flex: 0 0 24px; margin: 0; overflow: hidden; background: #fff; }
+    .logo-upload .clinic-logo-image { width: 22px; height: 22px; }
+    .logo-upload .clinic-logo svg { width: 17px; }
+    .logo-upload > span:not(.clinic-logo) { flex: 1; font-size: 10px; font-weight: 700; }
+    .logo-upload small { display: block; margin-top: 2px; color: var(--muted); font-size: 8px; }
+    .practice-grid { display: grid; grid-template-columns: 330px 1fr; gap: 18px; margin-top: 14px; }
+    .map-panel {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #d1e0e4;
+      border-radius: 6px;
+      background:
+        linear-gradient(25deg, transparent 0 38%, rgba(255,255,255,.9) 39% 41%, transparent 42%),
+        linear-gradient(115deg, transparent 0 48%, rgba(255,255,255,.9) 49% 51%, transparent 52%),
+        repeating-linear-gradient(8deg, #eef2ec 0 18px, #dfe8e2 19px 20px),
+        #e7ece8;
+    }
+    .map-search {
+      width: 220px;
+      height: 31px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      position: absolute;
+      top: 9px;
+      left: 9px;
+      padding: 0 9px;
+      border: 1px solid #d1e0e4;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 5px 12px rgba(20,64,78,.08);
+      font-size: 10px;
+    }
+    .map-search svg { width: 13px; color: var(--muted); }
+    .map-pin {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: 75px;
+      left: 48%;
+      color: #fff;
+      border-radius: 50% 50% 50% 4px;
+      background: #08a271;
+      box-shadow: 0 6px 14px rgba(8,162,113,.22);
+      transform: rotate(-45deg);
+    }
+    .map-pin svg { width: 17px; transform: rotate(45deg); }
+    .hours-panel { min-width: 0; }
+    .hours-title { margin: 0 0 8px; font-size: 11px; font-weight: 700; }
+    .day-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 7px; margin-bottom: 14px; }
+    .day {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid #d1e0e4;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 10px;
+    }
+    .day i {
+      width: 13px;
+      height: 13px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 50%;
+      background: var(--teal);
+      font-size: 9px;
+      font-style: normal;
+    }
+    .day.off i { color: transparent; border: 1px solid var(--muted); background: transparent; }
+    .time-row {
+      display: grid;
+      grid-template-columns: 70px 1fr auto 1fr 1fr 22px;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 8px;
+      font-size: 10px;
+    }
+    .time-box {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      padding: 0 9px;
+      border: 1px solid #d1e0e4;
+      border-radius: 5px;
+      background: #fff;
+      white-space: nowrap;
+    }
+    .delete-time { border: 0; background: transparent; cursor: pointer; }
+    .delete-time svg { width: 15px; }
+    .hours-actions { display: flex; align-items: center; gap: 25px; margin-top: 10px; }
+    .check-label { display: flex; align-items: center; gap: 7px; font-size: 10px; }
+    .check-label input { accent-color: var(--teal); }
+    .benefit-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(90deg,#fff,#f5fbfa);
+    }
+    .benefit {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 73px;
+      padding: 14px;
+    }
+    .benefit + .benefit { border-left: 1px solid var(--line); }
+    .benefit .feature-icon { width: 35px; height: 35px; flex: none; margin: 0; }
+    .benefit .feature-icon svg { width: 18px; }
+    .benefit strong,
+    .benefit small { display: block; }
+    .benefit strong { font-size: 11px; }
+    .benefit small { margin-top: 5px; color: var(--muted); font-size: 9px; line-height: 1.5; }
+
+    .clinic-list { display: grid; margin: 0 -19px; }
+    .clinic-list-item {
+      display: grid;
+      grid-template-columns: 18px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 19px;
+      border-top: 1px solid #e9eff0;
+      font-size: 9.5px;
+    }
+    .clinic-list-item svg { width: 15px; color: var(--teal-dark); }
+    .clinic-list-item.active { background: var(--teal-soft); }
+    .letterhead {
+      height: 190px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 12px;
+      border: 1px solid #d5e2e5;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 7px 18px rgba(20,64,78,.06);
+    }
+    .letterhead::before {
+      width: 140px;
+      height: 90px;
+      position: absolute;
+      right: -35px;
+      bottom: -30px;
+      border-radius: 50%;
+      background: #0b9d90;
+      content: "";
+      transform: rotate(-15deg);
+    }
+    .letterhead::after {
+      width: 180px;
+      height: 55px;
+      position: absolute;
+      bottom: -25px;
+      left: -45px;
+      border-radius: 50%;
+      background: #d9f1ed;
+      content: "";
+      transform: rotate(10deg);
+    }
+    .letterhead-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: absolute;
+      top: 18px;
+      left: 17px;
+      color: var(--teal-dark);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .letterhead-logo .clinic-logo { width: 30px; height: 30px; margin: 0; }
+    .letterhead-lines {
+      position: absolute;
+      top: 70px;
+      right: 22px;
+      left: 22px;
+      display: grid;
+      gap: 11px;
+    }
+    .letterhead-lines span { height: 2px; background: #edf2f3; }
+
+    .toast {
+      max-width: min(390px, calc(100% - 30px));
+      position: fixed;
+      z-index: 500;
+      right: 20px;
+      bottom: 20px;
+      padding: 13px 17px;
+      color: #fff;
+      border-radius: 8px;
+      background: #073f43;
+      box-shadow: 0 14px 35px rgba(3,44,51,.2);
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: .2s ease;
+    }
+    .toast.show { opacity: 1; transform: none; }
+
+    @media (max-width: 1180px) {
+      .topbar { grid-template-columns: 245px minmax(0, 1fr); }
+      .brand-panel { padding-inline: 20px; }
+      .topbar-main { gap: 18px; padding-inline: 20px; }
+      .tour-shell { grid-template-columns: 245px minmax(0, 1fr); }
+      .tour-sidebar { padding-inline: 17px; }
+      .content-grid,
+      .setup-layout { grid-template-columns: 1fr; }
+      .content-right { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .clinic-cards { grid-template-columns: repeat(3, 1fr); }
+      .add-clinic { grid-row: span 1; }
+      .practice-grid { grid-template-columns: 300px 1fr; }
+    }
+
+    @media (max-width: 860px) {
+      .topbar { grid-template-columns: 1fr; position: sticky; top: 0; }
+      .brand-panel { min-height: 64px; justify-content: center; border-right: 0; border-bottom: 1px solid var(--line); }
+      .topbar-main { min-height: 76px; grid-template-columns: 1fr auto auto; }
+      .tour-shell { grid-template-columns: 1fr; }
+      .tour-sidebar {
+        display: block;
+        padding: 14px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .tour-sidebar .side-card:first-child { overflow-x: auto; }
+      .side-card-title,
+      .steps-list::before,
+      .help-card { display: none; }
+      .steps-list { display: flex; min-width: 760px; padding: 8px; }
+      .tour-step { min-width: 104px; min-height: 48px; grid-template-columns: 24px 1fr; padding: 8px; }
+      .tour-step small,
+      .tour-step strong svg { display: none; }
+      .tour-content { padding: 22px 18px 35px; }
+      .welcome-hero { grid-template-columns: 1fr; }
+      .doctor-welcome { display: none; }
+      .practice-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 650px) {
+      .topbar-main { grid-template-columns: 1fr auto; padding: 12px; }
+      .progress-block { grid-column: 1 / -1; max-width: none; }
+      .top-actions { grid-column: 1; }
+      .profile-wrap { grid-column: 2; grid-row: 2; }
+      .profile-copy,
+      .profile-button > svg { display: none; }
+      .page-heading { flex-direction: column; }
+      .page-heading h1 { font-size: 23px; }
+      .tip-inline { white-space: normal; }
+      .feature-row,
+      .content-right,
+      .form-grid,
+      .benefit-row { grid-template-columns: 1fr; }
+      .feature { padding: 18px 0; }
+      .feature + .feature { border-top: 1px solid var(--line); border-left: 0; }
+      .video-preview { min-height: 410px; grid-template-columns: 1fr; }
+      .play-button { top: 53%; left: 50%; }
+      .clinic-cards { grid-template-columns: 1fr 1fr; }
+      .day-row { grid-template-columns: repeat(4, 1fr); }
+      .time-row { grid-template-columns: 1fr 1fr; }
+      .time-row > span,
+      .delete-time { display: none; }
+      .benefit + .benefit { border-top: 1px solid var(--line); border-left: 0; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/setup-tour-shell.css">
+  <link rel="stylesheet" href="assets/css/setup-sidebar-guidance.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+  <style>
+    /* Readability pass: keep the tour layout compact while avoiding 8–11px UI text. */
+    body.individual-tour-page {
+      font-size: 14px;
+    }
+
+    .individual-tour-page .progress-block > strong { font-size: 13px; }
+    .individual-tour-page .progress-label { font-size: 12px; }
+    .individual-tour-page .button,
+    .individual-tour-page .top-actions .button { font-size: 13px; }
+    .individual-tour-page .button-small { font-size: 12px; }
+    .individual-tour-page .profile-copy strong { font-size: 12px; }
+    .individual-tour-page .profile-copy small { font-size: 10px; }
+
+    .individual-tour-page .side-card-title { font-size: 16px; }
+    .individual-tour-page .tour-step,
+    .individual-tour-page .tour-step.active,
+    .individual-tour-page .tour-step.completed {
+      font-family: "DM Sans", Arial, sans-serif;
+      font-style: normal;
+    }
+    .individual-tour-page .step-number,
+    .individual-tour-page .tour-step.active .step-number,
+    .individual-tour-page .tour-step.completed .step-number {
+      width: 22px;
+      height: 22px;
+      font-size: 11px !important;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .individual-tour-page .tour-step strong,
+    .individual-tour-page .tour-step.active strong,
+    .individual-tour-page .tour-step.completed strong {
+      font-family: "DM Sans", Arial, sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    .individual-tour-page .tour-step small,
+    .individual-tour-page .tour-step.active small,
+    .individual-tour-page .tour-step.completed small {
+      font-family: "DM Sans", Arial, sans-serif !important;
+      font-size: 11px !important;
+      font-weight: 400 !important;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+    .individual-tour-page .help-card h3 { font-size: 16px; }
+    .individual-tour-page .help-card p,
+    .individual-tour-page .setup-sidebar-copy p { font-size: 12px; }
+
+    .individual-tour-page .page-heading h1 { font-size: 31px; }
+    .individual-tour-page .page-heading p { font-size: 15px; }
+    .individual-tour-page .tip-inline { font-size: 12px; }
+    .individual-tour-page .feature strong { font-size: 12px; }
+    .individual-tour-page .feature small { font-size: 11px; }
+    .individual-tour-page .speech { font-size: 11px; }
+    .individual-tour-page .info-banner { font-size: 13px; }
+
+    .individual-tour-page .video-card h2,
+    .individual-tour-page .section-heading h2,
+    .individual-tour-page .details-card h2 { font-size: 18px; }
+    .individual-tour-page .video-card > p,
+    .individual-tour-page .section-heading p { font-size: 12px; }
+    .individual-tour-page .right-card h2 { font-size: 17px; }
+    .individual-tour-page .pill { font-size: 11px; }
+    .individual-tour-page .metric,
+    .individual-tour-page .quick-action { font-size: 13px; }
+    .individual-tour-page .assistant-card h2 { font-size: 15px; }
+    .individual-tour-page .assistant-card p,
+    .individual-tour-page .tip-card p { font-size: 12px; }
+    .individual-tour-page .security-footer strong { font-size: 12px; }
+    .individual-tour-page .security-footer small { font-size: 11px; }
+
+    .individual-tour-page .field label { font-size: 12px; }
+    .individual-tour-page .field input { font-size: 13px; }
+    .individual-tour-page .add-clinic strong,
+    .individual-tour-page .clinic-card > strong { font-size: 12px; }
+    .individual-tour-page .add-clinic small,
+    .individual-tour-page .clinic-card > small,
+    .individual-tour-page .clinic-contact { font-size: 10px; }
+
+    @media (max-width: 650px) {
+      .individual-tour-page .page-heading h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body class="individual-tour-page">
+  <header class="topbar">
+    <div class="brand-panel">
+      <a class="brand" href="home2.html" aria-label="Divinexa home">
+        <span class="brand-mark"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Prescription Platform</small></span>
+      </a>
+    </div>
+    <div class="topbar-main">
+      <div class="progress-block">
+        <strong id="progressTitle">Tour Progress</strong>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="progress-label" id="progressLabel">Step 1 of 4</span>
+      </div>
+      <div class="top-actions">
+        <a class="button button-outline" href="doctor-dashboard.html">Skip Tour</a>
+        <button class="button button-primary" id="nextStep" type="button">Next <i data-lucide="arrow-right"></i></button>
+      </div>
+      <div class="profile-wrap">
+        <button class="profile-button" id="profileButton" type="button" aria-expanded="false">
+          <span class="avatar"><i data-lucide="user-round"></i></span>
+          <span class="profile-copy"><strong>Dr. Arjun Mehta</strong><small>Individual Plan</small></span>
+          <i class="profile-chevron" data-lucide="chevron-down"></i>
+        </button>
+        <div class="profile-menu" id="profileMenu" hidden>
+          <a href="doctor-dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+          <a href="profile.html"><i data-lucide="user-round"></i>My Profile</a>
+          <a href="login.html"><i data-lucide="log-out"></i>Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="tour-shell">
+    <aside class="tour-sidebar">
+      <div class="side-card">
+        <strong class="side-card-title">Tour Steps</strong>
+        <nav class="steps-list" aria-label="Setup tour steps">
+          <button class="tour-step active" type="button" data-tour-step="1">
+            <span class="step-number">1</span><span><strong><i data-lucide="home"></i>Welcome</strong><small>Introduction to Divinexa</small></span>
+          </button>
+          <button class="tour-step" type="button" data-tour-step="2">
+            <span class="step-number">2</span><span><strong><i data-lucide="building-2"></i>Clinic Setup</strong><small>Add and manage your clinics</small></span>
+          </button>
+          <button class="tour-step" type="button" data-tour-step="3">
+            <span class="step-number">3</span><span><strong><i data-lucide="file-text"></i>Templates</strong><small>Smart templates &amp; shortcuts</small></span>
+          </button>
+          <button class="tour-step" type="button" data-tour-step="4">
+            <span class="step-number">4</span><span><strong><i data-lucide="circle-check"></i>Finish &amp; Dashboard</strong><small>You're all set!</small></span>
+          </button>
+        </nav>
+        <div class="setup-sidebar-guidance">
+          <div class="setup-sidebar-art" aria-hidden="true">
+            <span class="setup-sidebar-clipboard"><i></i><i></i><i></i></span>
+            <img src="assets/images/clinic-setup-hero-light.png" alt="">
+          </div>
+          <div class="setup-sidebar-copy">
+            <strong>Just a few details<br>to get you started</strong>
+            <p>We'll help you set up your practice<br>in the best way.</p>
+          </div>
+        </div>
+      </div>
+      <div class="side-card help-card">
+        <h3>Need Help?</h3>
+        <p>Our support team is here for you.</p>
+        <button class="button button-outline button-small" type="button" data-demo-action><i data-lucide="message-circle"></i>Chat with Support</button>
+      </div>
+    </aside>
+
+    <main class="tour-content">
+      <section class="tour-view" id="welcomeView" data-tour-view="1">
+        <div class="content-grid">
+          <div class="content-stack">
+            <div class="welcome-hero">
+              <div>
+                <div class="page-heading">
+                  <div>
+                    <h1>Welcome to <span>Divinexa, Dr. Arjun!</span> 👋</h1>
+                    <p>Your all-in-one platform to manage clinics, patients, and AI-powered prescriptions with ease and confidence.</p>
+                  </div>
+                </div>
+                <div class="feature-row">
+                  <div class="feature"><span class="feature-icon"><i data-lucide="building-2"></i></span><strong>Manage Multiple Clinics</strong><small>Add and manage multiple clinics under your plan.</small></div>
+                  <div class="feature"><span class="feature-icon"><i data-lucide="users-round"></i></span><strong>Smart Patient Care</strong><small>Maintain patient records and history in one place.</small></div>
+                  <div class="feature"><span class="feature-icon"><i data-lucide="clipboard-check"></i></span><strong>AI-Powered Prescriptions</strong><small>Get smart suggestions, drug checks &amp; more.</small></div>
+                  <div class="feature"><span class="feature-icon"><i data-lucide="chart-no-axes-combined"></i></span><strong>Insights &amp; Reports</strong><small>Track performance and grow your practice.</small></div>
+                </div>
+              </div>
+              <div class="doctor-welcome">
+                <span class="speech">Let's set up your practice!</span>
+                <img src="assets/images/prescription-doctor.png" alt="Doctor welcoming the user to Divinexa">
+              </div>
+            </div>
+
+            <div class="info-banner"><i data-lucide="sparkles"></i>It takes just a few minutes to set up everything. You can always change it later from Settings.</div>
+
+            <article class="card video-card">
+              <h2>See Divinexa in Action</h2>
+              <p>Watch a quick video to see how Divinexa helps you save time and focus on your patients.</p>
+              <div class="video-preview">
+                <div class="video-copy">
+                  <div class="mini-brand"><span class="brand-mark"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong></div>
+                  <h3>Smart Prescriptions<br>Better Care</h3>
+                </div>
+                <div class="dashboard-preview">
+                  <div class="preview-label">Dashboard</div>
+                  <div class="preview-stats">
+                    <div class="preview-stat"><span>Total Clinics</span><strong>4</strong></div>
+                    <div class="preview-stat"><span>Total Patients</span><strong>1,248</strong></div>
+                    <div class="preview-stat"><span>Prescriptions</span><strong>320</strong></div>
+                    <div class="preview-stat"><span>Appointments</span><strong>85</strong></div>
+                  </div>
+                  <div class="preview-chart"><span class="chart-line"></span></div>
+                </div>
+                <button class="play-button" id="videoPlayOverlay" type="button" aria-label="Play Divinexa introduction"><i data-lucide="play"></i></button>
+                <span class="video-status" id="videoStatus">Interactive product tour</span>
+                <div class="video-controls" aria-label="Video controls">
+                  <button class="video-control-button" id="videoToggle" type="button" aria-label="Play video"><i data-lucide="play"></i></button>
+                  <span class="video-clock" id="videoCurrent">0:00</span>
+                  <input class="video-seek" id="videoSeek" type="range" min="0" max="135" value="0" aria-label="Video progress">
+                  <span class="video-clock">2:15</span>
+                  <button class="video-control-button" id="videoMute" type="button" aria-label="Mute video"><i data-lucide="volume-2"></i></button>
+                  <button class="video-control-button" id="videoFullscreen" type="button" aria-label="Enter fullscreen"><i data-lucide="maximize"></i></button>
+                </div>
+              </div>
+              <div class="slide-dots"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+            </article>
+
+            <div class="security-footer"><span class="feature-icon"><i data-lucide="shield-check"></i></span><span><strong>Your data is 100% secure and encrypted</strong><small>We follow industry best practices to keep your information safe.</small></span></div>
+          </div>
+
+          <aside class="content-stack content-right">
+            <article class="card right-card">
+              <div class="plan-heading"><h2>Your Plan</h2><span class="pill">Individual Plan</span></div>
+              <div class="metric-list">
+                <div class="metric"><span>Max Clinics Allowed</span><strong>3</strong></div>
+                <div class="metric"><span>Clinics Added</span><strong>2</strong></div>
+                <div class="metric"><span>Remaining</span><strong class="danger">1</strong></div>
+              </div>
+              <button class="button button-outline button-small" style="width:100%;margin-top:20px" type="button" data-demo-action>View Plan &amp; Usage</button>
+            </article>
+            <article class="card right-card">
+              <h2>Quick Actions</h2>
+              <div class="quick-list">
+                <button class="quick-action" type="button" data-demo-action><i data-lucide="sparkles"></i><span>Add New Clinic</span><i data-lucide="chevron-right"></i></button>
+                <button class="quick-action" type="button" data-demo-action><i data-lucide="user-plus"></i><span>Add New Patient</span><i data-lucide="chevron-right"></i></button>
+                <button class="quick-action" type="button" data-demo-action><i data-lucide="file-plus-2"></i><span>Create Prescription</span><i data-lucide="chevron-right"></i></button>
+                <button class="quick-action" type="button" data-demo-action><i data-lucide="calendar-days"></i><span>Schedule Appointment</span><i data-lucide="chevron-right"></i></button>
+              </div>
+            </article>
+            <article class="card assistant-card">
+              <h2><i data-lucide="bot"></i>AI Assistant <span class="pill">New</span></h2>
+              <p>Our AI will read your letterhead and auto-configure your clinic details, timings &amp; more.</p>
+              <button class="button button-outline button-small" type="button" data-demo-action>Set Up AI Assistant</button>
+              <span class="assistant-bot"><i data-lucide="bot"></i></span>
+            </article>
+            <article class="card right-card tip-card">
+              <h2><i data-lucide="lightbulb"></i>Pro Tip</h2>
+              <p>You can edit all details later from Settings.</p>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section class="tour-view" id="setupView" data-tour-view="2" hidden>
+        <div class="page-heading">
+          <div>
+            <h1>Set Up Your Practice 👋</h1>
+            <p>Let's set up your clinics and profile. You can add multiple clinics and manage them all in one place.</p>
+          </div>
+          <div class="tip-inline"><i data-lucide="lightbulb"></i><strong>Tip:</strong> You can edit these details anytime from Settings.</div>
+        </div>
+
+        <div class="content-grid setup-layout">
+          <div class="content-stack">
+            <article class="card setup-card">
+              <div class="section-heading">
+                <div><h2>Add Your Clinic(s)</h2><p>You can add multiple clinics as per your plan. Max 3 clinics allowed.</p></div>
+                <span class="drag-label"><i data-lucide="move"></i>Drag to reorder clinics</span>
+              </div>
+              <div class="clinic-cards">
+                <button class="add-clinic" type="button" data-demo-action><span class="feature-icon"><i data-lucide="plus"></i></span><strong>Add New Clinic</strong><small>Set up a new clinic</small></button>
+                <article class="clinic-card">
+                  <span class="primary-badge">Primary</span><button class="clinic-menu" type="button" data-demo-action><i data-lucide="ellipsis-vertical"></i></button>
+                  <span class="clinic-logo"><i data-lucide="heart-pulse"></i></span><strong>Mehta Health Clinic</strong><small>123, Green Park Road, Sector 41, Gurgaon, Haryana 122001</small>
+                  <span class="clinic-contact"><i data-lucide="phone"></i>+91 98765 43210</span><span class="clinic-contact"><i data-lucide="mail"></i>mehtahealth@gmail.com</span>
+                </article>
+                <article class="clinic-card">
+                  <button class="clinic-menu" type="button" data-demo-action><i data-lucide="ellipsis-vertical"></i></button>
+                  <span class="clinic-logo"><i data-lucide="cross"></i></span><strong>Care &amp; Cure Clinic</strong><small>2nd Floor, City Center, MG Road, Bangalore, Karnataka 560001</small>
+                  <span class="clinic-contact"><i data-lucide="phone"></i>+91 98764 32109</span><span class="clinic-contact"><i data-lucide="mail"></i>carecure@gmail.com</span>
+                </article>
+                <article class="clinic-card">
+                  <button class="clinic-menu" type="button" data-demo-action><i data-lucide="ellipsis-vertical"></i></button>
+                  <span class="clinic-logo"><i data-lucide="users-round"></i></span><strong>Wellness Point Clinic</strong><small>45, Park Street, Kolkata, West Bengal 700016</small>
+                  <span class="clinic-contact"><i data-lucide="phone"></i>+91 91234 56789</span><span class="clinic-contact"><i data-lucide="mail"></i>wellnesspoint@gmail.com</span>
+                </article>
+                <article class="clinic-card selected">
+                  <span class="primary-badge">Primary</span><button class="clinic-menu" type="button" data-demo-action><i data-lucide="ellipsis-vertical"></i></button>
+                  <span class="clinic-logo"><img class="clinic-logo-image" src="assets/images/clinic-demo-logo.png" alt=""></span><strong>Mukti Clinic</strong><small>221/B, Lake Town, Kolkata, West Bengal 700089</small>
+                  <span class="clinic-contact"><i data-lucide="phone"></i>+91 99033 22110</span><span class="clinic-contact"><i data-lucide="mail"></i>mukticlinic@gmail.com</span>
+                </article>
+              </div>
+            </article>
+
+            <article class="card details-card">
+              <h2>Clinic Details <span>(Mukti Clinic)</span></h2>
+              <div class="form-grid">
+                <div class="field"><label>Clinic Name <span class="required">*</span></label><input value="Mukti Clinic"></div>
+                <div class="field"><label>Clinic Logo</label><div class="logo-upload"><span class="clinic-logo"><img class="clinic-logo-image" src="assets/images/clinic-demo-logo.png" alt="Mukti Clinic logo"></span><span>mukti-logo.png<small>PNG • 512×512</small></span><button class="button button-outline button-small" type="button" data-demo-action><i data-lucide="upload"></i>Upload</button></div></div>
+                <div class="field wide"><label>Address <span class="required">*</span></label><input value="221/B, Lake Town, Kolkata, West Bengal 700089"></div>
+                <div class="field"><label>Phone Number <span class="required">*</span></label><input value="+91 99033 22110"></div>
+                <div class="field"><label>Email <span class="required">*</span></label><input value="mukticlinic@gmail.com"></div>
+                <div class="field"><label>Website (Optional)</label><input value="www.mukticlinic.com"></div>
+              </div>
+              <div class="practice-grid">
+                <div>
+                  <div class="hours-title">Map Location <span style="color:#d74c5d">*</span></div>
+                  <div class="map-panel"><span class="map-search"><i data-lucide="search"></i>Search location...</span><span class="map-pin"><i data-lucide="map-pin"></i></span></div>
+                </div>
+                <div class="hours-panel">
+                  <div class="hours-title">Working Days</div>
+                  <div class="day-row">
+                    <span class="day"><i>✓</i>Mon</span><span class="day"><i>✓</i>Tue</span><span class="day"><i>✓</i>Wed</span><span class="day"><i>✓</i>Thu</span><span class="day"><i>✓</i>Fri</span><span class="day"><i>✓</i>Sat</span><span class="day off"><i>✓</i>Sun</span>
+                  </div>
+                  <div class="hours-title">Working Hours</div>
+                  <div class="time-row"><strong>Morning</strong><span class="time-box">09:00 AM</span><span>to</span><span class="time-box">01:00 PM</span><span class="time-box">01:00 PM – 02:00 PM</span><button class="delete-time" type="button" data-demo-action><i data-lucide="trash-2"></i></button></div>
+                  <div class="time-row"><strong>Evening</strong><span class="time-box">05:00 PM</span><span>to</span><span class="time-box">09:00 PM</span><span class="time-box">—</span><button class="delete-time" type="button" data-demo-action><i data-lucide="trash-2"></i></button></div>
+                  <div class="hours-actions"><button class="button button-outline button-small" type="button" data-demo-action><i data-lucide="plus"></i>Add Time Slot</button><label class="check-label"><input type="checkbox">24 Hours Clinic (Open 24×7)</label></div>
+                </div>
+              </div>
+              <div class="benefit-row">
+                <div class="benefit"><span class="feature-icon"><i data-lucide="shield-check"></i></span><span><strong>Multi-Clinic Management</strong><small>Manage all your clinics from one dashboard</small></span></div>
+                <div class="benefit"><span class="feature-icon"><i data-lucide="bot"></i></span><span><strong>Smart AI Setup</strong><small>AI reads your documents and sets everything for you</small></span></div>
+                <div class="benefit"><span class="feature-icon"><i data-lucide="clock-3"></i></span><span><strong>Time Saving</strong><small>Automated setup saves your valuable time</small></span></div>
+                <div class="benefit"><span class="feature-icon"><i data-lucide="badge-check"></i></span><span><strong>100% Secure</strong><small>Your data is encrypted and always protected</small></span></div>
+              </div>
+            </article>
+          </div>
+
+          <aside class="content-stack">
+            <article class="card right-card">
+              <div class="plan-heading"><h2>Your Plan</h2><span class="pill">Individual Plan</span></div>
+              <div class="metric-list">
+                <div class="metric"><span>Max Clinics Allowed</span><strong>3</strong></div>
+                <div class="metric"><span>Clinics Added</span><strong>3</strong></div>
+                <div class="metric"><span>Remaining</span><strong class="danger">0</strong></div>
+              </div>
+            </article>
+            <article class="card right-card">
+              <h2>Clinic List</h2>
+              <div class="clinic-list">
+                <span class="clinic-list-item"><i data-lucide="heart-pulse"></i><span>Mehta Health Clinic</span><span class="pill">Primary</span></span>
+                <span class="clinic-list-item"><i data-lucide="cross"></i><span>Care &amp; Cure Clinic</span></span>
+                <span class="clinic-list-item"><i data-lucide="users-round"></i><span>Wellness Point Clinic</span></span>
+                <span class="clinic-list-item active"><img class="clinic-logo-image" style="width:16px;height:16px" src="assets/images/clinic-demo-logo.png" alt=""><span>Mukti Clinic</span></span>
+              </div>
+            </article>
+            <article class="card right-card">
+              <h2>Upload Clinic Letterhead</h2>
+              <p style="margin:-8px 0 13px;color:var(--muted);font-size:9px;line-height:1.5">Upload your letterhead to appear on prescriptions</p>
+              <div class="letterhead"><span class="letterhead-logo"><span class="clinic-logo"><img class="clinic-logo-image" src="assets/images/clinic-demo-logo.png" alt=""></span>MUKTI CLINIC</span><span class="letterhead-lines"><span></span><span></span><span></span><span></span></span></div>
+              <button class="button button-outline button-small" style="width:100%" type="button" data-demo-action><i data-lucide="upload"></i>Upload Letterhead</button>
+              <small style="display:block;margin-top:8px;color:var(--muted);font-size:7px;text-align:center">JPG, PNG or PDF (Max 2MB)</small>
+            </article>
+            <article class="card assistant-card">
+              <h2><i data-lucide="bot"></i>AI Will Read &amp; Configure</h2>
+              <p>Our AI will read your letterhead and auto-configure your prescription header, clinic details &amp; footer.</p>
+            </article>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    (() => {
+      const planKey = "individual";
+      const setupDestination = "individual-clinic-setup.html";
+      document.title = "CliniFlow - Individual Plan Welcome";
+      let currentStep = 1;
+      const progressFill = document.getElementById("progressFill");
+      const progressLabel = document.getElementById("progressLabel");
+      const progressTitle = document.getElementById("progressTitle");
+      const nextButton = document.getElementById("nextStep");
+      const toast = document.getElementById("toast");
+      let toastTimer;
+
+      const showToast = (message) => {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
+      };
+
+      const renderStep = (step) => {
+        if (step === 2) {
+          window.location.href = setupDestination;
+          return;
+        }
+        if (step !== 1) {
+          showToast("This demo currently includes Tour Steps 1 and 2.");
+          return;
+        }
+        currentStep = step;
+        document.querySelectorAll("[data-tour-view]").forEach((view) => {
+          view.hidden = Number(view.dataset.tourView) !== step;
+        });
+        document.querySelectorAll("[data-tour-step]").forEach((button) => {
+          const buttonStep = Number(button.dataset.tourStep);
+          button.classList.toggle("active", buttonStep === step);
+          button.classList.toggle("completed", buttonStep < step);
+        });
+        progressFill.style.width = `${(step / 4) * 100}%`;
+        progressLabel.textContent = `Step ${step} of 4`;
+        progressTitle.textContent = step === 1 ? "Tour Progress" : "Setup Progress";
+        nextButton.innerHTML = step === 1 ? 'Next <i data-lucide="arrow-right"></i>' : 'Next Step <i data-lucide="arrow-right"></i>';
+        history.replaceState(null, "", location.pathname);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.lucide) lucide.createIcons();
+      };
+
+      nextButton.addEventListener("click", () => {
+        window.location.href = setupDestination;
+      });
+
+      document.querySelectorAll("[data-tour-step]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const step = Number(button.dataset.tourStep);
+          if (step === 2) window.location.href = setupDestination;
+          else renderStep(step);
+        });
+      });
+
+      const videoPreview = document.querySelector(".video-preview");
+      const videoOverlay = document.getElementById("videoPlayOverlay");
+      const videoToggle = document.getElementById("videoToggle");
+      const videoSeek = document.getElementById("videoSeek");
+      const videoCurrentLabel = document.getElementById("videoCurrent");
+      const videoMute = document.getElementById("videoMute");
+      const videoFullscreen = document.getElementById("videoFullscreen");
+      const slideDots = [...document.querySelectorAll(".slide-dots span")];
+      const videoDuration = 135;
+      let videoCurrent = 0;
+      let videoPlaying = false;
+      let videoMuted = false;
+      let videoTimer;
+
+      const formatVideoTime = (seconds) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+
+      const renderVideo = () => {
+        videoPreview.classList.toggle("playing", videoPlaying);
+        videoCurrentLabel.textContent = formatVideoTime(videoCurrent);
+        videoSeek.value = String(videoCurrent);
+        videoToggle.innerHTML = `<i data-lucide="${videoPlaying ? "pause" : "play"}"></i>`;
+        videoToggle.setAttribute("aria-label", videoPlaying ? "Pause video" : "Play video");
+        const activeSlide = Math.min(4, Math.floor(videoCurrent / (videoDuration / 5)));
+        slideDots.forEach((dot, index) => dot.classList.toggle("active", index === activeSlide));
+        if (window.lucide) lucide.createIcons();
+      };
+
+      const stopVideoTimer = () => {
+        clearInterval(videoTimer);
+        videoTimer = null;
+      };
+
+      const setVideoPlaying = (playing) => {
+        videoPlaying = playing;
+        stopVideoTimer();
+        if (videoPlaying) {
+          if (videoCurrent >= videoDuration) videoCurrent = 0;
+          videoTimer = setInterval(() => {
+            videoCurrent += 1;
+            if (videoCurrent >= videoDuration) {
+              videoCurrent = videoDuration;
+              videoPlaying = false;
+              stopVideoTimer();
+            }
+            renderVideo();
+          }, 1000);
+        }
+        renderVideo();
+      };
+
+      videoOverlay.addEventListener("click", () => setVideoPlaying(true));
+      videoToggle.addEventListener("click", () => setVideoPlaying(!videoPlaying));
+      videoPreview.addEventListener("dblclick", () => videoFullscreen.click());
+      videoSeek.addEventListener("input", () => {
+        videoCurrent = Number(videoSeek.value);
+        renderVideo();
+      });
+      videoMute.addEventListener("click", () => {
+        videoMuted = !videoMuted;
+        videoMute.innerHTML = `<i data-lucide="${videoMuted ? "volume-x" : "volume-2"}"></i>`;
+        videoMute.setAttribute("aria-label", videoMuted ? "Unmute video" : "Mute video");
+        if (window.lucide) lucide.createIcons();
+      });
+      videoFullscreen.addEventListener("click", async () => {
+        if (!document.fullscreenElement) {
+          await videoPreview.requestFullscreen?.();
+        } else {
+          await document.exitFullscreen?.();
+        }
+      });
+      document.addEventListener("fullscreenchange", () => {
+        const fullscreen = document.fullscreenElement === videoPreview;
+        videoFullscreen.innerHTML = `<i data-lucide="${fullscreen ? "minimize" : "maximize"}"></i>`;
+        videoFullscreen.setAttribute("aria-label", fullscreen ? "Exit fullscreen" : "Enter fullscreen");
+        if (window.lucide) lucide.createIcons();
+      });
+
+      document.querySelectorAll("[data-demo-action]").forEach((button) => {
+        button.addEventListener("click", () => showToast("Demo action selected."));
+      });
+
+      const profileButton = document.getElementById("profileButton");
+      const profileMenu = document.getElementById("profileMenu");
+      profileButton.addEventListener("click", () => {
+        const open = profileMenu.hidden;
+        profileMenu.hidden = !open;
+        profileButton.setAttribute("aria-expanded", String(open));
+      });
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".profile-wrap")) {
+          profileMenu.hidden = true;
+          profileButton.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      document.querySelectorAll(".pill").forEach((pill) => {
+        pill.textContent = planKey === "clinic" ? "Clinic Plan" : "Individual Plan";
+      });
+      document.querySelector(".profile-copy small").textContent = planKey === "clinic" ? "Clinic Plan" : "Individual Plan";
+
+      renderStep(currentStep);
+      renderVideo();
+      if (window.lucide) lucide.createIcons();
+    })();
+  </script>
+</body>
+</html>

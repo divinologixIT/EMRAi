@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create a Divinexa patient portal account.">
+  <title>Patient Registration | Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/patient-auth.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="patient-auth registration-page">
+  <main class="auth-shell">
+    <header class="auth-header">
+      <a class="brand" href="home.html" aria-label="Divinexa patient portal home">
+        <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Patient Portal</small></span>
+      </a>
+      <p class="header-switch">Already have an account? <a href="patient-login.html">Login</a></p>
+    </header>
+
+    <div class="auth-grid">
+      <section class="auth-intro" aria-labelledby="registrationWelcome">
+        <h1 id="registrationWelcome">Create Your<br><span>Account</span></h1>
+        <p>Join us and take control of your health journey.<br>It's quick, easy and secure.</p>
+        <span class="intro-rule" aria-hidden="true"></span>
+
+        <ul class="benefits" aria-label="Registration benefits">
+          <li>
+            <span class="benefit-icon"><i data-lucide="shield-check"></i></span>
+            <span class="benefit-copy"><strong>Secure &amp; Private</strong><small>We keep your information safe and encrypted</small></span>
+          </li>
+          <li>
+            <span class="benefit-icon"><i data-lucide="user-round"></i></span>
+            <span class="benefit-copy"><strong>Easy Registration</strong><small>Create your account in just a few steps</small></span>
+          </li>
+          <li>
+            <span class="benefit-icon"><i data-lucide="heart-pulse"></i></span>
+            <span class="benefit-copy"><strong>Better Experience</strong><small>Connect with doctors and manage your health easily</small></span>
+          </li>
+          <li>
+            <span class="benefit-icon"><i data-lucide="bell"></i></span>
+            <span class="benefit-copy"><strong>Stay Updated</strong><small>Get reminders for appointments, medicines and more</small></span>
+          </li>
+        </ul>
+
+        <div class="auth-art registration-art" aria-hidden="true">
+          <img src="assets/images/patient-registration-family.png" alt="">
+        </div>
+      </section>
+
+      <section class="form-card signup-card patient-signup-card" aria-labelledby="patientRegistrationTitle">
+        <div class="form-heading signup-heading patient-signup-heading">
+          <span class="form-heading-icon signup-avatar" aria-hidden="true"><i data-lucide="user-round-plus"></i></span>
+          <h2 id="patientRegistrationTitle">Patient Registration</h2>
+        </div>
+
+        <form class="auth-form signup-form patient-signup-form" id="patientRegistrationForm" novalidate>
+          <div class="form-row signup-row">
+            <div class="form-field">
+              <label for="fullName">Full Name</label>
+              <div class="input-wrap"><i data-lucide="user-round"></i><input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Enter your full name"></div>
+              <small class="field-error" data-error-for="fullName" aria-live="polite"></small>
+            </div>
+            <div class="form-field">
+              <label for="mobileNumber">Mobile Number</label>
+              <div class="input-wrap"><i data-lucide="phone"></i><input id="mobileNumber" name="mobile" type="tel" inputmode="tel" autocomplete="tel" placeholder="Enter mobile number"></div>
+              <small class="field-error" data-error-for="mobileNumber" aria-live="polite"></small>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="emailAddress">Email Address</label>
+            <div class="input-wrap"><i data-lucide="mail"></i><input id="emailAddress" name="email" type="email" autocomplete="email" placeholder="Enter email address"></div>
+            <small class="field-error" data-error-for="emailAddress" aria-live="polite"></small>
+          </div>
+
+          <div class="form-row signup-row">
+            <div class="form-field auth-date-field">
+              <label for="dateOfBirth">Date of Birth</label>
+              <div class="input-wrap auth-date-trigger" data-auth-date-picker>
+                <i data-lucide="calendar-days"></i>
+                <input id="dateOfBirth" name="dateOfBirth" type="text" inputmode="none" autocomplete="bday" placeholder="dd/mm/yyyy" readonly aria-haspopup="dialog" aria-expanded="false">
+              </div>
+              <div class="auth-date-calendar" role="dialog" aria-label="Choose date of birth" hidden></div>
+              <small class="field-error" data-error-for="dateOfBirth" aria-live="polite"></small>
+            </div>
+            <div class="form-field">
+              <label id="genderLabel" for="gender">Gender</label>
+              <div class="input-wrap select-wrap patient-select-control"><i data-lucide="users-round"></i><select id="gender" name="gender"><option value="">Select Gender</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></div>
+              <small class="field-error" data-error-for="gender" aria-live="polite"></small>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="registrationPassword">Password</label>
+            <div class="input-wrap">
+              <i data-lucide="lock-keyhole"></i>
+              <input id="registrationPassword" name="password" type="password" autocomplete="new-password" placeholder="Create a password">
+              <button class="password-toggle" type="button" data-password-toggle="registrationPassword" aria-label="Show password"><i data-lucide="eye-off"></i></button>
+            </div>
+            <small class="field-error" data-error-for="registrationPassword" aria-live="polite"></small>
+          </div>
+
+          <div class="form-field">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="input-wrap">
+              <i data-lucide="lock-keyhole"></i>
+              <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Confirm your password">
+              <button class="password-toggle" type="button" data-password-toggle="confirmPassword" aria-label="Show password"><i data-lucide="eye-off"></i></button>
+            </div>
+            <small class="field-error" data-error-for="confirmPassword" aria-live="polite"></small>
+          </div>
+
+          <div>
+            <label class="check-control terms-row">
+              <input id="acceptTerms" type="checkbox" name="terms">
+              <span class="check-box"><i data-lucide="check"></i></span>
+              <span>I agree to the <a href="#terms">Terms &amp; Conditions</a></span>
+            </label>
+            <small class="field-error" data-error-for="acceptTerms" aria-live="polite"></small>
+          </div>
+
+          <button class="primary-action signup-button" type="submit">Create Account</button>
+
+          <div class="divider signup-divider"><span>or continue with</span></div>
+
+          <div class="social-row social-signup">
+            <button class="social-button" type="button" data-toast="Google registration is ready to connect.">
+              <span class="social-logo google-logo">G</span>Google
+            </button>
+            <button class="social-button" type="button" data-toast="Facebook registration is ready to connect.">
+              <span class="social-logo facebook-logo">f</span>Facebook
+            </button>
+          </div>
+
+          <p class="privacy-note"><i data-lucide="shield-check"></i><span>We never share your personal information with anyone. Your privacy is our priority.</span></p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check-big"></i><span></span></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/common-date-picker.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/patient-auth.js"></script>
+</body>
+</html>

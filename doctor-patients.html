@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Divinexa doctor patient list and patient records">
+  <title>Patients | Divinexa Doctor Portal</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ai-queue.css">
+  <link rel="stylesheet" href="assets/css/doctor-dashboard-sidebar.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+  <link rel="stylesheet" href="assets/css/doctor-patients.css">
+</head>
+<body>
+  <aside class="doctor-sidebar" id="doctorSidebar" aria-label="Doctor portal navigation">
+    <a class="doctor-brand" href="doctor-dashboard.html" aria-label="Divinexa doctor dashboard">
+      <span class="brand-pulse"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+      <span><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>AI Doctor Panel</small></span>
+    </a>
+    <button class="doctor-sidebar-collapse" id="doctorSidebarCollapse" type="button" aria-label="Collapse doctor menu" aria-controls="doctorSidebar" aria-expanded="true"><i data-lucide="chevrons-left"></i></button>
+
+    <nav class="doctor-nav">
+      <a class="doctor-nav-link" href="doctor-dashboard.html"><i data-lucide="house"></i><span>Dashboard</span><i class="nav-chevron" data-lucide="chevron-right"></i></a>
+      <span class="doctor-nav-section">Clinical</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening multi-clinic overview"><i data-lucide="hospital"></i><span>Multi-Clinic Overview</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <a class="doctor-nav-link" href="ai-queue.html"><i data-lucide="bot"></i><span>AI Queue</span><span class="nav-count">14</span></a>
+      <a class="doctor-nav-link" href="doctor-prescription.html"><i data-lucide="file-heart"></i><span>AI Prescriptions</span><span class="nav-count">27</span></a>
+      <a class="doctor-nav-link active" href="doctor-patients.html" aria-current="page"><i data-lucide="user-round"></i><span>Patients</span><i class="nav-chevron" data-lucide="chevron-right"></i></a>
+      <button class="doctor-nav-link" type="button" data-message="Opening appointments"><i data-lucide="calendar-days"></i><span>Appointments</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening medical records"><i data-lucide="folder-heart"></i><span>Medical Records</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening lab and imaging"><i data-lucide="flask-conical"></i><span>Lab &amp; Imaging</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <span class="doctor-nav-section">Analytics &amp; Finance</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening analytics"><i data-lucide="chart-no-axes-combined"></i><span>Analytics</span><i class="nav-chevron" data-lucide="chevron-down"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening revenue"><i data-lucide="circle-dollar-sign"></i><span>Revenue</span><i class="nav-chevron" data-lucide="chevron-down"></i></button>
+      <span class="doctor-nav-section">Communication</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening follow-ups"><i data-lucide="archive"></i><span>Follow-ups</span><span class="nav-count">11</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Checking drug interactions"><i data-lucide="pill"></i><span>Drug Interactions</span><span class="nav-count">6</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening messages"><i data-lucide="message-square"></i><span>Messages</span><span class="nav-count">8</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening calendar"><i data-lucide="calendar-days"></i><span>Calendar</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <span class="doctor-nav-section">Others</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening settings"><i data-lucide="settings"></i><span>Settings</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+    </nav>
+
+    <section class="doctor-sidebar-profile" aria-label="Signed-in doctor">
+      <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=96&amp;h=96&amp;q=82" alt="">
+      <span><strong>Dr. John Smith</strong><small>MBBS, MD · Physician</small><em><i></i> Online</em></span>
+      <button type="button" aria-label="Sign out" data-message="Signed out of preview"><i data-lucide="log-out"></i></button>
+    </section>
+  </aside>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="app-shell">
+    <header class="doctor-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle doctor navigation" aria-controls="doctorSidebar" aria-expanded="true"><i data-lucide="menu"></i></button>
+      <label class="doctor-search">
+        <span class="sr-only">Search patient, mobile number, UHID, or email</span>
+        <i data-lucide="search"></i>
+        <input id="globalSearch" type="search" placeholder="Search patient, mobile, UHID, email..." autocomplete="off">
+        <span class="search-shortcut">Ctrl + K</span>
+      </label>
+      <div class="topbar-spacer"></div>
+      <button class="voice-command" type="button" data-message="Voice command listening"><i data-lucide="mic"></i><span>Voice Command</span></button>
+      <button class="top-icon" type="button" aria-label="8 notifications" data-message="You have 8 new notifications"><i data-lucide="bell"></i><span class="top-badge">8</span></button>
+      <button class="top-icon" type="button" aria-label="3 unread messages" data-message="You have 3 unread messages"><i data-lucide="message-square"></i><span class="top-badge">3</span></button>
+      <div class="doctor-profile" id="doctorProfile">
+        <button class="doctor-profile-button" id="doctorProfileButton" type="button" aria-expanded="false">
+          <img class="doctor-avatar" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=82" alt="Dr. Arjun Mehta">
+          <span><strong>Dr. Arjun Mehta</strong><small>MBBS, MD - Physician</small></span>
+          <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="doctor-profile-menu" role="menu">
+          <button type="button" role="menuitem" data-message="Opening doctor profile">My Profile</button>
+          <button type="button" role="menuitem" data-message="Opening account settings">Account Settings</button>
+          <button type="button" role="menuitem" data-message="Signed out of preview">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="patients-page">
+      <section class="patients-page-head">
+        <div>
+          <h1>Patients</h1>
+          <p>Manage and view all your patient records</p>
+        </div>
+        <div class="patients-context">
+          <button type="button" data-message="Date selector opened"><i data-lucide="calendar-days"></i><span><strong>23 May 2026</strong><small>Friday</small></span><i data-lucide="chevron-down"></i></button>
+          <button type="button" data-message="Clinic selector opened"><i data-lucide="hospital"></i><span><strong>Divinexa Clinic</strong><small>Salt Lake, Kolkata</small></span><i data-lucide="chevron-down"></i></button>
+        </div>
+      </section>
+
+      <section class="patient-metrics" aria-label="Patient overview">
+        <article class="patient-metric"><span class="metric-icon teal"><i data-lucide="users-round"></i></span><div><small>Total Patients</small><strong>2,458</strong><em>All Time</em></div><svg class="metric-spark teal-line" data-sparkline="totalPatients" viewBox="0 0 64 24" aria-hidden="true"></svg></article>
+        <article class="patient-metric"><span class="metric-icon blue"><i data-lucide="clock-3"></i></span><div><small>Currently Waiting</small><strong>18</strong><em>In Queue</em></div><svg class="metric-spark blue-line" data-sparkline="currentlyWaiting" viewBox="0 0 64 24" aria-hidden="true"></svg></article>
+        <article class="patient-metric"><span class="metric-icon orange"><i data-lucide="stethoscope"></i></span><div><small>In Consultation</small><strong>1</strong><em>With Doctor</em></div><svg class="metric-spark orange-line" data-sparkline="inConsultation" viewBox="0 0 64 24" aria-hidden="true"></svg></article>
+        <article class="patient-metric"><span class="metric-icon green"><i data-lucide="circle-check-big"></i></span><div><small>Completed Today</small><strong>52</strong><em>Today</em></div><svg class="metric-spark green-line" data-sparkline="completedToday" viewBox="0 0 64 24" aria-hidden="true"></svg></article>
+        <article class="patient-metric"><span class="metric-icon purple"><i data-lucide="calendar-clock"></i></span><div><small>Follow-up Today</small><strong>32</strong><em>Attention</em></div><svg class="metric-spark purple-line" data-sparkline="followUpToday" viewBox="0 0 64 24" aria-hidden="true"></svg></article>
+      </section>
+
+      <div class="patients-layout">
+        <div class="patients-primary">
+          <section class="patient-filter-card">
+            <label class="patient-filter-search"><span>Search Patients</span><i data-lucide="search"></i><input id="patientSearch" type="search" placeholder="Search by name, mobile, UHID..." autocomplete="off"></label>
+            <label><span>Visit Type</span><select id="visitFilter"><option value="all">All</option><option value="New">New</option><option value="Review">Review</option><option value="Follow-up">Follow-up</option></select></label>
+            <label><span>Age Group</span><select id="ageFilter"><option value="all">All</option><option value="child">0–17 years</option><option value="adult">18–59 years</option><option value="senior">60+ years</option></select></label>
+            <label><span>Gender</span><select id="genderFilter"><option value="all">All</option><option value="Male">Male</option><option value="Female">Female</option></select></label>
+            <div class="more-filter-control">
+              <button class="secondary-filter" id="moreFiltersButton" type="button" aria-expanded="false" aria-controls="moreFiltersMenu"><span>More Filters</span><i data-lucide="list-filter"></i></button>
+              <div class="more-filter-menu" id="moreFiltersMenu" hidden>
+                <header><strong>More Filters</strong><button id="closeMoreFilters" type="button" aria-label="Close filters"><i data-lucide="x"></i></button></header>
+                <fieldset class="risk-options"><legend>AI Risk</legend><label><input type="checkbox" name="risk" value="Low" checked><span>Low</span></label><label><input type="checkbox" name="risk" value="Medium" checked><span>Medium</span></label><label><input type="checkbox" name="risk" value="High" checked><span>High</span></label></fieldset>
+                <fieldset class="status-options"><legend>Patient Status</legend><label><input type="checkbox" name="moreStatus" value="Waiting" checked><span>Waiting</span></label><label><input type="checkbox" name="moreStatus" value="In Consultation" checked><span>Consultation</span></label><label><input type="checkbox" name="moreStatus" value="Completed" checked><span>Completed</span></label></fieldset>
+                <fieldset class="last-visit-options"><legend>Last Visit</legend><label><input type="radio" name="lastVisit" value="all" checked><span>Any Time</span></label><label><input type="radio" name="lastVisit" value="week"><span>7 Days</span></label><label><input type="radio" name="lastVisit" value="month"><span>30 Days</span></label><label><input type="radio" name="lastVisit" value="none"><span>No History</span></label></fieldset>
+                <footer><button id="resetMoreFilters" type="button">Reset</button><button id="applyMoreFilters" type="button">Apply Filters</button></footer>
+              </div>
+            </div>
+            <button class="new-patient-button" id="newPatientButton" type="button"><i data-lucide="plus"></i><span>New Patient</span></button>
+          </section>
+
+          <section class="patient-records-card">
+            <div class="patient-tabs" role="tablist" aria-label="Patient status">
+              <button class="active" type="button" role="tab" data-status="all">All Patients <span>(245)</span></button>
+              <button type="button" role="tab" data-status="Waiting">Waiting <span>(18)</span></button>
+              <button type="button" role="tab" data-status="In Consultation">In Consultation <span>(1)</span></button>
+              <button type="button" role="tab" data-status="Follow-up">Follow-up <span>(32)</span></button>
+              <button type="button" role="tab" data-status="Completed">Completed <span>(52)</span></button>
+              <button class="export-button" type="button" data-message="Patient list exported"><i data-lucide="download"></i> Export</button>
+            </div>
+
+            <div class="patient-table-wrap">
+              <table class="patient-list-table">
+                <thead>
+                  <tr><th><input type="checkbox" aria-label="Select all patients"></th><th>#</th><th>Patient</th><th>Age / Gender</th><th>Visit Type</th><th>Last Visit</th><th>Status</th><th>AI Risk</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="patientTableBody">
+                  <tr data-name="Rahul Sen DX-10245 987XXXX54" data-visit="Follow-up" data-age="34" data-gender="Male" data-status="In Consultation" data-risk="Medium"><td><input type="checkbox" aria-label="Select Rahul Sen"></td><td>01</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=12" alt=""><span><strong>Rahul Sen <b>★</b></strong><small>UHID: DX-10245</small><em><i data-lucide="phone"></i> 987XXXX54</em></span></span></td><td>34 / Male</td><td><span class="visit-tag follow-up">Follow-up</span></td><td>12 Jul 2025</td><td><span class="status-tag consulting">In Consultation</span></td><td><span class="risk-tag medium">Medium</span></td><td><span class="table-actions"><button type="button" data-message="Continuing Rahul Sen consultation" aria-label="Continue consultation"><i data-lucide="play"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                  <tr data-name="Anita Roy DX-10567 90XXXX21" data-visit="New" data-age="26" data-gender="Female" data-status="Waiting" data-risk="Low"><td><input type="checkbox" aria-label="Select Anita Roy"></td><td>02</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=47" alt=""><span><strong>Anita Roy</strong><small>UHID: DX-10567</small><em><i data-lucide="phone"></i> 90XXXX21</em></span></span></td><td>26 / Female</td><td><span class="visit-tag new">New</span></td><td>–</td><td><span class="status-tag waiting">Waiting</span></td><td><span class="risk-tag low">Low</span></td><td><span class="table-actions"><button type="button" data-message="Calling Anita Roy" aria-label="Call patient"><i data-lucide="play"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                  <tr data-name="Rakesh Das DX-10454 98XXXX11" data-visit="Review" data-age="58" data-gender="Male" data-status="Completed" data-risk="High"><td><input type="checkbox" aria-label="Select Rakesh Das"></td><td>03</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=13" alt=""><span><strong>Rakesh Das</strong><small>UHID: DX-10454</small><em><i data-lucide="phone"></i> 98XXXX11</em></span></span></td><td>58 / Male</td><td><span class="visit-tag review">Review</span></td><td>Yesterday</td><td><span class="status-tag completed">Completed</span></td><td><span class="risk-tag high">High</span></td><td><span class="table-actions"><button type="button" data-message="Opening Rakesh Das summary" aria-label="View summary"><i data-lucide="file-text"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                  <tr data-name="Sumit Ghosh DX-10398 93XXXX77" data-visit="Review" data-age="45" data-gender="Male" data-status="Waiting" data-risk="Medium"><td><input type="checkbox" aria-label="Select Sumit Ghosh"></td><td>04</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=11" alt=""><span><strong>Sumit Ghosh</strong><small>UHID: DX-10398</small><em><i data-lucide="phone"></i> 93XXXX77</em></span></span></td><td>45 / Male</td><td><span class="visit-tag review">Review</span></td><td>2 Weeks Ago</td><td><span class="status-tag waiting">Waiting</span></td><td><span class="risk-tag medium">Medium</span></td><td><span class="table-actions"><button type="button" data-message="Calling Sumit Ghosh" aria-label="Call patient"><i data-lucide="play"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                  <tr data-name="Pooja Shaw DX-10987 89XXXX33" data-visit="Follow-up" data-age="31" data-gender="Female" data-status="Waiting" data-risk="Low"><td><input type="checkbox" aria-label="Select Pooja Shaw"></td><td>05</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=44" alt=""><span><strong>Pooja Shaw</strong><small>UHID: DX-10987</small><em><i data-lucide="phone"></i> 89XXXX33</em></span></span></td><td>31 / Female</td><td><span class="visit-tag follow-up">Follow-up</span></td><td>10 May 2025</td><td><span class="status-tag waiting">Waiting</span></td><td><span class="risk-tag low">Low</span></td><td><span class="table-actions"><button type="button" data-message="Calling Pooja Shaw" aria-label="Call patient"><i data-lucide="play"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                  <tr data-name="Subhash Paul DX-10876 98XXXX65" data-visit="New" data-age="62" data-gender="Male" data-status="Waiting" data-risk="High"><td><input type="checkbox" aria-label="Select Subhash Paul"></td><td>06</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=68" alt=""><span><strong>Subhash Paul</strong><small>UHID: DX-10876</small><em><i data-lucide="phone"></i> 98XXXX65</em></span></span></td><td>62 / Male</td><td><span class="visit-tag new">New</span></td><td>–</td><td><span class="status-tag waiting">Waiting</span></td><td><span class="risk-tag high">High</span></td><td><span class="table-actions"><button type="button" data-message="Calling Subhash Paul" aria-label="Call patient"><i data-lucide="play"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                  <tr data-name="Arjun Mukherjee DX-10765 91XXXX45" data-visit="Follow-up" data-age="10" data-gender="Male" data-status="Completed" data-risk="Low"><td><input type="checkbox" aria-label="Select Arjun Mukherjee"></td><td>07</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=8" alt=""><span><strong>Arjun Mukherjee</strong><small>UHID: DX-10765</small><em><i data-lucide="phone"></i> 91XXXX45</em></span></span></td><td>10 / Male</td><td><span class="visit-tag follow-up">Follow-up</span></td><td>5 Jun 2025</td><td><span class="status-tag completed">Completed</span></td><td><span class="risk-tag low">Low</span></td><td><span class="table-actions"><button type="button" data-message="Opening Arjun Mukherjee summary" aria-label="View summary"><i data-lucide="file-text"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                  <tr data-name="Maya Banerjee DX-10654 90XXXX12" data-visit="Review" data-age="68" data-gender="Female" data-status="Waiting" data-risk="Medium"><td><input type="checkbox" aria-label="Select Maya Banerjee"></td><td>08</td><td><span class="patient-cell"><img src="https://i.pravatar.cc/80?img=9" alt=""><span><strong>Maya Banerjee</strong><small>UHID: DX-10654</small><em><i data-lucide="phone"></i> 90XXXX12</em></span></span></td><td>68 / Female</td><td><span class="visit-tag review">Review</span></td><td>1 Week Ago</td><td><span class="status-tag waiting">Waiting</span></td><td><span class="risk-tag medium">Medium</span></td><td><span class="table-actions"><button type="button" data-message="Calling Maya Banerjee" aria-label="Call patient"><i data-lucide="play"></i></button><button type="button" data-message="Patient actions opened" aria-label="More actions"><i data-lucide="more-vertical"></i></button></span></td></tr>
+                </tbody>
+              </table>
+              <div class="empty-patients" id="emptyPatients"><i data-lucide="users"></i><strong>No patients found</strong><span>Try changing your search or filters.</span></div>
+            </div>
+
+            <footer class="patient-pagination"><span id="patientCount">Showing 1 to 8 of 245 patients</span><nav aria-label="Patient list pagination"><button type="button" aria-label="Previous page"><i data-lucide="chevron-left"></i></button><button class="active" type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">4</button><button type="button">5</button><span>…</span><button type="button">31</button><button type="button" aria-label="Next page"><i data-lucide="chevron-right"></i></button></nav><select aria-label="Patients per page"><option>10 / page</option><option>20 / page</option><option>50 / page</option></select></footer>
+          </section>
+        </div>
+
+        <aside class="patient-rail" aria-label="Consultation patient overview">
+          <article class="patient-focus current">
+            <header><span><i data-lucide="user-round-check"></i> Current Patient</span><em>In Consultation</em></header>
+            <div class="focus-person"><img src="https://i.pravatar.cc/120?img=12" alt="Rahul Sen"><span><strong>Rahul Sen <b>★</b></strong><small>34 Years, Male</small><small><i data-lucide="phone"></i> 987XXXX54</small><small>UHID: DX-10245</small></span></div>
+            <div class="focus-links"><button type="button" data-message="Opening Rahul Sen vitals"><i data-lucide="activity"></i>Vitals</button><button type="button" data-message="Opening Rahul Sen history"><i data-lucide="heart-pulse"></i>History</button><button type="button" data-message="Opening Rahul Sen reports"><i data-lucide="clipboard-list"></i>Reports</button><button type="button" data-message="More patient options"><i data-lucide="more-horizontal"></i>More</button></div>
+            <a class="focus-action teal-action" href="doctor-prescription.html"><i data-lucide="play"></i> Continue Consultation</a>
+          </article>
+          <article class="patient-focus next">
+            <header><span><i data-lucide="user-round-plus"></i> Next Patient</span><em>Waiting</em></header>
+            <div class="focus-person"><img src="https://i.pravatar.cc/120?img=47" alt="Anita Roy"><span><strong>Anita Roy</strong><small>26 Years, Female</small><small><i data-lucide="phone"></i> 90XXXX21</small><small>UHID: DX-10567</small></span></div>
+            <div class="focus-links"><button type="button" data-message="Opening Anita Roy vitals"><i data-lucide="activity"></i>Vitals</button><button type="button" data-message="Opening Anita Roy history"><i data-lucide="heart-pulse"></i>History</button><button type="button" data-message="Opening Anita Roy reports"><i data-lucide="clipboard-list"></i>Reports</button><button type="button" data-message="More patient options"><i data-lucide="more-horizontal"></i>More</button></div>
+            <button class="focus-action blue-action" type="button" data-message="Calling Anita Roy"><i data-lucide="phone-call"></i> Call Next Patient</button>
+          </article>
+          <article class="patient-focus completed-focus">
+            <header><span><i data-lucide="key-round"></i> Last Completed</span><em>Completed</em></header>
+            <div class="focus-person"><img src="https://i.pravatar.cc/120?img=13" alt="Rakesh Das"><span><strong>Rakesh Das</strong><small>58 Years, Male</small><small><i data-lucide="phone"></i> 98XXXX11</small><small>UHID: DX-10454</small></span></div>
+            <div class="focus-links"><button type="button" data-message="Opening consultation summary"><i data-lucide="file-check-2"></i>Summary</button><button type="button" data-message="Opening prescription"><i data-lucide="file-heart"></i>Prescription</button><button type="button" data-message="Opening Rakesh Das reports"><i data-lucide="clipboard-list"></i>Reports</button><button type="button" data-message="More patient options"><i data-lucide="more-horizontal"></i>More</button></div>
+            <button class="focus-action outline-action" type="button" data-message="Opening Rakesh Das summary"><i data-lucide="file-text"></i> View Summary</button>
+          </article>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <div class="patient-modal" id="patientModal" role="dialog" aria-modal="true" aria-labelledby="patientModalTitle" hidden>
+    <form class="patient-modal-card" id="newPatientForm">
+      <header><div><h2 id="patientModalTitle">Add New Patient</h2><p>Create a patient record for your clinic.</p></div><button id="closePatientModal" type="button" aria-label="Close"><i data-lucide="x"></i></button></header>
+      <div class="patient-modal-grid"><label><span>Full Name</span><input name="name" required placeholder="Enter patient name"></label><label><span>Mobile Number</span><input name="mobile" required placeholder="Enter mobile number"></label><label><span>Age</span><input name="age" type="number" min="0" max="120" required placeholder="Age"></label><label><span>Gender</span><select name="gender" required><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option></select></label></div>
+      <footer><button id="cancelPatientModal" type="button">Cancel</button><button type="submit"><i data-lucide="user-plus"></i> Add Patient</button></footer>
+    </form>
+  </div>
+
+  <div class="patients-toast" id="patientsToast" role="status" aria-live="polite"><i data-lucide="circle-check-big"></i><span id="patientsToastMessage">Done</span></div>
+
+  <script id="patientMetricChartData" type="application/json">
+    {
+      "totalPatients": [7, 12, 8, 14, 9, 12, 8],
+      "currentlyWaiting": [6, 13, 8, 15, 9, 9, 8],
+      "inConsultation": [5, 8, 13, 8, 7, 9, 6],
+      "completedToday": [6, 13, 8, 12, 8, 10, 7],
+      "followUpToday": [5, 13, 7, 9, 5, 8, 6]
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/doctor-patients.js"></script>
+  <script src="assets/js/doctor-dashboard-sidebar.js"></script>
+</body>
+</html>

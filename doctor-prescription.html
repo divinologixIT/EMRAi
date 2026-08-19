@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Divinexa AI-assisted prescription workspace">
+  <title>AI Prescription | Divinexa Doctor Portal</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/doctor-prescription.css?v=20260731-6">
+  <link rel="stylesheet" href="assets/css/doctor-dashboard-sidebar.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="sidebar-collapsed">
+  <aside class="doctor-sidebar" id="doctorSidebar" aria-label="Doctor portal navigation">
+    <a class="doctor-brand" href="doctor-dashboard.html" aria-label="Divinexa doctor dashboard">
+      <span class="brand-pulse"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+      <span><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>AI Doctor Panel</small></span>
+    </a>
+    <button class="doctor-sidebar-collapse" id="doctorSidebarCollapse" type="button" aria-label="Collapse doctor menu" aria-controls="doctorSidebar" aria-expanded="false"><i data-lucide="chevrons-left"></i></button>
+
+    <nav class="doctor-nav">
+      <a class="doctor-nav-link" href="doctor-dashboard.html"><i data-lucide="house"></i><span>Dashboard</span><i class="nav-chevron" data-lucide="chevron-right"></i></a>
+      <span class="doctor-nav-section">Clinical</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening multi-clinic overview"><i data-lucide="hospital"></i><span>Multi-Clinic Overview</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <a class="doctor-nav-link" href="ai-queue.html"><i data-lucide="bot"></i><span>AI Queue</span><span class="nav-count">14</span></a>
+      <a class="doctor-nav-link active" href="doctor-prescription.html" aria-current="page"><i data-lucide="file-heart"></i><span>AI Prescriptions</span><span class="nav-count">27</span></a>
+      <a class="doctor-nav-link" href="doctor-patients.html"><i data-lucide="user-round"></i><span>Patients</span><i class="nav-chevron" data-lucide="chevron-right"></i></a>
+      <button class="doctor-nav-link" type="button" data-message="Opening appointments"><i data-lucide="calendar-days"></i><span>Appointments</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening medical records"><i data-lucide="folder-heart"></i><span>Medical Records</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening lab and imaging"><i data-lucide="flask-conical"></i><span>Lab &amp; Imaging</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <span class="doctor-nav-section">Analytics &amp; Finance</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening analytics"><i data-lucide="chart-no-axes-combined"></i><span>Analytics</span><i class="nav-chevron" data-lucide="chevron-down"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening revenue"><i data-lucide="circle-dollar-sign"></i><span>Revenue</span><i class="nav-chevron" data-lucide="chevron-down"></i></button>
+      <span class="doctor-nav-section">Communication</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening follow-ups"><i data-lucide="archive"></i><span>Follow-ups</span><span class="nav-count">11</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Checking drug interactions"><i data-lucide="pill"></i><span>Drug Interactions</span><span class="nav-count">6</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening messages"><i data-lucide="message-square"></i><span>Messages</span><span class="nav-count">8</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening calendar"><i data-lucide="calendar-days"></i><span>Calendar</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <span class="doctor-nav-section">Others</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening settings"><i data-lucide="settings"></i><span>Settings</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+    </nav>
+
+    <section class="doctor-sidebar-profile" aria-label="Signed-in doctor">
+      <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=96&amp;h=96&amp;q=82" alt="">
+      <span><strong>Dr. John Smith</strong><small>MBBS, MD · Physician</small><em><i></i> Online</em></span>
+      <button type="button" aria-label="Sign out" data-message="Signed out of preview"><i data-lucide="log-out"></i></button>
+    </section>
+  </aside>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="app-shell">
+    <header class="doctor-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle doctor navigation" aria-controls="doctorSidebar" aria-expanded="false"><i data-lucide="menu"></i></button>
+      <label class="doctor-search">
+        <span class="sr-only">Search patient, symptoms, prescription, or report</span>
+        <i data-lucide="search"></i>
+        <input id="doctorSearch" type="search" placeholder="Search patient, symptoms, prescription, report..." autocomplete="off">
+        <span class="search-shortcut">Ctrl + K</span>
+      </label>
+      <div class="topbar-spacer"></div>
+      <button class="voice-command" type="button" data-message="Voice command listening"><i data-lucide="mic"></i><span>Voice Command</span></button>
+      <button class="top-icon" type="button" aria-label="5 notifications" data-message="You have 5 new notifications"><i data-lucide="bell"></i><span class="top-badge">5</span></button>
+      <button class="top-icon" type="button" aria-label="3 unread messages" data-message="You have 3 unread messages"><i data-lucide="message-square"></i><span class="top-badge">3</span></button>
+      <div class="doctor-profile" id="doctorProfile">
+        <button class="doctor-profile-button" id="doctorProfileButton" type="button" aria-expanded="false">
+          <img class="doctor-avatar" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=82" alt="Dr. Arjun Mehta">
+          <span><strong>Dr. Arjun Mehta</strong><small>MBBS, MD - Physician</small></span>
+          <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="doctor-profile-menu" role="menu">
+          <button type="button" role="menuitem" data-message="Opening doctor profile">My Profile</button>
+          <button type="button" role="menuitem" data-message="Opening account settings">Account Settings</button>
+          <button type="button" role="menuitem" data-message="Signed out of preview">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="prescription-page">
+      <section class="patient-card patient-overview-card" aria-labelledby="patientName">
+        <section class="patient-identity patient-identity-no-photo" aria-label="Editable patient identity">
+          <div class="patient-profile-copy">
+            <span class="patient-edit-tip"><i data-lucide="pencil"></i>Click any detail to edit</span>
+            <h2 id="patientName"><button class="patient-inline-value" type="button" data-patient-field="name">Patient Name</button> <i data-lucide="badge-check"></i></h2>
+            <span class="patient-mrn">MRN: PT-2026-001245</span>
+            <p class="patient-demographics">
+              <button class="patient-inline-value" type="button" data-patient-field="age">00 Years</button>
+              <span>&bull;</span>
+              <button class="patient-inline-value" type="button" data-patient-field="gender">Male</button>
+              <span>&bull;</span>
+              <button class="patient-inline-value" type="button" data-patient-field="dob">xx Mon xxxx</button>
+            </p>
+            <ul class="patient-contact">
+              <li><i data-lucide="phone"></i><button class="patient-inline-value" type="button" data-patient-field="phone">000000000</button></li>
+              <li><i data-lucide="mail"></i><button class="patient-inline-value" type="button" data-patient-field="email">xxx@xxx.com</button></li>
+              <li><i data-lucide="calendar-days"></i><button class="patient-inline-value" type="button" data-patient-field="patient-id">CF987654321</button></li>
+              <li><i data-lucide="map-pin"></i><button class="patient-inline-value" type="button" data-patient-field="location">City, Country</button></li>
+            </ul>
+            <span class="patient-active-status"><i></i>Active Patient</span>
+          </div>
+        </section>
+
+        <section class="patient-vitals" aria-labelledby="vitalSummaryTitle">
+          <div class="patient-vital-summary-view" id="patientVitalSummaryView">
+            <header class="patient-section-heading">
+              <h3 id="vitalSummaryTitle"><i data-lucide="heart-pulse"></i>Vital Summary</h3>
+            </header>
+            <div class="patient-vitals-grid">
+            <article class="patient-vital-card" data-patient-vital="heart-rate">
+              <span class="patient-vital-icon coral"><i data-lucide="heart"></i></span>
+              <span><small>Heart Rate</small><strong>00</strong><em>bpm</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="blood-pressure">
+              <span class="patient-vital-icon green"><i data-lucide="stethoscope"></i></span>
+              <span><small>Blood Pressure</small><strong>000/00</strong><em>mmHg</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="oxygen">
+              <span class="patient-vital-icon blue"><i data-lucide="circle-gauge"></i></span>
+              <span><small>SpO<sub>2</sub></small><strong>00</strong><em>%</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="respiratory">
+              <span class="patient-vital-icon orange"><i data-lucide="lungs"></i></span>
+              <span><small>Respiratory Rate</small><strong>00</strong><em>rpm</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="temperature">
+              <span class="patient-vital-icon teal"><i data-lucide="thermometer"></i></span>
+              <span><small>Body Temp.</small><strong>00.0</strong><em>&deg;F</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="blood-sugar">
+              <span class="patient-vital-icon purple"><i data-lucide="droplets"></i></span>
+              <span><small>Blood Sugar (F)</small><strong>000</strong><em>mg/dL</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="weight">
+              <span class="patient-vital-icon green"><i data-lucide="weight"></i></span>
+              <span><small>Weight</small><strong>00</strong><em>kg</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="height">
+              <span class="patient-vital-icon teal"><i data-lucide="ruler"></i></span>
+              <span><small>Height</small><strong>000</strong><em>cm</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="bmi">
+              <span class="patient-vital-icon amber"><i data-lucide="scale"></i></span>
+              <span><small>BMI</small><strong>00.0</strong><em>kg/m&sup2;</em></span>
+            </article>
+            <article class="patient-vital-card" data-patient-vital="blood-group">
+              <span class="patient-vital-icon coral"><i data-lucide="droplet"></i></span>
+              <span>
+                <small>Blood Group</small>
+                <strong id="patientBloodGroupDisplay">--</strong>
+                <select class="patient-vital-select" id="patientBloodGroup" aria-label="Blood Group">
+                  <option value="" selected>--</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                </select>
+                <em>&nbsp;</em>
+              </span>
+            </article>
+            </div>
+            <footer class="patient-vitals-footer">
+              <span><i data-lucide="clock-3"></i>Last Updated: <time id="patientVitalsUpdated">22 May 2026 &bull; 10:30 AM</time></span>
+            </footer>
+          </div>
+
+          <div class="patient-recordings-view" id="patientVoiceRecordingsView" hidden>
+            <header class="patient-section-heading">
+              <h3><i data-lucide="mic"></i>Voice Recordings</h3>
+              <button type="button" data-message="Opening all patient voice recordings">View All</button>
+            </header>
+            <p class="patient-recording-count">3 Recordings</p>
+            <div class="patient-recordings-list">
+              <article class="patient-recording-row">
+                <button class="patient-recording-play" type="button" aria-label="Play Chief Complaint recording" data-message="Playing Chief Complaint recording"><i data-lucide="play"></i></button>
+                <div class="patient-recording-copy">
+                  <strong>Chief Complaint</strong>
+                  <small>22 May 2026 &bull; 10:30 AM</small>
+                  <div class="patient-recording-waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+                <time datetime="PT45S">00:45</time>
+                <button class="patient-recording-menu" type="button" aria-label="Chief Complaint recording options" data-message="Recording options opened"><i data-lucide="list-music"></i></button>
+              </article>
+              <article class="patient-recording-row">
+                <button class="patient-recording-play" type="button" aria-label="Play Follow-up Note recording" data-message="Playing Follow-up Note recording"><i data-lucide="play"></i></button>
+                <div class="patient-recording-copy">
+                  <strong>Follow-up Note</strong>
+                  <small>20 May 2026 &bull; 04:15 PM</small>
+                  <div class="patient-recording-waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+                <time datetime="PT1M12S">01:12</time>
+                <button class="patient-recording-menu" type="button" aria-label="Follow-up Note recording options" data-message="Recording options opened"><i data-lucide="list-music"></i></button>
+              </article>
+              <article class="patient-recording-row">
+                <button class="patient-recording-play" type="button" aria-label="Play Symptoms Update recording" data-message="Playing Symptoms Update recording"><i data-lucide="play"></i></button>
+                <div class="patient-recording-copy">
+                  <strong>Symptoms Update</strong>
+                  <small>18 May 2026 &bull; 11:20 AM</small>
+                  <div class="patient-recording-waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+                <time datetime="PT58S">00:58</time>
+                <button class="patient-recording-menu" type="button" aria-label="Symptoms Update recording options" data-message="Recording options opened"><i data-lucide="list-music"></i></button>
+              </article>
+            </div>
+          </div>
+
+          <div class="patient-resource-view patient-videos-view" id="patientVideosView" hidden>
+            <header class="patient-section-heading">
+              <h3 class="video-heading"><i data-lucide="video"></i>Videos</h3>
+              <button type="button" data-message="Opening all patient videos">View All</button>
+            </header>
+            <p class="patient-resource-count">2 Videos</p>
+            <div class="patient-video-list">
+              <article class="patient-video-row">
+                <button class="patient-video-thumbnail consultation" type="button" aria-label="Play Consultation Video" data-message="Playing Consultation Video">
+                  <img src="assets/images/prescription-doctor.png" alt="">
+                  <span class="video-play-overlay"><i data-lucide="play"></i></span>
+                </button>
+                <div class="patient-video-copy">
+                  <strong>Consultation Video</strong>
+                  <small>22 May 2026 &bull; 10:32 AM</small>
+                </div>
+                <time datetime="PT5M32S">05:32</time>
+              </article>
+              <article class="patient-video-row">
+                <button class="patient-video-thumbnail scan" type="button" aria-label="Play Test Explanation" data-message="Playing Test Explanation">
+                  <span class="scan-placeholder"><i data-lucide="scan-line"></i></span>
+                  <span class="video-play-overlay"><i data-lucide="play"></i></span>
+                </button>
+                <div class="patient-video-copy">
+                  <strong>Test Explanation</strong>
+                  <small>21 May 2026 &bull; 02:20 PM</small>
+                </div>
+                <time datetime="PT3M18S">03:18</time>
+              </article>
+            </div>
+          </div>
+
+          <div class="patient-resource-view patient-images-view" id="patientImagesView" hidden>
+            <header class="patient-section-heading">
+              <h3 class="image-heading"><i data-lucide="image"></i>Images</h3>
+              <button type="button" data-message="Opening all patient images">View All</button>
+            </header>
+            <p class="patient-resource-count">5 Images</p>
+            <div class="patient-image-grid">
+              <button class="patient-image-thumb scan" type="button" aria-label="Open chest X-ray" data-message="Opening chest X-ray"><i data-lucide="scan-line"></i></button>
+              <button class="patient-image-thumb report" type="button" aria-label="Open medical report" data-message="Opening medical report"><i data-lucide="file-text"></i></button>
+              <button class="patient-image-thumb clinical" type="button" aria-label="Open clinical image" data-message="Opening clinical image"><i data-lucide="circle-dot"></i></button>
+              <button class="patient-image-thumb report" type="button" aria-label="Open laboratory report" data-message="Opening laboratory report"><i data-lucide="clipboard-list"></i></button>
+              <button class="patient-image-thumb scan more" type="button" aria-label="Open remaining patient images" data-message="Opening remaining patient images"><i data-lucide="scan-line"></i><span>+1</span></button>
+            </div>
+            <button class="patient-resource-upload" type="button" data-message="Image upload opened"><i data-lucide="plus"></i>Upload Image</button>
+          </div>
+
+          <div class="patient-resource-view patient-documents-view" id="patientDocumentsView" hidden>
+            <header class="patient-section-heading">
+              <h3 class="document-heading"><i data-lucide="file-clock"></i>Documents &amp; History</h3>
+              <button type="button" data-message="Opening all patient documents">View All</button>
+            </header>
+            <div class="patient-document-tabs" role="tablist" aria-label="Document types">
+              <button class="active" type="button" role="tab" aria-selected="true" data-document-filter="all">All</button>
+              <button type="button" role="tab" aria-selected="false" data-document-filter="prescription">Prescriptions</button>
+              <button type="button" role="tab" aria-selected="false" data-document-filter="lab">Lab Reports</button>
+              <button type="button" role="tab" aria-selected="false" data-document-filter="imaging">Imaging</button>
+              <button type="button" role="tab" aria-selected="false" data-document-filter="other">Others</button>
+            </div>
+            <div class="patient-document-list">
+              <article class="patient-document-row" data-document-type="prescription">
+                <span class="patient-document-icon pdf"><i data-lucide="file-text"></i></span>
+                <div><strong>Prescription - 22 May 2026</strong><small>Dr. Arjun Verma</small></div>
+                <span><time datetime="2026-05-22T10:45">22 May 2026 &bull; 10:45 AM</time><small>245 KB</small></span>
+                <button type="button" aria-label="Download Prescription" data-message="Prescription download started"><i data-lucide="download"></i></button>
+                <button type="button" aria-label="Prescription options" data-message="Document options opened"><i data-lucide="more-vertical"></i></button>
+              </article>
+              <article class="patient-document-row" data-document-type="imaging">
+                <span class="patient-document-icon image"><i data-lucide="image"></i></span>
+                <div><strong>X-Ray Chest</strong><small>Radiology Report</small></div>
+                <span><time datetime="2026-05-21T14:15">21 May 2026 &bull; 02:15 PM</time><small>1.2 MB</small></span>
+                <button type="button" aria-label="Download X-Ray Chest" data-message="X-Ray download started"><i data-lucide="download"></i></button>
+                <button type="button" aria-label="X-Ray options" data-message="Document options opened"><i data-lucide="more-vertical"></i></button>
+              </article>
+              <article class="patient-document-row" data-document-type="lab">
+                <span class="patient-document-icon report"><i data-lucide="flask-conical"></i></span>
+                <div><strong>Blood Test Report</strong><small>Complete Blood Count</small></div>
+                <span><time datetime="2026-05-20T09:20">20 May 2026 &bull; 09:20 AM</time><small>368 KB</small></span>
+                <button type="button" aria-label="Download Blood Test Report" data-message="Blood test report download started"><i data-lucide="download"></i></button>
+                <button type="button" aria-label="Blood Test options" data-message="Document options opened"><i data-lucide="more-vertical"></i></button>
+              </article>
+              <article class="patient-document-row" data-document-type="other">
+                <span class="patient-document-icon note"><i data-lucide="file"></i></span>
+                <div><strong>ECG Report</strong><small>Cardiology Report</small></div>
+                <span><time datetime="2026-05-18T11:30">18 May 2026 &bull; 11:30 AM</time><small>512 KB</small></span>
+                <button type="button" aria-label="Download ECG Report" data-message="ECG report download started"><i data-lucide="download"></i></button>
+                <button type="button" aria-label="ECG Report options" data-message="Document options opened"><i data-lucide="more-vertical"></i></button>
+              </article>
+              <article class="patient-document-row" data-document-type="prescription">
+                <span class="patient-document-icon pdf"><i data-lucide="file-text"></i></span>
+                <div><strong>Previous Prescription</strong><small>Dr. Arjun Verma</small></div>
+                <span><time datetime="2026-05-15T10:10">15 May 2026 &bull; 10:10 AM</time><small>245 KB</small></span>
+                <button type="button" aria-label="Download Previous Prescription" data-message="Previous prescription download started"><i data-lucide="download"></i></button>
+                <button type="button" aria-label="Previous Prescription options" data-message="Document options opened"><i data-lucide="more-vertical"></i></button>
+              </article>
+            </div>
+            <button class="patient-resource-upload" type="button" data-message="Document upload opened"><i data-lucide="plus"></i>Upload Document</button>
+          </div>
+        </section>
+
+        <section class="patient-other-info" aria-labelledby="otherInfoTitle">
+          <header class="patient-section-heading">
+            <h3 id="otherInfoTitle"><i data-lucide="contact-round"></i>Other Info</h3>
+          </header>
+          <div class="patient-info-list">
+            <div data-patient-vital="last-checkup"><i data-lucide="calendar-days"></i><span><small>Last Checkup</small><strong>22 May 2026</strong></span></div>
+            <div><i data-lucide="user-round"></i><span><small>Primary Doctor</small><strong>Dr. Arjun Verma</strong></span></div>
+            <div class="alert"><i data-lucide="triangle-alert"></i><span><small>Allergies</small><strong>Penicillin, Dust</strong></span></div>
+            <div><i data-lucide="clipboard-list"></i><span><small>Conditions</small><strong>No known chronic illness</strong></span></div>
+            <div><i data-lucide="shield-check"></i><span><small>Insurance</small><strong>N/A</strong></span></div>
+          </div>
+        </section>
+
+        <section class="patient-quick-actions" aria-labelledby="quickActionsTitle">
+          <header class="patient-section-heading">
+            <h3 id="quickActionsTitle"><i data-lucide="zap"></i>Quick Actions</h3>
+          </header>
+          <div class="patient-action-list">
+            <button type="button" data-recordings-open><i data-lucide="mic"></i>Voice Recordings</button>
+            <button type="button" data-videos-open><i data-lucide="video"></i>Videos</button>
+            <button type="button" data-images-open><i data-lucide="image"></i>Images</button>
+            <button type="button" data-documents-open><i data-lucide="file-clock"></i>Documents &amp; History</button>
+            <button type="button" data-export-summary><i data-lucide="download"></i>Export Summary</button>
+          </div>
+        </section>
+      </section>
+
+      <div class="prescription-workspace">
+        <aside class="input-panel card">
+          <header class="panel-title input-title">
+            <div><h2>DOCTOR INPUT <span>(Fast &amp; Easy)</span></h2><p>Enter minimum details, AI will generate the rest.</p></div>
+          </header>
+
+          <section class="input-section chief-complaint-section">
+            <h3>1. Chief Complaint <sup>*</sup></h3>
+            <label class="field-label">Main Complaint <small>(Select all that apply)</small></label>
+            <div class="chief-complaint-grid" data-multi-select>
+              <button class="selected" type="button" data-complaint-choice="Pain"><i data-lucide="sun"></i><span>Pain</span></button>
+              <button type="button" data-complaint-choice="Fever"><i data-lucide="thermometer"></i><span>Fever</span></button>
+              <button type="button" data-complaint-choice="Cough"><i data-lucide="wind"></i><span>Cough</span></button>
+              <button type="button" data-complaint-choice="Dizziness"><i data-lucide="headphones"></i><span>Dizziness</span></button>
+              <button type="button" data-complaint-choice="Weakness"><i data-lucide="sun-dim"></i><span>Weakness</span></button>
+              <button type="button" data-complaint-choice="Vomiting"><i data-lucide="activity"></i><span>Vomiting</span></button>
+              <button type="button" data-complaint-choice="Skin Rash"><i data-lucide="sparkles"></i><span>Skin Rash</span></button>
+              <button type="button" data-complaint-choice="Shortness of Breath"><i data-lucide="wind"></i><span>Shortness of<br>Breath</span></button>
+              <button type="button" data-complaint-choice="Other"><i data-lucide="ellipsis"></i><span>Other</span></button>
+              <input id="chiefComplaintValue" type="hidden" value="Pain">
+            </div>
+            <div class="complaint-more-panel" id="complaintMorePanel" hidden>
+              <span class="complaint-more-label"><i data-lucide="list-filter"></i>Select additional complaints</span>
+              <div class="complaint-autocomplete" id="complaintAutocomplete">
+                <div class="complaint-control" id="complaintControl">
+                  <label class="complaint-search">
+                    <i data-lucide="search"></i>
+                    <input id="chiefComplaint" type="search" placeholder="Search or type custom complaint..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="complaintResults">
+                  </label>
+                  <button class="complaint-voice" type="button" aria-label="Search complaints by voice" data-message="Complaint voice search listening"><i data-lucide="mic"></i></button>
+                </div>
+                <div class="complaint-results" id="complaintResults" role="listbox" aria-multiselectable="true"></div>
+              </div>
+            </div>
+
+            <section class="patient-capture collapsed">
+              <header>
+                <div><h4>Capture Patient Input <span>(Optional)</span></h4><p>Add voice, video or images to help AI understand better</p></div>
+                <button type="button" aria-label="Expand patient input" aria-expanded="false" data-capture-toggle><i data-lucide="chevron-down"></i></button>
+              </header>
+              <div class="patient-capture-grid">
+                <article class="capture-card voice">
+                  <header><span><i data-lucide="mic"></i><strong>Voice Input</strong></span><i data-lucide="info"></i></header>
+                  <p>Record patient’s concern</p>
+                  <div class="capture-mini-wave" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                  </div>
+                  <button id="captureVoiceButton" type="button" data-capture-voice><i data-lucide="mic"></i> Start Recording</button>
+                  <small id="captureVoiceTimer">00:00 / 02:00</small>
+                  <audio id="captureVoicePlayback" preload="metadata" hidden></audio>
+                </article>
+
+                <article class="capture-card video">
+                  <header><span><i data-lucide="video"></i><strong>Video Input</strong></span><i data-lucide="info"></i></header>
+                  <p>Record patient explaining</p>
+                  <div class="capture-video-preview" id="captureVideoPreview"><i data-lucide="scan-face"></i><span>Camera preview</span></div>
+                  <button type="button" data-capture-video><i data-lucide="video"></i><span>Start Video</span></button>
+                  <small id="captureVideoTimer">00:00 / 02:00</small>
+                </article>
+
+                <article class="capture-card images">
+                  <header><span><i data-lucide="image"></i><strong>Image Upload</strong></span><i data-lucide="info"></i></header>
+                  <p>Upload relevant images</p>
+                  <div class="capture-upload-zone" id="captureUploadZone">
+                    <i data-lucide="camera"></i>
+                    <strong>Upload or take a photo</strong>
+                    <small>of the patient’s concern</small>
+                    <div class="capture-upload-buttons">
+                      <button type="button" data-capture-photo><i data-lucide="camera"></i> Camera</button>
+                      <button type="button" data-capture-upload><i data-lucide="folder-open"></i> Browse File</button>
+                    </div>
+                  </div>
+                  <input id="captureImageUpload" type="file" accept="image/jpeg,image/png" multiple hidden>
+                  <div class="capture-image-previews" id="captureImagePreviews"><span><i data-lucide="image-plus"></i></span><span><i data-lucide="image-plus"></i></span><span><i data-lucide="image-plus"></i></span></div>
+                </article>
+              </div>
+              <footer><i data-lucide="lock-keyhole"></i> All recordings and images are secure and private</footer>
+            </section>
+
+            <div class="complaint-duration-block" data-single-select>
+              <label class="field-label">Duration</label>
+              <div class="duration-subgroup">
+                <strong>Short-term</strong>
+                <div class="duration-choice-grid">
+                  <button type="button">Today / This Morning</button>
+                  <button type="button">Since Yesterday</button>
+                  <button class="selected" type="button">For the last 2–3 Days</button>
+                  <button type="button">For about 1 Week</button>
+                  <button type="button">For a couple of Weeks</button>
+                </div>
+              </div>
+              <div class="duration-subgroup">
+                <strong>Long-term</strong>
+                <div class="duration-choice-grid long">
+                  <button type="button">About 3 Months</button>
+                  <button type="button">About 6 Months</button>
+                  <button type="button">About 1 Year</button>
+                  <button type="button">Since Childhood</button>
+                  <button type="button">Since Birth</button>
+                </div>
+              </div>
+              <div class="duration-subgroup">
+                <strong>Intermittent</strong>
+                <div class="duration-choice-grid intermittent">
+                  <button type="button">Comes and goes</button>
+                  <button type="button">Off and on for a few Months</button>
+                  <button type="button">Off and on for a Year+</button>
+                  <button type="button">Occurs Daily</button>
+                  <button type="button">Occurs Weekly</button>
+                </div>
+              </div>
+            </div>
+
+            <label class="field-label">Onset</label>
+            <div class="chip-grid two" data-single-select><button class="selected" type="button">Suddenly</button><button type="button">Gradually</button></div>
+          </section>
+
+          <section class="input-section pain-quality-section">
+            <h3>2. Details of Symptoms &amp; Pain Quality</h3>
+            <div class="pain-quality-layout">
+              <div class="pain-quality-group pain-location-group">
+                <label>Pain Location <small>(Select all that apply)</small></label>
+                <div class="pain-location-content">
+                  <div class="pain-body-map" aria-label="Front and back body location guides">
+                    <figure>
+                      <span class="pain-body-image">
+                        <img src="assets/images/symptom-body-front.png" alt="Front body pain location guide">
+                        <button class="pain-map-point front-neck" type="button" data-pain-point="Neck" aria-label="Toggle Neck pain location" title="Neck"></button>
+                        <button class="pain-map-point front-shoulder-left" type="button" data-pain-point="Shoulder" aria-label="Toggle Shoulder pain location" title="Shoulder"></button>
+                        <button class="pain-map-point front-shoulder-right" type="button" data-pain-point="Shoulder" aria-label="Toggle Shoulder pain location" title="Shoulder"></button>
+                        <button class="pain-map-point front-chest" type="button" data-pain-point="Chest" aria-label="Toggle Chest pain location" title="Chest"></button>
+                        <button class="pain-map-point front-abdomen" type="button" data-pain-point="Abdomen" aria-label="Toggle Abdomen pain location" title="Abdomen"></button>
+                        <button class="pain-map-point front-hip" type="button" data-pain-point="Hip" aria-label="Toggle Hip pain location" title="Hip"></button>
+                        <button class="pain-map-point front-thigh" type="button" data-pain-point="Thigh" aria-label="Toggle Thigh pain location" title="Thigh"></button>
+                        <button class="pain-map-point front-knee" type="button" data-pain-point="Knee" aria-label="Toggle Knee pain location" title="Knee"></button>
+                        <button class="pain-map-point front-leg" type="button" data-pain-point="Leg" aria-label="Toggle Leg pain location" title="Leg"></button>
+                        <button class="pain-map-point front-ankle" type="button" data-pain-point="Ankle" aria-label="Toggle Ankle pain location" title="Ankle"></button>
+                        <button class="pain-map-point front-foot" type="button" data-pain-point="Foot" aria-label="Toggle Foot pain location" title="Foot"></button>
+                      </span>
+                      <figcaption>Front</figcaption>
+                    </figure>
+                    <figure>
+                      <span class="pain-body-image">
+                        <img src="assets/images/symptom-body-back.png" alt="Back body pain location guide">
+                        <button class="pain-map-point back-neck" type="button" data-pain-point="Neck" aria-label="Toggle Neck pain location" title="Neck"></button>
+                        <button class="pain-map-point back-shoulder-left" type="button" data-pain-point="Shoulder" aria-label="Toggle Shoulder pain location" title="Shoulder"></button>
+                        <button class="pain-map-point back-shoulder-right" type="button" data-pain-point="Shoulder" aria-label="Toggle Shoulder pain location" title="Shoulder"></button>
+                        <button class="pain-map-point back-upper" type="button" data-pain-point="Upper Back" aria-label="Toggle Upper Back pain location" title="Upper Back"></button>
+                        <button class="pain-map-point back-lower" type="button" data-pain-point="Lower Back" aria-label="Toggle Lower Back pain location" title="Lower Back"></button>
+                        <button class="pain-map-point back-hip" type="button" data-pain-point="Hip" aria-label="Toggle Hip pain location" title="Hip"></button>
+                        <button class="pain-map-point back-thigh" type="button" data-pain-point="Thigh" aria-label="Toggle Thigh pain location" title="Thigh"></button>
+                        <button class="pain-map-point back-knee" type="button" data-pain-point="Knee" aria-label="Toggle Knee pain location" title="Knee"></button>
+                        <button class="pain-map-point back-leg" type="button" data-pain-point="Leg" aria-label="Toggle Leg pain location" title="Leg"></button>
+                        <button class="pain-map-point back-ankle" type="button" data-pain-point="Ankle" aria-label="Toggle Ankle pain location" title="Ankle"></button>
+                        <button class="pain-map-point back-foot" type="button" data-pain-point="Foot" aria-label="Toggle Foot pain location" title="Foot"></button>
+                      </span>
+                      <figcaption>Back</figcaption>
+                    </figure>
+                  </div>
+                  <div class="pain-choice-grid pain-location-options" data-multi-select>
+                    <button type="button" data-pain-location="Neck">Neck</button>
+                    <button type="button" data-pain-location="Hip">Hip</button>
+                    <button type="button" data-pain-location="Shoulder">Shoulder</button>
+                    <button type="button" data-pain-location="Thigh">Thigh</button>
+                    <button type="button" data-pain-location="Upper Back">Upper Back</button>
+                    <button type="button" data-pain-location="Knee">Knee</button>
+                    <button class="selected" type="button" data-pain-location="Lower Back">Lower Back</button>
+                    <button class="selected" type="button" data-pain-location="Leg">Leg</button>
+                    <button type="button" data-pain-location="Chest">Chest</button>
+                    <button type="button" data-pain-location="Ankle">Ankle</button>
+                    <button type="button" data-pain-location="Abdomen">Abdomen</button>
+                    <button type="button" data-pain-location="Foot">Foot</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pain-quality-group">
+                <label>Does pain spread/radiate?</label>
+                <div class="pain-choice-grid three" data-single-select>
+                  <button type="button">No</button>
+                  <button class="selected" type="button">To Left Leg</button>
+                  <button type="button">To Right Leg</button>
+                  <button type="button">To Left Arm</button>
+                  <button type="button">To Right Arm</button>
+                  <button type="button" data-factor-other="radiation"><span>Other</span><em data-factor-count hidden>0</em></button>
+                </div>
+                <div class="factor-dropdown radiation-dropdown" data-factor-dropdown="radiation" data-factor-label="radiation destinations" hidden>
+                  <header><strong>Other radiation destinations</strong><button type="button" aria-label="Close radiation destinations" data-factor-close><i data-lucide="x"></i></button></header>
+                  <div class="factor-selected-list" data-factor-selected></div>
+                  <div class="factor-entry-row">
+                    <i data-lucide="search"></i>
+                    <input type="text" placeholder="Search or type a custom destination..." data-factor-input>
+                    <button type="button" data-factor-add><i data-lucide="plus"></i>Add</button>
+                  </div>
+                  <div class="factor-options" data-factor-options>
+                    <button type="button" data-factor-option="To Neck">To Neck</button>
+                    <button type="button" data-factor-option="To Jaw">To Jaw</button>
+                    <button type="button" data-factor-option="To Left Shoulder">To Left Shoulder</button>
+                    <button type="button" data-factor-option="To Right Shoulder">To Right Shoulder</button>
+                    <button type="button" data-factor-option="To Upper Back">To Upper Back</button>
+                    <button type="button" data-factor-option="To Chest">To Chest</button>
+                    <button type="button" data-factor-option="To Abdomen">To Abdomen</button>
+                    <button type="button" data-factor-option="To Groin">To Groin</button>
+                    <button type="button" data-factor-option="To Hip">To Hip</button>
+                  </div>
+                  <input type="hidden" data-factor-value>
+                </div>
+              </div>
+
+              <div class="pain-quality-group">
+                <label>Pain Nature</label>
+                <div class="pain-choice-grid two" data-single-select>
+                  <button class="selected" type="button"><i data-lucide="zap"></i>Sharp</button>
+                  <button type="button">Dull Ache</button>
+                  <button type="button">Throbbing</button>
+                  <button type="button">Burning Sensation</button>
+                  <button type="button">Cramping</button>
+                  <button type="button">Pressure-like</button>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <section class="input-section">
+            <h3>3. Aggravating / Relieving Factors</h3>
+            <label class="field-label">Aggravating Factors</label>
+            <div class="chip-grid five" data-multi-select>
+              <button type="button">After eating</button><button type="button">Lying down</button><button class="selected" type="button">Movement</button><button type="button">Stress</button><button type="button" data-factor-other="aggravating"><span>Others</span><em data-factor-count hidden>0</em></button>
+            </div>
+            <div class="factor-dropdown" data-factor-dropdown="aggravating" hidden>
+              <header><strong>More aggravating factors</strong><button type="button" aria-label="Close aggravating factors" data-factor-close><i data-lucide="x"></i></button></header>
+              <div class="factor-selected-list" data-factor-selected></div>
+              <div class="factor-entry-row">
+                <i data-lucide="search"></i>
+                <input type="text" placeholder="Search or type a custom factor..." data-factor-input>
+                <button type="button" data-factor-add><i data-lucide="plus"></i>Add</button>
+              </div>
+              <div class="factor-options" data-factor-options>
+                <button type="button" data-factor-option="Exercise">Exercise</button>
+                <button type="button" data-factor-option="Walking">Walking</button>
+                <button type="button" data-factor-option="Bending">Bending</button>
+                <button type="button" data-factor-option="Deep breathing">Deep breathing</button>
+                <button type="button" data-factor-option="Coughing">Coughing</button>
+                <button type="button" data-factor-option="Cold weather">Cold weather</button>
+                <button type="button" data-factor-option="Heat">Heat</button>
+                <button type="button" data-factor-option="Touch / Pressure">Touch / Pressure</button>
+                <button type="button" data-factor-option="Lack of sleep">Lack of sleep</button>
+              </div>
+              <input type="hidden" data-factor-value>
+            </div>
+            <label class="field-label">Relieving Factors</label>
+            <div class="chip-grid five" data-multi-select>
+              <button class="selected" type="button">Rest</button><button type="button">Antacid</button><button type="button">Ice/Heat</button><button type="button">Medicine</button><button type="button" data-factor-other="relieving"><span>Others</span><em data-factor-count hidden>0</em></button>
+            </div>
+            <div class="factor-dropdown" data-factor-dropdown="relieving" hidden>
+              <header><strong>More relieving factors</strong><button type="button" aria-label="Close relieving factors" data-factor-close><i data-lucide="x"></i></button></header>
+              <div class="factor-selected-list" data-factor-selected></div>
+              <div class="factor-entry-row">
+                <i data-lucide="search"></i>
+                <input type="text" placeholder="Search or type a custom factor..." data-factor-input>
+                <button type="button" data-factor-add><i data-lucide="plus"></i>Add</button>
+              </div>
+              <div class="factor-options" data-factor-options>
+                <button type="button" data-factor-option="Sitting">Sitting</button>
+                <button type="button" data-factor-option="Lying still">Lying still</button>
+                <button type="button" data-factor-option="Elevation">Elevation</button>
+                <button type="button" data-factor-option="Stretching">Stretching</button>
+                <button type="button" data-factor-option="Massage">Massage</button>
+                <button type="button" data-factor-option="Warm compress">Warm compress</button>
+                <button type="button" data-factor-option="Hydration">Hydration</button>
+                <button type="button" data-factor-option="Sleep">Sleep</button>
+                <button type="button" data-factor-option="Breathing exercises">Breathing exercises</button>
+              </div>
+              <input type="hidden" data-factor-value>
+            </div>
+          </section>
+
+          <section class="input-section">
+            <h3>4. Associated Symptoms <span>(Select all that apply)</span></h3>
+            <div class="check-grid">
+              <label><input type="checkbox" checked><span></span>High grade fever with chills</label>
+              <label><input type="checkbox"><span></span>No loose motions</label>
+              <label><input type="checkbox" checked><span></span>Productive cough</label>
+              <label><input type="checkbox"><span></span>No burning urination</label>
+              <label><input type="checkbox" checked><span></span>Fatigue / Weakness</label>
+              <label><input type="checkbox"><span></span>No abdominal pain</label>
+              <label><input type="checkbox" checked><span></span>Loss of appetite</label>
+              <label><input type="checkbox"><span></span>No chest pain</label>
+              <label><input type="checkbox" checked><span></span>Mild nausea</label>
+              <label><input type="checkbox" checked><span></span>Body ache</label>
+            </div>
+          </section>
+
+          <section class="input-section">
+            <h3>5. Past History <span>(Quick)</span></h3>
+            <div class="history-grid">
+              <label>Known Disease<select aria-label="Known Disease"><option>Type 2 Diabetes, HTN</option><option>Type 2 Diabetes</option><option>Hypertension</option><option>Asthma</option><option>Thyroid Disorder</option><option>None</option></select></label>
+              <label>Surgical History<select aria-label="Surgical History"><option>No past surgeries</option><option>Appendectomy</option><option>Cholecystectomy</option><option>Cardiac surgery</option><option>Other</option></select></label>
+              <label>Allergies<select aria-label="Allergies"><option>NKDA</option><option>Penicillin</option><option>Sulfa drugs</option><option>NSAIDs</option><option>Other</option></select></label>
+            </div>
+            <label class="field-label">Current Medicines</label>
+            <div class="current-medicine-autocomplete" id="currentMedicineAutocomplete">
+              <div class="current-medicine-control" id="currentMedicineControl">
+                <span class="current-medicine-chip" data-current-medicine-id="MED019"><span>Metformin 500 mg OD</span><button type="button" aria-label="Remove Metformin"><i data-lucide="x"></i></button></span>
+                <span class="current-medicine-chip" data-current-medicine-id="MED021"><span>Amlodipine 5 mg OD</span><button type="button" aria-label="Remove Amlodipine"><i data-lucide="x"></i></button></span>
+                <label class="current-medicine-search"><i data-lucide="search"></i><input id="currentMedicineSearch" type="search" placeholder="Search and add medicine..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="currentMedicineResults" aria-expanded="false"></label>
+              </div>
+              <div class="medicine-results current-medicine-results" id="currentMedicineResults" role="listbox" aria-label="Current medicine suggestions"></div>
+              <input id="currentMedicinesValue" type="hidden" value="Metformin 500 mg OD, Amlodipine 5 mg OD">
+            </div>
+          </section>
+        </aside>
+
+        <section class="ai-panel">
+          <header class="ai-banner">
+            <div><h2>AI GENERATED PRESCRIPTION <span>(Review, Edit &amp; Approve)</span></h2><p>All sections below are editable. Click edit to modify any section.</p></div>
+            <button type="button" data-action="regenerate"><i data-lucide="refresh-cw"></i> Regenerate with AI</button>
+          </header>
+
+          <article class="result-card">
+            <header><h3>CLINICAL NOTE <span>(AI Generated)</span></h3></header>
+            <div class="clinical-grid">
+              <div>
+                <h4>History Summary</h4>
+                <p>Patient presents with fever for 3 days, sudden onset, high grade with chills. Associated with productive cough with yellowish sputum, worse at night, body ache, fatigue, loss of appetite and mild nausea.</p>
+                <p>No history of chest pain or breathlessness. Bowel and bladder habits normal.</p>
+                <p>Known case of <strong>Type 2 Diabetes</strong> and <strong>Hypertension</strong>. No known drug allergies.</p>
+              </div>
+              <div class="detail-list">
+                <h4>Pain Analysis</h4>
+                <p><span>Location:</span><strong>Chest</strong></p><p><span>Radiation:</span><strong>None</strong></p><p><span>Pain Nature:</span><strong>Dull ache</strong></p>
+                <p><span>Pattern:</span><strong>Intermittent</strong></p><p><span>Severity:</span><strong>6/10</strong></p>
+                <p><span>Aggravating:</span><strong>Coughing, Deep breathing</strong></p><p><span>Relieving:</span><strong>Rest, Paracetamol</strong></p>
+              </div>
+              <div>
+                <h4>Associated Symptoms</h4>
+                <ul class="check-list"><li>High grade fever with chills</li><li>Productive cough</li><li>Fatigue / Weakness</li><li>Loss of appetite</li><li>Mild nausea</li><li>Body ache</li></ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="result-card">
+            <header><h3>DIAGNOSIS <span>(AI Generated)</span></h3></header>
+            <div class="diagnosis-grid">
+              <div><h4>Likely Diagnosis</h4><strong class="diagnosis-pill">Acute Bronchitis</strong><p class="confidence-copy">Confidence: <b>High</b></p></div>
+              <div><h4>Differential Diagnosis <span>(Probability)</span></h4>
+                <ol class="probability-list">
+                  <li><span>Acute Bronchitis</span><b><i style="--value:60%"></i></b><em>60%</em></li>
+                  <li><span>Community Acquired Pneumonia</span><b><i style="--value:25%"></i></b><em>25%</em></li>
+                  <li><span>Viral Fever</span><b><i style="--value:10%"></i></b><em>10%</em></li>
+                  <li><span>COVID-19</span><b><i style="--value:5%"></i></b><em>5%</em></li>
+                </ol>
+              </div>
+              <div><h4>Red Flags</h4><ul class="check-list"><li>No breathlessness</li><li>No chest pain</li><li>No abdominal pain</li><li>No high risk condition</li></ul></div>
+            </div>
+          </article>
+
+          <article class="result-card compact-card investigation-card" id="investigationCard">
+            <header><h3>INVESTIGATIONS <span>(Suggested)</span></h3><button type="button" data-investigation-edit><i data-lucide="pencil"></i> Edit</button></header>
+            <div class="option-tags investigation-tags" id="investigationTags">
+              <div class="investigation-chip selected" data-investigation-name="CBC" data-investigation-full="Complete Blood Count" data-investigation-icon="test-tube-2"><button type="button" data-investigation-select><i data-lucide="test-tube-2"></i><span>CBC</span></button><button class="investigation-chip-remove" type="button" aria-label="Remove CBC"><i data-lucide="x"></i></button></div>
+              <div class="investigation-chip" data-investigation-name="CRP" data-investigation-full="C-Reactive Protein" data-investigation-icon="test-tube-2"><button type="button" data-investigation-select><i data-lucide="test-tube-2"></i><span>CRP</span></button><button class="investigation-chip-remove" type="button" aria-label="Remove CRP"><i data-lucide="x"></i></button></div>
+              <div class="investigation-chip" data-investigation-name="ESR" data-investigation-full="Erythrocyte Sedimentation Rate" data-investigation-icon="syringe"><button type="button" data-investigation-select><i data-lucide="syringe"></i><span>ESR</span></button><button class="investigation-chip-remove" type="button" aria-label="Remove ESR"><i data-lucide="x"></i></button></div>
+              <div class="investigation-chip" data-investigation-name="Chest X-Ray" data-investigation-full="Chest Radiograph" data-investigation-icon="scan-line"><button type="button" data-investigation-select><i data-lucide="scan-line"></i><span>Chest X-Ray</span></button><button class="investigation-chip-remove" type="button" aria-label="Remove Chest X-Ray"><i data-lucide="x"></i></button></div>
+              <div class="investigation-chip" data-investigation-name="Blood Sugar (F)" data-investigation-full="Fasting Blood Sugar" data-investigation-icon="droplet"><button type="button" data-investigation-select><i data-lucide="droplet"></i><span>Blood Sugar (F)</span></button><button class="investigation-chip-remove" type="button" aria-label="Remove Blood Sugar"><i data-lucide="x"></i></button></div>
+              <div class="investigation-chip" data-investigation-name="Sputum Routine" data-investigation-full="Sputum Routine Examination" data-investigation-icon="microscope"><button type="button" data-investigation-select><i data-lucide="microscope"></i><span>Sputum Routine</span></button><button class="investigation-chip-remove" type="button" aria-label="Remove Sputum Routine"><i data-lucide="x"></i></button></div>
+              <div class="investigation-chip" data-investigation-name="Urine Routine" data-investigation-full="Urine Routine Examination" data-investigation-icon="test-tube"><button type="button" data-investigation-select><i data-lucide="test-tube"></i><span>Urine Routine</span></button><button class="investigation-chip-remove" type="button" aria-label="Remove Urine Routine"><i data-lucide="x"></i></button></div>
+            </div>
+
+            <form class="investigation-editor" id="investigationEditor">
+              <div class="investigation-identity"><i id="investigationEditorIcon" data-lucide="test-tube-2"></i><span><strong id="investigationEditorName">CBC</strong><small id="investigationEditorFullName">Complete Blood Count</small></span></div>
+              <label class="investigation-field"><span>Short Name</span><input id="investigationShortName" value="CBC" maxlength="20"><small><b id="investigationShortCount">3</b>/20</small></label>
+              <label class="investigation-field"><span>Priority</span><select id="investigationPriority"><option>Routine</option><option>Urgent</option><option>Stat</option></select></label>
+              <label class="investigation-field"><span>Fasting</span><select id="investigationFasting"><option>No</option><option>Yes</option><option>Preferred</option></select></label>
+              <div class="investigation-editor-actions">
+                <button class="investigation-save" type="submit"><i data-lucide="circle-check"></i> Save</button>
+                <button class="investigation-remove" type="button" data-investigation-remove><i data-lucide="trash-2"></i> Remove</button>
+                <button class="investigation-collapse" type="button" aria-label="Collapse investigation editor" data-investigation-close><i data-lucide="chevron-up"></i></button>
+              </div>
+            </form>
+
+            <form class="investigation-add-form" id="investigationAddForm">
+              <div class="investigation-field investigation-add-search">
+                <label for="newInvestigationName">Investigation <sup>*</sup></label>
+                <div class="investigation-autocomplete">
+                  <i data-lucide="search"></i>
+                  <input id="newInvestigationName" type="search" placeholder="Search investigation..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="newInvestigationResults" aria-expanded="false" required>
+                  <div class="investigation-search-results" id="newInvestigationResults" role="listbox" aria-label="Investigation suggestions"></div>
+                </div>
+              </div>
+              <label class="investigation-field"><span>Short Name <sup>*</sup></span><input id="newInvestigationShort" maxlength="20" placeholder="e.g. LFT" required></label>
+              <label class="investigation-field"><span>Priority</span><select id="newInvestigationPriority"><option>Routine</option><option>Urgent</option><option>Stat</option></select></label>
+              <label class="investigation-field"><span>Fasting</span><select id="newInvestigationFasting"><option>No</option><option>Yes</option><option>Preferred</option></select></label>
+              <div class="investigation-editor-actions investigation-add-actions">
+                <button class="investigation-save" type="submit"><i data-lucide="circle-check"></i> Save</button>
+                <button class="investigation-remove" type="button" data-investigation-add-cancel><i data-lucide="trash-2"></i> Remove</button>
+                <button class="investigation-collapse" type="button" aria-label="Collapse add investigation editor" data-investigation-add-cancel><i data-lucide="chevron-up"></i></button>
+              </div>
+            </form>
+
+            <button class="add-link" type="button" data-investigation-add><i data-lucide="plus"></i> Add Investigation</button>
+          </article>
+
+          <article class="result-card treatment-card">
+            <header>
+              <h3>TREATMENT PLAN <span id="treatmentPlanSource">(AI Suggested)</span> <i class="ai-sparkle" data-lucide="info"></i></h3>
+              <div class="treatment-header-actions">
+                <button type="button" aria-expanded="false" aria-controls="treatmentTemplateModal" data-treatment-templates><i data-lucide="file-text"></i> Select from Template</button>
+                <button type="button" aria-expanded="false" aria-controls="saveTreatmentTemplateModal" data-treatment-save-template><i data-lucide="bookmark"></i> Save as Template</button>
+                <button type="button" data-treatment-open><i data-lucide="pencil"></i> Edit All</button>
+              </div>
+            </header>
+            <div class="medicine-row" data-medicine-row>
+              <b class="medicine-number">1</b>
+              <div class="medicine-name"><strong>Tab. Azithromycin 500 mg</strong><small>(Azithromycin)</small><span class="medicine-tags"><b data-medicine-manufacturer>Sun Pharma</b><em>Antibiotic</em></span></div>
+              <div class="medicine-detail" data-medicine-detail="dose"><small><i data-lucide="pills"></i>Dose</small><span><i data-lucide="capsule"></i><strong>500 mg</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="frequency"><small><i data-lucide="history"></i>Frequency</small><span><i data-lucide="clock-3"></i><strong>Once daily</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="duration"><small><i data-lucide="calendar-days"></i>Duration</small><span><i data-lucide="calendar-check"></i><strong>5 Days</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="route"><small><i data-lucide="git-branch"></i>Route</small><span><i data-lucide="route"></i><strong>Oral</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="purpose"><small><i data-lucide="orbit"></i>Purpose</small><span><i data-lucide="goal"></i><strong>Antibiotic</strong></span></div>
+              <div class="medicine-detail food" data-medicine-detail="instruction"><small><i data-lucide="utensils"></i>Instructions</small><span><i data-lucide="utensils"></i><strong>After Food</strong></span></div>
+              <button class="row-chevron" type="button" aria-label="Expand medicine editor" aria-expanded="false"><i data-lucide="chevron-down"></i></button>
+              <button class="row-action delete" type="button" aria-label="Delete medicine"><i data-lucide="trash-2"></i></button>
+            </div>
+            <form class="medicine-editor" id="medicineEditor">
+              <div class="medicine-editor-grid">
+                <div class="editor-field medicine-field">
+                  <label for="editMedicine">Search Medicine <sup>*</sup></label>
+                  <div class="medicine-autocomplete" id="medicineAutocomplete">
+                    <div class="editor-control icon-control">
+                      <i data-lucide="search"></i>
+                      <input id="editMedicine" type="search" value="Azithromycin 500 mg" placeholder="Type brand, generic or manufacturer..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="medicineResults" aria-expanded="false">
+                      <button class="medicine-voice" type="button" aria-label="Search medicine by voice" data-message="Medicine voice search started"><i data-lucide="mic"></i></button>
+                    </div>
+                    <div class="medicine-results" id="medicineResults" role="listbox" aria-label="Medicine suggestions"></div>
+                  </div>
+                </div>
+                <label class="editor-field category-field"><span>Category</span><select id="editCategory"><option>Antibiotic</option><option>Fever / Pain</option><option>Anti-inflammatory</option></select></label>
+                <label class="editor-field dose-field"><span>Dose / Strength <sup>*</sup></span><div class="split-control"><input id="editDose" value="500"><select id="editDoseUnit"><option>mg</option><option>ml</option><option>mcg</option></select></div></label>
+                <label class="editor-field frequency-field"><span>Frequency <sup>*</sup></span><select id="editFrequency"><option>Once daily</option><option>TDS</option><option>Twice daily</option><option>As needed</option></select></label>
+                <label class="editor-field duration-field"><span>Duration <sup>*</sup></span><div class="split-control"><input id="editDuration" value="5"><select id="editDurationUnit"><option>Days</option><option>Weeks</option><option>Months</option></select></div></label>
+                <label class="editor-field route-field"><span>Route <sup>*</sup></span><select id="editRoute"><option>Oral</option><option>Topical</option><option>Intravenous</option><option>Intramuscular</option></select></label>
+                <label class="editor-field purpose-field"><span>Purpose <small>(Optional)</small></span><select id="editPurpose"><option>Antibiotic</option><option>Fever / Pain</option><option>Inflammation</option></select></label>
+                <div class="editor-field instruction-field"><span>Instructions <small>(e.g. After Food)</small></span><div class="instruction-options" data-instruction-options>
+                  <button class="selected" type="button"><i data-lucide="utensils"></i>After Food</button><button type="button"><i data-lucide="sunrise"></i>Before Food</button>
+                  <button type="button"><i data-lucide="banana"></i>Empty Stomach</button><button type="button"><i data-lucide="bed"></i>At Bed Time</button><button type="button"><i data-lucide="pill"></i>Other</button>
+                </div></div>
+                <label class="editor-field additional-field"><span>Additional Instruction <small>(Optional)</small></span><input id="editAdditional" placeholder="e.g. Take with plenty of water"></label>
+                <label class="editor-field notes-field"><span>Notes <small>(Optional)</small></span><textarea id="editNotes" maxlength="120" placeholder="Add notes..."></textarea><small class="character-count"><b id="notesCount">0</b>/120</small></label>
+              </div>
+              <div class="medicine-editor-actions"><button class="editor-cancel-button" type="button" data-editor-cancel>Cancel</button><button class="editor-update-button" type="submit"><i data-lucide="check"></i> Update Medicine</button></div>
+            </form>
+            <div class="medicine-row" data-medicine-row>
+              <b class="medicine-number">2</b>
+              <div class="medicine-name"><strong>Tab. Paracetamol 650 mg</strong><small>(Paracetamol)</small><span class="medicine-tags"><b data-medicine-manufacturer>Cipla</b><em>Fever / Pain</em></span></div>
+              <div class="medicine-detail" data-medicine-detail="dose"><small><i data-lucide="pills"></i>Dose</small><span><i data-lucide="capsule"></i><strong>650 mg</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="frequency"><small><i data-lucide="history"></i>Frequency</small><span><i data-lucide="clock-3"></i><strong>TDS</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="duration"><small><i data-lucide="calendar-days"></i>Duration</small><span><i data-lucide="calendar-check"></i><strong>3 Days</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="route"><small><i data-lucide="git-branch"></i>Route</small><span><i data-lucide="route"></i><strong>Oral</strong></span></div>
+              <div class="medicine-detail" data-medicine-detail="purpose"><small><i data-lucide="orbit"></i>Purpose</small><span><i data-lucide="goal"></i><strong>Fever / Pain</strong></span></div>
+              <div class="medicine-detail food" data-medicine-detail="instruction"><small><i data-lucide="utensils"></i>Instructions</small><span><i data-lucide="utensils"></i><strong>After Food</strong></span></div>
+              <button class="row-chevron" type="button" aria-label="Expand medicine editor" aria-expanded="false"><i data-lucide="chevron-down"></i></button>
+              <button class="row-action delete" type="button" aria-label="Delete medicine"><i data-lucide="trash-2"></i></button>
+            </div>
+            <button class="add-link" type="button" data-add-medicine-open><i data-lucide="plus"></i> Add Medicine</button>
+            <form class="add-medicine-form" id="addMedicineForm" novalidate>
+              <h4>ADD NEW MEDICINE</h4>
+              <div class="add-medicine-grid">
+                <div class="editor-field medicine-field">
+                  <label for="addMedicineSearch">Search Medicine <sup>*</sup></label>
+                  <div class="medicine-autocomplete" id="addMedicineAutocomplete">
+                    <div class="editor-control icon-control">
+                      <i data-lucide="search"></i>
+                      <input id="addMedicineSearch" type="search" placeholder="Search medicine..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="addMedicineResults" aria-expanded="false" required>
+                      <button class="medicine-voice" type="button" aria-label="Search medicine by voice" data-message="Medicine voice search started"><i data-lucide="mic"></i></button>
+                    </div>
+                    <div class="medicine-results" id="addMedicineResults" role="listbox" aria-label="Medicine suggestions"></div>
+                  </div>
+                </div>
+                <label class="editor-field category-field"><span>Category</span><select id="addCategory"><option>Antibiotic</option><option>Fever / Pain</option><option>Anti-inflammatory</option></select></label>
+                <label class="editor-field dose-field"><span>Dose / Strength <sup>*</sup></span><div class="split-control"><input id="addDose" placeholder="Dose" required><select id="addDoseUnit"><option>mg</option><option>ml</option><option>mcg</option></select></div></label>
+                <label class="editor-field frequency-field"><span>Frequency <sup>*</sup></span><select id="addFrequency" required><option value="">Select frequency</option><option>Once daily</option><option>Twice daily</option><option>TDS</option><option>As needed</option></select></label>
+                <label class="editor-field duration-field"><span>Duration <sup>*</sup></span><div class="split-control"><input id="addDuration" placeholder="Duration" required><select id="addDurationUnit"><option>Days</option><option>Weeks</option><option>Months</option></select></div></label>
+                <label class="editor-field route-field"><span>Route <sup>*</sup></span><select id="addRoute" required><option value="">Select route</option><option>Oral</option><option>Topical</option><option>Intravenous</option><option>Intramuscular</option></select></label>
+                <label class="editor-field purpose-field"><span>Purpose <small>(Optional)</small></span><select id="addPurpose"><option value="">Select purpose</option><option>Antibiotic</option><option>Fever / Pain</option><option>Allergy</option><option>Cough</option><option>Diabetes</option><option>Hypertension</option></select></label>
+                <div class="editor-field instruction-field"><span>Instructions <small>(e.g. After Food)</small></span><div class="instruction-options" data-add-instruction-options>
+                  <button class="selected" type="button"><i data-lucide="utensils"></i>After Food</button><button type="button"><i data-lucide="sunrise"></i>Before Food</button>
+                  <button type="button"><i data-lucide="banana"></i>Empty Stomach</button><button type="button"><i data-lucide="bed"></i>At Bed Time</button><button type="button"><i data-lucide="pill"></i>Other</button>
+                </div></div>
+                <label class="editor-field additional-field"><span>Additional Instruction <small>(Optional)</small></span><input id="addAdditional" placeholder="e.g. Take with plenty of water"></label>
+                <label class="editor-field notes-field"><span>Notes <small>(Optional)</small></span><textarea id="addNotes" maxlength="120" placeholder="Add notes..."></textarea><small class="character-count"><b id="addNotesCount">0</b>/120</small></label>
+              </div>
+              <footer class="add-medicine-actions">
+                <button class="editor-cancel-button" type="button" data-add-medicine-cancel>Cancel</button>
+                <button class="editor-update-button" type="submit"><i data-lucide="plus"></i> Add Medicine</button>
+              </footer>
+            </form>
+          </article>
+
+          <article class="result-card compact-card advice-card" id="adviceCard">
+            <header><h3>ADVICE <span>(AI Suggested)</span></h3><button type="button" data-advice-edit><i data-lucide="pencil"></i> Edit</button></header>
+            <div class="advice-grid" id="adviceGrid"></div>
+            <button class="add-link advice-add-link" type="button" data-advice-add><i data-lucide="plus"></i> Add Advice</button>
+
+            <section class="advice-editor-panel" id="adviceEditorPanel" aria-label="Edit advice">
+              <header>
+                <div><h4>EDIT ADVICE</h4><p>Click on any advice to edit</p></div>
+                <div class="advice-panel-actions">
+                  <button class="editor-cancel-button" type="button" data-advice-edit-cancel><i data-lucide="x"></i> Cancel</button>
+                  <button class="editor-update-button" type="button" data-advice-edit-done><i data-lucide="check"></i> Done</button>
+                </div>
+              </header>
+              <div class="advice-editor-list" id="adviceEditorList"></div>
+              <footer>
+                <button class="advice-outline-action" type="button" data-advice-editor-add><i data-lucide="plus"></i> Add Advice</button>
+                <span><i data-lucide="info"></i> Drag to reorder advice</span>
+              </footer>
+            </section>
+
+            <section class="advice-add-panel" id="adviceAddPanel" aria-label="Add advice">
+              <header><i data-lucide="sparkles"></i><h4>Add / Edit Advice</h4></header>
+              <nav class="advice-tabs" aria-label="Advice sources">
+                <button class="active" type="button" data-advice-tab="suggestions"><i data-lucide="sparkles"></i> AI Suggestions</button>
+                <button type="button" data-advice-tab="frequent"><i data-lucide="bookmark"></i> Frequently Used</button>
+                <button type="button" data-advice-tab="templates"><i data-lucide="file-text"></i> My Templates</button>
+              </nav>
+              <div class="advice-picker">
+                <aside>
+                  <label class="advice-search"><i data-lucide="search"></i><input id="adviceSearch" type="search" placeholder="Search advice..." autocomplete="off"></label>
+                  <div class="advice-categories" id="adviceCategories">
+                    <button class="active" type="button" data-advice-category="All"><i data-lucide="layout-grid"></i> All Suggestions</button>
+                    <button type="button" data-advice-category="General"><i data-lucide="heart"></i> General</button>
+                    <button type="button" data-advice-category="Diet & Lifestyle"><i data-lucide="apple"></i> Diet &amp; Lifestyle</button>
+                    <button type="button" data-advice-category="Medication"><i data-lucide="pill"></i> Medication</button>
+                    <button type="button" data-advice-category="Hygiene"><i data-lucide="hand"></i> Hygiene</button>
+                    <button type="button" data-advice-category="Follow-up"><i data-lucide="clock-3"></i> Follow-up</button>
+                  </div>
+                </aside>
+                <div class="advice-suggestions" id="adviceSuggestions"></div>
+                <div class="advice-quick-add">
+                  <h5>Quick Add</h5>
+                  <div id="adviceQuickAdd"></div>
+                </div>
+              </div>
+              <footer>
+                <button class="editor-cancel-button" type="button" data-advice-add-cancel>Cancel</button>
+                <button class="editor-update-button" type="button" data-advice-add-selected>Add Selected (0)</button>
+              </footer>
+            </section>
+          </article>
+
+          <article class="result-card follow-card follow-planner" id="followPlanner">
+            <header class="follow-planner-header">
+              <div class="follow-title">
+                <i data-lucide="calendar-days"></i>
+                <span><h3>FOLLOW UP</h3></span>
+              </div>
+            </header>
+
+            <div class="follow-planner-layout">
+              <section class="follow-plan-main">
+                <div class="follow-plan-section">
+                  <h4><i data-lucide="calendar-range"></i>Next Visit</h4>
+                  <div class="follow-choice-grid next-visit-options" data-follow-single>
+                    <button type="button" data-follow-date="Tomorrow"><i data-lucide="calendar"></i>Tomorrow</button>
+                    <button class="selected" type="button" data-follow-date="3 Days"><i data-lucide="circle-dot"></i>3 Days</button>
+                    <button type="button" data-follow-date="7 Days"><i data-lucide="circle"></i>7 Days</button>
+                    <button type="button" data-follow-date="15 Days"><i data-lucide="circle"></i>15 Days</button>
+                    <button type="button" data-follow-date="1 Month"><i data-lucide="circle"></i>1 Month</button>
+                    <button type="button" data-follow-date="Custom"><i data-lucide="calendar-days"></i>Custom</button>
+                  </div>
+                  <div class="follow-custom-date" id="followCustomDate" hidden>
+                    <label for="followCustomDateInput">Select Date</label>
+                    <div class="follow-custom-date-layout">
+                      <div class="follow-custom-date-control">
+                        <i data-lucide="calendar-days"></i>
+                        <input id="followCustomDateInput" type="text" inputmode="none" autocomplete="off" placeholder="dd/mm/yyyy"
+                          readonly aria-label="Select custom follow-up date" aria-haspopup="dialog" aria-expanded="false"
+                          aria-controls="followCustomDateCalendar">
+                        <button type="button" aria-label="Clear custom follow-up date" data-follow-date-clear><i data-lucide="x"></i></button>
+                        <div class="follow-date-calendar" id="followCustomDateCalendar" role="dialog" aria-label="Choose follow-up date" hidden></div>
+                      </div>
+                      <div class="follow-custom-date-summary">
+                        <i data-lucide="calendar-check"></i>
+                        <span><strong>Selected Follow-up</strong><small id="followCustomDateLabel">Choose a date</small></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="follow-plan-section">
+                  <h4><i data-lucide="clipboard-check"></i>Follow-up Checklist <span>(Optional)</span></h4>
+                  <div class="follow-checklist">
+                    <label><input type="checkbox" value="Review Lab Reports" checked><span></span>Review Lab Reports</label>
+                    <label><input type="checkbox" value="Review Symptoms" checked><span></span>Review Symptoms</label>
+                    <label><input type="checkbox" value="Dressing Change"><span></span>Dressing Change</label>
+                    <label><input type="checkbox" value="Blood Pressure Check"><span></span>Blood Pressure Check</label>
+                    <label><input type="checkbox" value="Diabetes Follow-up"><span></span>Diabetes Follow-up</label>
+                    <label><input type="checkbox" value="Post Surgery Review"><span></span>Post Surgery Review</label>
+                    <label><input type="checkbox" value="Wound Review"><span></span>Wound Review</label>
+                    <label><input type="checkbox" value="Medication Review" checked><span></span>Medication Review</label>
+                  </div>
+                </div>
+
+                <div class="follow-plan-section">
+                  <h4><i data-lucide="users-round"></i>Follow-up Type</h4>
+                  <div class="follow-choice-grid follow-type-options" data-follow-single>
+                    <button class="selected" type="button" data-follow-type="In Clinic"><i data-lucide="hospital"></i>In Clinic</button>
+                    <button type="button" data-follow-type="Video Call"><i data-lucide="video"></i>Video Call</button>
+                    <button type="button" data-follow-type="Phone Call"><i data-lucide="phone"></i>Phone Call</button>
+                    <button type="button" data-follow-type="Home Visit"><i data-lucide="house"></i>Home Visit</button>
+                    <button class="sos" type="button" data-follow-type="SOS"><i data-lucide="bell"></i>SOS</button>
+                  </div>
+                </div>
+
+                <div class="follow-plan-section">
+                  <h4><i data-lucide="user-round-search"></i>Refer to Specialist <span>(Optional)</span></h4>
+                  <div class="follow-referral-row">
+                    <div class="follow-specialist-autocomplete" id="followSpecialistAutocomplete">
+                      <i data-lucide="search"></i>
+                      <input id="followSpecialistSearch" type="text" placeholder="Search specialist / department..." autocomplete="off"
+                        role="combobox" aria-label="Search specialist or department" aria-expanded="false" aria-controls="followSpecialistResults">
+                      <input id="followSpecialist" type="hidden" value="">
+                      <div class="follow-specialist-results" id="followSpecialistResults" role="listbox"></div>
+                    </div>
+                    <button type="button" data-message="Referral added to the follow-up plan"><i data-lucide="plus"></i>Add Referral</button>
+                  </div>
+                </div>
+
+                <div class="follow-plan-section follow-note-section">
+                  <div class="follow-note-heading">
+                    <h4><i data-lucide="notebook-tabs"></i>Follow-up Note / Instructions</h4>
+                    <div>
+                      <button type="button" data-follow-add-note><i data-lucide="plus"></i>Add Note</button>
+                      <button type="button" data-follow-voice-note><i data-lucide="mic"></i>Voice Note</button>
+                      <button type="button" data-follow-ai-note><i data-lucide="sparkles"></i>AI Generate</button>
+                      <button type="button" data-follow-template><i data-lucide="files"></i>Use Template</button>
+                    </div>
+                  </div>
+                  <textarea id="followupNotes" maxlength="600">Continue antibiotics for 3 days. Take paracetamol if fever persists.
+Steam inhalation twice daily. Drink plenty of fluids.
+Return immediately if breathing difficulty or fever &gt; 101°F.</textarea>
+                </div>
+
+                <p class="follow-notification"><i data-lucide="info"></i>Patient will be notified about the follow-up plan via SMS, Email &amp; App Notification.</p>
+              </section>
+
+              <aside class="follow-plan-aside">
+                <section class="follow-ai-card">
+                  <h4><i data-lucide="bot"></i>AI Follow-up Suggestion</h4>
+                  <div class="follow-ai-recommendation"><span><small>Recommended Follow-up</small><strong>3 Days</strong></span><i data-lucide="calendar-days"></i></div>
+                  <h5>Reason</h5>
+                  <ul><li>High grade fever with chills</li><li>Productive cough with yellowish sputum</li><li>Antibiotic started today</li><li>Needs review of symptoms &amp; vitals</li></ul>
+                  <div class="follow-recovery"><span>Expected Recovery</span><strong>4 - 7 Days</strong></div>
+                  <h5>Recommended Actions</h5>
+                  <ul class="plain"><li>Complete prescribed medication</li><li>Adequate rest and hydration</li><li>Follow up with chest X-ray if needed</li></ul>
+                  <button class="follow-apply-ai" type="button" data-follow-apply><i data-lucide="sparkles"></i>Apply Suggestion</button>
+                </section>
+                <section class="follow-quick-actions">
+                  <h4>Quick Actions</h4>
+                  <div>
+                    <button type="button" data-message="Follow-up reminder scheduled"><i data-lucide="bell"></i>Set Reminder</button>
+                    <button type="button" data-message="Follow-up plan ready to share"><i data-lucide="send"></i>Share Plan</button>
+                    <button type="button" data-message="Opening printable follow-up summary"><i data-lucide="printer"></i>Print Summary</button>
+                    <button type="button" data-message="Follow-up plan saved as a template"><i data-lucide="file-text"></i>Save as Template</button>
+                  </div>
+                </section>
+              </aside>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <section class="insight-grid">
+        <article><span><i data-lucide="binary"></i></span><div><small>ICD-10 CODE</small><strong>J20 - Acute Bronchitis</strong></div></article>
+        <article><span class="score-ring">92%</span><div><small>AI CONFIDENCE SCORE</small><strong class="good">High Confidence</strong></div></article>
+        <article><span><i data-lucide="shield-check"></i></span><div><small>DRUG INTERACTION</small><strong class="good">No Risk</strong><p>No interaction found</p></div></article>
+        <article><span><i data-lucide="file-check-2"></i></span><div><small>GUIDELINE MATCH</small><strong class="good">96%</strong><p>Matches standard guidelines</p></div></article>
+      </section>
+
+      <footer class="prescription-actions">
+        <button class="outline-button danger-outline" type="button" data-action="clear"><i data-lucide="trash-2"></i> Clear All</button>
+        <button class="outline-button" type="button" data-message="Prescription saved as draft"><i data-lucide="save"></i> Save Draft</button>
+        <button class="secondary-button" type="button" data-action="regenerate"><i data-lucide="sparkles"></i> Regenerate with AI</button>
+        <button class="outline-button danger-outline" type="button" data-message="Delete action requires confirmation"><i data-lucide="trash-2"></i> Delete All</button>
+        <button class="primary-button approve-button" type="button" data-action="approve"><i data-lucide="circle-check-big"></i><span>Approve &amp; Generate Prescription<small>Review &amp; send to patient</small></span></button>
+      </footer>
+    </main>
+  </div>
+
+  <div class="voice-input-modal" id="voiceInputModal" role="dialog" aria-modal="true" aria-labelledby="voiceInputTitle" hidden>
+    <button class="voice-input-backdrop" type="button" aria-label="Close voice input" data-voice-input-close></button>
+    <section class="voice-input-dialog">
+      <header class="voice-simple-header">
+        <h2 id="voiceInputTitle">Tell us how you are feeling</h2>
+        <p>Speak clearly about your symptoms</p>
+      </header>
+      <div class="voice-recording-stage voice-listening-visual" id="voiceListeningVisual">
+        <div class="voice-waveform" id="voiceWaveform" aria-hidden="true"></div>
+        <button class="voice-mic-button" type="button" aria-label="Pause recording" data-voice-pause><i data-lucide="mic"></i></button>
+        <strong>Tap the microphone to speak</strong>
+        <span class="voice-spoken-output" id="voiceStatus">Your spoken symptoms will appear here</span>
+        <p class="voice-recording-time">Recording: <b id="voiceTimer">00:00</b></p>
+      </div>
+      <div class="voice-simple-actions">
+        <button class="voice-cancel" type="button" data-voice-input-close>Cancel</button>
+        <button class="voice-stop" type="button" data-voice-stop>Stop &amp; Analyse</button>
+      </div>
+      <p class="voice-security"><i data-lucide="shield-check"></i> Your voice is secure and encrypted. We do not store your audio.</p>
+    </section>
+  </div>
+
+  <div class="camera-input-modal" id="cameraInputModal" role="dialog" aria-modal="true" aria-labelledby="cameraInputTitle" hidden>
+    <button class="camera-input-backdrop" type="button" aria-label="Close camera" data-camera-close></button>
+    <section class="camera-input-dialog">
+      <header>
+        <div><h2 id="cameraInputTitle">Video Input - Patient Explanation</h2><p id="cameraInputSubtitle">Record the patient explaining their concern.</p></div>
+        <button type="button" aria-label="Close camera" data-camera-close><i data-lucide="x"></i></button>
+      </header>
+      <div class="camera-live-stage">
+        <video id="cameraLiveVideo" autoplay muted playsinline></video>
+        <div class="camera-starting" id="cameraStatus"><i data-lucide="camera"></i><strong>Starting camera...</strong><span>Please allow camera access when prompted</span></div>
+        <span class="camera-rec-badge" id="cameraRecBadge"><i></i> REC</span>
+        <strong class="camera-live-timer" id="cameraLiveTimer">00:00</strong>
+      </div>
+      <div class="camera-recording-actions">
+        <button class="camera-cancel" type="button" data-camera-close>Cancel</button>
+        <button class="camera-pause" type="button" aria-label="Pause video" data-camera-pause><i data-lucide="pause"></i></button>
+        <button class="camera-stop" type="button" data-camera-stop><i data-lucide="square"></i><span>Stop Recording</span></button>
+        <button class="camera-capture" type="button" data-camera-capture hidden><i data-lucide="camera"></i><span>Capture Photo</span></button>
+        <button class="camera-delete" type="button" aria-label="Delete capture" data-camera-delete><i data-lucide="trash-2"></i></button>
+      </div>
+      <p class="camera-security"><i data-lucide="shield-check"></i> Camera access is private and used only for this consultation.</p>
+    </section>
+  </div>
+
+  <div class="capture-image-lightbox" id="captureImageLightbox" role="dialog" aria-modal="true" aria-label="Patient image preview" hidden>
+    <button class="capture-image-lightbox-backdrop" type="button" aria-label="Close image preview" data-image-lightbox-close></button>
+    <section class="capture-image-lightbox-dialog">
+      <button class="capture-image-lightbox-close" type="button" aria-label="Close image preview" data-image-lightbox-close><i data-lucide="x"></i></button>
+      <img id="captureImageLightboxImage" src="" alt="Enlarged patient upload">
+    </section>
+  </div>
+
+  <div class="treatment-template-modal" id="treatmentTemplateModal" role="dialog" aria-modal="true" aria-labelledby="treatmentTemplateTitle" hidden>
+    <button class="treatment-template-backdrop" type="button" aria-label="Close treatment templates" data-template-modal-close></button>
+    <section class="treatment-template-dialog">
+      <header>
+        <h2 id="treatmentTemplateTitle">Select from Template</h2>
+        <button type="button" aria-label="Close treatment templates" data-template-modal-close><i data-lucide="x"></i></button>
+      </header>
+      <label class="treatment-template-search"><i data-lucide="search"></i><input id="treatmentTemplateSearch" type="search" placeholder="Search template by name or symptom..." autocomplete="off"></label>
+      <nav class="treatment-template-tabs" aria-label="Treatment template categories">
+        <button class="active" type="button" data-template-category="all">All Templates</button>
+        <button type="button" data-template-category="fever">Fever</button>
+        <button type="button" data-template-category="cough">Cough &amp; Cold</button>
+        <button type="button" data-template-category="pain">Pain</button>
+        <button type="button" data-template-category="gastro">Gastro</button>
+        <button type="button" data-template-category="infection">Infection</button>
+        <button type="button" data-template-category="allergy">Allergy</button>
+        <div class="treatment-template-more-menu">
+          <button type="button" aria-haspopup="menu" aria-expanded="false" data-template-more-toggle>More <i data-lucide="chevron-down"></i></button>
+          <div class="treatment-template-more-dropdown" role="menu">
+            <button type="button" role="menuitem" data-template-category="diabetes"><i data-lucide="droplets"></i>Diabetes</button>
+            <button type="button" role="menuitem" data-template-category="hypertension"><i data-lucide="heart-pulse"></i>Hypertension</button>
+            <button type="button" role="menuitem" data-template-category="respiratory"><i data-lucide="lungs"></i>Respiratory</button>
+            <button type="button" role="menuitem" data-template-category="skin"><i data-lucide="sparkles"></i>Dermatology</button>
+            <button type="button" role="menuitem" data-template-category="ent"><i data-lucide="ear"></i>ENT</button>
+          </div>
+        </div>
+      </nav>
+      <div class="treatment-template-body">
+        <section class="treatment-template-options">
+          <h3>Popular Templates</h3>
+          <div id="treatmentTemplateOptions">
+            <button class="selected" type="button" data-template-option="fever" data-template-group="fever"><span class="red"><i data-lucide="thermometer"></i></span><div><strong>Fever (Acute)</strong><small>High grade fever with body ache</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="cold" data-template-group="cough"><span class="orange"><i data-lucide="cloud-rain"></i></span><div><strong>Common Cold</strong><small>Runny nose, sneezing, sore throat</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="cough" data-template-group="cough"><span class="pink"><i data-lucide="lungs"></i></span><div><strong>Productive Cough</strong><small>Cough with mucus</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="gastro" data-template-group="gastro"><span class="rose"><i data-lucide="flame"></i></span><div><strong>Gastritis / Acidity</strong><small>Acidity, heartburn, indigestion</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="infection" data-template-group="infection"><span class="blue"><i data-lucide="virus"></i></span><div><strong>Viral Infection</strong><small>Viral fever with weakness</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="pain" data-template-group="pain"><span class="purple"><i data-lucide="activity"></i></span><div><strong>Pain Relief</strong><small>Short-term pain management</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="allergy" data-template-group="allergy"><span class="green"><i data-lucide="flower-2"></i></span><div><strong>Allergy</strong><small>Sneezing, itching and rash</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="diabetes" data-template-group="diabetes"><span class="purple"><i data-lucide="droplets"></i></span><div><strong>Type 2 Diabetes</strong><small>Routine glycemic management</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="hypertension" data-template-group="hypertension"><span class="red"><i data-lucide="heart-pulse"></i></span><div><strong>Hypertension</strong><small>Routine blood-pressure management</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="respiratory" data-template-group="respiratory"><span class="blue"><i data-lucide="lungs"></i></span><div><strong>Respiratory Care</strong><small>Wheeze and breathing symptoms</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="skin" data-template-group="skin"><span class="pink"><i data-lucide="sparkles"></i></span><div><strong>Skin Infection</strong><small>Itching, rash and fungal symptoms</small></div><em>Use Template</em></button>
+            <button type="button" data-template-option="ent" data-template-group="ent"><span class="orange"><i data-lucide="ear"></i></span><div><strong>ENT Infection</strong><small>Ear, nose and throat symptoms</small></div><em>Use Template</em></button>
+          </div>
+          <button class="treatment-template-more" type="button" data-message="More treatment templates loaded">View More Templates <i data-lucide="chevron-down"></i></button>
+        </section>
+        <section class="treatment-template-preview">
+          <h3>Template Preview</h3>
+          <div class="treatment-template-preview-card">
+            <header><strong id="treatmentTemplatePreviewTitle">Fever (Acute)</strong><small id="treatmentTemplatePreviewDescription">High grade fever with body ache</small></header>
+            <div id="treatmentTemplatePreviewMedicines"></div>
+          </div>
+        </section>
+      </div>
+      <footer>
+        <button class="template-modal-cancel" type="button" data-template-modal-close>Cancel</button>
+        <button class="template-modal-use" type="button" data-template-modal-use>Use Selected Template</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="save-treatment-template-modal" id="saveTreatmentTemplateModal" role="dialog" aria-modal="true" aria-labelledby="saveTreatmentTemplateTitle" hidden>
+    <button class="save-treatment-template-backdrop" type="button" aria-label="Close save template dialog" data-save-template-close></button>
+    <form class="save-treatment-template-dialog" id="saveTreatmentTemplateForm">
+      <header>
+        <div class="save-template-title"><i data-lucide="bookmark"></i><h2 id="saveTreatmentTemplateTitle">SAVE AS TEMPLATE</h2></div>
+        <button type="button" aria-label="Close save template dialog" data-save-template-close><i data-lucide="x"></i></button>
+      </header>
+      <div class="save-treatment-template-content">
+        <section class="save-template-details">
+          <div class="save-template-primary-fields">
+            <label class="save-template-field">
+              <span>Template Name <sup>*</sup></span>
+              <input id="saveTemplateName" type="text" maxlength="70" placeholder="e.g. Fever + URI + Antibiotic" required>
+            </label>
+            <label class="save-template-field">
+              <span>Category</span>
+              <select id="saveTemplateCategory" required>
+                <option value="general">General Medicine</option>
+                <option value="fever">Fever</option>
+                <option value="cough">Cough &amp; Cold</option>
+                <option value="pain">Pain</option>
+                <option value="gastro">Gastro</option>
+                <option value="infection">Infection</option>
+                <option value="allergy">Allergy</option>
+                <option value="diabetes">Diabetes</option>
+                <option value="hypertension">Hypertension</option>
+                <option value="respiratory">Respiratory</option>
+                <option value="skin">Dermatology</option>
+                <option value="ent">ENT</option>
+              </select>
+            </label>
+          </div>
+          <div class="save-template-field">
+            <span>Tags</span>
+            <div class="save-template-tags" id="saveTemplateTags">
+              <input id="saveTemplateTagInput" type="text" maxlength="24" placeholder="Add tag...">
+            </div>
+          </div>
+          <label class="save-template-field">
+            <span>Description <small>(Optional)</small></span>
+            <textarea id="saveTemplateDescription" maxlength="140" placeholder="Treatment plan for fever with infection and body pain."></textarea>
+          </label>
+        </section>
+        <aside class="save-template-settings">
+          <h3>Save the following in template</h3>
+          <div class="save-template-checklist">
+            <label><input type="checkbox" value="medicines" checked data-save-template-part><span>Save Medicines</span></label>
+            <label><input type="checkbox" value="dose" checked data-save-template-part><span>Save Dosage</span></label>
+            <label><input type="checkbox" value="frequency" checked data-save-template-part><span>Save Frequency</span></label>
+            <label><input type="checkbox" value="duration" checked data-save-template-part><span>Save Duration</span></label>
+            <label><input type="checkbox" value="route" checked data-save-template-part><span>Save Route</span></label>
+            <label><input type="checkbox" value="purpose" checked data-save-template-part><span>Save Purpose</span></label>
+            <label><input type="checkbox" value="instruction" checked data-save-template-part><span>Save Instructions</span></label>
+          </div>
+          <div class="save-template-tip"><i data-lucide="lightbulb"></i><div><strong>Tip</strong><p>This template will be available under My Templates for quick use in future.</p></div></div>
+        </aside>
+      </div>
+      <footer>
+        <button class="save-template-cancel" type="button" data-save-template-close>Cancel</button>
+        <button class="save-template-submit" type="submit"><i data-lucide="save"></i> Save Template</button>
+      </footer>
+    </form>
+  </div>
+
+  <div class="summary-preview-modal" id="summaryPreviewModal" role="dialog" aria-modal="true" aria-labelledby="summaryPreviewTitle" hidden>
+    <button class="summary-preview-backdrop" type="button" aria-label="Close patient history preview" data-summary-preview-close></button>
+    <section class="summary-preview-dialog">
+      <header class="summary-preview-header">
+        <span><i data-lucide="sparkles"></i></span>
+        <div>
+          <h2 id="summaryPreviewTitle">Previous History at a Glance</h2>
+          <p>AI-organized from the patient information currently entered</p>
+        </div>
+        <button type="button" aria-label="Close patient history preview" data-summary-preview-close><i data-lucide="x"></i></button>
+      </header>
+      <div class="summary-preview-content">
+        <section class="summary-preview-patient">
+          <div><small>Patient</small><strong id="summaryPreviewPatient">Patient Name</strong></div>
+          <span><i data-lucide="sparkles"></i>AI Generated</span>
+        </section>
+        <div class="summary-preview-facts" id="summaryPreviewFacts"></div>
+        <section class="summary-preview-current">
+          <header><i data-lucide="stethoscope"></i><h3>Current Presentation</h3></header>
+          <p id="summaryPreviewCurrent">Patient presentation will appear here.</p>
+        </section>
+        <section class="summary-preview-analysis">
+          <header><i data-lucide="brain-circuit"></i><div><h3>AI History Analysis</h3><p>Key considerations for generating the clinical report</p></div></header>
+          <ul id="summaryPreviewInsights"></ul>
+        </section>
+      </div>
+      <footer class="summary-preview-actions">
+        <button class="summary-preview-cancel" type="button" data-summary-preview-close>Cancel</button>
+        <button class="summary-preview-download" type="button" data-summary-preview-download><i data-lucide="download"></i>Download Complete PDF</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="toast" id="doctorToast" role="status" aria-live="polite"></div>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="assets/data/clinical-options-data.js"></script>
+  <script src="assets/data/medicines-data.js"></script>
+  <script src="assets/data/doctors-data.js"></script>
+  <script src="assets/js/doctor-dashboard-sidebar.js"></script>
+  <script src="assets/js/common-date-picker.js"></script>
+  <script src="assets/js/doctor-prescription.js?v=20260731-6"></script>
+</body>
+</html>

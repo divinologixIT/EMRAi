@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Divinexa reception and clinical staff dashboard template">
+  <title>Divinexa — Reception Dashboard</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Divinexa home">
+        <img class="brand-mark divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt="">
+        <span class="brand-copy">
+          <strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong>
+          <small>Clinical Staff Management<br>SaaS Platform</small>
+        </span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard"><i data-lucide="home"></i><span>Dashboard</span></a>
+        <a class="nav-link" href="#reception"><i data-lucide="user-round-cog"></i><span>Reception</span></a>
+        <a class="nav-link" href="#front-desk"><i data-lucide="users-round"></i><span>Front Desk Staff</span></a>
+        <a class="nav-link" href="#clinical"><i data-lucide="stethoscope"></i><span>Clinical Staff</span></a>
+        <a class="nav-link" href="#queue"><i data-lucide="layout-grid"></i><span>Queue Management</span></a>
+        <a class="nav-link" href="#registration"><i data-lucide="file-user"></i><span>Patient Registration</span></a>
+        <a class="nav-link" href="#appointments"><i data-lucide="calendar-days"></i><span>Appointments</span></a>
+        <a class="nav-link" href="#schedule"><i data-lucide="calendar-clock"></i><span>Shift &amp; Schedule</span></a>
+        <a class="nav-link" href="#tasks"><i data-lucide="clipboard-check"></i><span>Tasks</span></a>
+        <a class="nav-link" href="#communication"><i data-lucide="mail"></i><span>Communication</span></a>
+        <a class="nav-link" href="#reports"><i data-lucide="chart-no-axes-combined"></i><span>Reports</span></a>
+        <a class="nav-link" href="#settings"><i data-lucide="settings"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-glow" aria-hidden="true"></div>
+      <div class="sidebar-dots" aria-hidden="true"></div>
+      <div class="wave" aria-hidden="true">
+        <svg viewBox="0 0 500 180" preserveAspectRatio="none" focusable="false">
+          <path d="M0,130 C90,60 180,170 280,120 C360,80 430,140 500,90" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"></path>
+          <path d="M0,150 C100,90 210,180 320,130 C420,90 470,170 500,130" stroke="rgba(255,255,255,.12)" stroke-width="2" fill="none"></path>
+          <path d="M0,170 C110,120 240,170 350,150 C430,140 470,170 500,150" stroke="rgba(255,255,255,.08)" stroke-width="2" fill="none"></path>
+        </svg>
+      </div>
+
+    </aside>
+
+    <div class="page-shell">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="sidebarToggle" type="button" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="true">
+          <i data-lucide="menu"></i>
+        </button>
+
+        <label class="search-box" for="globalSearch">
+          <i data-lucide="search"></i>
+          <input id="globalSearch" type="search" placeholder="Search patient, phone or ID..." autocomplete="off">
+          <kbd>⌘ K</kbd>
+        </label>
+
+        <div class="topbar-actions">
+          <button class="icon-button has-badge" type="button" aria-label="Notifications" data-toast="You have 5 new notifications.">
+            <i data-lucide="bell"></i><span class="badge">5</span>
+          </button>
+          <button class="icon-button has-badge" type="button" aria-label="Messages" data-toast="You have 2 unread messages.">
+            <i data-lucide="message-square-text"></i><span class="badge">2</span>
+          </button>
+          <button class="profile-button" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false" aria-controls="profileMenu">
+            <span class="avatar avatar-lg teal">SJ</span>
+            <span class="profile-copy"><strong>Sarah Johnson</strong><small>Reception Supervisor</small></span>
+            <i class="profile-chevron" data-lucide="chevron-down"></i>
+          </button>
+          <div class="profile-menu" id="profileMenu" role="menu" aria-label="Sarah Johnson profile menu">
+            <div class="profile-menu-header">
+              <span class="avatar avatar-lg teal">SJ</span>
+              <span><strong>Sarah Johnson</strong><small>Reception Supervisor</small></span>
+            </div>
+            <div class="profile-menu-items">
+              <button type="button" role="menuitem" data-toast="Profile page opened."><i data-lucide="user-round"></i><span>My Profile</span></button>
+              <button type="button" role="menuitem" data-toast="Settings opened."><i data-lucide="settings"></i><span>Settings</span></button>
+              <button type="button" role="menuitem" data-toast="Support center opened."><i data-lucide="circle-help"></i><span>Support</span></button>
+              <a href="login.html" role="menuitem"><i data-lucide="log-out"></i><span>Logout</span></a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="dashboard">
+        <section class="welcome-row" aria-labelledby="welcomeTitle">
+          <div>
+            <h1 id="welcomeTitle">Good Morning, Sarah Johnson! <span aria-hidden="true">👋</span></h1>
+            <p>Here’s what’s happening at your reception today.</p>
+          </div>
+          <button class="date-control" type="button" data-toast="Date picker opened.">
+            <i data-lucide="calendar-days"></i><strong>21 May 2024, Tue</strong><i data-lucide="chevron-down"></i>
+          </button>
+        </section>
+
+        <section class="metric-grid" aria-label="Reception metrics">
+          <article class="metric-card">
+            <div class="metric-main"><span class="metric-icon"><i data-lucide="users"></i></span><div><span class="eyebrow">On Duty Staff</span><strong class="metric-value">9</strong><small>of 12 Total Staff</small></div></div>
+            <canvas class="mini-chart" data-values="12,18,35,40,24,14,22,32,47,35" data-color="#119d8f" aria-label="On duty staff trend"></canvas>
+          </article>
+          <article class="metric-card">
+            <div class="metric-main"><span class="metric-icon"><i data-lucide="user-check"></i></span><div><span class="eyebrow">Patients Handled</span><strong class="metric-value">156</strong><small class="trend up"><i data-lucide="arrow-up"></i>18% <span>vs yesterday</span></small></div></div>
+            <canvas class="mini-chart" data-values="11,17,42,25,36,31,40,55,44" data-color="#119d8f" aria-label="Patients handled trend"></canvas>
+          </article>
+          <article class="metric-card">
+            <div class="metric-main"><span class="metric-icon"><i data-lucide="users-round"></i></span><div><span class="eyebrow">Patients in Queue</span><strong class="metric-value">24</strong><small class="trend down"><i data-lucide="arrow-down"></i>5 <span>vs yesterday</span></small></div></div>
+            <canvas class="mini-chart" data-values="18,18,49,21,32,29,36,57,38,33" data-color="#079eb0" aria-label="Patients in queue trend"></canvas>
+          </article>
+          <article class="metric-card">
+            <div class="metric-main"><span class="metric-icon"><i data-lucide="file-plus-2"></i></span><div><span class="eyebrow">Registrations</span><strong class="metric-value">37</strong><small class="trend up"><i data-lucide="arrow-up"></i>12% <span>vs yesterday</span></small></div></div>
+            <canvas class="mini-chart" data-values="21,45,37,22,36,17,12,25,48,38" data-color="#079eb0" aria-label="Registrations trend"></canvas>
+          </article>
+          <article class="metric-card">
+            <div class="metric-main"><span class="metric-icon"><i data-lucide="clock-3"></i></span><div><span class="eyebrow">Avg. Wait Time</span><strong class="metric-value">18 <em>mins</em></strong><small class="trend down"><i data-lucide="arrow-down"></i>5 mins <span>vs yesterday</span></small></div></div>
+            <canvas class="mini-chart" data-values="12,15,43,18,31,14,39,48,40" data-color="#079eb0" aria-label="Average wait time trend"></canvas>
+          </article>
+        </section>
+
+        <section class="dashboard-grid primary-panels">
+          <article class="panel queue-panel" id="queue">
+            <header class="panel-header"><h2>Live Reception Queue</h2><button class="text-button" type="button" data-toast="Showing the full patient queue.">View All</button></header>
+            <div class="table-wrap">
+              <table id="queueTable">
+                <thead><tr><th>#</th><th>Patient Name</th><th>Token No.</th><th>Purpose</th><th>Wait Time</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><span class="person"><span class="avatar mint">RS</span><strong>Ravi Sharma</strong></span></td><td><strong>T-101</strong></td><td>General Consultation</td><td><span class="pill">12 mins</span></td></tr>
+                  <tr><td>2</td><td><span class="person"><span class="avatar slate">AN</span><strong>Anita Nair</strong></span></td><td><strong>T-102</strong></td><td>Follow Up</td><td><span class="pill">18 mins</span></td></tr>
+                  <tr><td>3</td><td><span class="person"><span class="avatar coral">PK</span><strong>Pooja Kapoor</strong></span></td><td><strong>T-103</strong></td><td>Dental Checkup</td><td><span class="pill">22 mins</span></td></tr>
+                  <tr><td>4</td><td><span class="person"><span class="avatar mint">SK</span><strong>Sandeep Kumar</strong></span></td><td><strong>T-104</strong></td><td>Lab Test</td><td><span class="pill">26 mins</span></td></tr>
+                  <tr><td>5</td><td><span class="person"><span class="avatar sky">MJ</span><strong>Meera Joshi</strong></span></td><td><strong>T-105</strong></td><td>General Consultation</td><td><span class="pill blue">Next</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <button class="primary-button call-next" id="callNextPatient" type="button"><i data-lucide="bell-ring"></i>Call Next Patient<i data-lucide="arrow-right"></i></button>
+          </article>
+
+          <article class="panel staff-panel" id="front-desk">
+            <header class="panel-header"><h2>Staff On Duty</h2><button class="text-button" type="button" data-toast="Showing all on-duty staff.">View All</button></header>
+            <div class="staff-list">
+              <div class="staff-row"><span class="avatar photo">SJ</span><span class="staff-copy"><strong>Sarah Johnson</strong><small>Reception Supervisor</small></span><span class="status">On Duty</span></div>
+              <div class="staff-row"><span class="avatar photo warm">RB</span><span class="staff-copy"><strong>Riya Banerjee</strong><small>Front Desk Executive</small></span><span class="status">On Duty</span></div>
+              <div class="staff-row"><span class="avatar photo amber">AP</span><span class="staff-copy"><strong>Anita Patel</strong><small>Patient Coordinator</small></span><span class="status">On Duty</span></div>
+              <div class="staff-row"><span class="avatar photo green">MK</span><span class="staff-copy"><strong>Megha Kapoor</strong><small>Registration Executive</small></span><span class="status">On Duty</span></div>
+              <div class="staff-row"><span class="avatar photo blue">VS</span><span class="staff-copy"><strong>Vikram Singh</strong><small>Receptionist</small></span><span class="status">On Duty</span></div>
+            </div>
+            <button class="outline-button full-width" type="button" data-toast="Staff directory opened."><span><i data-lucide="users"></i>View All Staff</span><i data-lucide="arrow-right"></i></button>
+          </article>
+
+          <article class="panel overview-panel">
+            <header class="panel-header"><h2>Today’s Overview</h2></header>
+            <div class="overview-body">
+              <div class="illustration-wrap"><div class="overview-ring"></div><img src="assets/images/receptionist.png" alt="Reception staff member at the front desk"></div>
+              <ul class="overview-list">
+                <li><span class="list-icon"><i data-lucide="briefcase-medical"></i></span><span>Walk-ins</span><strong>89</strong></li>
+                <li><span class="list-icon"><i data-lucide="calendar-check-2"></i></span><span>Appointments Check-in</span><strong>52</strong></li>
+                <li><span class="list-icon"><i data-lucide="clipboard-plus"></i></span><span>New Registrations</span><strong>37</strong></li>
+                <li><span class="list-icon"><i data-lucide="clipboard-check"></i></span><span>Follow Ups</span><strong>26</strong></li>
+                <li><span class="list-icon"><i data-lucide="clipboard-heart"></i></span><span>Referrals</span><strong>14</strong></li>
+              </ul>
+            </div>
+            <div class="success-banner"><span class="trophy">🏆</span><div><strong>Great Job! 🎉</strong><p>You and your team are doing excellent today.</p></div></div>
+          </article>
+        </section>
+
+        <section class="dashboard-grid secondary-panels">
+          <article class="panel activity-panel">
+            <header class="panel-header"><h2 class="teal-heading">Staff Activity Overview</h2><button class="text-button" type="button" data-toast="Opening detailed staff activity.">View All</button></header>
+            <div class="activity-head"><span>Staff Name</span><span>Check-ins</span><span>Registrations</span><span>Queue Handled</span><span>Follow Ups</span></div>
+            <div class="activity-list">
+              <div class="activity-row"><span class="person"><span class="avatar mini photo">SJ</span><strong>Sarah Johnson</strong></span><span>28</span><span>12 <b style="--value:80%"></b></span><span>34 <b style="--value:88%"></b></span><span>16 <b style="--value:68%"></b></span></div>
+              <div class="activity-row"><span class="person"><span class="avatar mini photo warm">RB</span><strong>Riya Banerjee</strong></span><span>24</span><span>10 <b style="--value:62%"></b></span><span>29 <b style="--value:72%"></b></span><span>12 <b style="--value:52%"></b></span></div>
+              <div class="activity-row"><span class="person"><span class="avatar mini photo amber">AP</span><strong>Anita Patel</strong></span><span>20</span><span>7 <b style="--value:46%"></b></span><span>24 <b style="--value:66%"></b></span><span>9 <b style="--value:42%"></b></span></div>
+              <div class="activity-row"><span class="person"><span class="avatar mini photo green">MK</span><strong>Megha Kapoor</strong></span><span>18</span><span>5 <b style="--value:38%"></b></span><span>19 <b style="--value:53%"></b></span><span>8 <b style="--value:35%"></b></span></div>
+              <div class="activity-row"><span class="person"><span class="avatar mini photo blue">VS</span><strong>Vikram Singh</strong></span><span>14</span><span>3 <b style="--value:25%"></b></span><span>16 <b style="--value:44%"></b></span><span>6 <b style="--value:28%"></b></span></div>
+            </div>
+          </article>
+
+          <article class="panel schedule-panel" id="schedule">
+            <header class="panel-header"><h2>Today’s Shift Schedule</h2><button class="text-button" type="button" data-toast="Showing the complete shift schedule.">View All</button></header>
+            <div class="shift-list">
+              <div class="shift-row"><span class="shift-icon"><i data-lucide="clock-3"></i></span><span class="shift-copy"><strong>Morning Shift</strong><small>09:00 AM - 05:00 PM</small></span><span class="shift-count">5 Staff</span><span class="avatar-stack"><i>S</i><i>R</i><i>A</i><i>M</i><i>V</i><b>+2</b></span></div>
+              <div class="shift-row"><span class="shift-icon"><i data-lucide="clock-3"></i></span><span class="shift-copy"><strong>Evening Shift</strong><small>02:00 PM - 10:00 PM</small></span><span class="shift-count">4 Staff</span><span class="avatar-stack"><i>P</i><i>A</i><i>R</i><i>K</i><b>+1</b></span></div>
+              <div class="shift-row"><span class="shift-icon"><i data-lucide="clock-3"></i></span><span class="shift-copy"><strong>Night Shift</strong><small>10:00 PM - 06:00 AM</small></span><span class="shift-count">2 Staff</span><span class="avatar-stack"><i>J</i><i>N</i></span></div>
+              <div class="shift-row"><span class="shift-icon"><i data-lucide="clock-3"></i></span><span class="shift-copy"><strong>Off Duty</strong></span><span class="shift-count">0 Staff</span><span class="avatar-stack muted"><i><span>○</span></i></span></div>
+            </div>
+          </article>
+
+          <article class="panel quick-panel">
+            <header class="panel-header"><h2 class="teal-heading">Quick Actions</h2></header>
+            <div class="quick-grid">
+              <button type="button" data-toast="Walk-in form opened."><i data-lucide="user-plus"></i><span>Add Walk-in</span></button>
+              <button type="button" data-toast="Registration form opened."><i data-lucide="clipboard-list"></i><span>New Registration</span></button>
+              <button type="button" data-toast="Patient check-in opened."><i data-lucide="user-check"></i><span>Check-in Patient</span></button>
+              <button type="button" data-toast="Queue token created."><i data-lucide="ticket-check"></i><span>Queue Token</span></button>
+              <button type="button" data-toast="Add staff form opened."><i data-lucide="user-round-plus"></i><span>Add Staff</span></button>
+              <button type="button" data-toast="Staff messages opened."><i data-lucide="message-square-text"></i><span>Message Staff</span></button>
+            </div>
+          </article>
+        </section>
+
+        <section class="feature-grid" aria-label="Platform features">
+          <article class="feature-card"><span class="feature-visual image-feature queue-image"><img src="assets/images/queue-tracking.png" alt="Patient checking in at the clinic reception"></span><div><h3>Real-time Queue Tracking</h3><p>Monitor live queue and manage patient flow efficiently.</p><button class="text-button" type="button">View Details <i data-lucide="arrow-right"></i></button></div></article>
+          <article class="feature-card"><span class="feature-visual bell"><i data-lucide="bell-ring"></i><b>3</b></span><div><h3>Smart Notifications</h3><p>Get instant alerts for important updates and tasks.</p><button class="text-button" type="button">View Details <i data-lucide="arrow-right"></i></button></div></article>
+          <article class="feature-card"><span class="feature-visual image-feature chart-image"><img src="assets/images/reports-analytics.png" alt="Teal analytics growth chart"></span><div><h3>Reports &amp; Analytics</h3><p>Track daily performance and team productivity.</p><button class="text-button" type="button">View Details <i data-lucide="arrow-right"></i></button></div></article>
+          <article class="feature-card"><span class="feature-visual shield"><i data-lucide="shield-check"></i></span><div><h3>Data Security</h3><p>Secure and encrypted data for complete peace of mind.</p><button class="text-button" type="button">View Details <i data-lucide="arrow-right"></i></button></div></article>
+        </section>
+
+        <footer class="page-footer"><span>© 2024 Divinexa. All rights reserved.</span><span><a href="#privacy">Privacy Policy</a><i></i><a href="#terms">Terms of Service</a></span></footer>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check-big"></i><span></span></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/common-date-picker.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

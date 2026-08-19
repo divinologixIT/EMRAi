@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Patient login for the Divinexa healthcare portal.">
+  <title>Patient Login | Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/patient-auth.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="patient-auth login-page">
+  <main class="auth-shell">
+    <header class="auth-header">
+      <a class="brand" href="home.html" aria-label="Divinexa patient portal home">
+        <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Patient Portal</small></span>
+      </a>
+      <p class="header-switch">New here? <a href="patient-registration.html">Create Account</a></p>
+    </header>
+
+    <div class="auth-grid">
+      <section class="auth-intro" aria-labelledby="loginWelcome">
+        <h1 id="loginWelcome">Welcome Back!</h1>
+        <p>Login to access your health records and book appointments instantly.</p>
+        <span class="intro-rule" aria-hidden="true"></span>
+
+        <ul class="benefits" aria-label="Patient portal benefits">
+          <li>
+            <span class="benefit-icon"><i data-lucide="calendar-check-2"></i></span>
+            <span class="benefit-copy"><strong>Book Appointments</strong><small>Schedule with your preferred doctors</small></span>
+          </li>
+          <li>
+            <span class="benefit-icon"><i data-lucide="file-heart"></i></span>
+            <span class="benefit-copy"><strong>Health Records</strong><small>View and manage your medical history</small></span>
+          </li>
+          <li>
+            <span class="benefit-icon"><i data-lucide="notebook-tabs"></i></span>
+            <span class="benefit-copy"><strong>Prescriptions</strong><small>Access your prescriptions and doctor's notes</small></span>
+          </li>
+          <li>
+            <span class="benefit-icon"><i data-lucide="bell-ring"></i></span>
+            <span class="benefit-copy"><strong>Reminders</strong><small>Get reminders for appointments and medicines</small></span>
+          </li>
+        </ul>
+
+        <div class="auth-art login-art" aria-hidden="true">
+          <img src="assets/images/patient-login-phone.png" alt="">
+        </div>
+      </section>
+
+      <section class="form-card auth-card patient-login-card" aria-labelledby="patientLoginTitle">
+        <div class="form-heading auth-heading patient-login-heading">
+          <span class="form-heading-icon patient-login-avatar" aria-hidden="true"><i data-lucide="user-round"></i></span>
+          <h2 id="patientLoginTitle">Patient Login</h2>
+        </div>
+
+        <form class="auth-form login-form patient-login-form" id="patientLoginForm" novalidate>
+          <div class="form-field">
+            <label for="loginIdentity">Email or Mobile Number</label>
+            <div class="input-wrap input-control">
+              <i data-lucide="mail"></i>
+              <input id="loginIdentity" name="identity" type="text" autocomplete="username" placeholder="Enter email or mobile number">
+            </div>
+            <small class="field-error" data-error-for="loginIdentity" aria-live="polite"></small>
+          </div>
+
+          <div class="form-field">
+            <label for="loginPassword">Password</label>
+            <div class="input-wrap input-control">
+              <i data-lucide="lock-keyhole"></i>
+              <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password">
+              <button class="password-toggle" type="button" data-password-toggle="loginPassword" aria-label="Show password"><i data-lucide="eye-off"></i></button>
+            </div>
+            <small class="field-error" data-error-for="loginPassword" aria-live="polite"></small>
+          </div>
+
+          <div class="form-options">
+            <label class="check-control remember-control">
+              <input type="checkbox" name="remember">
+              <span class="check-box"><i data-lucide="check"></i></span>
+              <span>Remember me</span>
+            </label>
+            <button class="text-action" type="button" data-toast="Password recovery instructions will be sent to your registered email.">Forgot Password?</button>
+          </div>
+
+          <button class="primary-action sign-in-button patient-login-button" type="submit">Login</button>
+
+          <div class="divider login-divider patient-login-divider"><span>or continue with</span></div>
+
+          <div class="social-row patient-login-socials">
+            <button class="social-button google-button" type="button" data-toast="Google login is ready to connect.">
+              <span class="social-logo google-logo">G</span>Google
+            </button>
+            <button class="social-button google-button" type="button" data-toast="Facebook login is ready to connect.">
+              <span class="social-logo facebook-logo">f</span>Facebook
+            </button>
+          </div>
+
+          <p class="privacy-note patient-card-privacy"><i data-lucide="shield-check"></i><span>Your data is 100% secure and protected.</span></p>
+        </form>
+      </section>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check-big"></i><span></span></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/patient-auth.js"></script>
+</body>
+</html>

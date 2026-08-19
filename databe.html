@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Divinexa reusable DataTable sample">
+  <title>Divinexa — User Management DataTable</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/datatable/datatable.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="datatable-page">
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="index.html" aria-label="Divinexa dashboard">
+        <img class="brand-mark divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt="">
+        <span class="brand-copy">
+          <strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong>
+          <small>Clinical Staff Management<br>SaaS Platform</small>
+        </span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html"><i data-lucide="home"></i><span>Dashboard</span></a>
+        <a class="nav-link active" href="databe.html"><i data-lucide="users-round"></i><span>User Management</span></a>
+        <a class="nav-link" href="index.html#reception"><i data-lucide="user-round-cog"></i><span>Reception</span></a>
+        <a class="nav-link" href="index.html#front-desk"><i data-lucide="users-round"></i><span>Front Desk Staff</span></a>
+        <a class="nav-link" href="index.html#clinical"><i data-lucide="stethoscope"></i><span>Clinical Staff</span></a>
+        <a class="nav-link" href="index.html#queue"><i data-lucide="layout-grid"></i><span>Queue Management</span></a>
+        <a class="nav-link" href="index.html#registration"><i data-lucide="file-user"></i><span>Patient Registration</span></a>
+        <a class="nav-link" href="index.html#appointments"><i data-lucide="calendar-days"></i><span>Appointments</span></a>
+        <a class="nav-link" href="index.html#schedule"><i data-lucide="calendar-clock"></i><span>Shift &amp; Schedule</span></a>
+        <a class="nav-link" href="index.html#tasks"><i data-lucide="clipboard-check"></i><span>Tasks</span></a>
+        <a class="nav-link" href="index.html#communication"><i data-lucide="mail"></i><span>Communication</span></a>
+        <a class="nav-link" href="index.html#reports"><i data-lucide="chart-no-axes-combined"></i><span>Reports</span></a>
+        <a class="nav-link" href="index.html#settings"><i data-lucide="settings"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-glow" aria-hidden="true"></div>
+      <div class="sidebar-dots" aria-hidden="true"></div>
+      <div class="wave" aria-hidden="true">
+        <svg viewBox="0 0 500 180" preserveAspectRatio="none" focusable="false">
+          <path d="M0,130 C90,60 180,170 280,120 C360,80 430,140 500,90" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"></path>
+          <path d="M0,150 C100,90 210,180 320,130 C420,90 470,170 500,130" stroke="rgba(255,255,255,.12)" stroke-width="2" fill="none"></path>
+          <path d="M0,170 C110,120 240,170 350,150 C430,140 470,170 500,150" stroke="rgba(255,255,255,.08)" stroke-width="2" fill="none"></path>
+        </svg>
+      </div>
+    </aside>
+
+    <div class="page-shell">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="sidebarToggle" type="button" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="true">
+          <i data-lucide="menu"></i>
+        </button>
+
+        <label class="search-box" for="globalSearch">
+          <i data-lucide="search"></i>
+          <input id="globalSearch" type="search" placeholder="Search patient, phone or ID..." autocomplete="off">
+          <kbd>Ctrl K</kbd>
+        </label>
+
+        <div class="topbar-actions">
+          <button class="icon-button has-badge" type="button" aria-label="Notifications" data-toast="You have 5 new notifications.">
+            <i data-lucide="bell"></i><span class="badge">5</span>
+          </button>
+          <button class="icon-button has-badge" type="button" aria-label="Messages" data-toast="You have 2 unread messages.">
+            <i data-lucide="message-square-text"></i><span class="badge">2</span>
+          </button>
+          <button class="profile-button" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false" aria-controls="profileMenu">
+            <span class="avatar avatar-lg teal">SJ</span>
+            <span class="profile-copy"><strong>Sarah Johnson</strong><small>Reception Supervisor</small></span>
+            <i class="profile-chevron" data-lucide="chevron-down"></i>
+          </button>
+          <div class="profile-menu" id="profileMenu" role="menu" aria-label="Sarah Johnson profile menu">
+            <div class="profile-menu-header">
+              <span class="avatar avatar-lg teal">SJ</span>
+              <span><strong>Sarah Johnson</strong><small>Reception Supervisor</small></span>
+            </div>
+            <div class="profile-menu-items">
+              <button type="button" role="menuitem" data-toast="Profile page opened."><i data-lucide="user-round"></i><span>My Profile</span></button>
+              <button type="button" role="menuitem" data-toast="Settings opened."><i data-lucide="settings"></i><span>Settings</span></button>
+              <button type="button" role="menuitem" data-toast="Support center opened."><i data-lucide="circle-help"></i><span>Support</span></button>
+              <a href="login.html" role="menuitem"><i data-lucide="log-out"></i><span>Logout</span></a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+  <main class="datatable-content">
+    <header class="page-heading">
+      <div>
+        <h1>User Management</h1>
+        <p>Manage and view all system users</p>
+      </div>
+      <button class="dt-button dt-button-primary" id="addUserButton" type="button">
+        <i data-lucide="circle-plus" aria-hidden="true"></i>
+        <span>Add / Update User</span>
+      </button>
+    </header>
+
+    <section class="datatable-card" aria-labelledby="tableTitle">
+      <h2 class="sr-only" id="tableTitle">System users</h2>
+
+      <div class="datatable-toolbar">
+        <div class="toolbar-group">
+          <button class="dt-button dt-button-primary" id="exportButton" type="button">
+            <i data-lucide="download" aria-hidden="true"></i>
+            <span>Export</span>
+          </button>
+
+          <div class="column-picker" id="columnPicker">
+            <button class="dt-button dt-button-outline" id="columnButton" type="button" aria-expanded="false" aria-controls="columnMenu">
+              <i data-lucide="columns-3" aria-hidden="true"></i>
+              <span>Columns</span>
+              <i class="button-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="column-menu" id="columnMenu" role="menu" aria-label="Choose visible columns">
+              <label><input type="checkbox" data-column-toggle="fullName" checked> Full Name</label>
+              <label><input type="checkbox" data-column-toggle="username" checked> User Name</label>
+              <label><input type="checkbox" data-column-toggle="email" checked> Email</label>
+              <label><input type="checkbox" data-column-toggle="mobile" checked> Mobile</label>
+              <label><input type="checkbox" data-column-toggle="userType" checked> User Type</label>
+              <label><input type="checkbox" data-column-toggle="verified" checked> Email Verified</label>
+              <label><input type="checkbox" data-column-toggle="status" checked> Status</label>
+              <label><input type="checkbox" data-column-toggle="actions" checked> Actions</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="toolbar-group toolbar-group-end">
+          <label class="page-size-control">
+            <span class="sr-only">Rows per page</span>
+            <select id="pageSizeSelect" aria-label="Rows per page">
+              <option value="5" selected>5</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+            </select>
+            <i data-lucide="chevron-down" aria-hidden="true"></i>
+          </label>
+
+          <label class="datatable-search">
+            <i data-lucide="search" aria-hidden="true"></i>
+            <span class="sr-only">Search users</span>
+            <input id="searchInput" type="search" placeholder="Search user name..." autocomplete="off">
+          </label>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th class="select-column" scope="col">
+                <label class="dt-checkbox"><input id="selectAll" type="checkbox" aria-label="Select all visible users"><span></span></label>
+              </th>
+              <th data-column="fullName" scope="col"><button class="sort-button" type="button" data-sort="fullName">Full Name <i data-lucide="arrow-up-down"></i></button></th>
+              <th data-column="username" scope="col"><button class="sort-button" type="button" data-sort="username">User Name <i data-lucide="arrow-up-down"></i></button></th>
+              <th data-column="email" scope="col"><button class="sort-button" type="button" data-sort="email">Email <i data-lucide="arrow-up-down"></i></button></th>
+              <th data-column="mobile" scope="col"><button class="sort-button" type="button" data-sort="mobile">Mobile <i data-lucide="arrow-up-down"></i></button></th>
+              <th data-column="userType" scope="col"><button class="sort-button" type="button" data-sort="userType">User Type <i data-lucide="arrow-up-down"></i></button></th>
+              <th data-column="verified" scope="col"><button class="sort-button" type="button" data-sort="verified">Email Verified <i data-lucide="arrow-up-down"></i></button></th>
+              <th data-column="status" scope="col"><button class="sort-button" type="button" data-sort="status">Status <i data-lucide="arrow-up-down"></i></button></th>
+              <th data-column="actions" scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="datatable-footer">
+        <p id="tableSummary">Showing 0 users</p>
+        <nav class="pagination" aria-label="Table pagination">
+          <span>Page:</span>
+          <div id="pageButtons" class="page-buttons"></div>
+          <button class="page-arrow" id="previousPage" type="button" aria-label="Previous page"><i data-lucide="chevron-left"></i></button>
+          <button class="page-arrow" id="nextPage" type="button" aria-label="Next page"><i data-lucide="chevron-right"></i></button>
+        </nav>
+      </div>
+    </section>
+  </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="userModal" hidden>
+    <section class="user-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-header">
+        <div>
+          <h2 id="modalTitle">Add User</h2>
+          <p id="modalSubtitle">Create a new system user.</p>
+        </div>
+        <button class="modal-close" id="closeModalButton" type="button" aria-label="Close dialog"><i data-lucide="x"></i></button>
+      </header>
+
+      <form id="userForm" class="user-form">
+        <input id="userId" type="hidden">
+        <label>Full name<input id="fullNameField" name="fullName" required></label>
+        <label>User name<input id="usernameField" name="username" required></label>
+        <label>Email<input id="emailField" name="email" type="email" required></label>
+        <label>Mobile<input id="mobileField" name="mobile" inputmode="numeric" required></label>
+        <label>User type
+          <select id="userTypeField" name="userType" required>
+            <option>SuperAdmin</option><option>Admin</option><option>Receptionist</option><option>Coordinator</option><option>Front Desk</option>
+          </select>
+        </label>
+        <label>Status
+          <select id="statusField" name="status"><option>Active</option><option>Inactive</option></select>
+        </label>
+        <label class="form-check"><input id="verifiedField" name="verified" type="checkbox" checked><span></span>Email verified</label>
+        <div class="modal-actions">
+          <button class="dt-button dt-button-outline" id="cancelModalButton" type="button">Cancel</button>
+          <button class="dt-button dt-button-primary" id="saveUserButton" type="submit">Save User</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div class="datatable-toast" id="datatableToast" role="status" aria-live="polite"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check"></i><span></span></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/common-date-picker.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/datatable/datatable.js"></script>
+</body>
+</html>

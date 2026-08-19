@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="See how Divinexa turns registration, AI assistance, prescription creation and patient follow-up into one connected digital workflow.">
+  <title>How It Works | Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0b2545;
+      --muted: #51667f;
+      --brand: #0a9a8e;
+      --brand-dark: #087b73;
+      --brand-soft: #e7f8f5;
+      --brand-pale: #f4fcfb;
+      --line: #d9e8ea;
+      --surface: #fff;
+      --gradient: linear-gradient(135deg, #11a99c, #06867c);
+      --shadow: 0 14px 34px rgba(21, 74, 84, .10);
+      --container: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: "DM Sans", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.menu-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container {
+      width: min(calc(100% - 48px), var(--container));
+      margin-inline: auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid #e4eeee;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(12px);
+    }
+    .site-header .container {
+      width: min(calc(100% - 64px), 1280px);
+    }
+    .header-inner {
+      min-height: 80px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 34px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--brand-dark); }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: var(--gradient);
+      box-shadow: 0 8px 18px rgba(6,134,124,.22);
+      transform: rotate(45deg);
+    }
+    .brand-mark svg { width: 24px; height: 24px; stroke-width: 3; transform: rotate(-45deg); }
+    .brand-copy { display: grid; line-height: 1.02; }
+    .brand-copy strong { font-size: 24px; letter-spacing: -.045em; }
+    .brand-copy small { margin-top: 5px; color: #445a74; font-size: 11px; font-weight: 600; }
+    .main-nav { display: flex; justify-content: center; gap: clamp(25px, 3vw, 43px); }
+    .main-nav a {
+      position: relative;
+      padding: 28px 0 24px;
+      color: #18253b;
+      font-size: 13px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .main-nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: 17px;
+      left: 0;
+      height: 2px;
+      content: "";
+      border-radius: 99px;
+      background: var(--brand);
+      opacity: 0;
+      transform: scaleX(.35);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .main-nav a:hover, .main-nav a.active { color: var(--brand-dark); }
+    .main-nav a:hover::after, .main-nav a.active::after { opacity: 1; transform: scaleX(1); }
+    .header-actions { display: flex; gap: 13px; }
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 10px 22px;
+      color: var(--brand-dark);
+      border: 1px solid #87cec7;
+      border-radius: 9px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(5,128,118,.15); }
+    .button.primary { color: #fff; border-color: transparent; background: var(--gradient); }
+    .button svg { width: 17px; height: 17px; }
+    .menu-toggle {
+      width: 44px;
+      height: 44px;
+      display: none;
+      place-items: center;
+      color: var(--brand-dark);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 20px 0 24px;
+      border-bottom: 1px solid #e4efef;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(18,175,161,.13), transparent 21rem),
+        radial-gradient(circle at 87% 38%, rgba(18,175,161,.12), transparent 23rem),
+        linear-gradient(135deg, #fbfefe, #f3fbfa);
+    }
+    .hero::before, .hero::after {
+      position: absolute;
+      content: "";
+      pointer-events: none;
+      opacity: .5;
+      background-image: radial-gradient(#24b8aa 1.25px, transparent 1.25px);
+      background-size: 8px 8px;
+    }
+    .hero::before { width: 100px; height: 105px; left: 2%; top: 78px; }
+    .hero::after { width: 88px; height: 95px; right: 2%; top: 55px; }
+    .hero-inner {
+      position: relative;
+      min-height: 190px;
+      display: grid;
+      grid-template-columns: 230px 1fr 230px;
+      align-items: center;
+      gap: 28px;
+    }
+    .hero-art {
+      position: relative;
+      height: 170px;
+      display: grid;
+      place-items: center;
+    }
+    .hero-art::before {
+      position: absolute;
+      inset: 8px;
+      content: "";
+      border-radius: 50% 45% 52% 48%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(40,195,181,.25), rgba(23,160,149,.09) 58%, transparent 72%);
+    }
+    .clipboard-visual {
+      position: relative;
+      z-index: 2;
+      width: 116px;
+      height: 132px;
+      padding: 24px 15px 13px;
+      border: 7px solid #a8ded9;
+      border-radius: 8px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 13px 27px rgba(8,123,115,.14);
+    }
+    .clipboard-visual::before {
+      position: absolute;
+      top: -15px;
+      left: 30px;
+      width: 48px;
+      height: 25px;
+      content: "";
+      border-radius: 7px 7px 4px 4px;
+      background: #68bcb4;
+      box-shadow: inset 0 -4px 0 rgba(0,0,0,.06);
+    }
+    .clipboard-visual::after {
+      position: absolute;
+      top: -9px;
+      left: 50px;
+      width: 8px;
+      height: 8px;
+      content: "";
+      border-radius: 50%;
+      background: #dff6f3;
+    }
+    .rx-mark { margin-bottom: 8px; color: #61b8b0; font-size: 25px; font-weight: 800; line-height: 1; }
+    .clipboard-row { display: grid; grid-template-columns: 13px 1fr; align-items: center; gap: 7px; margin-top: 8px; color: #47aaa1; }
+    .clipboard-row svg { width: 13px; height: 13px; stroke-width: 3; }
+    .clipboard-row span { height: 4px; border-radius: 99px; background: #b9e5e1; }
+    .shield-badge {
+      position: absolute;
+      z-index: 3;
+      right: 20px;
+      bottom: 17px;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border: 5px solid #e9fbf9;
+      border-radius: 18px 18px 24px 24px;
+      background: var(--gradient);
+      box-shadow: 0 8px 18px rgba(6,134,124,.22);
+      clip-path: polygon(50% 0, 94% 16%, 89% 68%, 50% 100%, 11% 68%, 6% 16%);
+    }
+    .shield-badge svg { width: 28px; height: 28px; stroke-width: 3; }
+    .monitor-visual { position: relative; z-index: 2; width: 170px; height: 122px; }
+    .monitor-screen {
+      position: relative;
+      width: 170px;
+      height: 105px;
+      padding: 17px;
+      border: 7px solid var(--brand-dark);
+      border-radius: 9px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 13px 27px rgba(8,123,115,.14);
+    }
+    .monitor-screen::before {
+      position: absolute;
+      right: 54px;
+      bottom: -26px;
+      width: 49px;
+      height: 22px;
+      content: "";
+      border-bottom: 7px solid var(--brand-dark);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+    }
+    .monitor-layout { display: grid; grid-template-columns: 38px 1fr; gap: 9px; height: 100%; }
+    .monitor-user { display: grid; place-items: center; color: var(--brand); border-radius: 5px; background: #e7f7f5; }
+    .monitor-user svg { width: 24px; height: 24px; }
+    .dashboard-mini { display: grid; grid-template-rows: 8px 1fr; gap: 7px; }
+    .dashboard-lines { display: grid; grid-template-columns: 1fr .65fr; gap: 5px; }
+    .dashboard-lines span { border-radius: 99px; background: #bee7e3; }
+    .dashboard-chart { display: flex; align-items: end; gap: 4px; padding: 8px; border-radius: 5px; background: #eff9f8; }
+    .dashboard-chart i { width: 8px; border-radius: 2px 2px 0 0; background: #58bdb4; }
+    .dashboard-chart i:nth-child(1) { height: 16px; }
+    .dashboard-chart i:nth-child(2) { height: 25px; }
+    .dashboard-chart i:nth-child(3) { height: 34px; }
+    .dashboard-chart i:nth-child(4) { height: 22px; }
+    .plant {
+      position: absolute;
+      right: -5px;
+      bottom: -4px;
+      width: 37px;
+      height: 60px;
+      border-bottom: 18px solid #7cc8c0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+    }
+    .plant::before, .plant::after {
+      position: absolute;
+      bottom: 12px;
+      width: 20px;
+      height: 35px;
+      content: "";
+      border-radius: 100% 0 100% 0;
+      background: #39a99f;
+    }
+    .plant::before { left: -10px; transform: rotate(-25deg); }
+    .plant::after { right: -10px; transform: scaleX(-1) rotate(-25deg); }
+    .hero-copy { position: relative; z-index: 2; text-align: center; }
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(39px, 4vw, 52px);
+      line-height: 1;
+      letter-spacing: -.055em;
+    }
+    .hero-copy h1 span { color: var(--brand); }
+    .title-ornament {
+      width: 170px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 12px auto 11px;
+      color: var(--brand);
+    }
+    .title-ornament::before, .title-ornament::after {
+      flex: 1;
+      height: 1px;
+      content: "";
+      background: #8bd7d0;
+    }
+    .title-ornament span { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); }
+    .hero-copy h2 { margin: 0; color: var(--brand); font-size: 18px; }
+    .hero-copy p { max-width: 540px; margin: 8px auto 0; color: #344c69; font-size: 12px; line-height: 1.55; }
+
+    /* Workflow */
+    .workflow-section { padding: 34px 0 26px; }
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 28px;
+    }
+    .step-card {
+      position: relative;
+      min-height: 475px;
+      padding: 28px 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      transition: transform .24s ease, box-shadow .24s ease;
+    }
+    .step-card:nth-child(n+6) { min-height: 505px; }
+    .step-card:hover { transform: translateY(-7px); box-shadow: 0 22px 40px rgba(21,74,84,.15); }
+    .step-card::after {
+      position: absolute;
+      z-index: 3;
+      top: 68px;
+      right: -30px;
+      width: 31px;
+      content: "→";
+      color: var(--brand);
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .step-card:nth-child(5)::after, .step-card:nth-child(10)::after { display: none; }
+    .step-number {
+      position: absolute;
+      top: -11px;
+      left: 14px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border: 4px solid #fff;
+      border-radius: 50%;
+      background: var(--gradient);
+      box-shadow: 0 7px 16px rgba(6,134,124,.2);
+      font-size: 15px;
+      font-weight: 800;
+    }
+    .step-icon {
+      width: 76px;
+      height: 76px;
+      display: grid;
+      place-items: center;
+      margin: 10px auto 14px;
+      color: var(--brand);
+      border-radius: 50%;
+      background: var(--brand-soft);
+    }
+    .step-icon svg { width: 50px; height: 50px; stroke-width: 1.8; }
+    .step-card h3 { margin: 0; color: var(--brand-dark); font-size: 17px; text-align: center; }
+    .step-card .subtitle { margin: 4px 0 16px; color: var(--ink); font-size: 12px; font-weight: 600; text-align: center; }
+    .step-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+    .step-list li { position: relative; padding-left: 14px; color: #314861; font-size: 11px; line-height: 1.35; }
+    .step-list li::before { position: absolute; left: 0; content: "•"; color: var(--brand); font-weight: 800; }
+    .step-note {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #eef9f7, #f7fcfb);
+      color: #24445a;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+    .step-note strong { display: block; margin-bottom: 5px; color: var(--brand-dark); font-size: 11px; text-align: center; }
+    .mini-check { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+    .mini-check svg { width: 13px; height: 13px; color: var(--brand); }
+    .step-art {
+      height: 95px;
+      display: grid;
+      place-items: center;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #f5fbfa, #e2f5f2);
+    }
+    .step-art img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; opacity: .8; }
+
+    /* Benefits */
+    .why-section { padding: 12px 0 30px; }
+    .section-heading { margin-bottom: 20px; text-align: center; }
+    .section-heading h2 { margin: 0; font-size: 29px; letter-spacing: -.035em; }
+    .section-heading h2 span { color: var(--brand); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .why-card {
+      min-height: 165px;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      align-content: start;
+      gap: 11px;
+      padding: 21px 18px;
+      border-right: 1px solid var(--line);
+    }
+    .why-card:last-child { border-right: 0; }
+    .why-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      color: var(--brand-dark);
+      border-radius: 50%;
+      background: var(--brand-soft);
+    }
+    .why-icon svg { width: 27px; height: 27px; }
+    .why-card h3 { margin: 6px 0 9px; font-size: 13px; }
+    .why-card ul { grid-column: 2; display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+    .why-card li { position: relative; padding-left: 12px; color: #38516a; font-size: 10px; }
+    .why-card li::before { position: absolute; left: 0; content: "•"; color: var(--brand); }
+
+    /* CTA and stats */
+    .cta {
+      position: relative;
+      min-height: 155px;
+      display: grid;
+      grid-template-columns: 175px 1fr auto;
+      align-items: center;
+      gap: 32px;
+      overflow: hidden;
+      margin: 0 auto 30px;
+      padding: 22px 55px 22px 30px;
+      color: #fff;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 15% 45%, rgba(95,240,222,.25), transparent 12rem),
+        var(--gradient);
+      box-shadow: 0 18px 40px rgba(6,134,124,.22);
+    }
+    .cta::after {
+      position: absolute;
+      right: -100px;
+      bottom: -135px;
+      width: 450px;
+      height: 270px;
+      content: "";
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(255,255,255,.035), 0 0 0 58px rgba(255,255,255,.025);
+    }
+    .cta-shield {
+      position: relative;
+      z-index: 2;
+      width: 115px;
+      height: 115px;
+      display: grid;
+      place-items: center;
+      justify-self: center;
+      color: #fff;
+      border-radius: 50%;
+      background: rgba(255,255,255,.11);
+    }
+    .cta-shield svg { width: 86px; height: 86px; stroke-width: 1.8; }
+    .cta-copy { position: relative; z-index: 2; }
+    .cta-copy h2 { margin: 0 0 7px; font-size: 30px; line-height: 1.15; }
+    .cta-copy p { max-width: 550px; margin: 0; color: rgba(255,255,255,.9); font-size: 14px; line-height: 1.55; }
+    .cta-actions { position: relative; z-index: 2; display: grid; gap: 12px; min-width: 230px; }
+    .cta-actions .button { background: #fff; }
+    .cta-actions .button.secondary { color: #fff; border-color: rgba(255,255,255,.75); background: transparent; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: center;
+      min-height: 95px;
+      margin-bottom: 36px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .stat {
+      display: grid;
+      grid-template-columns: 49px 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 18px;
+      border-right: 1px solid var(--line);
+    }
+    .stat:last-child { border-right: 0; }
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--brand);
+      border-radius: 50%;
+      background: var(--brand-soft);
+    }
+    .stat-icon svg { width: 27px; height: 27px; }
+    .stat strong { display: block; color: var(--brand-dark); font-size: 20px; font-variant-numeric: tabular-nums; }
+    .stat small { display: block; margin-top: 3px; color: #455d75; font-size: 9px; }
+
+    /* Footer shared with home2.html */
+    .site-footer {
+      margin-top: 10px;
+      border-top: 1px solid #e1eaed;
+      background: #fff;
+    }
+    .site-footer .container { width: min(1180px, calc(100% - 48px)); }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.35fr repeat(3, .75fr) 1fr;
+      gap: 30px;
+      padding-block: 18px;
+    }
+    .footer-brand .brand { min-width: 0; }
+    .footer-brand .brand-mark { width: 31px; height: 31px; }
+    .footer-brand .brand-mark svg { width: 17px; height: 17px; }
+    .footer-brand .brand-copy strong { font-size: 20px; }
+    .footer-brand .brand-copy small { font-size: 10px; }
+    .footer-brand p {
+      max-width: 240px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .footer-column h3 { margin: 0 0 10px; font-size: 13px; font-weight: 800; }
+    .footer-column a {
+      display: block;
+      margin-top: 7px;
+      color: #304773;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .payment-logos { display: flex; flex-wrap: wrap; gap: 6px; }
+    .payment-logos span {
+      min-width: 43px;
+      padding: 7px 8px;
+      color: #154ab6;
+      border: 1px solid #dbe4ec;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0 17px;
+      color: #718096;
+      border-top: 1px solid #e7edef;
+      font-size: 10px;
+    }
+
+    /* Reveal motion */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1100px) {
+      .main-nav { gap: 20px; }
+      .hero-inner { grid-template-columns: 185px 1fr 185px; }
+      .workflow-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .step-card::after { display: none; }
+      .why-grid { grid-template-columns: repeat(3, 1fr); }
+      .why-card:nth-child(3) { border-right: 0; }
+      .why-card:nth-child(n+4) { border-top: 1px solid var(--line); }
+      .stats { grid-template-columns: repeat(3, 1fr); }
+      .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(n+4) { border-top: 1px solid var(--line); }
+      .footer-grid { grid-template-columns: 1.2fr repeat(2, .8fr) 1fr; }
+      .footer-column.company { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .header-inner { grid-template-columns: auto auto; justify-content: space-between; }
+      .menu-toggle { display: grid; }
+      .main-nav {
+        position: fixed;
+        z-index: 120;
+        top: 80px;
+        right: 18px;
+        left: 18px;
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+      .main-nav.open { display: flex; }
+      .main-nav a { padding: 14px 6px; border-bottom: 1px solid #edf3f4; }
+      .main-nav a::after, .header-actions { display: none; }
+      .hero-inner { grid-template-columns: 130px 1fr 130px; }
+      .hero-copy h1 { font-size: 43px; }
+      .cta { grid-template-columns: 125px 1fr; padding-right: 30px; }
+      .cta-actions { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 700px) {
+      .container { width: min(calc(100% - 24px), 640px); }
+      .hero { padding-top: 26px; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-art { display: none; }
+      .hero-copy h1 { font-size: 39px; }
+      .hero-copy h2 { font-size: 18px; }
+      .workflow-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+      .step-card, .step-card:nth-child(n+6) { min-height: 465px; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .why-card, .why-card:nth-child(3) { border-right: 1px solid var(--line); }
+      .why-card:nth-child(2n) { border-right: 0; }
+      .why-card:nth-child(n+3) { border-top: 1px solid var(--line); }
+      .cta { grid-template-columns: 1fr; text-align: center; }
+      .cta-shield { width: 90px; height: 90px; }
+      .cta-shield svg { width: 68px; height: 68px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat, .stat:nth-child(3) { border-right: 1px solid var(--line); }
+      .stat:nth-child(2n) { border-right: 0; }
+      .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+      .stat:last-child { grid-column: 1 / -1; border-right: 0; }
+      .footer-grid { grid-template-columns: 1fr; justify-items: center; gap: 18px; }
+      .footer-column, .footer-brand { width: 100%; text-align: center; }
+      .footer-brand p { margin-inline: auto; }
+      .payment-logos { justify-content: center; }
+      .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .brand-copy strong { font-size: 21px; }
+      .brand-copy small { font-size: 9px; }
+      .workflow-grid, .why-grid, .stats { grid-template-columns: 1fr; }
+      .step-card, .step-card:nth-child(n+6) { min-height: auto; }
+      .why-card, .why-card:nth-child(3), .why-card:nth-child(2n),
+      .stat, .stat:nth-child(3), .stat:nth-child(2n) {
+        border-right: 0;
+        border-top: 1px solid var(--line);
+      }
+      .why-card:first-child, .stat:first-child { border-top: 0; }
+      .cta { padding: 24px 18px; }
+      .cta-copy h2 { font-size: 25px; }
+      .cta-actions { grid-template-columns: 1fr; min-width: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+  <link rel="stylesheet" href="assets/css/mobile-nav-dropdown.css?v=20260818-1">
+  <script defer src="assets/js/mobile-nav-dropdown.js?v=20260818-1"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="home2.html" aria-label="Divinexa home">
+        <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Prescription Platform</small></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+        <a href="home2.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="subscription.html">Subscription</a>
+        <a class="active" href="how-it-works.html" aria-current="page">How It Works</a>
+        <a href="home2.html#contact">Contact</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <figure class="hero-art left" aria-hidden="true">
+          <div class="clipboard-visual">
+            <div class="rx-mark">R<sub>x</sub></div>
+            <div class="clipboard-row"><i data-lucide="check"></i><span></span></div>
+            <div class="clipboard-row"><i data-lucide="check"></i><span></span></div>
+            <div class="clipboard-row"><i data-lucide="check"></i><span></span></div>
+          </div>
+          <span class="shield-badge"><i data-lucide="cross"></i></span>
+        </figure>
+        <div class="hero-copy">
+          <h1>How It <span>Works</span></h1>
+          <div class="title-ornament" aria-hidden="true"><span></span></div>
+          <h2>AI-Powered Digital Prescription Workflow</h2>
+          <p>From registration to patient follow-up, Divinexa streamlines every step of the prescription process using Artificial Intelligence.</p>
+        </div>
+        <figure class="hero-art right" aria-hidden="true">
+          <div class="monitor-visual">
+            <div class="monitor-screen">
+              <div class="monitor-layout">
+                <span class="monitor-user"><i data-lucide="user-round"></i></span>
+                <span class="dashboard-mini">
+                  <span class="dashboard-lines"><span></span><span></span></span>
+                  <span class="dashboard-chart"><i></i><i></i><i></i><i></i></span>
+                </span>
+              </div>
+            </div>
+            <span class="plant"></span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="workflow-section" aria-label="Divinexa workflow">
+      <div class="container workflow-grid">
+        <article class="step-card reveal">
+          <span class="step-number">01</span>
+          <span class="step-icon"><i data-lucide="user-round-check"></i></span>
+          <h3>Register &amp; Verify</h3><p class="subtitle">Create Your Account</p>
+          <ul class="step-list">
+            <li>Quick registration</li><li>Email verification</li><li>Mobile verification</li>
+            <li>Medical license verification</li><li>Clinic profile setup</li>
+            <li>Organization registration</li><li>Multi-user access</li>
+          </ul>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">02</span>
+          <span class="step-icon"><i data-lucide="credit-card"></i></span>
+          <h3>Choose Subscription</h3><p class="subtitle">Activate Your Plan</p>
+          <ul class="step-list">
+            <li>Free trial</li><li>Pay per prescription</li><li>Monthly subscription</li>
+            <li>Annual subscription</li><li>Clinic package</li><li>Enterprise package</li>
+          </ul>
+          <div class="step-note"><strong>Benefits</strong>
+            <span class="mini-check"><i data-lucide="circle-check-big"></i>Unlimited patients</span>
+            <span class="mini-check"><i data-lucide="circle-check-big"></i>AI suggestions</span>
+            <span class="mini-check"><i data-lucide="circle-check-big"></i>Secure cloud storage</span>
+            <span class="mini-check"><i data-lucide="circle-check-big"></i>Priority support</span>
+          </div>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">03</span>
+          <span class="step-icon"><i data-lucide="badge-check"></i></span>
+          <h3>Complete Doctor Profile</h3><p class="subtitle">Professional Setup</p>
+          <ul class="step-list">
+            <li>Specialization</li><li>Qualifications</li><li>Registration number</li>
+            <li>Digital signature</li><li>Clinic details</li><li>Consultation fees</li>
+            <li>Working hours</li><li>Languages</li>
+          </ul>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">04</span>
+          <span class="step-icon"><i data-lucide="users-round"></i></span>
+          <h3>Add or Search Patient</h3><p class="subtitle">Patient Management</p>
+          <ul class="step-list">
+            <li>Personal details</li><li>Medical history</li><li>Allergies</li>
+            <li>Chronic diseases</li><li>Current medications</li><li>Previous prescriptions</li>
+            <li>Vitals</li><li>Insurance details</li>
+          </ul>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">05</span>
+          <span class="step-icon"><i data-lucide="clipboard-pen-line"></i></span>
+          <h3>Start Consultation</h3><p class="subtitle">Digital Consultation</p>
+          <ul class="step-list">
+            <li>Symptoms</li><li>Diagnosis</li><li>Clinical notes</li><li>Vitals</li>
+            <li>Laboratory results</li><li>Radiology reports</li><li>Previous history</li>
+          </ul>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">06</span>
+          <span class="step-icon"><i data-lucide="brain-circuit"></i></span>
+          <h3>AI Prescription Assistant</h3><p class="subtitle">AI-Powered Recommendation</p>
+          <ul class="step-list">
+            <li>Medicine suggestions</li><li>Dosage recommendation</li><li>Duration &amp; frequency</li>
+            <li>Drug interaction check</li><li>Allergy detection</li><li>Duplicate medicine warning</li>
+            <li>Clinical guideline suggestions</li><li>Alternative medicines</li><li>Generic medicine suggestions</li>
+          </ul>
+          <div class="step-note"><strong>Powered by AI</strong>Smart · Fast · Accurate</div>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">07</span>
+          <span class="step-icon"><i data-lucide="shield-check"></i></span>
+          <h3>Review &amp; Customize</h3><p class="subtitle">Doctor Approval</p>
+          <ul class="step-list">
+            <li>Edit medicines</li><li>Change dosage</li><li>Add advice</li><li>Add investigations</li>
+            <li>Add follow-up date</li><li>Add lifestyle instructions</li><li>Add notes</li><li>Save templates</li>
+          </ul>
+          <div class="step-art"><img src="assets/images/workflow-clipboard.png" alt="" aria-hidden="true"></div>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">08</span>
+          <span class="step-icon"><i data-lucide="file-check-2"></i></span>
+          <h3>Generate Prescription</h3><p class="subtitle">Professional Prescription</p>
+          <ul class="step-list">
+            <li>QR code</li><li>Digital signature</li><li>Hospital branding</li><li>Doctor details</li>
+            <li>Patient details</li><li>Medicine list</li><li>Advice</li><li>Follow-up date</li><li>Laboratory tests</li>
+          </ul>
+          <div class="step-note"><strong>Formats</strong>PDF · Print · A4 · Mobile</div>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">09</span>
+          <span class="step-icon"><i data-lucide="send"></i></span>
+          <h3>Share with Patient</h3><p class="subtitle">Instant Delivery</p>
+          <ul class="step-list">
+            <li>WhatsApp</li><li>SMS</li><li>Email</li><li>Patient portal</li><li>PDF download</li><li>QR code</li>
+          </ul>
+          <div class="step-art"><img src="assets/images/workflow-monitor.png" alt="" aria-hidden="true"></div>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="step-number">10</span>
+          <span class="step-icon"><i data-lucide="chart-no-axes-combined"></i></span>
+          <h3>Follow-up &amp; Analytics</h3><p class="subtitle">Smart Practice Management</p>
+          <ul class="step-list">
+            <li>Patient history</li><li>Prescription history</li><li>Revenue reports</li>
+            <li>Daily consultations</li><li>Medicine analytics</li><li>AI usage reports</li>
+            <li>Doctor performance</li><li>Clinic performance</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="why-section">
+      <div class="container">
+        <div class="section-heading"><h2>Why Choose <span>Divinexa?</span></h2></div>
+        <div class="why-grid reveal">
+          <article class="why-card"><span class="why-icon"><i data-lucide="lock-keyhole"></i></span><h3>Secure &amp; Compliant</h3><ul><li>HIPAA ready</li><li>GDPR ready</li><li>End-to-end encryption</li><li>Role-based access</li></ul></article>
+          <article class="why-card"><span class="why-icon"><i data-lucide="clock-3"></i></span><h3>Faster Consultation</h3><ul><li>Reduce time by up to 70%</li><li>AI-assisted recommendations</li><li>One-click templates</li></ul></article>
+          <article class="why-card"><span class="why-icon"><i data-lucide="bot"></i></span><h3>AI Powered</h3><ul><li>Smart medicine suggestions</li><li>Drug interaction alerts</li><li>Allergy detection</li><li>Clinical decision support</li></ul></article>
+          <article class="why-card"><span class="why-icon"><i data-lucide="cloud"></i></span><h3>Cloud Based</h3><ul><li>Access anywhere</li><li>Automatic backups</li><li>Multi-device synchronization</li></ul></article>
+          <article class="why-card"><span class="why-icon"><i data-lucide="users"></i></span><h3>Scalable</h3><ul><li>Solo doctors</li><li>Clinics</li><li>Hospitals</li><li>Healthcare organizations</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container cta reveal">
+      <span class="cta-shield" aria-hidden="true"><i data-lucide="shield-plus"></i></span>
+      <div class="cta-copy"><h2>Ready to Transform Your Healthcare Practice?</h2><p>Deliver faster, safer, and smarter digital prescriptions with AI-powered assistance.</p></div>
+      <div class="cta-actions">
+        <a class="button" href="signup.html">Start Free Trial <i data-lucide="arrow-right"></i></a>
+        <a class="button secondary" href="subscription.html">View Subscription Plans <i data-lucide="arrow-right"></i></a>
+      </div>
+    </section>
+
+    <section class="container stats reveal" aria-label="Divinexa statistics">
+      <div class="stat"><span class="stat-icon"><i data-lucide="user-round-check"></i></span><span><strong class="count-up" data-target="10000" data-format="comma" data-suffix="+">0</strong><small>Registered Doctors</small></span></div>
+      <div class="stat"><span class="stat-icon"><i data-lucide="building-2"></i></span><span><strong class="count-up" data-target="2500" data-format="comma" data-suffix="+">0</strong><small>Clinics &amp; Hospitals</small></span></div>
+      <div class="stat"><span class="stat-icon"><i data-lucide="file-text"></i></span><span><strong class="count-up" data-target="5" data-suffix=" Million+">0</strong><small>Prescriptions Created</small></span></div>
+      <div class="stat"><span class="stat-icon"><i data-lucide="clock-3"></i></span><span><strong class="count-up" data-target="99.9" data-decimals="1" data-suffix="%">0</strong><small>Platform Uptime</small></span></div>
+      <div class="stat"><span class="stat-icon"><i data-lucide="headphones"></i></span><span><strong>24/7</strong><small>Customer Support</small></span></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="home2.html">
+          <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+          <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>AI Prescription Platform</small></span>
+        </a>
+        <p>AI-powered prescription management platform for doctors, clinics and healthcare organizations.</p>
+      </div>
+      <div class="footer-column"><h3>Platform</h3><a href="home2.html">Home</a><a href="subscription.html">Subscription</a><a href="#">Features</a><a href="how-it-works.html">How It Works</a></div>
+      <div class="footer-column company"><h3>Company</h3><a href="about.html">About Us</a><a href="#">Contact</a><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a></div>
+      <div class="footer-column"><h3>Support</h3><a href="#">Help Center</a><a href="#">FAQ</a><a href="mailto:support@cliniflow.example">Contact Support</a><a href="mailto:support@cliniflow.example">support@cliniflow.com</a></div>
+      <div class="footer-column"><h3>We Accept</h3><div class="payment-logos"><span>VISA</span><span>●●</span><span>RuPay</span><span>UPI</span></div></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 Divinexa. All rights reserved.</span><span>Made with ♥ for Better Healthcare</span></div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      const renderIcons = () => window.lucide?.createIcons();
+      const nav = document.getElementById("mainNav");
+      const toggle = document.getElementById("menuToggle");
+
+      const setMenu = (open) => {
+        nav.classList.toggle("open", open);
+        document.body.classList.toggle("menu-open", open);
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+        toggle.innerHTML = `<i data-lucide="${open ? "x" : "menu"}"></i>`;
+        renderIcons();
+      };
+
+      toggle.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+      nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+      document.querySelectorAll('a[href="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => event.preventDefault());
+      });
+
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reveals = document.querySelectorAll(".reveal");
+      const counters = document.querySelectorAll(".count-up");
+
+      const setCounterFinal = (element) => {
+        const target = Number(element.dataset.target);
+        const decimals = Number(element.dataset.decimals || 0);
+        const formatted = element.dataset.format === "comma"
+          ? Math.round(target).toLocaleString("en-US")
+          : target.toFixed(decimals);
+        element.textContent = `${formatted}${element.dataset.suffix || ""}`;
+      };
+
+      const animateCounter = (element) => {
+        const target = Number(element.dataset.target);
+        const decimals = Number(element.dataset.decimals || 0);
+        const startTime = performance.now();
+        const duration = 1350;
+        const tick = (now) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const value = target * eased;
+          const formatted = element.dataset.format === "comma"
+            ? Math.round(value).toLocaleString("en-US")
+            : value.toFixed(decimals);
+          element.textContent = `${formatted}${element.dataset.suffix || ""}`;
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+
+      if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        reveals.forEach((element) => element.classList.add("visible"));
+        counters.forEach(setCounterFinal);
+      } else {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: .12 });
+
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            animateCounter(entry.target);
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: .55 });
+
+        reveals.forEach((element) => revealObserver.observe(element));
+        counters.forEach((element) => counterObserver.observe(element));
+      }
+
+      renderIcons();
+    })();
+  </script>
+</body>
+</html>

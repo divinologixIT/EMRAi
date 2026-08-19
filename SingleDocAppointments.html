@@ -1,0 +1,3504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Divinexa single clinic appointments dashboard">
+  <title>Appointments | Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #071c4b;
+      --muted: #536586;
+      --teal: #079b94;
+      --teal-dark: #008b85;
+      --teal-soft: #e8f7f5;
+      --blue: #1477e7;
+      --green: #08a75a;
+      --orange: #f47721;
+      --line: #dfe8ed;
+      --page: #fbfdfd;
+      --surface: #fff;
+      --header: 56px;
+      --sidebar: 230px;
+      --ease: cubic-bezier(.22, .8, .24, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      overflow: hidden;
+      color: var(--navy);
+      background: var(--page);
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 12px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 3px solid rgba(7, 155, 148, .2);
+      outline-offset: 2px;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 100;
+      inset: 0 0 auto;
+      height: var(--header);
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, .98);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-zone {
+      width: var(--sidebar);
+      height: 100%;
+      flex: 0 0 var(--sidebar);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      overflow: hidden;
+      border-right: 1px solid var(--line);
+      will-change: width, flex-basis;
+      transition:
+        width 650ms var(--ease),
+        flex-basis 650ms var(--ease),
+        padding 650ms var(--ease);
+    }
+
+    .menu-button {
+      width: 32px;
+      height: 36px;
+      flex: 0 0 32px;
+      display: grid;
+      place-items: center;
+      margin-right: 14px;
+      padding: 0;
+      border: 0;
+      border-radius: 9px;
+      color: var(--navy);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .menu-button:hover { background: #eff8f7; }
+    .menu-button svg { width: 18px; height: 18px; stroke-width: 1.8; }
+
+    .brand {
+      min-width: 0;
+      max-width: 190px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--teal-dark);
+      text-decoration: none;
+      transition:
+        max-width 650ms var(--ease),
+        opacity 230ms ease 80ms,
+        transform 380ms var(--ease) 40ms;
+    }
+
+    .brand-mark {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      transform: rotate(45deg);
+      border-radius: 12px 17px 12px 17px;
+      background: linear-gradient(145deg, #38c7bb, #03a49d 70%);
+      box-shadow: 0 7px 17px rgba(3, 164, 157, .17);
+    }
+
+    .brand-mark::before, .brand-mark::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 6px;
+      border: 3px solid #fff;
+      border-radius: 4px;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      content: "";
+    }
+
+    .brand-mark::after { width: 6px; height: 20px; }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: -.8px;
+      white-space: nowrap;
+    }
+
+    .brand-copy small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .topbar-main {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      padding: 0 27px;
+    }
+
+    .date-button, .notification, .profile {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .date-button {
+      height: 42px;
+      min-width: 148px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      font-weight: 600;
+    }
+
+    .date-button svg:first-child { width: 17px; height: 17px; }
+    .date-button svg:last-child { width: 13px; height: 13px; margin-left: auto; }
+
+    .notification {
+      position: relative;
+      width: 43px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--line);
+    }
+
+    .notification svg { width: 19px; height: 19px; }
+    .notification b {
+      position: absolute;
+      top: 0;
+      right: 8px;
+      min-width: 16px;
+      height: 16px;
+      display: grid;
+      place-items: center;
+      padding: 0 4px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      color: #fff;
+      background: #ef2942;
+      font-size: 8px;
+    }
+
+    .profile {
+      min-width: 178px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .avatar {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      overflow: hidden;
+      border: 3px solid #edf2f4;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 36%, #e3a477 0 15%, transparent 16%),
+        radial-gradient(ellipse at 50% 35%, #15201e 0 20%, transparent 21%),
+        radial-gradient(ellipse at 50% 95%, #183445 0 37%, transparent 38%),
+        #dfe7e9;
+    }
+
+    .profile strong, .profile small { display: block; white-space: nowrap; }
+    .profile strong { font-size: 13px; }
+    .profile small { margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .profile > svg { width: 14px; height: 14px; margin-left: auto; }
+
+    .sidebar {
+      position: fixed;
+      z-index: 90;
+      inset: var(--header) auto 0 0;
+      width: var(--sidebar);
+      padding: 18px 16px 13px;
+      overflow: hidden;
+      background: #fff;
+      border-right: 1px solid var(--line);
+      will-change: width;
+      transition:
+        width 650ms var(--ease),
+        padding 650ms var(--ease),
+        transform .24s ease;
+    }
+
+    .nav { display: grid; gap: 5px; }
+
+    .nav-link {
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 13px;
+      overflow: hidden;
+      border-radius: 8px;
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition:
+        background .18s ease,
+        color .18s ease,
+        padding 650ms var(--ease),
+        gap 650ms var(--ease);
+    }
+
+    .nav-link:hover { color: var(--teal-dark); background: #f1f9f8; }
+    .nav-link.active { color: #fff; background: linear-gradient(135deg, #08a69e, #02958f); }
+    .nav-link svg { width: 14px; height: 14px; flex: 0 0 14px; color: #069b94; stroke-width: 1.75; }
+    .nav-link.active svg { color: #fff; }
+
+    .nav-link span {
+      max-width: 170px;
+      display: block;
+      overflow: hidden;
+      opacity: 1;
+      white-space: nowrap;
+      transform: translateX(0);
+      transition:
+        max-width 650ms var(--ease),
+        opacity 210ms ease 70ms,
+        transform 340ms ease 30ms;
+    }
+
+    .support-card {
+      max-height: 210px;
+      margin-top: 17px;
+      padding: 14px;
+      overflow: hidden;
+      border: 1px solid #d7eaeb;
+      border-radius: 13px;
+      background: linear-gradient(145deg, rgba(235,249,248,.9), rgba(248,252,252,.95));
+      transform: translateY(0);
+      transition:
+        max-height 520ms var(--ease),
+        margin 520ms var(--ease),
+        padding 520ms var(--ease),
+        opacity 190ms ease,
+        transform 320ms ease;
+    }
+
+    .support-card strong { display: flex; align-items: center; gap: 9px; color: var(--teal-dark); }
+    .support-card strong svg { width: 16px; height: 16px; }
+    .support-card p { margin: 10px 0 12px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .support-card button {
+      width: 100%;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--teal);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .support-card button svg { width: 13px; height: 13px; }
+
+    .main {
+      height: 100vh;
+      min-height: 0;
+      margin-left: var(--sidebar);
+      padding: calc(var(--header) + 13px) 28px 12px;
+      overflow: hidden;
+      will-change: margin-left;
+      transition:
+        margin-left 650ms var(--ease),
+        padding 650ms var(--ease);
+    }
+
+    body.sidebar-compact { --sidebar: 76px; }
+    body.sidebar-compact .brand-zone { justify-content: center; padding-inline: 10px; }
+    body.sidebar-compact .menu-button { margin-right: 0; }
+    body.sidebar-compact .brand {
+      max-width: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-12px);
+      transition:
+        max-width 650ms var(--ease),
+        opacity 150ms ease,
+        transform 260ms ease;
+    }
+    body.sidebar-compact .sidebar { padding-inline: 10px; }
+    body.sidebar-compact .nav-link { justify-content: center; gap: 0; padding-inline: 0; }
+    body.sidebar-compact .nav-link span {
+      max-width: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-10px);
+      transition:
+        max-width 650ms var(--ease),
+        opacity 140ms ease,
+        transform 240ms ease;
+    }
+    body.sidebar-compact .support-card {
+      max-height: 0;
+      margin-block: 0;
+      padding-block: 0;
+      border-color: transparent;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+
+    .page-heading {
+      min-height: 47px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .page-heading h1 { margin: 0; font-size: 22px; letter-spacing: -.35px; }
+    .page-heading p { margin: 5px 0 0; color: var(--muted); font-size: 11px; }
+
+    .primary-button {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 7px;
+      color: #fff;
+      background: linear-gradient(135deg, #08a69e, #008d88);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 7px 16px rgba(0, 141, 136, .14);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .primary-button:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,141,136,.2); }
+    .primary-button svg { width: 14px; height: 14px; }
+
+    .toolbar {
+      height: 42px;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tabs { display: flex; align-items: stretch; gap: 30px; }
+    .tab {
+      position: relative;
+      padding: 0 5px;
+      border: 0;
+      color: var(--navy);
+      background: transparent;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .tab::after {
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--teal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+      content: "";
+    }
+    .tab.active { color: var(--teal-dark); }
+    .tab.active::after { transform: scaleX(1); }
+
+    .toolbar-actions { display: flex; gap: 8px; padding-bottom: 7px; }
+    body.week-view-active [data-date-control],
+    body.all-view-active [data-date-control] { order: -1; }
+    .outline-control {
+      min-width: 76px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .outline-control svg { width: 13px; height: 13px; color: var(--teal); }
+
+    .appointments-layout {
+      height: calc(100vh - var(--header) - 125px);
+      min-height: 500px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.58fr) minmax(330px, 1fr);
+      gap: 14px;
+    }
+
+    .queue-column, .current-card {
+      min-width: 0;
+      height: 100%;
+    }
+
+    .next-card {
+      min-height: 70px;
+      display: grid;
+      grid-template-columns: 145px minmax(0, 1fr) 105px 88px 39px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 9px;
+      padding: 10px 12px;
+      border: 1px solid #cee0f7;
+      border-radius: 8px;
+      background: linear-gradient(115deg, #f1f7ff, #eefbf9);
+      animation: rise-in .42s var(--ease) both;
+    }
+
+    .next-card-label {
+      grid-column: 1 / -1;
+      align-self: start;
+      margin-bottom: -21px;
+      color: var(--blue);
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .next-card time { font-size: 13px; font-weight: 700; }
+    .patient { min-width: 0; display: flex; align-items: center; gap: 9px; }
+    .patient-link {
+      padding: 3px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .patient-link:hover {
+      color: var(--teal-dark);
+      background: #edf9f7;
+      transform: translateX(2px);
+    }
+    .patient-avatar {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      overflow: hidden;
+      border: 2px solid #e0e8eb;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #dce7e9, #aebfc4);
+    }
+    .patient-avatar::before {
+      position: absolute;
+      top: 5px;
+      left: 8px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--skin, #d99a70);
+      content: "";
+    }
+    .patient-avatar::after {
+      position: absolute;
+      right: 2px;
+      bottom: -7px;
+      left: 2px;
+      height: 20px;
+      border-radius: 50% 50% 0 0;
+      background: var(--shirt, #1e3847);
+      content: "";
+    }
+    .patient-avatar i {
+      position: absolute;
+      z-index: 2;
+      top: 3px;
+      left: 7px;
+      width: 18px;
+      height: 8px;
+      border-radius: 50% 50% 25% 25%;
+      background: var(--hair, #1a1b1b);
+    }
+    .patient strong, .patient small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .patient strong { font-size: 11.5px; }
+    .patient small { margin-top: 4px; color: var(--muted); font-size: 9px; }
+    .visit-type { color: #405477; font-size: 10px; }
+
+    .status {
+      min-width: 62px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .status.progress { color: #096dc6; background: #e8f3fd; }
+    .status.completed { color: #008159; background: #e8f7ef; }
+    .status.upcoming { color: #e35e0a; background: #fff1e7; }
+
+    .arrow-button {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 6px;
+      color: #fff;
+      background: var(--blue);
+      cursor: pointer;
+      transition: transform .18s ease;
+    }
+    .arrow-button:hover { transform: translateX(2px); }
+    .arrow-button svg { width: 16px; height: 16px; }
+
+    .section-title {
+      height: 25px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0;
+      font-size: 12.5px;
+    }
+    .count-badge {
+      min-width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 5px;
+      border-radius: 9px;
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      font-size: 9px;
+    }
+
+    .appointment-list { display: grid; }
+    .appointment-row {
+      position: relative;
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1.2fr) 92px 67px 43px 20px;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 6px 5px 12px;
+      border-bottom: 1px solid #eaf0f3;
+      background: #fff;
+      animation: row-in .38s var(--ease) backwards;
+      transition: background .18s ease, transform .18s ease;
+    }
+    .appointment-row:nth-child(2) { animation-delay: .04s; }
+    .appointment-row:nth-child(3) { animation-delay: .08s; }
+    .appointment-row:nth-child(4) { animation-delay: .12s; }
+    .appointment-row:nth-child(5) { animation-delay: .16s; }
+    .appointment-row:nth-child(6) { animation-delay: .2s; }
+    .appointment-row:hover { z-index: 1; background: #f8fcfc; transform: translateX(2px); }
+    .appointment-row::before {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 0;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--row-color, var(--teal));
+      content: "";
+    }
+    .appointment-row time { display: block; font-size: 11.5px; font-weight: 700; }
+    .appointment-row .duration { display: flex; align-items: center; gap: 4px; margin-top: 4px; color: var(--muted); font-size: 9px; }
+    .appointment-row .duration svg { width: 10px; height: 10px; }
+
+    .start-button, .more-button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+    .start-button {
+      display: grid;
+      justify-items: center;
+      gap: 2px;
+      color: var(--navy);
+      font-size: 8px;
+    }
+    .start-button span {
+      width: 23px;
+      height: 23px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #90a7c6;
+      border-radius: 50%;
+      color: #44628b;
+    }
+    .start-button svg { width: 10px; height: 10px; }
+    .start-button.completed-control {
+      color: var(--green);
+      font-weight: 700;
+    }
+    .start-button.completed-control span {
+      color: var(--green);
+      border-color: var(--green);
+      background: #effaf5;
+    }
+    .more-button { width: 20px; height: 28px; padding: 0; color: #344c75; }
+    .more-button svg { width: 14px; height: 14px; }
+
+    .view-more-wrap { display: flex; justify-content: center; padding-top: 8px; }
+    .view-more {
+      min-width: 102px;
+      height: 31px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--teal-dark);
+      background: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .view-more svg { width: 12px; height: 12px; }
+
+    .current-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 7px 22px rgba(28,70,84,.035);
+      animation: rise-in .44s var(--ease) .08s backwards;
+    }
+
+    .current-label {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding: 0 13px;
+      color: var(--blue);
+      background: #f4f8ff;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .current-patient {
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 13px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, #fff, #f4f9ff);
+    }
+    .current-patient .patient-avatar { width: 38px; height: 38px; flex-basis: 38px; }
+    .current-patient .patient strong { font-size: 13px; }
+    .current-patient .patient small { font-size: 10px; }
+    .current-patient .status { margin-left: auto; font-size: 10px; }
+
+    .details {
+      display: grid;
+      gap: 9px;
+      padding: 11px 13px;
+    }
+    .detail-row {
+      display: grid;
+      grid-template-columns: 15px 1fr 1fr;
+      align-items: center;
+      gap: 7px;
+      font-size: 10.5px;
+    }
+    .detail-row svg { width: 12px; height: 12px; color: var(--teal); }
+    .detail-row span { color: var(--muted); }
+    .detail-row strong { justify-self: start; font-size: 10.5px; }
+
+    .completion-panel, .automatic-panel {
+      margin: 0 11px 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fbfdfd;
+    }
+    .completion-panel h3, .automatic-panel h3 { margin: 0; font-size: 11px; }
+    .completion-panel p { margin: 6px 0 10px; color: var(--muted); font-size: 9.5px; }
+    .completion-panel .primary-button { width: 100%; height: 33px; font-size: 12px; }
+    .automatic-panel { position: relative; background: #f1fbf8; border-color: #cdebe4; }
+    .automatic-panel h3 { color: var(--teal-dark); }
+    .automatic-panel ul { display: grid; gap: 5px; margin: 7px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 9.5px; }
+    .automatic-panel li { display: flex; align-items: center; gap: 5px; }
+    .automatic-panel li svg { width: 10px; height: 10px; color: var(--green); }
+    .automatic-panel > svg {
+      position: absolute;
+      right: 12px;
+      bottom: 13px;
+      width: 34px;
+      height: 34px;
+      padding: 8px;
+      border-radius: 50%;
+      color: var(--teal);
+      background: #dff6f1;
+    }
+
+    [data-appointment-panel][hidden] { display: none !important; }
+    .week-view-panel {
+      height: calc(100vh - var(--header) - 125px);
+      min-height: 500px;
+      display: grid;
+      grid-template-rows: 88px minmax(0, 1fr);
+      gap: 10px;
+      animation: rise-in .32s var(--ease) both;
+    }
+    .week-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 175px;
+      gap: 12px;
+    }
+    .week-days-card,
+    .week-total-card,
+    .week-schedule-card,
+    .week-next-card,
+    .week-summary-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 7px 20px rgba(28, 70, 84, .025);
+    }
+    .week-days-card {
+      display: grid;
+      grid-template-columns: 34px repeat(7, minmax(58px, 1fr)) 34px;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+    }
+    .week-nav-button {
+      width: 30px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 6px;
+      color: #344d76;
+      background: #f4f8fb;
+      cursor: pointer;
+    }
+    .week-nav-button svg { width: 13px; height: 13px; }
+    .week-day {
+      min-width: 0;
+      height: 67px;
+      display: grid;
+      place-content: center;
+      gap: 5px;
+      border: 1px solid #edf1f3;
+      border-radius: 7px;
+      color: #34496f;
+      background: #fff;
+      text-align: center;
+      cursor: pointer;
+      transition: color .18s ease, border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .week-day span,
+    .week-day strong,
+    .week-day small { display: block; }
+    .week-day span { font-size: 9px; text-transform: uppercase; }
+    .week-day strong { font-size: 10px; }
+    .week-day small { font-size: 10px; font-weight: 750; }
+    .week-day:hover { border-color: #9fd8d3; transform: translateY(-1px); }
+    .week-day.active {
+      color: #fff;
+      border-color: var(--teal);
+      background: linear-gradient(145deg, #11aca2, #04958e);
+      box-shadow: 0 8px 17px rgba(0, 151, 143, .18);
+    }
+    .week-total-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+    }
+    .week-total-card span,
+    .week-total-card strong,
+    .week-total-card small { display: block; }
+    .week-total-card span { color: var(--muted); font-size: 10px; }
+    .week-total-card strong { margin-top: 5px; font-size: 22px; }
+    .week-total-card small { margin-top: 3px; color: #405477; font-size: 9px; }
+    .week-total-card > svg {
+      width: 35px;
+      height: 35px;
+      padding: 9px;
+      border-radius: 7px;
+      color: var(--teal);
+      background: var(--teal-soft);
+    }
+    .week-content {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 238px;
+      gap: 12px;
+    }
+    .week-schedule-card {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .week-schedule-heading {
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .week-schedule-heading h2 { margin: 0; font-size: 14px; }
+    .week-count {
+      padding: 4px 8px;
+      border-radius: 10px;
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .week-table-head,
+    .week-appointment-row {
+      display: grid;
+      grid-template-columns: 92px minmax(180px, 1.4fr) 100px 80px 55px 20px;
+      align-items: center;
+      gap: 8px;
+    }
+    .week-table-head {
+      min-height: 31px;
+      padding: 0 12px;
+      color: #405477;
+      background: #f8fafb;
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .week-appointment-list {
+      min-height: 0;
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: #9bcac6 #f4f8f8;
+    }
+    .week-appointment-list::-webkit-scrollbar { width: 7px; }
+    .week-appointment-list::-webkit-scrollbar-track { background: #f4f8f8; }
+    .week-appointment-list::-webkit-scrollbar-thumb { border-radius: 8px; background: #9bcac6; }
+    .week-appointment-row[hidden] { display: none; }
+    .week-appointment-row {
+      min-height: 53px;
+      position: relative;
+      padding: 5px 8px 5px 14px;
+      border-bottom: 1px solid #e9eff1;
+      background: #fff;
+      transition: background .18s ease;
+    }
+    .week-appointment-row:hover { background: #f8fcfc; }
+    .week-appointment-row::before {
+      width: 3px;
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 0;
+      border-radius: 3px;
+      background: var(--row-color, var(--teal));
+      content: "";
+    }
+    .week-time strong { display: block; font-size: 12px; }
+    .week-time small { display: flex; align-items: center; gap: 4px; margin-top: 4px; color: var(--muted); font-size: 9px; }
+    .week-time svg { width: 10px; height: 10px; }
+    .week-appointment-row .patient strong { font-size: 12px; }
+    .week-appointment-row .patient small { font-size: 9px; }
+    .week-appointment-row .visit-type { font-size: 10px; }
+    .week-appointment-row .status { min-width: 64px; height: 23px; font-size: 9px; }
+    .week-appointment-row .start-button { font-size: 9px; }
+    .week-schedule-card > .view-more-wrap {
+      position: relative;
+      z-index: 2;
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, .97);
+      box-shadow: 0 -5px 12px rgba(21, 64, 88, .045);
+    }
+    .week-schedule-card > .view-more-wrap .view-more[disabled] {
+      color: var(--muted);
+      background: #f7f9fa;
+      cursor: default;
+    }
+    .week-side { min-height: 0; display: grid; grid-template-rows: auto 1fr; gap: 10px; }
+    .week-next-card,
+    .week-summary-card { padding: 12px; }
+    .week-next-card h3,
+    .week-summary-card h3 { margin: 0 0 10px; font-size: 12px; }
+    .week-next-box {
+      padding: 10px;
+      border: 1px solid #cee0f7;
+      border-radius: 7px;
+      background: linear-gradient(145deg, #f1f7ff, #f5fbff);
+    }
+    .week-next-box time { color: var(--blue); font-size: 16px; font-weight: 800; }
+    .week-next-box .patient { margin-top: 10px; }
+    .week-next-box .patient strong { font-size: 12px; }
+    .week-next-box .patient small { font-size: 9px; }
+    .week-next-box .status { margin-top: 8px; }
+    .open-record-button {
+      width: 100%;
+      height: 31px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      border: 0;
+      border-radius: 6px;
+      color: #fff;
+      background: var(--blue);
+      font-size: 9px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    .open-record-button svg { width: 12px; height: 12px; }
+    .week-summary-list { display: grid; gap: 11px; }
+    .week-summary-row {
+      display: grid;
+      grid-template-columns: 16px 1fr auto;
+      align-items: center;
+      gap: 7px;
+      color: #405477;
+      font-size: 10px;
+    }
+    .week-summary-row svg { width: 13px; height: 13px; color: var(--teal); }
+    .week-summary-row strong { color: var(--navy); font-size: 10px; }
+    .week-average {
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid #cce9e5;
+      border-radius: 7px;
+      color: #405477;
+      background: linear-gradient(135deg, #effaf8, #f5fbff);
+      font-size: 9px;
+    }
+    .week-average strong { display: flex; align-items: center; gap: 6px; margin-top: 7px; color: var(--teal-dark); font-size: 13px; }
+    .week-average svg { width: 12px; height: 12px; }
+
+    .all-appointments-panel {
+      height: calc(100vh - var(--header) - 125px);
+      min-height: 500px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 10px;
+      animation: rise-in .32s var(--ease) both;
+    }
+
+    .all-filter-bar {
+      display: grid;
+      grid-template-columns: minmax(520px, 1fr) minmax(330px, .72fr);
+      align-items: center;
+      gap: 18px;
+    }
+
+    .all-status-filters {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(88px, 1fr));
+      gap: 10px;
+    }
+
+    .all-status-filter {
+      min-height: 61px;
+      display: grid;
+      grid-template-columns: 19px minmax(0, 1fr);
+      align-content: center;
+      column-gap: 8px;
+      row-gap: 3px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--navy);
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+
+    .all-status-filter:hover {
+      border-color: #a8dcd7;
+      transform: translateY(-1px);
+    }
+
+    .all-status-filter.active {
+      border-color: #8dd6cf;
+      box-shadow: inset 0 -2px var(--teal), 0 6px 16px rgba(7, 155, 148, .07);
+    }
+
+    .all-status-filter svg {
+      width: 17px;
+      height: 17px;
+      grid-row: 1 / span 2;
+      color: var(--filter-color, var(--teal));
+    }
+
+    .all-status-filter span {
+      overflow: hidden;
+      font-size: 11px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .all-status-filter strong {
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .all-search-tools {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) 82px;
+      gap: 10px;
+    }
+
+    .all-search {
+      min-width: 0;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .all-search svg {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 auto;
+      color: #52688c;
+    }
+
+    .all-search input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      color: var(--navy);
+      background: transparent;
+      font-size: 11px;
+    }
+
+    .all-search input::placeholder { color: #7a89a2; }
+
+    .all-export {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--teal-dark);
+      background: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .all-export svg { width: 14px; height: 14px; }
+
+    .all-content {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 12px;
+    }
+
+    .all-table-card,
+    .all-summary-card,
+    .all-average-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 7px 20px rgba(28, 70, 84, .025);
+    }
+
+    .all-table-card {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: 32px minmax(0, 1fr) 42px;
+      overflow: hidden;
+    }
+
+    .all-table-head,
+    .all-appointment-row {
+      display: grid;
+      grid-template-columns: 94px minmax(150px, 1.35fr) 92px 82px 105px 78px 34px 19px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .all-table-head {
+      padding: 0 9px 0 15px;
+      color: #405477;
+      background: #f7fafb;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .all-table-head span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .all-table-head svg { width: 9px; height: 9px; }
+
+    .all-table-body {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .all-appointment-row {
+      min-height: 53px;
+      position: relative;
+      padding: 5px 7px 5px 15px;
+      border-bottom: 1px solid #e9eff1;
+      background: #fff;
+      animation: row-in .34s var(--ease) backwards;
+      transition: background .18s ease, transform .18s ease;
+    }
+
+    .all-appointment-row:nth-child(2) { animation-delay: .03s; }
+    .all-appointment-row:nth-child(3) { animation-delay: .06s; }
+    .all-appointment-row:nth-child(4) { animation-delay: .09s; }
+    .all-appointment-row:nth-child(5) { animation-delay: .12s; }
+    .all-appointment-row:nth-child(6) { animation-delay: .15s; }
+    .all-appointment-row:nth-child(7) { animation-delay: .18s; }
+    .all-appointment-row:hover { z-index: 1; background: #f8fcfc; transform: translateX(2px); }
+    .all-appointment-row[hidden] { display: none; }
+
+    .all-appointment-row::before {
+      width: 3px;
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 0;
+      border-radius: 3px;
+      background: var(--row-color, var(--teal));
+      content: "";
+    }
+
+    .all-time strong,
+    .all-time small,
+    .all-payment strong,
+    .all-payment small { display: block; }
+
+    .all-time strong { font-size: 13px; }
+    .all-time small {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 9px;
+    }
+    .all-time svg { width: 9px; height: 9px; }
+
+    .all-appointment-row .patient-avatar {
+      width: 31px;
+      height: 31px;
+      flex-basis: 31px;
+    }
+
+    .all-appointment-row .patient strong { font-size: 12px; }
+    .all-appointment-row .patient small { margin-top: 3px; font-size: 9px; }
+    .all-appointment-row .visit-type,
+    .all-doctor { color: #405477; font-size: 10.5px; }
+    .all-appointment-row .status { min-width: 64px; height: 24px; font-size: 9px; }
+    .status.cancelled { color: #e3273f; background: #ffe9ec; }
+
+    .all-payment strong { font-size: 12px; }
+    .all-payment small {
+      width: fit-content;
+      margin-top: 3px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #087d59;
+      background: #e8f7ef;
+      font-size: 8px;
+    }
+    .all-payment small.pending { color: #096dc6; background: #e8f3fd; }
+    .all-payment small.na { color: #63728e; background: #eef2f5; }
+
+    .all-record-button {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 7px;
+      color: var(--teal);
+      background: #edf9f7;
+      cursor: pointer;
+    }
+    .all-record-button svg { width: 13px; height: 13px; }
+
+    .all-pagination {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 5px 11px;
+      color: #405477;
+      background: #fff;
+      font-size: 9.5px;
+    }
+
+    .pagination-pages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .pagination-pages button,
+    .page-size {
+      min-width: 27px;
+      height: 27px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: #405477;
+      background: #fff;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .pagination-pages button.active {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .pagination-pages button:disabled { opacity: .45; cursor: not-allowed; }
+    .pagination-pages svg { width: 12px; height: 12px; }
+
+    .page-size {
+      min-width: 70px;
+      justify-self: end;
+      grid-auto-flow: column;
+      gap: 5px;
+      padding: 0 8px;
+    }
+    .page-size svg { width: 11px; height: 11px; }
+
+    .all-summary {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 10px;
+    }
+
+    .all-summary-card { padding: 13px; }
+    .all-summary-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 13px;
+      font-size: 13px;
+    }
+    .all-summary-card h3 svg { width: 16px; height: 16px; color: var(--teal); }
+
+    .all-summary-list { display: grid; gap: 12px; }
+    .all-summary-row {
+      display: grid;
+      grid-template-columns: 16px 1fr auto;
+      align-items: center;
+      gap: 7px;
+      color: #405477;
+      font-size: 10.5px;
+    }
+    .all-summary-row svg { width: 13px; height: 13px; color: var(--summary-color, var(--teal)); }
+    .all-summary-row strong { color: var(--summary-color, var(--navy)); font-size: 10.5px; }
+
+    .payment-summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #405477;
+      font-size: 10.5px;
+    }
+    .payment-summary-row + .payment-summary-row { margin-top: 13px; }
+    .payment-summary-row strong { color: var(--payment-color, var(--navy)); font-size: 10.5px; }
+
+    .all-average-card {
+      align-self: stretch;
+      padding: 14px;
+      color: #405477;
+      background: linear-gradient(135deg, #effaf8, #f5fbff);
+      font-size: 10.5px;
+    }
+    .all-average-card strong {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 10px;
+      color: var(--teal-dark);
+      font-size: 15px;
+    }
+    .all-average-card svg { width: 14px; height: 14px; }
+
+    @media (max-width: 1180px) {
+      .all-filter-bar { grid-template-columns: 1fr; gap: 8px; }
+      .all-appointments-panel { height: auto; min-height: 0; }
+      .all-content { grid-template-columns: 1fr; }
+      .all-summary { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; }
+      .all-table-card { min-height: 460px; }
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 180;
+      right: 22px;
+      bottom: 20px;
+      max-width: 340px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      border-radius: 9px;
+      color: #fff;
+      background: #08494b;
+      box-shadow: 0 14px 34px rgba(5,31,52,.24);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(18px);
+      transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+    }
+    .toast.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    .toast svg { width: 18px; height: 18px; color: #5ae1d2; }
+    .toast span { font-size: 9px; line-height: 1.4; }
+
+    .overlay {
+      position: fixed;
+      z-index: 140;
+      inset: 0;
+      display: none;
+      background: rgba(5, 23, 55, .38);
+      backdrop-filter: blur(2px);
+    }
+    .overlay.open { display: block; }
+
+    .modal {
+      position: fixed;
+      z-index: 150;
+      top: 50%;
+      left: 50%;
+      width: min(440px, calc(100vw - 30px));
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 25px 80px rgba(2,26,54,.25);
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -46%) scale(.97);
+      transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+    }
+    .modal.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+    .modal header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+    .modal h2 { margin: 0; font-size: 17px; }
+    .modal p { margin: 5px 0 0; color: var(--muted); font-size: 9px; }
+    .close-button { width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 7px; background: #eff6f6; cursor: pointer; }
+    .close-button svg { width: 15px; height: 15px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .field { display: grid; gap: 5px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 9px; font-weight: 700; }
+    .field input, .field select, .field textarea { width: 100%; min-height: 39px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; color: var(--navy); background: #fff; }
+    .field textarea { min-height: 64px; resize: vertical; }
+    .form-actions { grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+    .secondary { height: 38px; padding: 0 15px; border: 1px solid var(--line); border-radius: 7px; background: #fff; cursor: pointer; }
+
+    .patient-record-view {
+      position: fixed;
+      z-index: 75;
+      inset: var(--header) 0 0 var(--sidebar);
+      padding: 13px 28px 18px;
+      overflow: auto;
+      background: var(--page);
+      animation: record-view-in .36s var(--ease) both;
+      transition: left 650ms var(--ease);
+    }
+    .patient-record-view[hidden] { display: none; }
+
+    .record-topline {
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .record-topline h2 { margin: 0; font-size: 16px; }
+    .back-button {
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--navy);
+      background: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .back-button svg { width: 13px; height: 13px; }
+
+    .record-profile {
+      min-height: 112px;
+      display: grid;
+      grid-template-columns: minmax(300px, 1.05fr) 1.6fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(24, 70, 87, .04);
+    }
+    .record-identity { display: flex; align-items: center; gap: 13px; }
+    .record-identity .patient-avatar { width: 68px; height: 68px; flex-basis: 68px; border-width: 4px; }
+    .record-identity .patient-avatar::before { top: 10px; left: 17px; width: 29px; height: 29px; }
+    .record-identity .patient-avatar::after { height: 35px; bottom: -10px; }
+    .record-identity .patient-avatar i { top: 6px; left: 14px; width: 35px; height: 14px; }
+    .record-identity h3 { margin: 0 0 6px; font-size: 16px; }
+    .record-identity p { margin: 4px 0; color: var(--muted); font-size: 9px; }
+
+    .record-vitals {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(90px, 1fr));
+      gap: 14px 20px;
+      padding-left: 20px;
+      border-left: 1px solid var(--line);
+    }
+    .record-vital { display: flex; align-items: center; gap: 8px; }
+    .record-vital svg { width: 17px; height: 17px; color: var(--teal); }
+    .record-vital small, .record-vital strong { display: block; }
+    .record-vital small { color: var(--muted); font-size: 8px; }
+    .record-vital strong { margin-top: 3px; font-size: 10px; }
+
+    .record-tabs {
+      min-height: 46px;
+      display: flex;
+      align-items: stretch;
+      gap: 38px;
+      margin-top: 9px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .record-tab {
+      position: relative;
+      min-width: 90px;
+      padding: 0 8px;
+      border: 0;
+      color: #405477;
+      background: transparent;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .record-tab::after {
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--teal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+      content: "";
+    }
+    .record-tab.active { color: var(--teal-dark); }
+    .record-tab.active::after { transform: scaleX(1); }
+
+    .record-panel {
+      padding-top: 10px;
+      animation: rise-in .28s var(--ease) both;
+    }
+    .record-panel[hidden] { display: none; }
+    .record-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 1.08fr);
+      gap: 13px;
+    }
+    .record-card {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 7px 20px rgba(24,70,87,.03);
+    }
+    .record-card h3 { margin: 0; font-size: 12px; }
+    .record-card > p { margin: 5px 0 11px; color: var(--muted); font-size: 9px; }
+
+    .health-tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+    .health-tile {
+      min-height: 78px;
+      display: grid;
+      place-items: center;
+      gap: 6px;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--navy);
+      background: #fff;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .health-tile:hover { transform: translateY(-2px); border-color: #b9d9d7; background: #f8fcfc; }
+    .health-tile svg { width: 22px; height: 22px; color: var(--teal); }
+    .health-tile strong, .health-tile small { display: block; }
+    .health-tile strong { font-size: 9px; }
+    .health-tile small { margin-top: 3px; color: var(--muted); font-size: 7px; }
+
+    .ai-summary {
+      padding: 13px;
+      border: 1px solid #dedff7;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #fbfaff, #f8fbff);
+    }
+    .ai-summary strong { display: flex; align-items: center; gap: 7px; color: var(--teal-dark); font-size: 10px; }
+    .ai-summary svg { width: 16px; height: 16px; }
+    .ai-summary p { margin: 9px 0 0 25px; color: var(--muted); font-size: 8px; line-height: 1.7; }
+    .analysis-list { display: grid; margin-top: 10px; }
+    .analysis-row {
+      min-height: 42px;
+      display: grid;
+      grid-template-columns: 27px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #edf1f3;
+    }
+    .analysis-row > svg { width: 25px; height: 25px; padding: 6px; border-radius: 50%; color: var(--teal); background: var(--teal-soft); }
+    .analysis-row strong, .analysis-row small { display: block; }
+    .analysis-row strong { font-size: 9px; }
+    .analysis-row small { margin-top: 2px; color: var(--muted); font-size: 7px; }
+    .analysis-row b { color: var(--teal-dark); font-size: 8px; }
+
+    .record-filters { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
+    .record-filter {
+      height: 29px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      color: var(--muted);
+      background: #fff;
+      font-size: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .record-filter.active { color: #fff; border-color: var(--teal); background: var(--teal); }
+    .record-table { display: grid; }
+    .record-item {
+      min-height: 48px;
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr) 105px 75px 32px;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 4px;
+      border-bottom: 1px solid #edf1f3;
+    }
+    .record-item > svg { width: 28px; height: 28px; padding: 7px; border-radius: 7px; color: var(--teal); background: var(--teal-soft); }
+    .record-item strong, .record-item small { display: block; }
+    .record-item strong { font-size: 9px; }
+    .record-item small { margin-top: 3px; color: var(--muted); font-size: 7px; }
+    .record-item span { color: var(--muted); font-size: 8px; }
+    .record-item button { width: 28px; height: 28px; display: grid; place-items: center; border: 0; border-radius: 6px; color: var(--teal); background: #f0f8f7; cursor: pointer; }
+    .record-item button svg { width: 13px; height: 13px; }
+
+    .document-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+    .document-card {
+      min-height: 68px;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 28px;
+      align-items: center;
+      gap: 9px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .document-card > svg { width: 32px; height: 32px; padding: 8px; border-radius: 7px; color: var(--teal); background: var(--teal-soft); }
+    .document-card strong, .document-card small { display: block; }
+    .document-card strong { font-size: 9px; }
+    .document-card small { margin-top: 4px; color: var(--muted); font-size: 7px; }
+    .document-card button { width: 28px; height: 28px; display: grid; place-items: center; border: 0; border-radius: 6px; color: var(--teal); background: #eff8f7; cursor: pointer; }
+    .document-card button svg { width: 13px; height: 13px; }
+
+    .record-overlay {
+      position: fixed;
+      z-index: 154;
+      inset: 0;
+      background: rgba(7, 24, 49, .46);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .22s ease, visibility .22s ease;
+    }
+    .record-overlay.open { opacity: 1; visibility: visible; }
+
+    .patient-record-view {
+      z-index: 155;
+      inset: 15px;
+      width: min(1240px, calc(100vw - 30px));
+      height: fit-content;
+      max-height: calc(100vh - 30px);
+      margin: auto;
+      padding: 10px 12px 12px;
+      overflow: visible;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+      box-shadow: 0 28px 90px rgba(2, 22, 48, .3);
+      opacity: 0;
+      visibility: hidden;
+      animation: none;
+      transform: translateY(10px) scale(.975);
+      transition:
+        opacity .22s ease,
+        visibility .22s ease,
+        transform .22s var(--ease);
+    }
+    .patient-record-view.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    .patient-record-view .record-topline {
+      min-height: 20px;
+      margin: 0;
+    }
+    .patient-record-view .record-topline h2 { display: none; }
+    .patient-record-view .back-button {
+      width: 32px;
+      height: 32px;
+      min-width: 0;
+      margin-left: auto;
+      padding: 0;
+      border: 0;
+      color: var(--teal-dark);
+      background: transparent;
+      font-size: 0;
+      cursor: pointer;
+      transition: color .18s ease, border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .patient-record-view .back-button svg { width: 17px; height: 17px; }
+
+    .patient-record-view .record-profile {
+      min-height: 62px;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 14px;
+      padding: 4px 8px 9px;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .patient-record-view > .record-profile > .record-vitals,
+    .patient-record-view > .record-profile > .primary-button { display: none; }
+    .patient-record-view .record-identity .patient-avatar { width: 50px; height: 50px; flex-basis: 50px; border-width: 3px; }
+    .patient-record-view .record-identity .patient-avatar::before { top: 7px; left: 12px; width: 21px; height: 21px; }
+    .patient-record-view .record-identity .patient-avatar::after { height: 27px; bottom: -8px; }
+    .patient-record-view .record-identity .patient-avatar i { top: 4px; left: 10px; width: 25px; height: 11px; }
+    .patient-record-view .record-identity h3 { margin-bottom: 4px; font-size: 14px; }
+    .patient-record-view .record-identity p { display: inline; margin-right: 8px; font-size: 8px; }
+
+    .embedded-health-records {
+      width: 100%;
+      height: min(820px, calc(100vh - 55px));
+      display: block;
+      border: 0;
+      border-radius: 9px;
+      background: var(--page);
+    }
+    .patient-record-view > .record-profile { display: none; }
+    .patient-record-view > .record-topline {
+      min-height: 0;
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      right: 0;
+      margin: 0;
+    }
+    .patient-record-view > .record-topline .back-button {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-right: 0;
+      border-radius: 0 12px 0 10px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: -3px 4px 12px rgba(10, 38, 59, .08);
+    }
+    .patient-record-view > .record-topline .back-button:hover {
+      color: #006a64;
+      border-color: #a8d7d3;
+      background: #eefaf8;
+      transform: scale(1.04);
+    }
+    .patient-record-view > .record-tabs,
+    .patient-record-view > .record-panel { display: none !important; }
+
+    .visit-pill {
+      min-width: 105px;
+      height: 27px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      color: var(--teal-dark);
+      background: #edf9f7;
+      font-size: 8px;
+      font-weight: 700;
+    }
+    .visit-completed {
+      min-width: 145px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 8px;
+      color: var(--navy);
+      background: #edf8f7;
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .visit-completed svg { width: 15px; height: 15px; padding: 3px; border-radius: 50%; color: #fff; background: var(--teal); }
+
+    .patient-record-view .record-tabs {
+      min-height: 39px;
+      gap: 0;
+      margin-top: 0;
+      padding: 0;
+      overflow: visible;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+    }
+    .patient-record-view .record-tab {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-right: 0;
+      font-size: 8px;
+    }
+    .patient-record-view .record-tab svg { display: none; }
+    .patient-record-view .record-tab:last-child { border-right: 0; }
+    .patient-record-view .record-panel { padding-top: 9px; }
+    .patient-record-view .record-card { padding: 11px; }
+    .patient-record-view .record-card h3 { font-size: 10px; }
+    .patient-record-view .record-card > p { margin-bottom: 8px; font-size: 8px; }
+    [data-record-panel="overview"] > .modal-overview-grid,
+    [data-record-panel="overview"] > .media-card,
+    [data-record-panel="overview"] > .record-modal-footer { display: none; }
+    .legacy-overview { display: grid; }
+    .legacy-overview .record-card { min-height: 395px; }
+    .legacy-overview .health-tile { min-height: 86px; }
+    .overview-upload {
+      width: 180px;
+      margin-top: 11px;
+    }
+    .beta-pill {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 5px;
+      padding: 3px 7px;
+      border-radius: 10px;
+      color: #7749d6;
+      background: #e9ddff;
+      font-size: 7px;
+      vertical-align: middle;
+    }
+    .ask-ai-button {
+      width: 205px;
+      height: 39px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      border: 1px solid var(--teal);
+      border-radius: 8px;
+      color: var(--teal-dark);
+      background: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .ask-ai-button svg { width: 15px; height: 15px; }
+
+    .modal-overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 10px;
+    }
+    .vitals-list {
+      display: grid;
+      gap: 0;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .vital-line {
+      min-height: 32px;
+      display: grid;
+      grid-template-columns: 18px 1fr 92px 52px;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid #edf1f3;
+      font-size: 8px;
+    }
+    .vital-line:last-child { border-bottom: 0; }
+    .vital-line svg { width: 13px; height: 13px; color: var(--teal); }
+    .vital-line strong { font-size: 8px; }
+    .normal-pill { padding: 3px 6px; border-radius: 9px; color: var(--green); background: #e9f8f1; font-size: 7px; text-align: center; }
+
+    .follow-up-card {
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 0 10px;
+      border-radius: 7px;
+      color: var(--teal-dark);
+      background: #eaf8f6;
+      font-size: 8px;
+      font-weight: 700;
+    }
+    .follow-up-card svg { width: 13px; height: 13px; }
+    .follow-up-card svg:last-child { margin-left: auto; }
+
+    .media-card {
+      margin-top: 9px;
+      padding: 0;
+      overflow: hidden;
+    }
+    .media-tabs {
+      min-height: 34px;
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid var(--line);
+    }
+    .media-tab {
+      min-width: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      color: var(--navy);
+      background: transparent;
+      font-size: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .media-tab.active { color: var(--teal-dark); box-shadow: inset 0 -2px var(--teal); }
+    .media-tab svg { width: 12px; height: 12px; }
+    .media-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.45fr 1.5fr;
+      gap: 9px;
+      padding: 9px;
+    }
+    .media-thumb, .doctor-note {
+      min-height: 92px;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+    }
+    .media-visual {
+      height: 58px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 6px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(255,255,255,.16), transparent 20%),
+        linear-gradient(145deg, #132536, #7c8992);
+    }
+    .media-visual.skin { background: radial-gradient(circle at 55% 45%, #9c583c 0 11%, #d3a17c 12% 25%, #deb895 26% 48%, #b78361 49% 65%, #6c4235 66%); }
+    .media-visual.video { background: linear-gradient(135deg, #d3e2e5, #4f6a75); }
+    .media-visual svg { width: 30px; height: 30px; padding: 8px; border-radius: 50%; background: rgba(5,25,42,.45); }
+    .media-thumb strong, .media-thumb small { display: block; }
+    .media-thumb strong { margin-top: 5px; font-size: 7px; }
+    .media-thumb small { margin-top: 2px; color: var(--muted); font-size: 6px; }
+    .doctor-note { background: #f8fbff; }
+    .doctor-note strong { display: flex; align-items: center; gap: 6px; font-size: 8px; }
+    .doctor-note svg { width: 13px; height: 13px; color: #536a91; }
+    .doctor-note p { margin: 8px 0 0; color: var(--muted); font-size: 7px; }
+
+    .record-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 9px;
+    }
+    .record-modal-footer button { height: 34px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+    .record-modal-footer button svg { width: 13px; height: 13px; }
+
+    .health-records-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+      gap: 12px;
+    }
+    .health-records-layout > .record-card { min-height: 380px; }
+    .old-records-card { display: none; }
+    .records-card-header,
+    .upload-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .records-card-header h3,
+    .upload-card-header h3 { font-size: 14px !important; }
+    .records-card-header p,
+    .upload-card-header p { margin: 5px 0 0; color: var(--muted); font-size: 8px; }
+    .set-vitals-button {
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--teal);
+      box-shadow: 0 9px 20px rgba(0, 151, 143, .18);
+      font-size: 9px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .set-vitals-button svg { width: 17px; height: 17px; }
+    .health-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 13px;
+    }
+    .health-filter {
+      min-height: 30px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: #405477;
+      background: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: color .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .health-filter.active {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+    .record-search-tools {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 135px 92px;
+      gap: 8px;
+      margin-top: 13px;
+    }
+    .record-search-box,
+    .record-sort-button,
+    .record-filter-button {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--navy);
+      background: #fff;
+    }
+    .record-search-box { padding: 0 11px; }
+    .record-search-box svg,
+    .record-sort-button svg,
+    .record-filter-button svg { width: 15px; height: 15px; }
+    .record-search-box svg { color: #617392; }
+    .record-search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--navy);
+      background: transparent;
+      font: inherit;
+      font-size: 8px;
+    }
+    .record-sort-button,
+    .record-filter-button {
+      justify-content: center;
+      padding: 0 10px;
+      font-size: 8px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    .record-sort-button svg { margin-left: auto; }
+    .record-filter-button { color: var(--teal-dark); border-color: var(--teal); }
+    .health-record-list {
+      margin-top: 11px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .health-record-row {
+      min-height: 61px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) 92px 54px 28px;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .health-record-row:last-child { border-bottom: 0; }
+    .health-record-row > svg:first-child {
+      width: 36px;
+      height: 36px;
+      padding: 10px;
+      border-radius: 7px;
+      color: var(--teal);
+      background: #eaf8f5;
+    }
+    .health-record-row.document > svg:first-child { color: #ff4764; background: #fff0f3; }
+    .health-record-copy strong,
+    .health-record-copy small { display: block; }
+    .health-record-copy strong { font-size: 8px; }
+    .health-record-copy small { margin-top: 3px; color: var(--muted); font-size: 7px; }
+    .health-record-row time { color: #31466b; font-size: 8px; }
+    .file-badge {
+      justify-self: start;
+      padding: 4px 7px;
+      border-radius: 8px;
+      color: #ad6c00;
+      background: #fff2d9;
+      font-size: 7px;
+      font-weight: 800;
+    }
+    .file-badge.docx { color: #176dcc; background: #e9f2ff; }
+    .record-icon-button {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 6px;
+      color: var(--teal-dark);
+      background: transparent;
+      cursor: pointer;
+    }
+    .record-icon-button svg { width: 15px; height: 15px; }
+    .upload-record-button {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 11px;
+      border: 1px solid var(--teal);
+      border-radius: 7px;
+      color: var(--teal-dark);
+      background: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .upload-record-button svg { width: 15px; height: 15px; }
+    .upload-types-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .upload-type {
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--navy);
+      background: #fff;
+      cursor: pointer;
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .upload-type:hover { border-color: #9ed5d0; background: #f8fcfc; transform: translateY(-1px); }
+    .upload-type svg { width: 19px; height: 19px; color: var(--teal); }
+    .upload-type strong { font-size: 8px; }
+    .upload-type small { color: var(--muted); font-size: 6px; }
+    .health-drop-zone {
+      min-height: 104px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      border: 1px dashed #90cfcb;
+      border-radius: 8px;
+      color: var(--teal-dark);
+      background: #fbfefe;
+      cursor: pointer;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .health-drop-zone.dragging { border-color: var(--teal); background: #ecfaf7; }
+    .health-drop-zone svg { width: 30px; height: 30px; }
+    .health-drop-zone strong { font-size: 9px; }
+    .health-drop-zone small { color: var(--muted); font-size: 7px; }
+    .empty-records {
+      display: none;
+      padding: 24px 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 8px;
+    }
+    .empty-records.show { display: block; }
+
+    @keyframes record-view-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes row-in {
+      from { opacity: 0; transform: translateX(-8px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .mobile-backdrop {
+      position: fixed;
+      z-index: 80;
+      inset: var(--header) 0 0;
+      display: none;
+      background: rgba(5,23,55,.35);
+    }
+
+    @media (max-width: 1180px) {
+      .appointments-layout { grid-template-columns: 1.4fr 1fr; }
+      .appointment-row { grid-template-columns: 98px minmax(0, 1fr) 78px 62px 40px 18px; }
+      .next-card { grid-template-columns: 112px minmax(0, 1fr) 80px 70px 35px; }
+    }
+
+    @media (max-width: 900px) {
+      :root { --header: 68px; }
+      body { overflow: auto; }
+      .brand-zone { width: auto; flex-basis: auto; border-right: 0; }
+      .brand-copy small { display: none; }
+      .topbar-main { padding: 0 14px 0 5px; }
+      .date-button { min-width: 45px; width: 45px; padding: 0; justify-content: center; }
+      .date-button span, .date-button svg:last-child { display: none; }
+      .profile { min-width: 38px; }
+      .profile > span:not(.avatar), .profile > svg { display: none; }
+      .sidebar { width: 250px; transform: translateX(-102%); overflow-y: auto; }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-backdrop.open { display: block; }
+      .main { height: auto; min-height: 100vh; margin-left: 0; padding: calc(var(--header) + 16px) 16px 22px; overflow: visible; }
+      .patient-record-view {
+        inset: 10px;
+        width: calc(100vw - 20px);
+        height: fit-content;
+        max-height: calc(100vh - 20px);
+        margin: auto;
+        padding: 10px;
+      }
+      .embedded-health-records { height: calc(100vh - 40px); }
+      .record-profile { grid-template-columns: 1fr; }
+      .record-vitals { padding: 12px 0 0; border-top: 1px solid var(--line); border-left: 0; }
+      .record-grid { grid-template-columns: 1fr; }
+      .modal-overview-grid { grid-template-columns: 1fr; }
+      .media-content { grid-template-columns: repeat(2, 1fr); }
+      .health-records-layout { grid-template-columns: 1fr; }
+      .appointments-layout { height: auto; min-height: 0; grid-template-columns: 1fr; }
+      .queue-column, .current-card { height: auto; }
+      .current-card { min-height: 480px; }
+      .week-view-panel { height: auto; min-height: 0; grid-template-rows: auto auto; }
+      .week-top, .week-content { grid-template-columns: 1fr; }
+      .week-days-card { overflow-x: auto; grid-template-columns: 34px repeat(7, 75px) 34px; }
+      .week-side { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    }
+
+    @media (max-width: 620px) {
+      .brand-copy { display: none; }
+      .brand-zone { padding-left: 8px; }
+      .topbar-main { gap: 5px; }
+      .notification { width: 38px; }
+      .page-heading { display: grid; }
+      .toolbar { height: auto; display: grid; gap: 8px; padding-bottom: 8px; }
+      .tabs { gap: 10px; min-height: 40px; overflow-x: auto; }
+      .toolbar-actions { padding: 0; }
+      .appointment-row { grid-template-columns: 86px minmax(0, 1fr) 52px 20px; }
+      .appointment-row .visit-type, .appointment-row .status { display: none; }
+      .next-card { grid-template-columns: 85px minmax(0, 1fr) 36px; }
+      .next-card .visit-type, .next-card .status { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full, .form-actions { grid-column: auto; }
+      .record-tabs { gap: 8px; overflow-x: auto; }
+      .record-tab { min-width: 92px; }
+      .patient-record-view .record-profile { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+      .visit-pill { display: none; }
+      .visit-completed { min-width: 130px; }
+      .patient-record-view .record-tab { min-width: 112px; }
+      .vital-line { grid-template-columns: 17px 1fr 76px 48px; }
+      .record-vitals { grid-template-columns: repeat(2, 1fr); }
+      .health-tiles { grid-template-columns: repeat(2, 1fr); }
+      .record-item { grid-template-columns: 30px minmax(0, 1fr) 28px; }
+      .record-item > span { display: none; }
+      .document-grid { grid-template-columns: 1fr; }
+      .record-search-tools { grid-template-columns: 1fr 1fr; }
+      .record-search-box { grid-column: 1 / -1; }
+      .upload-types-grid { grid-template-columns: repeat(2, 1fr); }
+      .health-record-row { grid-template-columns: 36px minmax(0, 1fr) 52px 27px; }
+      .health-record-row time { display: none; }
+      .week-table-head,
+      .week-appointment-row { grid-template-columns: 78px minmax(130px, 1fr) 62px 28px; }
+      .week-table-head > :nth-child(3),
+      .week-table-head > :nth-child(4),
+      .week-appointment-row .visit-type,
+      .week-appointment-row .status { display: none; }
+      .week-side { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-zone">
+      <button class="menu-button" type="button" aria-label="Collapse navigation" aria-expanded="true" data-sidebar-toggle><i data-lucide="menu"></i></button>
+      <a class="brand" href="SingleDocSingleClinic.html" aria-label="Divinexa dashboard">
+        <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Clinic Panel</small></span>
+      </a>
+    </div>
+    <div class="topbar-main">
+      <button class="date-button" type="button" data-message="Today’s calendar opened."><i data-lucide="calendar-days"></i><span>28 Jul 2026</span><i data-lucide="chevron-down"></i></button>
+      <button class="notification" type="button" aria-label="View 3 notifications" data-message="You have 3 new notifications."><i data-lucide="bell"></i><b>3</b></button>
+      <button class="profile" type="button" data-message="Profile menu opened.">
+        <span class="avatar" aria-hidden="true"></span>
+        <span><strong>Dr. Rahul Sharma</strong><small>General Physician</small></span>
+        <i data-lucide="chevron-down"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-backdrop" data-mobile-backdrop></div>
+  <aside class="sidebar" aria-label="Primary navigation">
+    <nav class="nav">
+      <a class="nav-link" href="SingleDocSingleClinic.html" title="Dashboard"><i data-lucide="house"></i><span>Dashboard</span></a>
+      <a class="nav-link active" href="SingleDocAppointments.html" title="Appointments" aria-current="page"><i data-lucide="calendar-check"></i><span>Appointments</span></a>
+      <a class="nav-link" href="#patient-records" data-open-patient-record title="Patients"><i data-lucide="user-round"></i><span>Patients</span></a>
+      <a class="nav-link" href="#doctors" title="Doctors" data-message="Doctors opened."><i data-lucide="user-round-cog"></i><span>Doctors</span></a>
+      <a class="nav-link" href="#billing" title="Billing & Payments" data-message="Billing opened."><i data-lucide="notebook-tabs"></i><span>Billing &amp; Payments</span></a>
+      <a class="nav-link" href="#reports" title="Reports" data-message="Reports opened."><i data-lucide="chart-no-axes-column-increasing"></i><span>Reports</span></a>
+      <a class="nav-link" href="#settings" title="Profile Settings" data-message="Profile settings opened."><i data-lucide="settings"></i><span>Profile Settings</span></a>
+    </nav>
+    <section class="support-card">
+      <strong><i data-lucide="headset"></i>Need Help?</strong>
+      <p>Our support team is available 24/7 to assist you.</p>
+      <button type="button" data-message="Support chat started."><i data-lucide="messages-square"></i>Contact Support</button>
+    </section>
+  </aside>
+
+  <main class="main">
+    <section class="page-heading">
+      <div><h1>Appointments</h1><p>Today’s schedule and real-time appointment management</p></div>
+      <button class="primary-button" type="button" data-open-modal><i data-lucide="plus"></i>New Appointment</button>
+    </section>
+
+    <section class="toolbar" aria-label="Appointment controls">
+      <div class="tabs" role="tablist">
+        <button class="tab active" type="button" role="tab" aria-selected="true" data-view="Day View">Day View</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-view="Week View">Week View</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-view="All Appointments">All Appointments</button>
+      </div>
+      <div class="toolbar-actions">
+        <button class="outline-control" type="button" data-message="Appointment filters opened."><i data-lucide="list-filter"></i>Filter<i data-lucide="chevron-down"></i></button>
+        <button class="outline-control" type="button" data-message="Appointment date range opened." data-date-control><i data-lucide="calendar-days"></i><span data-date-label>Today</span><i data-lucide="chevron-down"></i></button>
+      </div>
+    </section>
+
+    <section class="appointments-layout" data-appointment-panel="Day View">
+      <div class="queue-column">
+        <article class="next-card">
+          <span class="next-card-label">Next Patient (In Progress)</span>
+          <time>09:30 AM</time>
+          <span class="patient"><span class="patient-avatar" style="--skin:#dfa076;--shirt:#152f3d;--hair:#111"><i></i></span><span><strong>Priya Das</strong><small>28 Y/F&nbsp; • &nbsp;9876543211</small></span></span>
+          <span class="visit-type">Consultation</span>
+          <span class="status progress">In Progress</span>
+          <button class="arrow-button" type="button" aria-label="Open Priya Das appointment" data-patient="Priya Das"><i data-lucide="arrow-right"></i></button>
+        </article>
+
+        <h2 class="section-title">Today’s Appointments <span class="count-badge">18</span></h2>
+        <div class="appointment-list">
+          <article class="appointment-row" style="--row-color:#10ad9e">
+            <span><time>09:00 AM</time><span class="duration"><i data-lucide="clock-3"></i>20 min</span></span>
+            <span class="patient"><span class="patient-avatar" style="--skin:#bf7a55;--shirt:#274252;--hair:#181919"><i></i></span><span><strong>Amit Kumar</strong><small>32 Y/M&nbsp; • &nbsp;9876543210</small></span></span>
+            <span class="visit-type">Consultation</span><span class="status completed">Completed</span>
+            <button class="start-button completed-control" type="button" data-message="Amit Kumar’s completed visit opened."><span><i data-lucide="check"></i></span>Completed</button>
+            <button class="more-button" type="button" aria-label="More actions for Amit Kumar" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+          </article>
+          <article class="appointment-row" style="--row-color:#1878ef">
+            <span><time>09:30 AM</time><span class="duration"><i data-lucide="clock-3"></i>20 min</span></span>
+            <span class="patient"><span class="patient-avatar" style="--skin:#dfa076;--shirt:#152f3d;--hair:#111"><i></i></span><span><strong>Priya Das</strong><small>28 Y/F&nbsp; • &nbsp;9876543211</small></span></span>
+            <span class="visit-type">Consultation</span><span class="status progress">In Progress</span>
+            <button class="start-button" type="button" data-patient="Priya Das"><span><i data-lucide="play"></i></span>Start</button>
+            <button class="more-button" type="button" aria-label="More actions for Priya Das" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+          </article>
+          <article class="appointment-row" style="--row-color:#ff9a35">
+            <span><time>10:00 AM</time><span class="duration"><i data-lucide="clock-3"></i>20 min</span></span>
+            <span class="patient"><span class="patient-avatar" style="--skin:#be7855;--shirt:#304959;--hair:#161717"><i></i></span><span><strong>Sourav Mondal</strong><small>45 Y/M&nbsp; • &nbsp;9876543212</small></span></span>
+            <span class="visit-type">Follow Up</span><span class="status upcoming">Upcoming</span>
+            <button class="start-button" type="button" data-patient="Sourav Mondal"><span><i data-lucide="play"></i></span>Start</button>
+            <button class="more-button" type="button" aria-label="More actions for Sourav Mondal" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+          </article>
+          <article class="appointment-row" style="--row-color:#ff9a35">
+            <span><time>10:30 AM</time><span class="duration"><i data-lucide="clock-3"></i>20 min</span></span>
+            <span class="patient"><span class="patient-avatar" style="--skin:#d79268;--shirt:#203b48;--hair:#111"><i></i></span><span><strong>Ananya Sen</strong><small>32 Y/F&nbsp; • &nbsp;9876543213</small></span></span>
+            <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+            <button class="start-button" type="button" data-patient="Ananya Sen"><span><i data-lucide="play"></i></span>Start</button>
+            <button class="more-button" type="button" aria-label="More actions for Ananya Sen" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+          </article>
+          <article class="appointment-row" style="--row-color:#ff9a35">
+            <span><time>11:00 AM</time><span class="duration"><i data-lucide="clock-3"></i>20 min</span></span>
+            <span class="patient"><span class="patient-avatar" style="--skin:#a96547;--shirt:#294456;--hair:#151717"><i></i></span><span><strong>Vikram Roy</strong><small>38 Y/M&nbsp; • &nbsp;9876543214</small></span></span>
+            <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+            <button class="start-button" type="button" data-patient="Vikram Roy"><span><i data-lucide="play"></i></span>Start</button>
+            <button class="more-button" type="button" aria-label="More actions for Vikram Roy" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+          </article>
+          <article class="appointment-row" style="--row-color:#ff9a35">
+            <span><time>11:30 AM</time><span class="duration"><i data-lucide="clock-3"></i>20 min</span></span>
+            <span class="patient"><span class="patient-avatar" style="--skin:#dca073;--shirt:#273d4a;--hair:#121313"><i></i></span><span><strong>Neha Gupta</strong><small>26 Y/F&nbsp; • &nbsp;9876543215</small></span></span>
+            <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+            <button class="start-button" type="button" data-patient="Neha Gupta"><span><i data-lucide="play"></i></span>Start</button>
+            <button class="more-button" type="button" aria-label="More actions for Neha Gupta" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+          </article>
+        </div>
+        <div class="view-more-wrap"><button class="view-more" type="button" data-message="More appointments loaded.">View More<i data-lucide="chevron-down"></i></button></div>
+      </div>
+
+      <aside class="current-card" aria-labelledby="current-patient-heading">
+        <div class="current-label" id="current-patient-heading">Current Patient</div>
+        <div class="current-patient">
+          <span class="patient-avatar" style="--skin:#dfa076;--shirt:#152f3d;--hair:#111"><i></i></span>
+          <span class="patient"><span><strong data-current-name>Priya Das</strong><small>28 Y/F&nbsp; • &nbsp;9876543211</small></span></span>
+          <span class="status progress" data-current-status>In Progress</span>
+        </div>
+        <div class="details">
+          <div class="detail-row"><i data-lucide="calendar-days"></i><span>Appointment ID</span><strong>APT2507280901</strong></div>
+          <div class="detail-row"><i data-lucide="calendar-check"></i><span>Date</span><strong>Tue, 28 Jul 2026</strong></div>
+          <div class="detail-row"><i data-lucide="clock-3"></i><span>Time</span><strong>09:30 AM – 09:50 AM</strong></div>
+          <div class="detail-row"><i data-lucide="clipboard-list"></i><span>Type</span><strong>Consultation</strong></div>
+          <div class="detail-row"><i data-lucide="user-round"></i><span>Doctor</span><strong>Dr. Rahul Sharma</strong></div>
+          <div class="detail-row"><i data-lucide="badge-indian-rupee"></i><span>Fees</span><strong>₹600</strong></div>
+        </div>
+        <section class="completion-panel">
+          <h3>Complete Appointment</h3>
+          <p>Mark as completed and process payment in one click.</p>
+          <button class="primary-button" type="button" data-complete><i data-lucide="circle-check"></i>Mark as Completed &amp; Collect Payment</button>
+        </section>
+        <section class="automatic-panel">
+          <h3>On Completion (Automatic)</h3>
+          <ul>
+            <li><i data-lucide="circle-check"></i>Payment receipt generated</li>
+            <li><i data-lucide="circle-check"></i>Patient will receive SMS &amp; Email</li>
+            <li><i data-lucide="circle-check"></i>Next patient will be marked as ‘In Progress’</li>
+          </ul>
+          <i data-lucide="send"></i>
+        </section>
+      </aside>
+    </section>
+
+    <section class="week-view-panel" data-appointment-panel="Week View" hidden>
+      <div class="week-top">
+        <div class="week-days-card" aria-label="Week dates">
+          <button class="week-nav-button" type="button" aria-label="Previous week" data-week-shift="previous"><i data-lucide="chevron-left"></i></button>
+          <button class="week-day" type="button" data-week-day data-week-date="Monday, 28 July 2026" data-week-count="12"><span>Mon</span><strong>28 Jul</strong><small>12</small></button>
+          <button class="week-day active" type="button" data-week-day data-week-date="Tuesday, 29 July 2026" data-week-count="18"><span>Tue</span><strong>29 Jul</strong><small>18</small></button>
+          <button class="week-day" type="button" data-week-day data-week-date="Wednesday, 30 July 2026" data-week-count="16"><span>Wed</span><strong>30 Jul</strong><small>16</small></button>
+          <button class="week-day" type="button" data-week-day data-week-date="Thursday, 31 July 2026" data-week-count="14"><span>Thu</span><strong>31 Jul</strong><small>14</small></button>
+          <button class="week-day" type="button" data-week-day data-week-date="Friday, 01 August 2026" data-week-count="15"><span>Fri</span><strong>01 Aug</strong><small>15</small></button>
+          <button class="week-day" type="button" data-week-day data-week-date="Saturday, 02 August 2026" data-week-count="10"><span>Sat</span><strong>02 Aug</strong><small>10</small></button>
+          <button class="week-day" type="button" data-week-day data-week-date="Sunday, 03 August 2026" data-week-count="8"><span>Sun</span><strong>03 Aug</strong><small>8</small></button>
+          <button class="week-nav-button" type="button" aria-label="Next week" data-week-shift="next"><i data-lucide="chevron-right"></i></button>
+        </div>
+        <article class="week-total-card">
+          <span>Total This Week<strong>93</strong><small>Appointments</small></span>
+          <i data-lucide="calendar-check"></i>
+        </article>
+      </div>
+
+      <div class="week-content">
+        <article class="week-schedule-card">
+          <header class="week-schedule-heading">
+            <h2 data-week-heading>Tuesday, 29 July 2026</h2>
+            <span class="week-count"><span data-week-count-label>18</span> Appointments</span>
+          </header>
+          <div class="week-table-head"><span>Time</span><span>Patient</span><span>Type</span><span>Status</span><span>Action</span><span></span></div>
+          <div class="week-appointment-list">
+            <article class="week-appointment-row" style="--row-color:#10ad9e">
+              <span class="week-time"><strong>09:00 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#bf7a55;--shirt:#274252;--hair:#181919"><i></i></span><span><strong>Amit Kumar</strong><small>32 Y/M · 9876543210</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status completed">Completed</span>
+              <button class="start-button completed-control" type="button" data-message="Amit Kumar’s completed visit opened."><span><i data-lucide="check"></i></span>Completed</button>
+              <button class="more-button" type="button" aria-label="More actions for Amit Kumar" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#1878ef">
+              <span class="week-time"><strong>09:30 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#dfa076;--shirt:#152f3d;--hair:#111"><i></i></span><span><strong>Priya Das</strong><small>28 Y/F · 9876543211</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status progress">In Progress</span>
+              <button class="start-button" type="button" data-patient="Priya Das"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Priya Das" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35">
+              <span class="week-time"><strong>10:00 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#be7855;--shirt:#304959;--hair:#161717"><i></i></span><span><strong>Sourav Mondal</strong><small>45 Y/M · 9876543212</small></span></span>
+              <span class="visit-type">Follow Up</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Sourav Mondal"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Sourav Mondal" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35">
+              <span class="week-time"><strong>10:30 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#d79268;--shirt:#203b48;--hair:#111"><i></i></span><span><strong>Ananya Sen</strong><small>32 Y/F · 9876543213</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Ananya Sen"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Ananya Sen" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35">
+              <span class="week-time"><strong>11:00 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#a96547;--shirt:#294456;--hair:#151717"><i></i></span><span><strong>Vikram Roy</strong><small>38 Y/M · 9876543214</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Vikram Roy"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Vikram Roy" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35">
+              <span class="week-time"><strong>11:30 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#dca073;--shirt:#273d4a;--hair:#121313"><i></i></span><span><strong>Neha Gupta</strong><small>26 Y/F · 9876543215</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Neha Gupta"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Neha Gupta" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35" data-extra-week-row hidden>
+              <span class="week-time"><strong>12:00 PM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#c8835e;--shirt:#28485a;--hair:#171919"><i></i></span><span><strong>Ravi Shah</strong><small>41 Y/M · 9876543216</small></span></span>
+              <span class="visit-type">Follow Up</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Ravi Shah"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Ravi Shah" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35" data-extra-week-row hidden>
+              <span class="week-time"><strong>12:30 PM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#d89a72;--shirt:#203e50;--hair:#161616"><i></i></span><span><strong>Meera Iyer</strong><small>35 Y/F · 9876543217</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Meera Iyer"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Meera Iyer" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35" data-extra-week-row hidden>
+              <span class="week-time"><strong>01:00 PM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#b97857;--shirt:#294456;--hair:#111"><i></i></span><span><strong>Rohit Sen</strong><small>29 Y/M · 9876543218</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Rohit Sen"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Rohit Sen" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35" data-extra-week-row hidden>
+              <span class="week-time"><strong>01:30 PM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#dfa076;--shirt:#244453;--hair:#171717"><i></i></span><span><strong>Kavita Rao</strong><small>38 Y/F · 9876543219</small></span></span>
+              <span class="visit-type">Health Check</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Kavita Rao"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Kavita Rao" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+            <article class="week-appointment-row" style="--row-color:#ff9a35" data-extra-week-row hidden>
+              <span class="week-time"><strong>02:00 PM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#b66f4e;--shirt:#243f4c;--hair:#111"><i></i></span><span><strong>Arjun Nair</strong><small>46 Y/M · 9876543220</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <button class="start-button" type="button" data-patient="Arjun Nair"><span><i data-lucide="play"></i></span>Start</button>
+              <button class="more-button" type="button" aria-label="More actions for Arjun Nair" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+          </div>
+          <div class="view-more-wrap"><button class="view-more" type="button" data-week-view-more>View More<i data-lucide="chevron-down"></i></button></div>
+        </article>
+
+        <aside class="week-side">
+          <article class="week-next-card">
+            <h3>Next Patient (In Progress)</h3>
+            <div class="week-next-box">
+              <time>09:30 AM</time>
+              <span class="patient"><span class="patient-avatar" style="--skin:#dfa076;--shirt:#152f3d;--hair:#111"><i></i></span><span><strong>Priya Das</strong><small>28 Y/F · 9876543211</small></span></span>
+              <span class="status progress">✓ In Progress</span>
+              <button class="open-record-button" type="button" data-patient="Priya Das">Open Patient Record<i data-lucide="arrow-right"></i></button>
+            </div>
+          </article>
+          <article class="week-summary-card">
+            <h3>This Week Overview</h3>
+            <div class="week-summary-list">
+              <div class="week-summary-row"><i data-lucide="calendar-days"></i><span>Total Appointments</span><strong>93</strong></div>
+              <div class="week-summary-row"><i data-lucide="circle-check"></i><span>Completed</span><strong>28</strong></div>
+              <div class="week-summary-row"><i data-lucide="play-circle"></i><span>In Progress</span><strong>6</strong></div>
+              <div class="week-summary-row"><i data-lucide="calendar-clock"></i><span>Upcoming</span><strong>59</strong></div>
+              <div class="week-summary-row"><i data-lucide="circle-x"></i><span>Cancelled</span><strong>0</strong></div>
+            </div>
+            <div class="week-average">Average Consultation Time<strong><i data-lucide="clock-3"></i>18 min</strong></div>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="all-appointments-panel" data-appointment-panel="All Appointments" hidden>
+      <div class="all-filter-bar">
+        <div class="all-status-filters" aria-label="Filter appointments by status">
+          <button class="all-status-filter active" type="button" data-all-filter="all" aria-pressed="true">
+            <i data-lucide="calendar-days"></i><span>All</span><strong>124</strong>
+          </button>
+          <button class="all-status-filter" type="button" data-all-filter="progress" aria-pressed="false" style="--filter-color:#1477e7">
+            <i data-lucide="circle-play"></i><span>In Progress</span><strong>12</strong>
+          </button>
+          <button class="all-status-filter" type="button" data-all-filter="completed" aria-pressed="false" style="--filter-color:#08a75a">
+            <i data-lucide="circle-check"></i><span>Completed</span><strong>64</strong>
+          </button>
+          <button class="all-status-filter" type="button" data-all-filter="upcoming" aria-pressed="false" style="--filter-color:#f47721">
+            <i data-lucide="clock-3"></i><span>Upcoming</span><strong>43</strong>
+          </button>
+          <button class="all-status-filter" type="button" data-all-filter="cancelled" aria-pressed="false" style="--filter-color:#ef334b">
+            <i data-lucide="circle-x"></i><span>Cancelled</span><strong>5</strong>
+          </button>
+        </div>
+
+        <div class="all-search-tools">
+          <label class="all-search">
+            <i data-lucide="search"></i>
+            <input type="search" placeholder="Search by patient name, phone, ID..." aria-label="Search all appointments" data-all-search>
+          </label>
+          <button class="all-export" type="button" data-all-export><i data-lucide="download"></i>Export</button>
+        </div>
+      </div>
+
+      <div class="all-content">
+        <article class="all-table-card">
+          <div class="all-table-head">
+            <span>Time<i data-lucide="arrow-down-up"></i></span>
+            <span>Patient<i data-lucide="arrow-down-up"></i></span>
+            <span>Type<i data-lucide="arrow-down-up"></i></span>
+            <span>Status<i data-lucide="arrow-down-up"></i></span>
+            <span>Doctor<i data-lucide="arrow-down-up"></i></span>
+            <span>Payment<i data-lucide="arrow-down-up"></i></span>
+            <span>Action</span><span></span>
+          </div>
+
+          <div class="all-table-body" data-all-table>
+            <article class="all-appointment-row" data-all-row data-status="completed" data-search="amit kumar 9876543210 apt25072809001 consultation completed rahul sharma" style="--row-color:#10ad9e">
+              <span class="all-time"><strong>09:00 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#bf7a55;--shirt:#274252;--hair:#181919"><i></i></span><span><strong>Amit Kumar</strong><small>32 Y/M · 9876543210<br>APT25072809001</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status completed">Completed</span>
+              <span class="all-doctor">Dr. Rahul Sharma</span><span class="all-payment"><strong>₹600</strong><small>Paid</small></span>
+              <button class="all-record-button" type="button" aria-label="Open Amit Kumar record" data-patient="Amit Kumar"><i data-lucide="file-text"></i></button>
+              <button class="more-button" type="button" aria-label="More actions for Amit Kumar" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+
+            <article class="all-appointment-row" data-all-row data-status="progress" data-search="priya das 9876543211 apt25072809002 consultation in progress rahul sharma" style="--row-color:#1477e7">
+              <span class="all-time"><strong>09:30 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#dfa076;--shirt:#152f3d;--hair:#111"><i></i></span><span><strong>Priya Das</strong><small>28 Y/F · 9876543211<br>APT25072809002</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status progress">In Progress</span>
+              <span class="all-doctor">Dr. Rahul Sharma</span><span class="all-payment"><strong>₹600</strong><small class="pending">Pending</small></span>
+              <button class="all-record-button" type="button" aria-label="Open Priya Das record" data-patient="Priya Das"><i data-lucide="file-text"></i></button>
+              <button class="more-button" type="button" aria-label="More actions for Priya Das" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+
+            <article class="all-appointment-row" data-all-row data-status="upcoming" data-search="sourav mondal 9876543212 apt25072809003 follow up upcoming rahul sharma" style="--row-color:#f47721">
+              <span class="all-time"><strong>10:00 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#be7855;--shirt:#304959;--hair:#161717"><i></i></span><span><strong>Sourav Mondal</strong><small>45 Y/M · 9876543212<br>APT25072809003</small></span></span>
+              <span class="visit-type">Follow Up</span><span class="status upcoming">Upcoming</span>
+              <span class="all-doctor">Dr. Rahul Sharma</span><span class="all-payment"><strong>₹400</strong><small class="pending">Pending</small></span>
+              <button class="all-record-button" type="button" aria-label="Open Sourav Mondal record" data-patient="Sourav Mondal"><i data-lucide="file-text"></i></button>
+              <button class="more-button" type="button" aria-label="More actions for Sourav Mondal" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+
+            <article class="all-appointment-row" data-all-row data-status="upcoming" data-search="ananya sen 9876543213 apt25072809004 consultation upcoming rahul sharma" style="--row-color:#f47721">
+              <span class="all-time"><strong>10:30 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#d79268;--shirt:#203b48;--hair:#111"><i></i></span><span><strong>Ananya Sen</strong><small>32 Y/F · 9876543213<br>APT25072809004</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <span class="all-doctor">Dr. Rahul Sharma</span><span class="all-payment"><strong>₹600</strong><small class="pending">Pending</small></span>
+              <button class="all-record-button" type="button" aria-label="Open Ananya Sen record" data-patient="Ananya Sen"><i data-lucide="file-text"></i></button>
+              <button class="more-button" type="button" aria-label="More actions for Ananya Sen" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+
+            <article class="all-appointment-row" data-all-row data-status="upcoming" data-search="vikram roy 9876543214 apt25072809005 consultation upcoming rahul sharma" style="--row-color:#f47721">
+              <span class="all-time"><strong>11:00 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#a96547;--shirt:#294456;--hair:#151717"><i></i></span><span><strong>Vikram Roy</strong><small>38 Y/M · 9876543214<br>APT25072809005</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <span class="all-doctor">Dr. Rahul Sharma</span><span class="all-payment"><strong>₹600</strong><small class="pending">Pending</small></span>
+              <button class="all-record-button" type="button" aria-label="Open Vikram Roy record" data-patient="Vikram Roy"><i data-lucide="file-text"></i></button>
+              <button class="more-button" type="button" aria-label="More actions for Vikram Roy" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+
+            <article class="all-appointment-row" data-all-row data-status="upcoming" data-search="neha gupta 9876543215 apt25072809006 consultation upcoming rahul sharma" style="--row-color:#f47721">
+              <span class="all-time"><strong>11:30 AM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#dca073;--shirt:#273d4a;--hair:#121313"><i></i></span><span><strong>Neha Gupta</strong><small>26 Y/F · 9876543215<br>APT25072809006</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status upcoming">Upcoming</span>
+              <span class="all-doctor">Dr. Rahul Sharma</span><span class="all-payment"><strong>₹600</strong><small class="pending">Pending</small></span>
+              <button class="all-record-button" type="button" aria-label="Open Neha Gupta record" data-patient="Neha Gupta"><i data-lucide="file-text"></i></button>
+              <button class="more-button" type="button" aria-label="More actions for Neha Gupta" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+
+            <article class="all-appointment-row" data-all-row data-status="cancelled" data-search="deepak singh 9876543216 apt25072809007 consultation cancelled rahul sharma" style="--row-color:#ef334b">
+              <span class="all-time"><strong>12:00 PM</strong><small><i data-lucide="clock-3"></i>20 min</small></span>
+              <span class="patient"><span class="patient-avatar" style="--skin:#c6845f;--shirt:#304959;--hair:#171818"><i></i></span><span><strong>Deepak Singh</strong><small>35 Y/M · 9876543216<br>APT25072809007</small></span></span>
+              <span class="visit-type">Consultation</span><span class="status cancelled">Cancelled</span>
+              <span class="all-doctor">Dr. Rahul Sharma</span><span class="all-payment"><strong>₹0</strong><small class="na">N/A</small></span>
+              <button class="all-record-button" type="button" aria-label="Open Deepak Singh record" data-patient="Deepak Singh"><i data-lucide="file-text"></i></button>
+              <button class="more-button" type="button" aria-label="More actions for Deepak Singh" data-message="Appointment actions opened."><i data-lucide="more-vertical"></i></button>
+            </article>
+          </div>
+
+          <footer class="all-pagination">
+            <span data-all-result-count>Showing 1 to 7 of 124 appointments</span>
+            <div class="pagination-pages" aria-label="Appointment pages">
+              <button type="button" aria-label="Previous page" disabled><i data-lucide="chevron-left"></i></button>
+              <button class="active" type="button" aria-current="page" data-page="1">1</button>
+              <button type="button" data-page="2">2</button>
+              <button type="button" data-page="3">3</button>
+              <button type="button" data-page="4">4</button>
+              <button type="button" data-page="5">5</button>
+              <span>…</span>
+              <button type="button" data-page="13">13</button>
+              <button type="button" aria-label="Next page"><i data-lucide="chevron-right"></i></button>
+            </div>
+            <button class="page-size" type="button" data-message="Page size options opened.">10 / page<i data-lucide="chevron-down"></i></button>
+          </footer>
+        </article>
+
+        <aside class="all-summary">
+          <article class="all-summary-card">
+            <h3><i data-lucide="notebook-tabs"></i>Quick Summary</h3>
+            <div class="all-summary-list">
+              <div class="all-summary-row"><i data-lucide="calendar-days"></i><span>Total Appointments</span><strong>124</strong></div>
+              <div class="all-summary-row" style="--summary-color:#08a75a"><i data-lucide="circle-check"></i><span>Completed</span><strong>64 (51.6%)</strong></div>
+              <div class="all-summary-row" style="--summary-color:#1477e7"><i data-lucide="circle-play"></i><span>In Progress</span><strong>12 (9.7%)</strong></div>
+              <div class="all-summary-row" style="--summary-color:#f47721"><i data-lucide="clock-3"></i><span>Upcoming</span><strong>43 (34.7%)</strong></div>
+              <div class="all-summary-row" style="--summary-color:#ef334b"><i data-lucide="circle-x"></i><span>Cancelled</span><strong>5 (4.0%)</strong></div>
+            </div>
+          </article>
+
+          <article class="all-summary-card">
+            <h3><i data-lucide="indian-rupee"></i>Payment Summary</h3>
+            <div class="payment-summary-row"><span>Total Collection</span><strong style="--payment-color:#079b94">₹38,400</strong></div>
+            <div class="payment-summary-row"><span>Paid</span><strong style="--payment-color:#08a75a">₹30,600</strong></div>
+            <div class="payment-summary-row"><span>Pending</span><strong style="--payment-color:#f47721">₹7,800</strong></div>
+            <div class="payment-summary-row"><span>Refunded</span><strong style="--payment-color:#ef334b">₹0</strong></div>
+          </article>
+
+          <article class="all-average-card">
+            Average Consultation Time
+            <strong><i data-lucide="clock-3"></i>18 min</strong>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <div class="record-overlay" data-record-overlay></div>
+    <section class="patient-record-view" data-patient-record-view hidden aria-hidden="true" aria-labelledby="record-view-title" role="dialog" aria-modal="true">
+      <header class="record-topline">
+        <div><h2 id="record-view-title">Patient Health Record</h2></div>
+        <button class="back-button" type="button" aria-label="Close patient record" data-close-patient-record><i data-lucide="x"></i>Close</button>
+      </header>
+
+      <section class="record-profile">
+        <div class="record-identity">
+          <span class="patient-avatar" style="--skin:#dfa076;--shirt:#152f3d;--hair:#111"><i></i></span>
+          <div>
+            <h3 data-record-patient-name>Priya Das</h3>
+            <p>28 Years&nbsp; • &nbsp;Female&nbsp; • &nbsp;12 Aug 1998</p>
+            <p>CF987654321&nbsp; • &nbsp;+91 98765 43211</p>
+            <p>priya.das@gmail.com</p>
+          </div>
+        </div>
+        <div class="record-vitals">
+          <div class="record-vital"><i data-lucide="droplets"></i><span><small>Blood Group</small><strong>O+</strong></span></div>
+          <div class="record-vital"><i data-lucide="ruler"></i><span><small>Height</small><strong>165 cm</strong></span></div>
+          <div class="record-vital"><i data-lucide="weight"></i><span><small>Weight</small><strong>62 kg</strong></span></div>
+          <div class="record-vital"><i data-lucide="heart-pulse"></i><span><small>BMI</small><strong>22.8</strong></span></div>
+          <div class="record-vital"><i data-lucide="calendar-days"></i><span><small>Last Checkup</small><strong>22 Jul 2026</strong></span></div>
+          <div class="record-vital"><i data-lucide="user-round"></i><span><small>Primary Doctor</small><strong>Dr. Rahul Sharma</strong></span></div>
+        </div>
+        <span class="visit-pill">Today's Visit</span>
+        <span class="visit-completed"><i data-lucide="check"></i>09:30 AM – Completed</span>
+        <button class="primary-button" type="button" data-message="Vitals editor opened."><i data-lucide="heart-pulse"></i>Set Vitals</button>
+      </section>
+
+      <iframe class="embedded-health-records" src="health-records.html?embed=1#overview" title="Priya Das health records" data-embedded-health-records></iframe>
+
+      <nav class="record-tabs" role="tablist" aria-label="Patient health record sections">
+        <button class="record-tab active" type="button" role="tab" aria-selected="true" data-record-tab="overview"><i data-lucide="clipboard-pulse"></i>Overview</button>
+        <button class="record-tab" type="button" role="tab" aria-selected="false" data-record-tab="records"><i data-lucide="heart-pulse"></i>Health Records</button>
+        <button class="record-tab" type="button" role="tab" aria-selected="false" data-record-tab="analysis"><i data-lucide="sparkles"></i>AI Analysis</button>
+        <button class="record-tab" type="button" role="tab" aria-selected="false" data-record-tab="documents"><i data-lucide="file-text"></i>Documents</button>
+      </nav>
+
+      <section class="record-panel" data-record-panel="overview">
+        <div class="modal-overview-grid">
+          <article class="record-card">
+            <h3>Vitals (Today)</h3>
+            <div class="vitals-list">
+              <div class="vital-line"><i data-lucide="gauge"></i><span>Blood Pressure</span><strong>120/80 mmHg</strong><span class="normal-pill">Normal</span></div>
+              <div class="vital-line"><i data-lucide="heart-pulse"></i><span>Heart Rate</span><strong>78 bpm</strong><span class="normal-pill">Normal</span></div>
+              <div class="vital-line"><i data-lucide="thermometer"></i><span>Temperature</span><strong>98.4 °F</strong><span class="normal-pill">Normal</span></div>
+              <div class="vital-line"><i data-lucide="weight"></i><span>Weight</span><strong>68 kg</strong><span class="normal-pill">Normal</span></div>
+            </div>
+          </article>
+          <article class="record-card">
+            <h3><i data-lucide="sparkles"></i> AI Health Summary</h3>
+            <p>Good overall health. Vitals are normal. Continue current medication and maintain lifestyle.</p>
+            <button class="follow-up-card" type="button" data-message="Follow-up reminder scheduled for 3 months."><i data-lucide="heart-pulse"></i>Follow up in 3 months<i data-lucide="chevron-right"></i></button>
+          </article>
+        </div>
+
+        <article class="record-card media-card">
+          <div class="media-tabs" role="tablist" aria-label="Visit media">
+            <button class="media-tab active" type="button" role="tab" aria-selected="true" data-media-tab="images"><i data-lucide="image"></i>Images (2)</button>
+            <button class="media-tab" type="button" role="tab" aria-selected="false" data-media-tab="videos"><i data-lucide="video"></i>Videos (1)</button>
+            <button class="media-tab" type="button" role="tab" aria-selected="false" data-media-tab="notes"><i data-lucide="file-text"></i>Notes (1)</button>
+          </div>
+          <div class="media-content">
+            <button class="media-thumb" type="button" data-media-item="images" data-message="Chest image opened."><span class="media-visual"><i data-lucide="scan"></i></span><strong>Chest Image</strong><small>28 Jul 2026</small></button>
+            <button class="media-thumb" type="button" data-media-item="images" data-message="Skin image opened."><span class="media-visual skin"></span><strong>Skin Image</strong><small>28 Jul 2026</small></button>
+            <button class="media-thumb" type="button" data-media-item="videos" data-message="Consultation video opened."><span class="media-visual video"><i data-lucide="play"></i></span><strong>Consultation Video</strong><small>28 Jul 2026</small></button>
+            <aside class="doctor-note" data-media-item="notes"><strong><i data-lucide="file-text"></i>Doctor's notes</strong><p>No new notes for this visit.</p></aside>
+          </div>
+        </article>
+
+        <footer class="record-modal-footer">
+          <button class="secondary" type="button" data-message="Visit summary shared by SMS and email."><i data-lucide="send"></i>Share via SMS / Email</button>
+          <button class="primary-button" type="button" data-close-patient-record><i data-lucide="check"></i>Close Visit</button>
+        </footer>
+
+        <div class="record-grid legacy-overview">
+          <article class="record-card">
+            <h3>Health Data You Share</h3>
+            <p>All your health information in one place</p>
+            <div class="health-tiles">
+              <button class="health-tile" type="button" data-open-record-tab="records"><span><i data-lucide="flask-conical"></i><strong>Lab Reports</strong><small>12 Reports</small></span></button>
+              <button class="health-tile" type="button" data-open-record-tab="records"><span><i data-lucide="image"></i><strong>Imaging</strong><small>8 Reports</small></span></button>
+              <button class="health-tile" type="button" data-open-record-tab="documents"><span><i data-lucide="notebook-tabs"></i><strong>Prescriptions</strong><small>15 Records</small></span></button>
+              <button class="health-tile" type="button" data-message="Patient vitals are up to date."><span><i data-lucide="heart-pulse"></i><strong>Vitals</strong><small>28 Records</small></span></button>
+              <button class="health-tile" type="button" data-open-record-tab="documents"><span><i data-lucide="file-text"></i><strong>Documents</strong><small>18 Files</small></span></button>
+              <button class="health-tile" type="button" data-message="Voice notes opened."><span><i data-lucide="mic"></i><strong>Voice Notes</strong><small>6 Notes</small></span></button>
+              <button class="health-tile" type="button" data-message="Patient videos opened."><span><i data-lucide="video"></i><strong>Videos</strong><small>4 Videos</small></span></button>
+              <button class="health-tile" type="button" data-message="Health summary opened."><span><i data-lucide="clipboard-check"></i><strong>Health Summary</strong><small>View Details</small></span></button>
+              <button class="health-tile" type="button" data-message="Patient allergies opened."><span><i data-lucide="droplets"></i><strong>Allergies</strong><small>2 Allergies</small></span></button>
+            </div>
+            <button class="upload-record-button overview-upload" type="button" data-open-health-upload><i data-lucide="upload"></i>Upload New Record</button>
+          </article>
+          <article class="record-card">
+            <h3>AI Health Analysis <span class="beta-pill">BETA</span></h3>
+            <p>AI-powered insights based on this patient’s health data</p>
+            <div class="ai-summary"><strong><i data-lucide="sparkles"></i>AI Summary</strong><p>Overall health looks good. Vitamin D levels are low and seasonal allergies should be monitored. Regular exercise and hydration are recommended.</p></div>
+            <div class="analysis-list">
+              <div class="analysis-row"><i data-lucide="shield-check"></i><span><strong>Risk Level</strong><small>Based on 42 health records</small></span><b>Low</b></div>
+              <div class="analysis-row"><i data-lucide="triangle-alert"></i><span><strong>Key Concern</strong><small>Needs attention</small></span><b style="color:#e46c08">Vitamin D Deficiency</b></div>
+              <div class="analysis-row"><i data-lucide="mic"></i><span><strong>Recommendation</strong><small>Personalized for patient</small></span><b style="color:#1675d2">Increase Vitamin D Intake</b></div>
+              <div class="analysis-row"><i data-lucide="alarm-clock"></i><span><strong>Next Suggested Checkup</strong><small>Preventive follow-up</small></span><b style="color:#8048d8">After 3 Months</b></div>
+            </div>
+            <button class="ask-ai-button" type="button" data-message="AI health assistant opened."><i data-lucide="sparkles"></i>Ask AI About Your Health</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="record-panel" data-record-panel="records" hidden>
+        <div class="health-records-layout">
+          <article class="record-card">
+            <header class="records-card-header">
+              <div>
+                <h3>All Health Records</h3>
+                <p>All your medical records in one place</p>
+              </div>
+              <button class="set-vitals-button" type="button" data-message="Vitals editor opened."><i data-lucide="heart-pulse"></i>Set Vitals</button>
+            </header>
+
+            <div class="health-filter-row" aria-label="Record categories">
+              <button class="health-filter active" type="button" data-record-filter="all">All</button>
+              <button class="health-filter" type="button" data-record-filter="lab">Lab Reports</button>
+              <button class="health-filter" type="button" data-record-filter="imaging">Imaging</button>
+              <button class="health-filter" type="button" data-record-filter="prescription">Prescriptions</button>
+              <button class="health-filter" type="button" data-record-filter="documents">Documents</button>
+              <button class="health-filter" type="button" data-record-filter="vitals">Vitals</button>
+              <button class="health-filter" type="button" data-record-filter="others">Others</button>
+            </div>
+
+            <div class="record-search-tools">
+              <label class="record-search-box"><i data-lucide="search"></i><input type="search" placeholder="Search records by name or keyword..." aria-label="Search health records" data-record-search></label>
+              <button class="record-sort-button" type="button" data-record-sort>Newest First<i data-lucide="chevron-down"></i></button>
+              <button class="record-filter-button" type="button" data-message="Advanced health record filters opened."><i data-lucide="list-filter"></i>Filter</button>
+            </div>
+
+            <div class="health-record-list" data-health-record-list>
+              <div class="health-record-row" data-record-type="others" data-record-name="Voice Note Symptoms">
+                <i data-lucide="mic"></i>
+                <span class="health-record-copy"><strong>Voice Note – Symptoms</strong><small>Voice Note</small></span>
+                <time datetime="2026-05-21">21 May 2026</time>
+                <span class="file-badge">00:45</span>
+                <button class="record-icon-button" type="button" aria-label="Play voice note" data-message="Voice note playback started."><i data-lucide="play"></i></button>
+              </div>
+              <div class="health-record-row document" data-record-type="documents" data-record-name="Medical History Summary">
+                <i data-lucide="file-text"></i>
+                <span class="health-record-copy"><strong>Medical History Summary</strong><small>Document</small></span>
+                <time datetime="2026-05-20">20 May 2026</time>
+                <span class="file-badge docx">DOCX</span>
+                <button class="record-icon-button" type="button" aria-label="Download medical history" data-message="Medical history download started."><i data-lucide="download"></i></button>
+              </div>
+              <div class="empty-records" data-empty-records>No matching health records found.</div>
+            </div>
+
+            <button class="upload-record-button" type="button" data-open-health-upload><i data-lucide="upload"></i>Upload New Record</button>
+          </article>
+
+          <article class="record-card">
+            <header class="upload-card-header">
+              <div>
+                <h3>Upload Health Data</h3>
+                <p>Upload any type of health data securely</p>
+              </div>
+            </header>
+
+            <div class="upload-types-grid">
+              <button class="upload-type" type="button" data-upload-kind="Lab Reports"><i data-lucide="flask-conical"></i><strong>Lab Reports</strong><small>PDF, JPG, PNG</small></button>
+              <button class="upload-type" type="button" data-upload-kind="Imaging Reports"><i data-lucide="image"></i><strong>Imaging Reports</strong><small>X-Ray, MRI, CT</small></button>
+              <button class="upload-type" type="button" data-upload-kind="Prescriptions"><i data-lucide="notebook-tabs"></i><strong>Prescriptions</strong><small>PDF, JPG, PNG</small></button>
+              <button class="upload-type" type="button" data-upload-kind="Documents"><i data-lucide="files"></i><strong>Documents</strong><small>PDF, DOC, JPG</small></button>
+              <button class="upload-type" type="button" data-upload-kind="Voice Note"><i data-lucide="mic"></i><strong>Voice Note</strong><small>MP3, WAV, M4A</small></button>
+              <button class="upload-type" type="button" data-upload-kind="Videos"><i data-lucide="video"></i><strong>Videos</strong><small>MP4, MOV, AVI</small></button>
+            </div>
+
+            <button class="health-drop-zone" type="button" data-health-drop-zone>
+              <i data-lucide="cloud-upload"></i>
+              <strong>Drag &amp; drop files here</strong>
+              <small>or browse files from your device · Maximum 50MB</small>
+            </button>
+            <input type="file" hidden multiple data-health-file-input>
+          </article>
+        </div>
+
+        <article class="record-card old-records-card">
+          <h3>All Health Records</h3>
+          <p>Clinical records, investigations, prescriptions, and vitals</p>
+          <div class="record-filters">
+            <button class="record-filter active" type="button" data-record-filter="all">All Records</button>
+            <button class="record-filter" type="button" data-record-filter="lab">Lab Reports</button>
+            <button class="record-filter" type="button" data-record-filter="imaging">Imaging</button>
+            <button class="record-filter" type="button" data-record-filter="prescription">Prescriptions</button>
+          </div>
+          <div class="record-table">
+            <div class="record-item" data-record-type="lab"><i data-lucide="flask-conical"></i><div><strong>Complete Blood Count (CBC)</strong><small>Apollo Clinic</small></div><span>22 Jul 2026</span><span>Lab Report</span><button type="button" data-message="CBC report opened."><i data-lucide="eye"></i></button></div>
+            <div class="record-item" data-record-type="imaging"><i data-lucide="image"></i><div><strong>Chest X-Ray</strong><small>Apollo Clinic</small></div><span>20 Jul 2026</span><span>Imaging</span><button type="button" data-message="Chest X-Ray opened."><i data-lucide="eye"></i></button></div>
+            <div class="record-item" data-record-type="prescription"><i data-lucide="notebook-tabs"></i><div><strong>Prescription – Dr. Rahul Sharma</strong><small>General Medicine</small></div><span>18 Jul 2026</span><span>Prescription</span><button type="button" data-message="Prescription opened."><i data-lucide="eye"></i></button></div>
+            <div class="record-item" data-record-type="lab"><i data-lucide="flask-conical"></i><div><strong>Vitamin D Test</strong><small>Apollo Clinic</small></div><span>15 Jul 2026</span><span>Lab Report</span><button type="button" data-message="Vitamin D report opened."><i data-lucide="eye"></i></button></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="record-panel" data-record-panel="analysis" hidden>
+        <div class="record-grid">
+          <article class="record-card">
+            <h3>AI Clinical Summary</h3>
+            <p>Generated from the patient’s complete medical history</p>
+            <div class="ai-summary"><strong><i data-lucide="brain-circuit"></i>Longitudinal Analysis</strong><p>No immediate high-risk indicators are present. Continue monitoring Vitamin D levels and seasonal allergy symptoms during follow-up visits.</p></div>
+            <div class="analysis-list">
+              <div class="analysis-row"><i data-lucide="activity"></i><span><strong>Health Trend</strong><small>Last 12 months</small></span><b>Stable</b></div>
+              <div class="analysis-row"><i data-lucide="pill"></i><span><strong>Medication Review</strong><small>No interaction detected</small></span><b>Clear</b></div>
+              <div class="analysis-row"><i data-lucide="calendar-check"></i><span><strong>Preventive Care</strong><small>Next recommended action</small></span><b>Vitamin D Recheck</b></div>
+            </div>
+          </article>
+          <article class="record-card">
+            <h3>Ask AI About This Patient</h3>
+            <p>Use the patient’s records to prepare for consultation</p>
+            <div class="health-tiles">
+              <button class="health-tile" type="button" data-message="AI is summarizing recent changes."><span><i data-lucide="list-checks"></i><strong>Recent Changes</strong><small>Summarize</small></span></button>
+              <button class="health-tile" type="button" data-message="AI is checking clinical risks."><span><i data-lucide="shield-alert"></i><strong>Clinical Risks</strong><small>Analyze</small></span></button>
+              <button class="health-tile" type="button" data-message="AI prepared consultation questions."><span><i data-lucide="messages-square"></i><strong>Consult Questions</strong><small>Prepare</small></span></button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="record-panel" data-record-panel="documents" hidden>
+        <article class="record-card">
+          <div class="record-topline"><div><h3>Patient Documents</h3><p>Prescriptions, reports, images, and clinical files</p></div><button class="primary-button" type="button" data-message="Document upload opened."><i data-lucide="upload"></i>Upload Document</button></div>
+          <div class="document-grid">
+            <div class="document-card"><i data-lucide="file-text"></i><span><strong>CBC Lab Report</strong><small>PDF • 245 KB • 22 Jul 2026</small></span><button type="button" data-message="CBC document opened."><i data-lucide="eye"></i></button></div>
+            <div class="document-card"><i data-lucide="image"></i><span><strong>Chest X-Ray</strong><small>JPG • 1.2 MB • 20 Jul 2026</small></span><button type="button" data-message="X-Ray image opened."><i data-lucide="eye"></i></button></div>
+            <div class="document-card"><i data-lucide="notebook-tabs"></i><span><strong>Prescription – 18 Jul</strong><small>PDF • 165 KB • Dr. Rahul Sharma</small></span><button type="button" data-message="Prescription document opened."><i data-lucide="eye"></i></button></div>
+            <div class="document-card"><i data-lucide="file-heart"></i><span><strong>Medical History Summary</strong><small>PDF • 320 KB • 12 Jul 2026</small></span><button type="button" data-message="History summary opened."><i data-lucide="eye"></i></button></div>
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <div class="overlay" data-overlay></div>
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" data-modal>
+    <header><div><h2 id="modal-title">New Appointment</h2><p>Book a visit at Apollo Clinic, Salt Lake.</p></div><button class="close-button" type="button" aria-label="Close appointment form" data-close-modal><i data-lucide="x"></i></button></header>
+    <form class="form-grid" data-form>
+      <div class="field full"><label for="patientName">Patient name</label><input id="patientName" type="text" placeholder="Enter patient name" required></div>
+      <div class="field"><label for="appointmentDate">Date</label><input id="appointmentDate" type="date" value="2026-07-28" required></div>
+      <div class="field"><label for="appointmentTime">Time</label><select id="appointmentTime" required><option value="">Select time</option><option>12:15 PM</option><option>12:45 PM</option><option>01:30 PM</option><option>05:30 PM</option></select></div>
+      <div class="field full"><label for="visitType">Visit type</label><select id="visitType"><option>Consultation</option><option>Follow Up</option><option>Health Check</option></select></div>
+      <div class="field full"><label for="notes">Notes</label><textarea id="notes" placeholder="Optional appointment note"></textarea></div>
+      <div class="form-actions"><button class="secondary" type="button" data-close-modal>Cancel</button><button class="primary-button" type="submit">Book Appointment</button></div>
+    </form>
+  </section>
+
+  <div class="toast" role="status" aria-live="polite" data-toast><i data-lucide="circle-check"></i><span data-toast-text>Done.</span></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      if (window.lucide) window.lucide.createIcons();
+
+      const body = document.body;
+      const sidebar = document.querySelector(".sidebar");
+      const sidebarToggle = document.querySelector("[data-sidebar-toggle]");
+      const backdrop = document.querySelector("[data-mobile-backdrop]");
+      const toast = document.querySelector("[data-toast]");
+      const toastText = document.querySelector("[data-toast-text]");
+      const modal = document.querySelector("[data-modal]");
+      const overlay = document.querySelector("[data-overlay]");
+      const patientRecordView = document.querySelector("[data-patient-record-view]");
+      const recordOverlay = document.querySelector("[data-record-overlay]");
+      const embeddedHealthRecords = document.querySelector("[data-embedded-health-records]");
+      const recordTabs = [...document.querySelectorAll("[data-record-tab]")];
+      const recordPanels = [...document.querySelectorAll("[data-record-panel]")];
+      let toastTimer;
+      let lastFocused;
+      let recordLastFocused;
+      let recordCloseTimer;
+
+      function showToast(message) {
+        clearTimeout(toastTimer);
+        toastText.textContent = message;
+        toast.classList.add("show");
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 2700);
+      }
+
+      function syncSidebar() {
+        if (window.innerWidth <= 900) {
+          const open = sidebar.classList.contains("open");
+          sidebarToggle.setAttribute("aria-expanded", String(open));
+          sidebarToggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+        } else {
+          const compact = body.classList.contains("sidebar-compact");
+          sidebarToggle.setAttribute("aria-expanded", String(!compact));
+          sidebarToggle.setAttribute("aria-label", compact ? "Expand navigation" : "Collapse navigation");
+        }
+      }
+
+      sidebarToggle.addEventListener("click", () => {
+        if (window.innerWidth <= 900) {
+          const open = sidebar.classList.toggle("open");
+          backdrop.classList.toggle("open", open);
+        } else {
+          body.classList.toggle("sidebar-compact");
+          setTimeout(() => window.dispatchEvent(new Event("resize")), 680);
+        }
+        syncSidebar();
+      });
+
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+        backdrop.classList.remove("open");
+        syncSidebar();
+      });
+
+      document.querySelectorAll("[data-message]").forEach((control) => {
+        control.addEventListener("click", (event) => {
+          if (control.tagName === "A") event.preventDefault();
+          showToast(control.dataset.message);
+        });
+      });
+
+      document.querySelectorAll("[data-view]").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const view = tab.dataset.view;
+          body.classList.toggle("week-view-active", view === "Week View");
+          body.classList.toggle("all-view-active", view === "All Appointments");
+          document.querySelectorAll("[data-view]").forEach((item) => {
+            const selected = item === tab;
+            item.classList.toggle("active", selected);
+            item.setAttribute("aria-selected", String(selected));
+          });
+          document.querySelectorAll("[data-appointment-panel]").forEach((panel) => {
+            panel.hidden = panel.dataset.appointmentPanel !== view;
+          });
+          const dateLabel = document.querySelector("[data-date-label]");
+          if (dateLabel) {
+            dateLabel.textContent = view === "Week View" ? "28 Jul – 03 Aug 2026" : view === "All Appointments" ? "All Dates" : "Today";
+          }
+          if (dateLabel && view === "All Appointments") dateLabel.textContent = "28 Jul \u2013 03 Aug 2026";
+          showToast(`${view} selected.`);
+        });
+      });
+
+      const weekAppointmentList = document.querySelector(".week-appointment-list");
+      const extraWeekRows = [...document.querySelectorAll("[data-extra-week-row]")];
+      const weekMoreButton = document.querySelector("[data-week-view-more]");
+      let weekScrollLoading = false;
+
+      function updateWeekMoreButton() {
+        const remaining = extraWeekRows.filter((row) => row.hidden).length;
+        if (!weekMoreButton) return;
+        weekMoreButton.disabled = remaining === 0;
+        weekMoreButton.innerHTML = remaining
+          ? `View More <i data-lucide="chevron-down"></i>`
+          : `All Appointments Loaded <i data-lucide="check"></i>`;
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function revealMoreWeekRows(amount = 2, scrollAfter = false) {
+        const nextRows = extraWeekRows.filter((row) => row.hidden).slice(0, amount);
+        nextRows.forEach((row) => row.hidden = false);
+        updateWeekMoreButton();
+        if (nextRows.length && scrollAfter) {
+          requestAnimationFrame(() => weekAppointmentList.scrollTo({ top: weekAppointmentList.scrollHeight, behavior: "smooth" }));
+        }
+        return nextRows.length;
+      }
+
+      function resetWeekRows() {
+        extraWeekRows.forEach((row) => row.hidden = true);
+        if (weekAppointmentList) weekAppointmentList.scrollTop = 0;
+        updateWeekMoreButton();
+      }
+
+      weekMoreButton?.addEventListener("click", () => {
+        const revealed = revealMoreWeekRows(3, true);
+        showToast(revealed ? `${revealed} more appointments loaded.` : "All appointments are already loaded.");
+      });
+
+      weekAppointmentList?.addEventListener("scroll", () => {
+        if (weekScrollLoading || weekAppointmentList.scrollTop + weekAppointmentList.clientHeight < weekAppointmentList.scrollHeight - 24) return;
+        weekScrollLoading = true;
+        revealMoreWeekRows(2);
+        setTimeout(() => weekScrollLoading = false, 180);
+      });
+
+      document.querySelectorAll("[data-week-day]").forEach((day) => {
+        day.addEventListener("click", () => {
+          document.querySelectorAll("[data-week-day]").forEach((item) => {
+            const selected = item === day;
+            item.classList.toggle("active", selected);
+            item.setAttribute("aria-pressed", String(selected));
+          });
+          document.querySelector("[data-week-heading]").textContent = day.dataset.weekDate;
+          document.querySelector("[data-week-count-label]").textContent = day.dataset.weekCount;
+          resetWeekRows();
+          showToast(`${day.dataset.weekDate}: ${day.dataset.weekCount} appointments.`);
+        });
+      });
+
+      updateWeekMoreButton();
+
+      document.querySelectorAll("[data-week-shift]").forEach((button) => {
+        button.addEventListener("click", () => {
+          showToast(`${button.dataset.weekShift === "next" ? "Next" : "Previous"} week loaded.`);
+        });
+      });
+
+      const allRows = [...document.querySelectorAll("[data-all-row]")];
+      const allSearch = document.querySelector("[data-all-search]");
+      const allFilters = [...document.querySelectorAll("[data-all-filter]")];
+      const allResultCount = document.querySelector("[data-all-result-count]");
+      const allTotals = { all: 124, progress: 12, completed: 64, upcoming: 43, cancelled: 5 };
+      let activeAllFilter = "all";
+
+      function refreshAllAppointments() {
+        const query = allSearch?.value.trim().toLowerCase() || "";
+        let visibleRows = 0;
+
+        allRows.forEach((row) => {
+          const statusMatches = activeAllFilter === "all" || row.dataset.status === activeAllFilter;
+          const queryMatches = !query || row.dataset.search.includes(query);
+          const visible = statusMatches && queryMatches;
+          row.hidden = !visible;
+          if (visible) visibleRows += 1;
+        });
+
+        if (allResultCount) {
+          if (!visibleRows) {
+            allResultCount.textContent = "No matching appointments";
+          } else {
+            const total = query ? visibleRows : allTotals[activeAllFilter];
+            const shown = !query && activeAllFilter === "all" ? Math.min(10, total) : visibleRows;
+            allResultCount.textContent = `Showing 1 to ${shown} of ${total} appointments`;
+          }
+        }
+      }
+
+      allFilters.forEach((filter) => {
+        filter.addEventListener("click", () => {
+          activeAllFilter = filter.dataset.allFilter;
+          allFilters.forEach((item) => {
+            const selected = item === filter;
+            item.classList.toggle("active", selected);
+            item.setAttribute("aria-pressed", String(selected));
+          });
+          refreshAllAppointments();
+        });
+      });
+
+      allSearch?.addEventListener("input", refreshAllAppointments);
+
+      document.querySelector("[data-all-export]")?.addEventListener("click", () => {
+        const visibleRows = allRows.filter((row) => !row.hidden);
+        const csvRows = [
+          ["Time", "Patient", "Type", "Status", "Doctor", "Payment"],
+          ...visibleRows.map((row) => [
+            row.querySelector(".all-time strong")?.textContent.trim() || "",
+            row.querySelector(".patient strong")?.textContent.trim() || "",
+            row.querySelector(".visit-type")?.textContent.trim() || "",
+            row.querySelector(".status")?.textContent.trim() || "",
+            row.querySelector(".all-doctor")?.textContent.trim() || "",
+            row.querySelector(".all-payment strong")?.textContent.trim() || ""
+          ])
+        ];
+        const csv = csvRows.map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")).join("\n");
+        const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "cliniflow-appointments.csv";
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast(`${visibleRows.length} appointments exported.`);
+      });
+
+      document.querySelectorAll("[data-page]").forEach((pageButton) => {
+        pageButton.addEventListener("click", () => {
+          document.querySelectorAll("[data-page]").forEach((item) => {
+            const selected = item === pageButton;
+            item.classList.toggle("active", selected);
+            if (selected) item.setAttribute("aria-current", "page");
+            else item.removeAttribute("aria-current");
+          });
+          showToast(`Page ${pageButton.dataset.page} loaded.`);
+        });
+      });
+
+      function selectPatient(name) {
+        document.querySelector("[data-current-name]").textContent = name;
+        const status = document.querySelector("[data-current-status]");
+        status.textContent = "In Progress";
+        status.className = "status progress";
+        showToast(`${name} is now the current patient.`);
+      }
+
+      function openRecordTab(name) {
+        recordTabs.forEach((tab) => {
+          const selected = tab.dataset.recordTab === name;
+          tab.classList.toggle("active", selected);
+          tab.setAttribute("aria-selected", String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+        recordPanels.forEach((panel) => {
+          panel.hidden = panel.dataset.recordPanel !== name;
+        });
+        patientRecordView.scrollTop = 0;
+      }
+
+      function openPatientRecord(name = "Priya Das") {
+        clearTimeout(recordCloseTimer);
+        recordLastFocused = document.activeElement;
+        document.querySelector("[data-record-patient-name]").textContent = name;
+        embeddedHealthRecords?.contentWindow?.postMessage({ type: "cliniflow-health-tab", tab: "overview" }, "*");
+        patientRecordView.hidden = false;
+        patientRecordView.setAttribute("aria-hidden", "false");
+        openRecordTab("overview");
+        requestAnimationFrame(() => {
+          patientRecordView.classList.add("open");
+          recordOverlay.classList.add("open");
+          patientRecordView.querySelector("[data-close-patient-record]")?.focus();
+        });
+      }
+
+      function closePatientRecord() {
+        patientRecordView.classList.remove("open");
+        recordOverlay.classList.remove("open");
+        patientRecordView.setAttribute("aria-hidden", "true");
+        recordCloseTimer = setTimeout(() => {
+          patientRecordView.hidden = true;
+        }, 230);
+        if (recordLastFocused instanceof HTMLElement) recordLastFocused.focus();
+      }
+
+      document.querySelectorAll("[data-patient]").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          selectPatient(button.dataset.patient);
+          openPatientRecord(button.dataset.patient);
+        });
+      });
+
+      document.querySelectorAll(".patient").forEach((patient) => {
+        const name = patient.querySelector("strong")?.textContent?.trim() || "patient";
+        patient.classList.add("patient-link");
+        patient.tabIndex = 0;
+        patient.setAttribute("role", "link");
+        patient.setAttribute("aria-label", `Open ${name} health record`);
+
+        const openThisPatient = () => openPatientRecord(name);
+
+        patient.addEventListener("click", openThisPatient);
+        patient.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openThisPatient();
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-open-patient-record]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          openPatientRecord(document.querySelector("[data-current-name]")?.textContent?.trim() || "Priya Das");
+        });
+      });
+
+      recordTabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => openRecordTab(tab.dataset.recordTab));
+        tab.addEventListener("keydown", (event) => {
+          if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+          event.preventDefault();
+          const direction = event.key === "ArrowRight" ? 1 : -1;
+          const next = recordTabs[(index + direction + recordTabs.length) % recordTabs.length];
+          openRecordTab(next.dataset.recordTab);
+          next.focus();
+        });
+      });
+
+      document.querySelectorAll("[data-open-record-tab]").forEach((button) => {
+        button.addEventListener("click", () => openRecordTab(button.dataset.openRecordTab));
+      });
+
+      const healthRecordRows = [...document.querySelectorAll("[data-health-record-list] .health-record-row")];
+      const recordSearch = document.querySelector("[data-record-search]");
+      const emptyRecords = document.querySelector("[data-empty-records]");
+
+      function applyHealthRecordFilters() {
+        const selected = document.querySelector(".health-filter.active")?.dataset.recordFilter || "all";
+        const query = recordSearch?.value.trim().toLowerCase() || "";
+        let visible = 0;
+        healthRecordRows.forEach((row) => {
+          const categoryMatch = selected === "all" || row.dataset.recordType === selected;
+          const searchMatch = !query || row.dataset.recordName.toLowerCase().includes(query);
+          row.hidden = !(categoryMatch && searchMatch);
+          if (!row.hidden) visible += 1;
+        });
+        emptyRecords?.classList.toggle("show", visible === 0);
+      }
+
+      document.querySelectorAll("[data-record-filter]").forEach((filter) => {
+        filter.addEventListener("click", () => {
+          document.querySelectorAll("[data-record-filter]").forEach((item) => item.classList.toggle("active", item === filter));
+          document.querySelectorAll(".old-records-card [data-record-type]").forEach((item) => {
+            item.hidden = filter.dataset.recordFilter !== "all" && item.dataset.recordType !== filter.dataset.recordFilter;
+          });
+          applyHealthRecordFilters();
+        });
+      });
+
+      recordSearch?.addEventListener("input", applyHealthRecordFilters);
+
+      document.querySelector("[data-record-sort]")?.addEventListener("click", (event) => {
+        const button = event.currentTarget;
+        const oldest = button.dataset.order !== "oldest";
+        button.dataset.order = oldest ? "oldest" : "newest";
+        button.firstChild.textContent = oldest ? "Oldest First" : "Newest First";
+        const list = document.querySelector("[data-health-record-list]");
+        healthRecordRows.reverse().forEach((row) => list.insertBefore(row, emptyRecords));
+      });
+
+      const healthFileInput = document.querySelector("[data-health-file-input]");
+      const healthDropZone = document.querySelector("[data-health-drop-zone]");
+
+      function openHealthUpload(kind = "Health Record") {
+        healthFileInput.dataset.kind = kind;
+        healthFileInput.click();
+      }
+
+      document.querySelectorAll("[data-open-health-upload]").forEach((button) => {
+        button.addEventListener("click", () => openHealthUpload());
+      });
+      document.querySelectorAll("[data-upload-kind]").forEach((button) => {
+        button.addEventListener("click", () => openHealthUpload(button.dataset.uploadKind));
+      });
+      healthDropZone?.addEventListener("click", () => openHealthUpload());
+      ["dragenter", "dragover"].forEach((eventName) => {
+        healthDropZone?.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          healthDropZone.classList.add("dragging");
+        });
+      });
+      ["dragleave", "drop"].forEach((eventName) => {
+        healthDropZone?.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          healthDropZone.classList.remove("dragging");
+        });
+      });
+      healthDropZone?.addEventListener("drop", (event) => {
+        const count = event.dataTransfer?.files?.length || 0;
+        if (count) showToast(`${count} health record file${count === 1 ? "" : "s"} ready to upload.`);
+      });
+      healthFileInput?.addEventListener("change", () => {
+        const count = healthFileInput.files.length;
+        if (count) showToast(`${count} ${healthFileInput.dataset.kind || "health record"} file${count === 1 ? "" : "s"} selected.`);
+        healthFileInput.value = "";
+      });
+
+      document.querySelectorAll("[data-media-tab]").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll("[data-media-tab]").forEach((item) => {
+            const selected = item === tab;
+            item.classList.toggle("active", selected);
+            item.setAttribute("aria-selected", String(selected));
+          });
+          document.querySelectorAll("[data-media-item]").forEach((item) => {
+            item.hidden = item.dataset.mediaItem !== tab.dataset.mediaTab;
+          });
+        });
+      });
+
+      document.querySelectorAll("[data-close-patient-record]").forEach((button) => button.addEventListener("click", closePatientRecord));
+      recordOverlay.addEventListener("click", closePatientRecord);
+
+      document.querySelector("[data-complete]").addEventListener("click", () => {
+        const name = document.querySelector("[data-current-name]").textContent;
+        const status = document.querySelector("[data-current-status]");
+        status.textContent = "Completed";
+        status.className = "status completed";
+        showToast(`${name} completed. Receipt sent by SMS and email.`);
+      });
+
+      function openModal() {
+        lastFocused = document.activeElement;
+        modal.classList.add("open");
+        overlay.classList.add("open");
+        setTimeout(() => document.getElementById("patientName").focus(), 60);
+      }
+
+      function closeModal() {
+        modal.classList.remove("open");
+        overlay.classList.remove("open");
+        if (lastFocused) lastFocused.focus();
+      }
+
+      document.querySelector("[data-open-modal]").addEventListener("click", openModal);
+      document.querySelectorAll("[data-close-modal]").forEach((button) => button.addEventListener("click", closeModal));
+      overlay.addEventListener("click", closeModal);
+
+      document.querySelector("[data-form]").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = document.getElementById("patientName").value.trim();
+        closeModal();
+        event.currentTarget.reset();
+        document.getElementById("appointmentDate").value = "2026-07-28";
+        showToast(`Appointment booked${name ? ` for ${name}` : ""}.`);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          if (patientRecordView.classList.contains("open")) closePatientRecord();
+          else if (modal.classList.contains("open")) closeModal();
+          else {
+            sidebar.classList.remove("open");
+            backdrop.classList.remove("open");
+            syncSidebar();
+          }
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+        } else {
+          body.classList.remove("sidebar-compact");
+        }
+        syncSidebar();
+      });
+
+      syncSidebar();
+      if (window.location.hash === "#patient-records") openPatientRecord();
+    })();
+  </script>
+</body>
+</html>

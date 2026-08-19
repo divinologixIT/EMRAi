@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Choose how you want to use Divinexa and start your free trial.">
+  <title>Divinexa - Choose Account Type</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #082548;
+      --muted: #526984;
+      --teal: #07998e;
+      --teal-dark: #057e76;
+      --teal-soft: #e8f8f6;
+      --line: #cce1e3;
+      --white: #fff;
+      --shadow: 0 18px 48px rgba(14, 67, 77, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 4% 13%, rgba(7, 153, 142, .10), transparent 25rem),
+        radial-gradient(circle at 93% 80%, rgba(7, 153, 142, .07), transparent 28rem),
+        #fbfdfd;
+      font-family: "DM Sans", "Segoe UI", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a:focus-visible {
+      outline: 3px solid rgba(7, 153, 142, .22);
+      outline-offset: 4px;
+    }
+
+    svg { display: block; }
+
+    .container {
+      width: min(calc(100% - 64px), 1280px);
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid #e4eeee;
+      background: rgba(255, 255, 255, .97);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      min-height: 80px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--teal-dark);
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #11a99c, #06867c);
+      box-shadow: 0 8px 18px rgba(6, 134, 124, .22);
+      transform: rotate(45deg);
+    }
+
+    .brand-copy {
+      display: grid;
+      line-height: 1.02;
+    }
+
+    .brand-copy strong {
+      font-size: 24px;
+      letter-spacing: -.045em;
+    }
+
+    .brand-copy small {
+      margin-top: 5px;
+      color: #445a74;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .main-nav {
+      display: flex;
+      justify-content: center;
+      gap: clamp(25px, 3vw, 43px);
+    }
+
+    .main-nav a {
+      position: relative;
+      padding: 28px 0 24px;
+      color: #18253b;
+      font-size: 13px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .main-nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: 17px;
+      left: 0;
+      height: 2px;
+      content: "";
+      border-radius: 99px;
+      background: var(--teal);
+      opacity: 0;
+      transform: scaleX(.35);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: var(--teal-dark);
+    }
+
+    .main-nav a:hover::after,
+    .main-nav a.active::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .menu-toggle {
+      width: 42px;
+      height: 42px;
+      display: none;
+      place-items: center;
+      padding: 0;
+      color: var(--teal-dark);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .menu-toggle svg { width: 20px; height: 20px; }
+
+    .page {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 28px 0 76px;
+    }
+
+    .intro {
+      max-width: 680px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .step {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 16px;
+      padding: 7px 12px;
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .step::before {
+      width: 7px;
+      height: 7px;
+      background: var(--teal);
+      border-radius: 50%;
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.13;
+      letter-spacing: -.04em;
+    }
+
+    .intro p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .account-card {
+      position: relative;
+      display: flex;
+      min-height: 290px;
+      flex-direction: column;
+      align-items: center;
+      padding: 34px 28px 30px;
+      overflow: hidden;
+      text-align: center;
+      background: rgba(255, 255, 255, .96);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(14, 67, 77, .035);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .account-card::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #11aea1, #07877e);
+      opacity: 0;
+      content: "";
+      transition: opacity 180ms ease;
+    }
+
+    .account-card:hover {
+      transform: translateY(-6px);
+      border-color: #78c9c3;
+      box-shadow: var(--shadow);
+    }
+
+    .account-card:hover::before { opacity: 1; }
+
+    .icon-bubble {
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      margin-bottom: 17px;
+      color: var(--teal);
+      background: var(--teal-soft);
+      border-radius: 50%;
+    }
+
+    .icon-bubble svg {
+      width: 34px;
+      height: 34px;
+      stroke-width: 2;
+    }
+
+    .account-card h2 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: -.02em;
+    }
+
+    .account-card p {
+      margin: 10px 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .choose-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: auto;
+      color: var(--teal-dark);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .choose-link svg {
+      width: 17px;
+      height: 17px;
+      transition: transform 180ms ease;
+    }
+
+    .account-card:hover .choose-link svg { transform: translateX(4px); }
+
+    .back-link {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      gap: 7px;
+      margin: 30px auto 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .back-link:hover { color: var(--teal-dark); }
+    .back-link svg { width: 16px; height: 16px; }
+
+    @media (max-width: 930px) {
+      .header-inner {
+        grid-template-columns: auto 1fr;
+        justify-content: space-between;
+      }
+
+      .menu-toggle {
+        display: grid;
+        justify-self: end;
+      }
+
+      .main-nav {
+        position: fixed;
+        z-index: 110;
+        top: 72px;
+        right: 18px;
+        left: 18px;
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .main-nav.open { display: flex; }
+
+      .main-nav a {
+        padding: 14px 6px;
+        border-bottom: 1px solid #edf3f4;
+        font-size: 12px;
+      }
+
+      .main-nav a::after { display: none; }
+      .account-grid { gap: 18px; }
+      .account-card { padding-inline: 20px; }
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(calc(100% - 36px), 1280px); }
+      .page {
+        width: min(100% - 32px, 500px);
+        padding: 24px 0 54px;
+      }
+
+      .intro { margin-bottom: 28px; }
+      .intro p { font-size: 14px; }
+      .account-grid { grid-template-columns: 1fr; }
+      .account-card {
+        min-height: 0;
+        padding: 27px 24px;
+      }
+    }
+
+  </style>
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="home2.html" aria-label="Divinexa home">
+        <span class="brand-mark"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Prescription Platform</small></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+        <a class="active" href="home2.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="subscription.html">Subscription</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="home2.html#contact">Contact</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <span class="step">Step 1 of 3</span>
+      <h1>How will you use <span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span>?</h1>
+      <p>Choose the account type that best describes you. We’ll personalize the setup experience for your practice.</p>
+    </section>
+
+    <section class="account-grid" aria-label="Choose your account type">
+      <a class="account-card" href="doctor-onboarding.html?flow=trial" aria-label="Continue as an individual doctor">
+        <span class="icon-bubble" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M5 21v-2a7 7 0 0 1 11.7-5.2"></path>
+            <path d="m16 19 2 2 4-4"></path>
+          </svg>
+        </span>
+        <h2>Individual Doctor</h2>
+        <p>Create prescriptions faster, manage patients and grow your practice.</p>
+        <span class="choose-link">
+          Continue as Doctor
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="m13 6 6 6-6 6"></path>
+          </svg>
+        </span>
+      </a>
+
+      <a class="account-card" href="#" aria-label="Continue as a clinic">
+        <span class="icon-bubble" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"></path>
+            <path d="M9 7h4M9 11h4M9 15h4"></path>
+            <path d="M17 9h2a1 1 0 0 1 1 1v11M2 21h20"></path>
+          </svg>
+        </span>
+        <h2>Clinic</h2>
+        <p>Manage a multi-doctor practice, appointments and prescription templates.</p>
+        <span class="choose-link">
+          Continue as Clinic
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="m13 6 6 6-6 6"></path>
+          </svg>
+        </span>
+      </a>
+
+      <a class="account-card" href="#" aria-label="Continue as a healthcare organization">
+        <span class="icon-bubble" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V6l7-3 7 3v15"></path>
+            <path d="M9 9h6M12 6v6M8 15h2M14 15h2M8 18h2M14 18h2"></path>
+          </svg>
+        </span>
+        <h2>Organization</h2>
+        <p>Centralize prescribing for hospitals, healthcare networks and large chains.</p>
+        <span class="choose-link">
+          Continue as Organization
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="m13 6 6 6-6 6"></path>
+          </svg>
+        </span>
+      </a>
+    </section>
+
+    <a class="back-link" href="home2.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5"></path>
+        <path d="m11 18-6-6 6-6"></path>
+      </svg>
+      Back to home
+    </a>
+  </main>
+  <script>
+    const mainNav = document.getElementById("mainNav");
+    const menuToggle = document.getElementById("menuToggle");
+
+    menuToggle.addEventListener("click", () => {
+      const open = mainNav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+    });
+
+    mainNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mainNav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation");
+      });
+    });
+  </script>
+</body>
+</html>

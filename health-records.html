@@ -1,0 +1,3799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Records | Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="stylesheet" href="assets/css/common-header.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --navy: #102553;
+      --muted: #63728e;
+      --teal: #07988c;
+      --teal-dark: #007b73;
+      --teal-pale: #e9f8f6;
+      --blue: #2678ec;
+      --purple: #7144ef;
+      --orange: #f59e0b;
+      --red: #f0445e;
+      --line: #dce7eb;
+      --surface: #ffffff;
+      --page: #f7fbfb;
+      --shadow: 0 10px 28px rgba(21, 64, 88, .055);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 70% 0%, rgba(65, 196, 181, .07), transparent 32rem),
+        var(--page);
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.9;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 1000;
+      top: 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .96);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: auto auto minmax(420px, 1fr) auto;
+      align-items: center;
+      gap: 24px;
+      padding: 0 24px;
+    }
+
+    .menu-button,
+    .icon-button {
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .menu-button {
+      width: 34px;
+      height: 34px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      color: white;
+      background: linear-gradient(145deg, #3dc0b3, #008d85);
+      box-shadow: 0 9px 24px rgba(0, 143, 133, .23);
+      transform: rotate(45deg);
+    }
+
+    .brand-mark svg {
+      width: 26px;
+      height: 26px;
+      transform: rotate(-45deg);
+    }
+
+    .brand-copy {
+      display: grid;
+      line-height: 1.08;
+    }
+
+    .brand-copy strong {
+      color: #007c74;
+      font-size: 22px;
+      letter-spacing: -.04em;
+    }
+
+    .brand-copy small {
+      margin-top: 5px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(22px, 4vw, 54px);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .main-nav a {
+      position: relative;
+      padding: 27px 0 24px;
+      white-space: nowrap;
+    }
+
+    .main-nav a.active {
+      color: var(--teal-dark);
+    }
+
+    .main-nav a.active::after {
+      height: 2px;
+      position: absolute;
+      right: 0;
+      bottom: 15px;
+      left: 0;
+      border-radius: 2px;
+      background: var(--teal);
+      content: "";
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .notification {
+      width: 38px;
+      height: 38px;
+      position: relative;
+    }
+
+    .notification-badge {
+      min-width: 17px;
+      height: 17px;
+      display: grid;
+      position: absolute;
+      top: 0;
+      right: 0;
+      place-items: center;
+      border: 2px solid white;
+      border-radius: 50%;
+      color: white;
+      background: #ef2f45;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .profile-menu {
+      position: relative;
+    }
+
+    .profile-button {
+      min-width: 180px;
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr) 16px;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 7px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .profile-button:hover,
+    .profile-menu.open .profile-button {
+      border-color: #b8e3df;
+      background: #f1faf9;
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #d5ebe8;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-copy {
+      display: grid;
+      gap: 2px;
+    }
+
+    .profile-copy strong {
+      font-size: 12px;
+    }
+
+    .profile-copy small {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .profile-dropdown {
+      width: 238px;
+      display: none;
+      position: absolute;
+      z-index: 20;
+      top: calc(100% + 9px);
+      right: 0;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: white;
+      box-shadow: 0 18px 45px rgba(18, 47, 67, .17);
+    }
+
+    .profile-menu.open .profile-dropdown {
+      display: block;
+      animation: menuIn .18s ease both;
+    }
+
+    .profile-dropdown a {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .profile-dropdown a:hover {
+      color: var(--teal-dark);
+      background: var(--teal-pale);
+    }
+
+    .profile-dropdown a:last-child {
+      color: #cf334a;
+      border-top: 1px solid #edf1f2;
+      border-radius: 0 0 8px 8px;
+    }
+
+    @keyframes menuIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .portal-shell {
+      width: min(1760px, 100%);
+      display: grid;
+      grid-template-columns: 232px minmax(0, 1fr) 310px;
+      align-items: start;
+      gap: 18px;
+      margin: 0 auto;
+      padding: 0 18px 24px;
+    }
+
+    .sidebar {
+      min-height: calc(100vh - 104px);
+      display: flex;
+      position: sticky;
+      top: 88px;
+      flex-direction: column;
+      gap: 14px;
+      padding: 4px 0;
+    }
+
+    .side-nav {
+      display: grid;
+      gap: 3px;
+    }
+
+    .side-link {
+      width: 100%;
+      min-height: 39px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 0 14px;
+      border-top: 0;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 3px solid transparent;
+      border-radius: 0 9px 9px 0;
+      color: #243864;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .side-link:hover,
+    .side-link.active {
+      color: var(--teal-dark);
+      background: linear-gradient(90deg, #e9f8f6, #f2faf9);
+    }
+
+    .side-link.active {
+      border-left-color: var(--teal);
+      font-weight: 800;
+    }
+
+    .side-link svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .new-badge,
+    .beta {
+      margin-left: auto;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: #6541dd;
+      background: #e9e0ff;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .assistant-card {
+      margin-top: auto;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(145deg, #fff, #effaf8);
+      box-shadow: var(--shadow);
+    }
+
+    .assistant-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--teal-dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .assistant-card p {
+      margin: 14px 0;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.7;
+    }
+
+    .primary-button,
+    .outline-button {
+      min-height: 39px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 17px;
+      border: 1px solid var(--teal);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary-button {
+      color: white;
+      background: linear-gradient(135deg, #09a397, #00867e);
+      box-shadow: 0 7px 17px rgba(0, 139, 130, .18);
+    }
+
+    .outline-button {
+      color: var(--teal-dark);
+      background: white;
+    }
+
+    .assistant-card .primary-button {
+      width: 100%;
+    }
+
+    .workspace {
+      min-width: 0;
+    }
+
+    .profile-banner,
+    .card,
+    .rail-card {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: var(--shadow);
+    }
+
+    .profile-banner {
+      min-height: 160px;
+      display: grid;
+      grid-template-columns: 110px minmax(270px, 1.2fr) 1.8fr auto;
+      align-items: center;
+      gap: 22px;
+      padding: 18px 22px;
+    }
+
+    .patient-photo {
+      width: 104px;
+      height: 104px;
+      border: 4px solid #eef6f6;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .patient-identity h1 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px;
+      font-size: 21px;
+      letter-spacing: -.025em;
+    }
+
+    .verified {
+      color: var(--teal);
+    }
+
+    .identity-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 7px 0;
+      color: #4f6284;
+      font-size: 11px;
+    }
+
+    .identity-line svg {
+      width: 15px;
+      height: 15px;
+      color: var(--teal);
+    }
+
+    .health-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(105px, 1fr));
+      gap: 17px 25px;
+      padding-left: 24px;
+      border-left: 1px solid #e3eaed;
+    }
+
+    .health-stat {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 8px;
+    }
+
+    .health-stat svg {
+      color: var(--teal);
+    }
+
+    .health-stat:nth-child(1) svg,
+    .health-stat:nth-child(4) svg {
+      color: var(--red);
+    }
+
+    .health-stat small {
+      display: block;
+      color: var(--muted);
+      font-size: 9.5px;
+    }
+
+    .health-stat strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .profile-banner > .outline-button {
+      align-self: start;
+    }
+
+    .record-tabs {
+      display: flex;
+      align-items: center;
+      gap: 42px;
+      margin-top: 16px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .record-tab {
+      min-height: 48px;
+      position: relative;
+      border: 0;
+      color: #3e5076;
+      background: transparent;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .record-tab.active {
+      color: var(--teal-dark);
+    }
+
+    .record-tab.active::after {
+      height: 2px;
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      border-radius: 2px;
+      background: var(--teal);
+      content: "";
+    }
+
+    .tab-panel {
+      padding-top: 12px;
+      animation: panelIn .24s ease both;
+    }
+
+    .tab-panel[hidden],
+    .rail-panel[hidden] {
+      display: none !important;
+    }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .overview-grid,
+    .records-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.08fr;
+      gap: 14px;
+    }
+
+    .card {
+      padding: 16px;
+    }
+
+    .card-heading,
+    .rail-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .card-heading h2,
+    .card h2,
+    .rail-card h2 {
+      margin: 0;
+      color: #102553;
+      font-size: 15px;
+      letter-spacing: -.015em;
+    }
+
+    .card-heading p,
+    .card > p,
+    .rail-card > p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .data-tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .data-tile {
+      min-height: 92px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .data-tile:hover {
+      border-color: #78cdc5;
+      background: #f7fcfb;
+    }
+
+    .data-tile svg {
+      width: 24px;
+      height: 24px;
+      color: var(--teal);
+    }
+
+    .data-tile strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 10.5px;
+    }
+
+    .data-tile small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .ai-summary-box {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid #e2e8f2;
+      border-radius: 9px;
+      background: linear-gradient(140deg, #f8fbff, #fbf9ff);
+    }
+
+    .ai-summary-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--teal-dark);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .ai-summary-box p {
+      margin: 10px 0 0 32px;
+      color: #425475;
+      font-size: 10px;
+      line-height: 1.7;
+    }
+
+    .insight-list,
+    .rail-list,
+    .activity-list {
+      display: grid;
+      margin-top: 12px;
+    }
+
+    .insight-row,
+    .rail-list li,
+    .activity-item {
+      min-height: 47px;
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #e7edef;
+      font-size: 10px;
+    }
+
+    .insight-row:last-child,
+    .rail-list li:last-child,
+    .activity-item:last-child {
+      border-bottom: 0;
+    }
+
+    .insight-icon,
+    .list-icon {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--teal);
+      background: var(--teal-pale);
+    }
+
+    .insight-icon svg,
+    .list-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .insight-row strong,
+    .activity-item strong {
+      display: block;
+      font-size: 10px;
+    }
+
+    .insight-row small,
+    .activity-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 8.7px;
+    }
+
+    .recent-card {
+      grid-column: 1 / -1;
+      margin-top: 14px;
+    }
+
+    .recent-scroller {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(145px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .recent-record {
+      min-height: 82px;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .file-icon {
+      width: 36px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: var(--red);
+      background: #fff0f2;
+    }
+
+    .file-icon.voice {
+      color: #15924d;
+      background: #eefbf2;
+    }
+
+    .recent-record strong {
+      display: block;
+      font-size: 9.5px;
+    }
+
+    .recent-record small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 8.5px;
+      line-height: 1.45;
+    }
+
+    .privacy-bar {
+      min-height: 53px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 0 18px;
+      border: 1px solid #d7ece9;
+      border-radius: 10px;
+      color: #425675;
+      background: linear-gradient(90deg, #f1faf9, #fbfdfd);
+      font-size: 10px;
+    }
+
+    .privacy-bar svg {
+      color: var(--teal);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) 130px auto;
+      gap: 9px;
+      margin-top: 13px;
+    }
+
+    .search-box {
+      min-height: 37px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: white;
+    }
+
+    .search-box svg {
+      width: 15px;
+      height: 15px;
+      color: var(--muted);
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--navy);
+      background: transparent;
+      font-size: 10px;
+    }
+
+    .toolbar select {
+      min-height: 37px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: #3e5075;
+      background: white;
+      font-size: 10px;
+      outline: 0;
+    }
+
+    .select-control {
+      min-width: 0;
+      min-height: 39px;
+      display: flex;
+      position: relative;
+      align-items: center;
+      border: 1px solid #d9e5e9;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(23, 64, 86, .035);
+    }
+
+    .select-control:focus-within,
+    .select-control.open {
+      border-color: #56bdb4;
+      box-shadow: 0 0 0 3px rgba(7, 152, 140, .1);
+    }
+
+    .select-control select,
+    .toolbar .select-control select {
+      width: 100%;
+      min-height: 37px;
+      appearance: none;
+      padding: 0 36px 0 12px;
+      border: 0;
+      outline: 0;
+      color: #243864;
+      background: transparent;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .select-control.enhanced > select,
+    .select-control.enhanced > svg {
+      display: none;
+    }
+
+    .select-trigger {
+      width: 100%;
+      min-height: 37px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 11px 0 12px;
+      border: 0;
+      border-radius: 7px;
+      outline: 0;
+      color: #243864;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .select-trigger span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .select-trigger svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+      transition: transform 160ms ease;
+    }
+
+    .select-control.open .select-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    .select-trigger:focus-visible {
+      outline: 3px solid rgba(10, 148, 136, .18);
+      outline-offset: 2px;
+    }
+
+    .select-menu {
+      width: max(100%, 172px);
+      max-height: 240px;
+      position: absolute;
+      z-index: 250;
+      top: calc(100% + 7px);
+      right: 0;
+      overflow-y: auto;
+      padding: 4px 0;
+      border: 1px solid #d2e1e3;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 20px 42px rgba(29, 63, 72, .18);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-7px);
+      visibility: hidden;
+      transition: opacity 150ms ease, transform 150ms ease, visibility 150ms ease;
+    }
+
+    .select-control.open .select-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    .select-option {
+      width: 100%;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 12px;
+      border: 0;
+      color: #243864;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .select-option:hover,
+    .select-option:focus-visible {
+      outline: 0;
+      color: var(--teal-dark);
+      background: #eef9f7;
+    }
+
+    .select-option svg {
+      width: 14px;
+      height: 14px;
+      color: var(--teal);
+      opacity: 0;
+    }
+
+    .select-option.selected {
+      color: var(--teal-dark);
+      background: #e8f7f5;
+    }
+
+    .select-option.selected svg {
+      opacity: 1;
+    }
+
+    .select-control > svg {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      right: 11px;
+      color: #274166;
+      pointer-events: none;
+    }
+
+    .record-filters {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+
+    .filter-chip {
+      min-width: 0;
+      min-height: 30px;
+      flex: 0 1 auto;
+      padding: 0 clamp(7px, .65vw, 12px);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: #43557a;
+      background: white;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-chip.active {
+      border-color: var(--teal);
+      color: white;
+      background: var(--teal);
+    }
+
+    .record-list {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+    }
+
+    .record-row {
+      min-height: 49px;
+      display: grid;
+      grid-template-columns: 32px minmax(150px, 1fr) 100px 90px 56px;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 10px;
+      border-bottom: 1px solid #e7edef;
+      font-size: 9.5px;
+    }
+
+    .record-row:last-child {
+      border-bottom: 0;
+    }
+
+    .record-row[hidden] {
+      display: none;
+    }
+
+    .record-row .record-name strong {
+      display: block;
+      font-size: 9.8px;
+    }
+
+    .record-row .record-name small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 8.5px;
+    }
+
+    .type-badge {
+      width: fit-content;
+      padding: 4px 7px;
+      border-radius: 6px;
+      color: #00867e;
+      background: #e3f7f3;
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .type-badge.imaging {
+      color: #1d68d8;
+      background: #e8f1ff;
+    }
+
+    .type-badge.prescription {
+      color: #7040df;
+      background: #eee8ff;
+    }
+
+    .type-badge.voice {
+      color: #b16d00;
+      background: #fff4dd;
+    }
+
+    .row-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .row-actions button {
+      width: 25px;
+      height: 25px;
+      border: 0;
+      color: var(--teal-dark);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .upload-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .upload-types {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .upload-type {
+      min-height: 91px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .upload-type:hover {
+      border-color: #7bcfc6;
+      background: #f5fbfa;
+    }
+
+    .upload-type svg {
+      color: var(--teal);
+    }
+
+    .upload-type strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 9.5px;
+    }
+
+    .upload-type small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    .drop-zone {
+      min-height: 104px;
+      display: grid;
+      place-items: center;
+      margin-top: 11px;
+      padding: 15px;
+      border: 1px dashed #aacdd0;
+      border-radius: 9px;
+      color: var(--teal-dark);
+      background: #fbfefe;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .drop-zone.dragging {
+      border-color: var(--teal);
+      background: var(--teal-pale);
+    }
+
+    .drop-zone svg {
+      width: 29px;
+      height: 29px;
+    }
+
+    .drop-zone strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 10px;
+    }
+
+    .drop-zone small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 8.5px;
+    }
+
+    .email-import {
+      margin-top: 14px;
+    }
+
+    .email-row {
+      min-height: 55px;
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      margin-top: 11px;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 9px;
+    }
+
+    .email-row strong {
+      display: block;
+    }
+
+    .email-row small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+    }
+
+    .quick-access {
+      grid-column: 1 / -1;
+      margin-top: 14px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(95px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+
+    .quick-item {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 8.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .quick-item svg {
+      color: var(--teal);
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.05fr .72fr;
+      gap: 13px;
+    }
+
+    .score-wrap {
+      display: grid;
+      grid-template-columns: 145px 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .score-ring {
+      width: 126px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      position: relative;
+      border-radius: 50%;
+      background: conic-gradient(#29a56d 0 78%, #e7eeee 78% 100%);
+    }
+
+    .score-ring::after {
+      width: 92px;
+      aspect-ratio: 1;
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      content: "";
+    }
+
+    .score-ring > span {
+      z-index: 1;
+      text-align: center;
+      font-size: 9px;
+    }
+
+    .score-ring strong {
+      display: block;
+      margin: 3px 0;
+      font-size: 25px;
+    }
+
+    .score-meta {
+      display: grid;
+      gap: 12px;
+      font-size: 9px;
+    }
+
+    .score-meta span {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .analysis-grid > .card:first-child .insight-list {
+      gap: 9px;
+      margin-top: 17px;
+    }
+
+    .analysis-grid > .card:first-child .insight-row {
+      min-height: 52px;
+      padding: 5px 0 9px;
+    }
+
+    .analysis-grid > .card:first-child .insight-row .outline-button {
+      min-width: 98px;
+      min-height: 40px;
+      margin-left: 7px;
+    }
+
+    .chart {
+      height: 190px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      margin-top: 15px;
+      padding: 15px 14px 24px;
+      border-left: 1px solid #dce7eb;
+      border-bottom: 1px solid #dce7eb;
+      background: repeating-linear-gradient(to top, transparent 0 42px, #edf2f3 43px);
+    }
+
+    .chart-month {
+      min-width: 30px;
+      height: 100%;
+      display: flex;
+      position: relative;
+      flex: 1;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .chart-month::after {
+      position: absolute;
+      bottom: -18px;
+      color: var(--muted);
+      content: attr(data-label);
+      font-size: 7px;
+      white-space: nowrap;
+    }
+
+    .chart-bar {
+      width: 8px;
+      border-radius: 5px 5px 0 0;
+      background: var(--teal);
+    }
+
+    .chart-bar.blue {
+      background: var(--blue);
+    }
+
+    .trend-chart {
+      height: 172px;
+      position: relative;
+      margin-top: 12px;
+      border-left: 1px solid #dce7eb;
+      border-bottom: 1px solid #dce7eb;
+      background: repeating-linear-gradient(to top, transparent 0 39px, #edf2f3 40px);
+    }
+
+    .trend-chart::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 86px;
+      background: linear-gradient(to bottom, rgba(37, 119, 236, .13), rgba(37, 119, 236, 0));
+      clip-path: polygon(0 47%, 18% 59%, 38% 45%, 58% 68%, 78% 51%, 100% 33%, 100% 100%, 0 100%);
+      content: "";
+    }
+
+    .trend-segment {
+      height: 2px;
+      position: absolute;
+      z-index: 2;
+      left: var(--x);
+      bottom: var(--y);
+      border-radius: 2px;
+      background: var(--color);
+      transform: rotate(var(--angle));
+      transform-origin: left center;
+      width: var(--length);
+    }
+
+    .trend-segment::before,
+    .trend-segment.last::after {
+      width: 7px;
+      height: 7px;
+      position: absolute;
+      top: 50%;
+      left: -3px;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--color);
+      box-shadow: 0 1px 4px rgba(21, 61, 86, .2);
+      content: "";
+      transform: translateY(-50%);
+    }
+
+    .trend-segment.last::after {
+      right: -3px;
+      left: auto;
+    }
+
+    .trend-months {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 7.5px;
+      text-align: center;
+    }
+
+    .chat-window {
+      min-height: 395px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 13px;
+    }
+
+    .chat-bubble {
+      max-width: 89%;
+      padding: 9px 10px;
+      border-radius: 9px;
+      color: #445578;
+      background: #f1f6f7;
+      font-size: 8.5px;
+      line-height: 1.55;
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: #e7f4f5;
+    }
+
+    .chat-input {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding: 0 7px 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .chat-input input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      outline: 0;
+      font-size: 9px;
+    }
+
+    .chat-input button {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      color: white;
+      background: var(--teal);
+      cursor: pointer;
+    }
+
+    .documents-card {
+      padding: 16px;
+    }
+
+    .documents-toolbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) 130px 110px auto;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .document-table {
+      margin-top: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+    }
+
+    .document-row {
+      min-width: 730px;
+      min-height: 47px;
+      display: grid;
+      grid-template-columns: minmax(220px, 1.7fr) 105px 110px 100px 70px 90px;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      border-bottom: 1px solid #e7edef;
+      font-size: 9px;
+    }
+
+    .document-row.header {
+      min-height: 36px;
+      color: #4f6182;
+      background: #f8fbfb;
+      font-size: 8.5px;
+      font-weight: 800;
+    }
+
+    .document-row:last-child {
+      border-bottom: 0;
+    }
+
+    .document-row[hidden] {
+      display: none;
+    }
+
+    .document-name {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .document-name .file-icon {
+      width: 28px;
+      height: 34px;
+    }
+
+    .document-name strong {
+      display: block;
+      font-size: 9.5px;
+    }
+
+    .document-name small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .pagination button {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: #43557a;
+      background: white;
+      font-size: 9px;
+      cursor: pointer;
+    }
+
+    .pagination button.active {
+      color: white;
+      background: var(--teal);
+    }
+
+    .right-rail {
+      display: grid;
+      position: sticky;
+      top: 88px;
+      gap: 14px;
+    }
+
+    .rail-panel {
+      display: grid;
+      gap: 14px;
+    }
+
+    .rail-card {
+      padding: 17px;
+    }
+
+    .rail-card > h2 {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .rail-card > h2 svg {
+      color: var(--teal);
+    }
+
+    .rail-list {
+      padding: 0;
+      list-style: none;
+    }
+
+    .rail-list li strong {
+      font-size: 9.5px;
+    }
+
+    .rail-list li > span:last-child {
+      color: #536485;
+      font-size: 9px;
+      text-align: right;
+    }
+
+    .sync-progress {
+      height: 7px;
+      margin: 12px 0 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e9eff0;
+    }
+
+    .sync-progress span {
+      width: 22%;
+      height: 100%;
+      display: block;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--teal), #32b5aa);
+    }
+
+    .rail-card .outline-button {
+      width: 100%;
+    }
+
+    .rail-heading {
+      align-items: center;
+      gap: 18px;
+    }
+
+    .rail-heading h2 {
+      white-space: nowrap;
+    }
+
+    .rail-heading .outline-button {
+      width: auto;
+      min-width: 118px;
+      flex: 0 0 118px;
+    }
+
+    .rail-card .activity-list {
+      margin-top: 18px;
+    }
+
+    .activity-item {
+      grid-template-columns: 27px minmax(0, 1fr) auto;
+    }
+
+    .donut-wrap {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: center;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .donut {
+      width: 112px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      position: relative;
+      border-radius: 50%;
+      background: conic-gradient(#07988c 0 34%, #2678ec 34% 57%, #7144ef 57% 78%, #fbbf24 78% 91%, #d6dce0 91%);
+    }
+
+    .donut::after {
+      width: 70px;
+      aspect-ratio: 1;
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      content: "";
+    }
+
+    .donut span {
+      z-index: 1;
+      text-align: center;
+      font-size: 8px;
+    }
+
+    .donut strong {
+      display: block;
+      font-size: 22px;
+    }
+
+    .legend {
+      display: grid;
+      gap: 10px;
+      font-size: 8.5px;
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .legend i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .legend span:nth-child(2) i { background: var(--blue); }
+    .legend span:nth-child(3) i { background: var(--purple); }
+    .legend span:nth-child(4) i { background: #fbbf24; }
+    .legend span:nth-child(5) i { background: #d6dce0; }
+
+    .toast {
+      max-width: min(420px, calc(100% - 32px));
+      min-height: 45px;
+      display: flex;
+      position: fixed;
+      z-index: 2000;
+      right: 22px;
+      bottom: 22px;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: white;
+      background: #103b45;
+      box-shadow: 0 16px 38px rgba(11, 46, 55, .25);
+      font-size: 11px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1420px) {
+      .portal-shell {
+        grid-template-columns: 215px minmax(0, 1fr);
+      }
+
+      .right-rail {
+        grid-column: 2;
+        position: static;
+      }
+
+      .rail-panel:not([hidden]) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .rail-card {
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 1120px) {
+      .header-inner {
+        grid-template-columns: auto auto 1fr auto;
+      }
+
+      .main-nav {
+        display: none;
+      }
+
+      .portal-shell {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .sidebar {
+        width: 250px;
+        display: none;
+        position: fixed;
+        z-index: 900;
+        top: 72px;
+        bottom: 0;
+        left: 0;
+        padding: 14px;
+        overflow-y: auto;
+        background: white;
+        box-shadow: 12px 0 30px rgba(18, 56, 73, .15);
+      }
+
+      .sidebar.open {
+        display: flex;
+      }
+
+      .workspace,
+      .right-rail {
+        grid-column: 1;
+      }
+
+      .profile-banner {
+        grid-template-columns: 94px 1fr;
+      }
+
+      .patient-photo {
+        width: 90px;
+        height: 90px;
+      }
+
+      .health-stats {
+        grid-column: 1 / -1;
+        padding: 15px 0 0;
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .profile-banner > .outline-button {
+        position: absolute;
+        right: 38px;
+      }
+
+      .analysis-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .analysis-grid .chat-card {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .header-inner {
+        min-height: 66px;
+        gap: 10px;
+        padding: 0 12px;
+      }
+
+      .brand-copy {
+        display: none;
+      }
+
+      .profile-button {
+        min-width: 44px;
+        grid-template-columns: 40px;
+      }
+
+      .profile-copy,
+      .profile-button > svg {
+        display: none;
+      }
+
+      .header-actions {
+        gap: 4px;
+      }
+
+      .portal-shell {
+        padding: 10px;
+      }
+
+      .profile-banner {
+        grid-template-columns: 72px 1fr;
+        gap: 13px;
+        padding: 15px;
+      }
+
+      .patient-photo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .patient-identity h1 {
+        font-size: 17px;
+      }
+
+      .health-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .profile-banner > .outline-button {
+        display: none;
+      }
+
+      .record-tabs {
+        gap: 24px;
+        overflow-x: auto;
+      }
+
+      .record-tab {
+        white-space: nowrap;
+      }
+
+      .overview-grid,
+      .records-layout,
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .recent-card,
+      .quick-access,
+      .analysis-grid .chat-card {
+        grid-column: 1;
+      }
+
+      .toolbar,
+      .documents-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .data-tiles,
+      .upload-types {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .record-row {
+        grid-template-columns: 30px minmax(140px, 1fr) 70px;
+      }
+
+      .record-row > :nth-child(4),
+      .record-row > :nth-child(5) {
+        display: none;
+      }
+
+      .rail-panel:not([hidden]) {
+        grid-template-columns: 1fr;
+      }
+
+      .score-wrap {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+    }
+
+    @media (min-width: 1121px) {
+      .health-records-page .portal-shell {
+        width: min(1740px, calc(100% - 28px));
+        grid-template-columns: 230px minmax(0, 1fr) 270px;
+        gap: 18px;
+        padding: 18px 0 20px;
+      }
+
+      .health-records-page .sidebar,
+      .health-records-page .right-rail {
+        top: 82px;
+      }
+
+      .health-records-page .side-link {
+        min-height: 36px;
+        font-size: 11.5px;
+      }
+
+      .health-records-page .assistant-card {
+        padding: 14px;
+      }
+
+      .health-records-page .profile-banner {
+        min-height: 132px;
+        grid-template-columns: 88px minmax(240px, 1.2fr) 1.8fr auto;
+        gap: 16px;
+        padding: 12px 16px;
+      }
+
+      .health-records-page .patient-photo {
+        width: 84px;
+        height: 84px;
+      }
+
+      .health-records-page .patient-identity h1 {
+        margin-bottom: 5px;
+        font-size: 18px;
+      }
+
+      .health-records-page .identity-line {
+        margin: 5px 0;
+        font-size: 10px;
+      }
+
+      .health-records-page .health-stats {
+        gap: 12px 20px;
+        padding-left: 18px;
+      }
+
+      .health-records-page .record-tabs {
+        gap: 36px;
+        margin-top: 10px;
+      }
+
+      .health-records-page .record-tab {
+        min-height: 41px;
+        font-size: 10.5px;
+      }
+
+      .health-records-page .tab-panel {
+        padding-top: 8px;
+      }
+
+      .health-records-page .card,
+      .health-records-page .rail-card {
+        padding: 13px;
+      }
+
+      .health-records-page .card-heading h2,
+      .health-records-page .card h2,
+      .health-records-page .rail-card h2 {
+        font-size: 13.5px;
+      }
+
+      .health-records-page .analysis-grid {
+        gap: 10px;
+      }
+
+      .health-records-page .score-wrap {
+        grid-template-columns: 118px 1fr;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .health-records-page .score-ring {
+        width: 108px;
+      }
+
+      .health-records-page .score-ring::after {
+        width: 80px;
+      }
+
+      .health-records-page .score-ring strong {
+        font-size: 21px;
+      }
+
+      .health-records-page .insight-row {
+        min-height: 42px;
+      }
+
+      .health-records-page .chat-window {
+        min-height: 328px;
+      }
+
+      .health-records-page .privacy-bar {
+        min-height: 45px;
+        margin-top: 10px;
+      }
+    }
+    .vitals-modal {
+      display: grid;
+      place-items: center;
+      position: fixed;
+      z-index: 2147483000;
+      inset: 0;
+      padding: 24px;
+      isolation: isolate;
+    }
+
+    .vitals-modal[hidden] {
+      display: none;
+    }
+
+    .vitals-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 25, 55, .5);
+      backdrop-filter: blur(3px);
+    }
+
+    .vitals-dialog {
+      width: min(920px, 100%);
+      max-height: calc(100vh - 48px);
+      position: relative;
+      overflow: auto;
+      border: 1px solid #cfe2e4;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 25px 65px rgba(10, 42, 72, .24);
+    }
+
+    .vitals-dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      position: sticky;
+      z-index: 3;
+      top: 0;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .vitals-dialog-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vitals-dialog-title > span {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: var(--teal-dark);
+      border-radius: 50%;
+      background: var(--teal-soft);
+    }
+
+    .vitals-dialog-title svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .vitals-dialog-title h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .vitals-dialog-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .vitals-close {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .vitals-close svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .vitals-form {
+      padding: 22px;
+    }
+
+    .vitals-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 17px 16px;
+    }
+
+    .vital-field {
+      min-width: 0;
+      display: grid;
+      gap: 7px;
+    }
+
+    .vital-field.span-2 {
+      grid-column: span 2;
+    }
+
+    .vital-field label {
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .vital-field input,
+    .vital-field select {
+      width: 100%;
+      height: 42px;
+      min-height: 42px;
+      padding: 0 12px;
+      color: var(--navy);
+      border: 1px solid #bfd2dc;
+      border-radius: 7px;
+      background: #fff;
+      font: 500 11px/1 Inter, sans-serif;
+    }
+
+    .vital-field input:focus,
+    .vital-field select:focus {
+      border-color: var(--teal);
+      outline: 3px solid rgba(10, 148, 136, .12);
+    }
+
+    .vital-field input::placeholder {
+      color: #9aa7b5;
+    }
+
+    .vital-split {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vital-split > span {
+      color: var(--navy);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .vital-field .select-control {
+      min-width: 0;
+    }
+
+    .vital-field .select-trigger {
+      min-height: 42px;
+      padding: 0 12px;
+      font-size: 11px;
+    }
+
+    .vital-field .select-menu {
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .vitals-form-note {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 18px;
+      padding: 11px 13px;
+      color: #31576c;
+      border: 1px solid #d2e8e7;
+      border-radius: 8px;
+      background: #f4fbfa;
+      font-size: 9px;
+    }
+
+    .vitals-form-note svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal);
+    }
+
+    .vitals-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 17px;
+      border-top: 1px solid var(--line);
+    }
+
+    .vitals-form-actions .outline-button {
+      min-width: 120px;
+    }
+
+    /* Add Vitals dialog — mirrors the approved health-records design */
+    .vitals-design {
+      width: min(680px, 100%);
+      border-radius: 18px;
+    }
+    .vitals-design .vitals-dialog-header {
+      padding: 18px 26px 14px;
+      border-bottom: 0;
+    }
+    .vitals-design .vitals-dialog-title > span {
+      width: 36px;
+      height: 36px;
+      background: transparent;
+    }
+    .vitals-design .vitals-dialog-title > span svg { width: 27px; height: 27px; }
+    .vitals-design .vitals-dialog-title h2 { font-size: 21px; }
+    .vitals-design .vitals-dialog-title p { margin-top: 3px; font-size: 10px; }
+    .vitals-design .vitals-close {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      background: transparent;
+    }
+    .vitals-design .vitals-form { padding: 12px 26px 18px; }
+    .vitals-record-time { margin-bottom: 20px; }
+    .vitals-record-time > label,
+    .vitals-notes > label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .vitals-record-time-fields {
+      display: grid;
+      grid-template-columns: 180px 150px;
+      gap: 10px;
+    }
+    .vitals-record-time-fields label {
+      min-height: 38px;
+      display: grid;
+      grid-template-columns: 1fr 17px;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      border: 1px solid #cbdbe3;
+      border-radius: 7px;
+      background: #fff;
+    }
+    .vitals-record-time-fields label:focus-within {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(10,148,136,.1);
+    }
+    .vitals-record-time-fields input {
+      width: 100%;
+      min-width: 0;
+      color: var(--navy);
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font: 600 10px/1 Inter, sans-serif;
+    }
+    .vitals-record-time-fields svg { width: 15px; color: #72829a; }
+    .vital-picker-field { position: relative; min-width: 0; }
+    .vital-picker-field.is-open { z-index: 50; }
+    .vital-picker-trigger {
+      width: 100%;
+      min-height: 38px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 17px;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      color: var(--navy);
+      border: 1px solid #cbdbe3;
+      border-radius: 7px;
+      outline: 0;
+      background: #fff;
+      font: 700 10px/1 Inter, sans-serif;
+      text-align: left;
+      cursor: pointer;
+    }
+    .vital-picker-trigger > span {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .vital-picker-trigger b { font: inherit; }
+    .vital-picker-trigger:hover,
+    .vital-picker-trigger:focus-visible,
+    .vital-picker-field.is-open .vital-picker-trigger {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(10,148,136,.1);
+    }
+    .vital-date-calendar {
+      width: 322px;
+      max-width: calc(100vw - 48px);
+      position: absolute;
+      z-index: 90;
+      top: calc(100% + 7px);
+      left: 0;
+      padding: 13px;
+      border: 1px solid #dbe5ec;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 18px 45px rgba(20,49,70,.2);
+    }
+    .vital-date-calendar[hidden] { display: none; }
+    .vital-date-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 9px;
+    }
+    .vital-date-jump {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 82px;
+      gap: 6px;
+      flex: 1;
+    }
+    .vital-date-jump select {
+      min-width: 0;
+      height: 34px;
+      padding: 0 9px;
+      color: var(--navy);
+      border: 1px solid #dbe5ec;
+      border-radius: 7px;
+      outline: 0;
+      background: #fff;
+      font: 700 11px/1 Inter, sans-serif;
+      cursor: pointer;
+    }
+    .vital-date-nav,
+    .vital-date-day {
+      padding: 0;
+      color: var(--navy);
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+    .vital-date-nav {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      flex: none;
+      border-radius: 7px;
+    }
+    .vital-date-nav svg { width: 16px; height: 16px; }
+    .vital-date-nav:hover,
+    .vital-date-day:hover { color: var(--teal-dark); background: #eaf8f5; }
+    .vital-date-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      text-align: center;
+    }
+    .vital-date-weekday,
+    .vital-date-empty,
+    .vital-date-day {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      justify-self: center;
+      border-radius: 50%;
+      font-size: 10px;
+    }
+    .vital-date-weekday {
+      height: 21px;
+      color: #52627d;
+      border-radius: 0;
+      font-weight: 800;
+    }
+    .vital-date-day.is-selected {
+      color: #fff;
+      background: linear-gradient(135deg, #0aa89b, #078f78);
+      box-shadow: 0 5px 12px rgba(7,143,120,.22);
+      font-weight: 800;
+    }
+
+    .vital-clock-backdrop {
+      position: fixed;
+      z-index: 2147483100;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(8,24,42,.48);
+      opacity: 0;
+      transition: opacity 160ms ease;
+    }
+    .vital-clock-backdrop[hidden] { display: none; }
+    .vital-clock-backdrop.open { opacity: 1; }
+    .vital-clock-dialog {
+      width: min(310px, 100%);
+      overflow: hidden;
+      color: var(--navy);
+      border: 1px solid rgba(13,134,124,.18);
+      border-radius: 12px;
+      outline: 0;
+      background: #fff;
+      box-shadow: 0 24px 70px rgba(11,38,54,.28);
+      transform: translateY(10px) scale(.98);
+      transition: transform 160ms ease;
+    }
+    .vital-clock-backdrop.open .vital-clock-dialog { transform: none; }
+    .vital-clock-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 15px 18px 14px;
+      color: #fff;
+      background: linear-gradient(135deg, #12aaa0, #058b82);
+    }
+    .vital-clock-kicker {
+      display: block;
+      grid-column: 1 / -1;
+      margin-bottom: -4px;
+      color: rgba(255,255,255,.8);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .vital-clock-time {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      font-size: 34px;
+      font-weight: 500;
+      letter-spacing: -.04em;
+    }
+    .vital-clock-value {
+      padding: 0;
+      color: rgba(255,255,255,.68);
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      font: inherit;
+      cursor: pointer;
+    }
+    .vital-clock-value.active { color: #fff; border-bottom-color: rgba(255,255,255,.85); }
+    .vital-clock-periods { display: grid; align-self: end; gap: 2px; padding-bottom: 4px; }
+    .vital-clock-period {
+      padding: 1px 4px;
+      color: rgba(255,255,255,.7);
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      font: 800 9px/1.4 Inter, sans-serif;
+      cursor: pointer;
+    }
+    .vital-clock-period.active { color: #07877e; background: #fff; }
+    .vital-clock-body { padding: 13px 18px 7px; text-align: center; }
+    .vital-clock-prompt { margin: 0 0 9px; color: #617087; font-size: 9px; font-weight: 700; }
+    .vital-clock-face {
+      width: 214px;
+      height: 214px;
+      position: relative;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: #f1f5f5;
+    }
+    .vital-clock-face::after {
+      width: 7px;
+      height: 7px;
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      background: var(--teal);
+      content: "";
+      transform: translate(-50%, -50%);
+    }
+    .vital-clock-hand {
+      width: 75px;
+      height: 2px;
+      position: absolute;
+      z-index: 1;
+      top: calc(50% - 1px);
+      left: 50%;
+      background: var(--teal);
+      transform: rotate(-90deg);
+      transform-origin: left center;
+      transition: transform 150ms ease;
+    }
+    .vital-clock-hand::after {
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: 50%;
+      right: -5px;
+      border-radius: 50%;
+      background: var(--teal);
+      content: "";
+      transform: translateY(-50%);
+    }
+    .vital-clock-number {
+      width: 31px;
+      height: 31px;
+      position: absolute;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      color: #34455e;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      font: 700 9px/1 Inter, sans-serif;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+    }
+    .vital-clock-number:hover,
+    .vital-clock-number:focus-visible { color: var(--teal-dark); outline: 2px solid rgba(10,163,151,.25); }
+    .vital-clock-number.active { color: #fff; background: var(--teal); }
+    .vital-clock-actions { display: flex; justify-content: flex-end; gap: 6px; padding: 7px 11px 11px; }
+    .vital-clock-action {
+      min-height: 32px;
+      padding: 0 12px;
+      color: var(--teal-dark);
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      font: 800 10px/1 Inter, sans-serif;
+      cursor: pointer;
+    }
+    .vital-clock-action:hover,
+    .vital-clock-action:focus-visible { outline: 0; background: #edf9f7; }
+    .vitals-design .vitals-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 11px;
+    }
+    .vitals-design .vital-field {
+      gap: 9px;
+      padding: 11px;
+      border: 1px solid #d4e1e7;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .vital-field-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+    }
+    .vital-field-head label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--navy);
+      font-size: 9px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .vital-field-head label svg { width: 14px; height: 14px; color: var(--teal); }
+    .vitals-design .vital-field:nth-child(2) .vital-field-head label svg,
+    .vitals-design .vital-field:nth-child(3) .vital-field-head label svg,
+    .vitals-design .vital-field:nth-child(4) .vital-field-head label svg,
+    .vitals-design .vital-field:nth-child(9) .vital-field-head label svg { color: #ff5262; }
+    .vital-field-head > span {
+      color: #718198;
+      font-size: 7px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .vitals-design .vital-field input,
+    .vitals-design .vital-field output {
+      width: 100%;
+      height: 38px;
+      min-height: 38px;
+      padding: 0 10px;
+      color: var(--navy);
+      border: 1px solid #d3dfe6;
+      border-radius: 6px;
+      background: #fbfdfe;
+      font: 600 10px/1 Inter, sans-serif;
+    }
+    .vitals-design .vital-field input:focus {
+      border-color: var(--teal);
+      outline: 3px solid rgba(10,148,136,.1);
+    }
+    .vitals-design .vital-split {
+      grid-template-columns: 1fr 8px 1fr;
+      gap: 5px;
+    }
+    .vitals-design .vital-split b {
+      color: var(--navy);
+      font-size: 13px;
+      text-align: center;
+    }
+    .vital-output-wrap { position: relative; }
+    .vitals-design .vital-field output {
+      display: flex;
+      align-items: center;
+      padding-right: 58px;
+    }
+    .bmi-status {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      padding: 4px 8px;
+      color: #14874c;
+      border-radius: 99px;
+      background: #ddf5e5;
+      font-size: 7px;
+      font-weight: 800;
+      transform: translateY(-50%);
+    }
+    .vitals-notes { margin-top: 17px; }
+    .vitals-notes-box { position: relative; }
+    .vitals-notes textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      padding: 11px 12px 23px;
+      color: var(--navy);
+      border: 1px solid #cbdbe3;
+      border-radius: 7px;
+      outline: 0;
+      background: #fff;
+      font: 500 10px/1.5 Inter, sans-serif;
+    }
+    .vitals-notes textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(10,148,136,.1);
+    }
+    .vitals-notes textarea::placeholder { color: #8e9bad; }
+    .vitals-notes-count {
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      color: #75859b;
+      font-size: 8px;
+    }
+    .vitals-design .vitals-form-actions {
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 14px;
+    }
+    .vitals-design .vitals-form-actions .outline-button,
+    .vitals-design .vitals-form-actions .primary-button {
+      min-width: 105px;
+      min-height: 32px;
+    }
+
+    body.vitals-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 780px) {
+      .vitals-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .vitals-design .vitals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      .vitals-modal {
+        padding: 10px;
+      }
+
+      .vitals-grid {
+        grid-template-columns: 1fr;
+      }
+      .vitals-design .vitals-grid,
+      .vitals-record-time-fields { grid-template-columns: 1fr; }
+
+      .vital-field.span-2 {
+        grid-column: auto;
+      }
+
+      .vitals-form-actions {
+        flex-direction: column-reverse;
+      }
+
+      .vitals-form-actions .outline-button {
+        width: 100%;
+      }
+    }
+    body.embed-mode {
+      min-width: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 70% 0%, rgba(65, 196, 181, .07), transparent 32rem),
+        var(--page);
+    }
+    .embed-mode #commonHeader,
+    .embed-mode #commonSidebar,
+    .embed-mode #patientSidebar,
+    .embed-mode .common-patient-sidebar,
+    .embed-mode .right-rail,
+    .embed-mode .recent-card,
+    .embed-mode .email-import,
+    .embed-mode .quick-access,
+    .embed-mode .privacy-bar {
+      display: none !important;
+    }
+    .health-records-page.embed-mode .portal-shell {
+      width: 100% !important;
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 10px 14px !important;
+    }
+    .embed-mode .workspace {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .embed-mode .record-tabs {
+      min-height: 44px;
+      margin-top: 0;
+      padding: 0 14px;
+      background: rgba(247, 251, 251, .96);
+    }
+    .embed-mode .record-tab {
+      min-width: 120px;
+      min-height: 44px;
+    }
+    .embed-mode .tab-panel { padding-top: 10px; }
+    .embed-mode .overview-grid,
+    .embed-mode .records-layout { grid-template-columns: 1fr 1.08fr; }
+    .embed-mode .analysis-grid { grid-template-columns: .9fr 1.05fr .72fr; }
+
+    @media (max-width: 900px) {
+      .embed-mode .overview-grid,
+      .embed-mode .records-layout,
+      .embed-mode .analysis-grid { grid-template-columns: 1fr; }
+      .embed-mode .record-tabs {
+        gap: 18px;
+        overflow-x: auto;
+        padding: 0 4px;
+      }
+      .embed-mode .record-tab { min-width: 105px; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/common-sidebar.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="health-records-page">
+  <script>
+    if (new URLSearchParams(window.location.search).has("embed")) {
+      document.body.classList.add("embed-mode");
+    }
+  </script>
+  <div id="commonHeader" data-active="health"></div>
+  <script src="assets/js/common-header.js"></script>
+
+  <main class="portal-shell">
+    <div id="commonSidebar" data-active="health"></div>
+    <script src="assets/js/common-sidebar.js"></script>
+
+    <section class="workspace">
+      <section class="profile-banner" id="profile">
+        <img class="patient-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&amp;fit=crop&amp;w=220&amp;h=220&amp;q=88" alt="Rahul Sharma">
+        <div class="patient-identity">
+          <h1>Rahul Sharma <i class="verified" data-lucide="badge-check"></i></h1>
+          <p class="identity-line">28 Years <span>•</span> Male <span>•</span> 12 Aug 1990</p>
+          <p class="identity-line"><i data-lucide="badge-info"></i>CF987654321</p>
+          <p class="identity-line"><i data-lucide="phone"></i>+91 98765 43210</p>
+          <p class="identity-line"><i data-lucide="mail"></i>rahul.sharma@gmail.com</p>
+        </div>
+        <div class="health-stats">
+          <div class="health-stat"><i data-lucide="droplets"></i><span><small>Blood Group</small><strong>O+</strong></span></div>
+          <div class="health-stat"><i data-lucide="ruler"></i><span><small>Height</small><strong>175 cm</strong></span></div>
+          <div class="health-stat"><i data-lucide="weight"></i><span><small>Weight</small><strong>72 kg</strong></span></div>
+          <div class="health-stat"><i data-lucide="heart-pulse"></i><span><small>BMI</small><strong>23.5</strong></span></div>
+          <div class="health-stat"><i data-lucide="calendar-days"></i><span><small>Last Checkup</small><strong>22 May 2026</strong></span></div>
+          <div class="health-stat"><i data-lucide="user-round"></i><span><small>Primary Doctor</small><strong>Dr. Arjun Verma</strong></span></div>
+        </div>
+        <button class="primary-button" type="button" data-open-vitals><i data-lucide="heart-pulse"></i>Set Vitals</button>
+      </section>
+
+      <nav class="record-tabs" role="tablist" aria-label="Health record sections">
+        <button class="record-tab active" id="overviewTab" type="button" role="tab" aria-selected="true" aria-controls="overviewPanel" data-tab="overview">Overview</button>
+        <button class="record-tab" id="recordsTab" type="button" role="tab" aria-selected="false" aria-controls="recordsPanel" data-tab="records">Health Records</button>
+        <button class="record-tab" id="analysisTab" type="button" role="tab" aria-selected="false" aria-controls="analysisPanel" data-tab="analysis">AI Analysis</button>
+        <button class="record-tab" id="documentsTab" type="button" role="tab" aria-selected="false" aria-controls="documentsPanel" data-tab="documents">Documents</button>
+      </nav>
+
+      <section class="tab-panel" id="overviewPanel" role="tabpanel" aria-labelledby="overviewTab" data-panel="overview">
+        <div class="overview-grid">
+          <section class="card">
+            <div class="card-heading"><div><h2>Health Data You Share</h2><p>All your health information in one place</p></div></div>
+            <div class="data-tiles">
+              <button class="data-tile" type="button" data-open-tab="records"><span><i data-lucide="flask-conical"></i><strong>Lab Reports</strong><small>12 Reports</small></span></button>
+              <button class="data-tile" type="button" data-open-tab="records"><span><i data-lucide="image"></i><strong>Imaging</strong><small>8 Reports</small></span></button>
+              <button class="data-tile" type="button" data-open-tab="documents"><span><i data-lucide="notebook-tabs"></i><strong>Prescriptions</strong><small>15 Records</small></span></button>
+              <button class="data-tile" type="button" data-message="Vitals and trends are up to date."><span><i data-lucide="heart-pulse"></i><strong>Vitals</strong><small>28 Records</small></span></button>
+              <button class="data-tile" type="button" data-open-tab="documents"><span><i data-lucide="file-text"></i><strong>Documents</strong><small>18 Files</small></span></button>
+              <button class="data-tile" type="button" data-message="Opening your voice notes."><span><i data-lucide="mic"></i><strong>Voice Notes</strong><small>6 Notes</small></span></button>
+              <button class="data-tile" type="button" data-message="Opening your saved videos."><span><i data-lucide="video"></i><strong>Videos</strong><small>4 Videos</small></span></button>
+              <button class="data-tile" type="button" data-message="Health summary is up to date."><span><i data-lucide="clipboard-check"></i><strong>Health Summary</strong><small>View Details</small></span></button>
+              <button class="data-tile" type="button" data-message="You have 2 recorded allergies."><span><i data-lucide="droplets"></i><strong>Allergies</strong><small>2 Allergies</small></span></button>
+            </div>
+            <button class="outline-button" type="button" data-upload-trigger style="margin-top:14px"><i data-lucide="upload"></i>Upload New Record</button>
+          </section>
+
+          <section class="card">
+            <div class="card-heading"><div><h2>AI Health Analysis <span class="beta">BETA</span></h2><p>AI-powered insights based on your health data</p></div></div>
+            <div class="ai-summary-box">
+              <div class="ai-summary-title"><i data-lucide="sparkles"></i>AI Summary</div>
+              <p>Your overall health looks good. Vitamin D levels are low and you have a history of seasonal allergies. Regular exercise and hydration are recommended.</p>
+            </div>
+            <div class="insight-list">
+              <div class="insight-row"><span class="insight-icon"><i data-lucide="shield-check"></i></span><span><strong>Risk Level</strong><small>Based on 42 health records</small></span><strong style="color:#15924d">Low</strong></div>
+              <div class="insight-row"><span class="insight-icon"><i data-lucide="triangle-alert"></i></span><span><strong>Key Concern</strong><small>Needs attention</small></span><strong style="color:#db7600">Vitamin D Deficiency</strong></div>
+              <div class="insight-row"><span class="insight-icon"><i data-lucide="mic"></i></span><span><strong>Recommendation</strong><small>Personalized for you</small></span><strong style="color:#1871d7">Increase Vitamin D intake</strong></div>
+              <div class="insight-row"><span class="insight-icon"><i data-lucide="alarm-clock"></i></span><span><strong>Next Suggested Checkup</strong><small>Preventive follow-up</small></span><strong style="color:#7545e8">After 3 Months</strong></div>
+            </div>
+            <button class="outline-button" type="button" data-open-tab="analysis" style="margin-top:12px"><i data-lucide="sparkles"></i>Ask AI About Your Health</button>
+          </section>
+
+        </div>
+      </section>
+
+      <section class="tab-panel" id="recordsPanel" role="tabpanel" aria-labelledby="recordsTab" data-panel="records" hidden>
+        <div class="records-layout">
+          <section class="card">
+            <div class="card-heading">
+              <div><h2>All Health Records</h2><p>All your medical records in one place</p></div>
+              <button class="primary-button" type="button" data-open-vitals><i data-lucide="heart-pulse"></i>Set Vitals</button>
+            </div>
+            <div class="record-filters">
+              <button class="filter-chip active" type="button" data-record-filter="all">All</button>
+              <button class="filter-chip" type="button" data-record-filter="lab">Lab Reports</button>
+              <button class="filter-chip" type="button" data-record-filter="imaging">Imaging</button>
+              <button class="filter-chip" type="button" data-record-filter="prescription">Prescriptions</button>
+              <button class="filter-chip" type="button" data-record-filter="document">Documents</button>
+              <button class="filter-chip" type="button" data-record-filter="vitals">Vitals</button>
+              <button class="filter-chip" type="button" data-record-filter="other">Others</button>
+            </div>
+            <div class="toolbar">
+              <label class="search-box"><i data-lucide="search"></i><input id="recordSearch" type="search" placeholder="Search records by name or keyword..."></label>
+              <div class="select-control"><select id="recordSort" data-custom-select aria-label="Sort records"><option>Newest First</option><option>Oldest First</option></select><i data-lucide="chevron-down"></i></div>
+              <button class="outline-button" type="button" data-message="Advanced record filters are ready."><i data-lucide="list-filter"></i>Filter</button>
+            </div>
+            <div class="record-list" id="recordList" style="margin-top:12px">
+              <article class="record-row" data-record-type="lab" data-record-name="complete blood count cbc">
+                <span class="file-icon"><i data-lucide="flask-conical"></i></span><span class="record-name"><strong>Complete Blood Count (CBC)</strong><small>Lab Report · Apollo Clinic</small></span><span>22 May 2026</span><span class="type-badge">PDF</span><span class="row-actions"><button type="button" data-message="CBC report downloaded."><i data-lucide="download"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="imaging" data-record-name="chest x-ray imaging">
+                <span class="file-icon"><i data-lucide="image"></i></span><span class="record-name"><strong>Chest X-Ray</strong><small>Imaging · Apollo Clinic</small></span><span>20 May 2026</span><span class="type-badge imaging">Image</span><span class="row-actions"><button type="button" data-message="X-Ray downloaded."><i data-lucide="download"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="lab" data-record-name="vitamin d test">
+                <span class="file-icon"><i data-lucide="flask-conical"></i></span><span class="record-name"><strong>Vitamin D Test</strong><small>Lab Report · Apollo Clinic</small></span><span>18 May 2026</span><span class="type-badge">PDF</span><span class="row-actions"><button type="button" data-message="Vitamin D report downloaded."><i data-lucide="download"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="prescription" data-record-name="paracetamol vitamin d3 prescription">
+                <span class="file-icon"><i data-lucide="notebook-tabs"></i></span><span class="record-name"><strong>Paracetamol, Vitamin D3</strong><small>Prescription · Dr. Arjun Verma</small></span><span>21 May 2026</span><span class="type-badge prescription">PDF</span><span class="row-actions"><button type="button" data-message="Prescription downloaded."><i data-lucide="download"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="document" data-record-name="voice note symptoms">
+                <span class="file-icon voice"><i data-lucide="mic"></i></span><span class="record-name"><strong>Voice Note – Symptoms</strong><small>Voice Note</small></span><span>21 May 2026</span><span class="type-badge voice">00:45</span><span class="row-actions"><button type="button" data-message="Voice note opened."><i data-lucide="play"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="document" data-record-name="medical history summary">
+                <span class="file-icon"><i data-lucide="file-text"></i></span><span class="record-name"><strong>Medical History Summary</strong><small>Document</small></span><span>20 May 2026</span><span class="type-badge imaging">DOCX</span><span class="row-actions"><button type="button" data-message="Medical history downloaded."><i data-lucide="download"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="vitals" data-record-name="blood pressure heart rate vital signs">
+                <span class="file-icon voice"><i data-lucide="heart-pulse"></i></span><span class="record-name"><strong>Blood Pressure &amp; Heart Rate</strong><small>Vitals · 118/76 mmHg · 72 bpm</small></span><span>22 May 2026</span><span class="type-badge">Vitals</span><span class="row-actions"><button type="button" data-message="Vital-sign record opened."><i data-lucide="eye"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="vitals" data-record-name="weight bmi vital trend">
+                <span class="file-icon voice"><i data-lucide="activity"></i></span><span class="record-name"><strong>Weight &amp; BMI Trend</strong><small>Vitals · 72 kg · BMI 23.5</small></span><span>21 May 2026</span><span class="type-badge">Vitals</span><span class="row-actions"><button type="button" data-message="BMI trend opened."><i data-lucide="eye"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="other" data-record-name="video consultation dr arjun verma">
+                <span class="file-icon voice"><i data-lucide="video"></i></span><span class="record-name"><strong>Video Consultation</strong><small>Dr. Arjun Verma · Duration 18:24</small></span><span>22 May 2026</span><span class="type-badge prescription">Video</span><span class="row-actions"><button type="button" data-message="Video consultation opened."><i data-lucide="play"></i></button></span>
+              </article>
+              <article class="record-row" data-record-type="other" data-record-name="insurance card star health">
+                <span class="file-icon"><i data-lucide="badge-info"></i></span><span class="record-name"><strong>Insurance Card</strong><small>Star Health Insurance</small></span><span>15 May 2026</span><span class="type-badge imaging">Other</span><span class="row-actions"><button type="button" data-message="Insurance card opened."><i data-lucide="eye"></i></button></span>
+              </article>
+            </div>
+            <button class="outline-button" type="button" data-upload-trigger style="width:100%;margin-top:10px"><i data-lucide="upload"></i>Upload New Record</button>
+          </section>
+
+          <div>
+            <section class="card upload-card">
+              <div class="card-heading"><div><h2>Upload Health Data</h2><p>Upload any type of health data securely</p></div></div>
+              <div class="upload-types">
+                <button class="upload-type" type="button" data-upload-trigger><span><i data-lucide="flask-conical"></i><strong>Lab Reports</strong><small>PDF, JPG, PNG</small></span></button>
+                <button class="upload-type" type="button" data-upload-trigger><span><i data-lucide="image"></i><strong>Imaging Reports</strong><small>X-Ray, MRI, CT</small></span></button>
+                <button class="upload-type" type="button" data-upload-trigger><span><i data-lucide="file-text"></i><strong>Prescriptions</strong><small>PDF, JPG, PNG</small></span></button>
+                <button class="upload-type" type="button" data-upload-trigger><span><i data-lucide="files"></i><strong>Documents</strong><small>PDF, DOC, JPG</small></span></button>
+                <button class="upload-type" type="button" data-message="Voice recorder is ready."><span><i data-lucide="mic"></i><strong>Voice Note</strong><small>MP3, WAV, M4A</small></span></button>
+                <button class="upload-type" type="button" data-upload-trigger><span><i data-lucide="video"></i><strong>Videos</strong><small>MP4, MOV, AVI</small></span></button>
+              </div>
+              <div class="drop-zone" id="dropZone" tabindex="0" role="button">
+                <span><i data-lucide="cloud-upload"></i><strong>Drag &amp; drop files here</strong><small>or browse files from your device · Maximum 50MB</small></span>
+              </div>
+            </section>
+            <section class="card email-import">
+              <div class="card-heading"><div><h2>Imported from Email</h2><p>Records automatically imported and synced</p></div><button class="outline-button" type="button" data-message="All imported records displayed.">View All</button></div>
+              <div class="email-row"><i data-lucide="mail"></i><span><strong>rahul.sharma@gmail.com</strong><small>Last synced: Today, 10:30 AM</small></span><span class="type-badge">✓ Synced</span></div>
+            </section>
+          </div>
+          <section class="card quick-access">
+            <h2>Quick Access</h2>
+            <div class="quick-grid">
+              <div class="quick-item"><i data-lucide="flask-conical"></i>Lab Reports</div><div class="quick-item"><i data-lucide="image"></i>Imaging Reports</div><div class="quick-item"><i data-lucide="notebook-tabs"></i>Prescriptions</div><div class="quick-item"><i data-lucide="pill"></i>Medicines</div><div class="quick-item"><i data-lucide="droplets"></i>Allergies</div><div class="quick-item"><i data-lucide="file-text"></i>Documents</div><div class="quick-item"><i data-lucide="activity"></i>Vitals &amp; Trends</div>
+            </div>
+          </section>
+        </div>
+        <div class="privacy-bar"><i data-lucide="lock-keyhole"></i>Your health data is private and secure. We never share your information without your permission.</div>
+      </section>
+
+      <section class="tab-panel" id="analysisPanel" role="tabpanel" aria-labelledby="analysisTab" data-panel="analysis" hidden>
+        <section class="card">
+          <div class="card-heading"><div><h2>AI Health Analysis <span class="beta">BETA</span></h2><p>AI-powered insights based on your health data.</p></div><div class="select-control" style="min-width:190px"><select id="analysisDate" data-custom-select aria-label="Analysis date"><option>Analysis Date: 22 May 2026</option><option>Analysis Date: 15 May 2026</option><option>Analysis Date: 30 Apr 2026</option></select><i data-lucide="chevron-down"></i></div></div>
+          <div class="analysis-grid" style="margin-top:14px">
+            <section class="card">
+              <h2>AI Health Summary</h2>
+              <p>Based on your lab reports, vitals, lifestyle and medical history.</p>
+              <div class="score-wrap">
+                <div class="score-ring"><span>Health Score<strong>78</strong>Good</span></div>
+                <div class="score-meta"><span><i data-lucide="sparkles"></i>Overall Status: <strong>Good</strong></span><span><i data-lucide="triangle-alert"></i>Risk Level: <strong>Low</strong></span><span><i data-lucide="database"></i>Data Analyzed: <strong>42 Records</strong></span><span><i data-lucide="calendar-check"></i>Updated: <strong>22 May</strong></span></div>
+              </div>
+              <div class="insight-list">
+                <div class="insight-row"><span class="insight-icon"><i data-lucide="sun"></i></span><span><strong>Vitamin D Deficiency Detected</strong><small>Below normal range</small></span><button class="outline-button" type="button" data-message="Vitamin D insight opened.">View Details</button></div>
+                <div class="insight-row"><span class="insight-icon"><i data-lucide="droplet"></i></span><span><strong>Improve Hydration</strong><small>Your water intake seems low</small></span><button class="outline-button" type="button" data-message="Hydration insight opened.">View Details</button></div>
+                <div class="insight-row"><span class="insight-icon"><i data-lucide="person-standing"></i></span><span><strong>Regular Exercise Recommended</strong><small>30 minutes daily</small></span><button class="outline-button" type="button" data-message="Exercise insight opened.">View Details</button></div>
+              </div>
+            </section>
+            <section class="card">
+              <div class="card-heading"><h2>Health Trend</h2><div class="select-control" style="min-width:120px"><select id="trendRange" data-custom-select aria-label="Health trend range"><option>Last 3 Months</option><option selected>Last 6 Months</option><option>Last 12 Months</option></select><i data-lucide="chevron-down"></i></div></div>
+              <div class="trend-chart" aria-label="Six month health trend chart">
+                <i class="trend-segment" style="--x:3%;--y:92px;--length:18%;--angle:-7deg;--color:#07988c"></i>
+                <i class="trend-segment" style="--x:20%;--y:96px;--length:19%;--angle:5deg;--color:#07988c"></i>
+                <i class="trend-segment" style="--x:38%;--y:90px;--length:20%;--angle:-8deg;--color:#07988c"></i>
+                <i class="trend-segment" style="--x:57%;--y:98px;--length:20%;--angle:9deg;--color:#07988c"></i>
+                <i class="trend-segment last" style="--x:76%;--y:88px;--length:20%;--angle:-15deg;--color:#07988c"></i>
+                <i class="trend-segment" style="--x:3%;--y:65px;--length:18%;--angle:8deg;--color:#2678ec"></i>
+                <i class="trend-segment" style="--x:20%;--y:58px;--length:19%;--angle:-8deg;--color:#2678ec"></i>
+                <i class="trend-segment" style="--x:38%;--y:66px;--length:20%;--angle:14deg;--color:#2678ec"></i>
+                <i class="trend-segment" style="--x:57%;--y:51px;--length:20%;--angle:-8deg;--color:#2678ec"></i>
+                <i class="trend-segment last" style="--x:76%;--y:59px;--length:20%;--angle:-10deg;--color:#2678ec"></i>
+              </div>
+              <div class="trend-months"><span>Dec 2025</span><span>Jan 2026</span><span>Feb 2026</span><span>Mar 2026</span><span>Apr 2026</span><span>May 2026</span></div>
+              <h2 style="margin-top:20px">Prediction &amp; Recommendation</h2>
+              <div class="insight-list">
+                <div class="insight-row"><span class="insight-icon"><i data-lucide="triangle-alert"></i></span><span><strong>Possible Risk</strong></span><span>Low Vitamin D risk</span></div>
+                <div class="insight-row"><span class="insight-icon"><i data-lucide="activity"></i></span><span><strong>Lifestyle Impact</strong></span><span>Improve sleep and hydration</span></div>
+                <div class="insight-row"><span class="insight-icon"><i data-lucide="calendar-check"></i></span><span><strong>Next Checkup</strong></span><span>After 3 months</span></div>
+              </div>
+              <button class="outline-button" type="button" data-message="AI report downloaded." style="width:100%;margin-top:14px"><i data-lucide="download"></i>Download AI Report (PDF)</button>
+            </section>
+            <section class="card chat-card" id="ai">
+              <h2>AI Health Assistant <span class="beta">BETA</span></h2>
+              <p>Ask anything about your health.</p>
+              <div class="chat-window" id="chatWindow">
+                <div class="chat-bubble user">What is my biggest health concern?</div>
+                <div class="chat-bubble">Your Vitamin D level is consistently low. It may cause fatigue, weak immunity and bone issues.</div>
+                <div class="chat-bubble user">How can I improve it?</div>
+                <div class="chat-bubble">Try morning sunlight, Vitamin D rich foods, doctor-approved supplements, and regular exercise.</div>
+                <label class="chat-input"><input id="chatInput" placeholder="Type your question..."><button id="chatSend" type="button" aria-label="Send"><i data-lucide="send"></i></button></label>
+              </div>
+            </section>
+          </div>
+        </section>
+        <div class="privacy-bar"><i data-lucide="info"></i>AI analysis is not a replacement for professional medical advice. Please consult your doctor for medical concerns.</div>
+      </section>
+
+      <section class="tab-panel" id="documentsPanel" role="tabpanel" aria-labelledby="documentsTab" data-panel="documents" hidden>
+        <section class="card documents-card">
+          <div class="card-heading"><div><h2>My Health Documents</h2><p>All your medical documents in one place. Secure, private and synced.</p></div><button class="outline-button" type="button" data-upload-trigger><i data-lucide="cloud-upload"></i>Upload New Document</button></div>
+          <div class="documents-toolbar">
+            <label class="search-box"><i data-lucide="search"></i><input id="documentSearch" type="search" placeholder="Search documents by name or type..."></label>
+            <div class="select-control"><select id="documentType" data-custom-select><option value="all">All Types</option><option value="lab">Lab Reports</option><option value="imaging">Imaging</option><option value="prescription">Prescriptions</option><option value="history">Medical History</option></select><i data-lucide="chevron-down"></i></div>
+            <div class="select-control"><select id="documentSort" data-custom-select aria-label="Sort documents"><option>Newest First</option><option>Oldest First</option></select><i data-lucide="chevron-down"></i></div>
+            <button class="outline-button" type="button" data-message="Document filters applied."><i data-lucide="list-filter"></i>Filter</button>
+          </div>
+          <div class="record-filters">
+            <button class="filter-chip active" type="button" data-document-filter="all">All</button><button class="filter-chip" type="button" data-document-filter="lab">Lab Reports</button><button class="filter-chip" type="button" data-document-filter="imaging">Imaging</button><button class="filter-chip" type="button" data-document-filter="prescription">Prescriptions</button><button class="filter-chip" type="button" data-document-filter="history">Medical History</button>
+          </div>
+          <div class="document-table" id="documentTable">
+            <div class="document-row header"><span>Document Name</span><span>Type</span><span>Date</span><span>Uploaded By</span><span>Size</span><span>Actions</span></div>
+            <article class="document-row" data-document-name="complete blood count cbc apollo clinic" data-document-type="lab"><span class="document-name"><i class="file-icon" data-lucide="file-text"></i><span><strong>Complete Blood Count (CBC)</strong><small>Apollo Clinic</small></span></span><span class="type-badge">Lab Report</span><span>22 May 2026</span><span>You</span><span>245 KB</span><span class="row-actions"><button data-message="Document preview opened."><i data-lucide="eye"></i></button><button data-message="Document downloaded."><i data-lucide="download"></i></button></span></article>
+            <article class="document-row" data-document-name="chest x-ray apollo clinic" data-document-type="imaging"><span class="document-name"><i class="file-icon" data-lucide="image"></i><span><strong>Chest X-Ray</strong><small>Apollo Clinic</small></span></span><span class="type-badge imaging">Imaging</span><span>20 May 2026</span><span>You</span><span>1.2 MB</span><span class="row-actions"><button data-message="Image preview opened."><i data-lucide="eye"></i></button><button data-message="Image downloaded."><i data-lucide="download"></i></button></span></article>
+            <article class="document-row" data-document-name="vitamin d test report" data-document-type="lab"><span class="document-name"><i class="file-icon" data-lucide="file-text"></i><span><strong>Vitamin D Test Report</strong><small>Apollo Clinic</small></span></span><span class="type-badge">Lab Report</span><span>18 May 2026</span><span>You</span><span>198 KB</span><span class="row-actions"><button data-message="Document preview opened."><i data-lucide="eye"></i></button><button data-message="Document downloaded."><i data-lucide="download"></i></button></span></article>
+            <article class="document-row" data-document-name="prescription dr arjun verma" data-document-type="prescription"><span class="document-name"><i class="file-icon" data-lucide="file-text"></i><span><strong>Prescription – Dr. Arjun Verma</strong><small>Apollo Clinic</small></span></span><span class="type-badge prescription">Prescription</span><span>21 May 2026</span><span>You</span><span>165 KB</span><span class="row-actions"><button data-message="Prescription preview opened."><i data-lucide="eye"></i></button><button data-message="Prescription downloaded."><i data-lucide="download"></i></button></span></article>
+            <article class="document-row" data-document-name="voice note symptoms" data-document-type="history"><span class="document-name"><i class="file-icon voice" data-lucide="mic"></i><span><strong>Voice Note – Symptoms</strong><small>Duration: 00:45</small></span></span><span class="type-badge voice">Voice Note</span><span>21 May 2026</span><span>You</span><span>450 KB</span><span class="row-actions"><button data-message="Voice note opened."><i data-lucide="play"></i></button><button data-message="Voice note downloaded."><i data-lucide="download"></i></button></span></article>
+            <article class="document-row" data-document-name="medical history summary" data-document-type="history"><span class="document-name"><i class="file-icon" data-lucide="file-text"></i><span><strong>Medical History Summary</strong><small>Apollo Clinic</small></span></span><span class="type-badge imaging">Medical History</span><span>20 May 2026</span><span>You</span><span>320 KB</span><span class="row-actions"><button data-message="History preview opened."><i data-lucide="eye"></i></button><button data-message="History downloaded."><i data-lucide="download"></i></button></span></article>
+          </div>
+          <div class="pagination"><button type="button">‹</button><button class="active" type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">›</button></div>
+        </section>
+        <div class="privacy-bar"><i data-lucide="shield-check"></i>Your health data is private and secure. We never share your information without your permission.</div>
+      </section>
+    </section>
+
+    <aside class="right-rail">
+      <div class="rail-panel" data-rail-panel="overview">
+        <section class="rail-card">
+          <h2>Health Summary <i data-lucide="info"></i></h2>
+          <ul class="rail-list">
+            <li><span class="list-icon"><i data-lucide="heart-pulse"></i></span><strong>Chronic Conditions</strong><span>1</span></li>
+            <li><span class="list-icon"><i data-lucide="droplets"></i></span><strong>Allergies</strong><span>2</span></li>
+            <li><span class="list-icon"><i data-lucide="briefcase-medical"></i></span><strong>Current Medications</strong><span>3</span></li>
+            <li><span class="list-icon"><i data-lucide="sparkles"></i></span><strong>Surgeries</strong><span>0</span></li>
+            <li><span class="list-icon"><i data-lucide="syringe"></i></span><strong>Immunizations</strong><span style="color:#15924d">Up to date</span></li>
+          </ul>
+        </section>
+        <section class="rail-card">
+          <h2><i data-lucide="cloud-cog"></i>Sync &amp; Storage</h2>
+          <p>All your health data is securely stored and synced across all your devices.</p>
+          <ul class="rail-list">
+            <li><span class="list-icon"><i data-lucide="check"></i></span><strong>Last Sync</strong><span>Today, 10:30 AM</span></li>
+            <li><span class="list-icon"><i data-lucide="refresh-cw"></i></span><strong>Synced with</strong><span>rahul.sharma@gmail.com</span></li>
+          </ul>
+          <button class="outline-button" type="button" data-message="Your records are fully synced."><i data-lucide="refresh-cw"></i>Manage Sync</button>
+        </section>
+      </div>
+
+      <div class="rail-panel" data-rail-panel="records" hidden>
+        <section class="rail-card">
+          <h2>Data Sources</h2>
+          <ul class="rail-list"><li><span class="list-icon"><i data-lucide="clipboard-check"></i></span><strong>Manual Upload</strong><span>28 Records</span></li><li><span class="list-icon"><i data-lucide="mail"></i></span><strong>Email Sync</strong><span>15 Records</span></li><li><span class="list-icon"><i data-lucide="smartphone"></i></span><strong>Mobile App</strong><span>8 Records</span></li><li><span class="list-icon"><i data-lucide="monitor"></i></span><strong>Other Devices</strong><span>3 Records</span></li></ul>
+        </section>
+        <section class="rail-card">
+          <h2><i data-lucide="shield-check"></i>Privacy &amp; Security</h2>
+          <ul class="rail-list"><li><span class="list-icon"><i data-lucide="shield-check"></i></span><strong>End-to-end encrypted</strong><span></span></li><li><span class="list-icon"><i data-lucide="user-check"></i></span><strong>Only you can access your data</strong><span></span></li><li><span class="list-icon"><i data-lucide="lock-keyhole"></i></span><strong>We never share your information</strong><span></span></li></ul>
+        </section>
+      </div>
+
+      <div class="rail-panel" data-rail-panel="analysis" hidden>
+        <section class="rail-card">
+          <h2><i data-lucide="cloud-cog"></i>Sync &amp; Storage</h2>
+          <p>Your latest records are included in this health analysis.</p>
+          <ul class="rail-list"><li><span class="list-icon"><i data-lucide="check"></i></span><strong>Last Sync</strong><span>Today, 10:30 AM</span></li><li><span class="list-icon"><i data-lucide="database"></i></span><strong>Records Analyzed</strong><span>42</span></li></ul>
+          <button class="outline-button" type="button" data-message="Health records re-synced."><i data-lucide="refresh-cw"></i>Manage Sync</button>
+        </section>
+        <section class="rail-card"><h2>Data Sources</h2><ul class="rail-list"><li><span class="list-icon"><i data-lucide="clipboard-check"></i></span><strong>Manual Upload</strong><span>28 Records</span></li><li><span class="list-icon"><i data-lucide="mail"></i></span><strong>Email Sync</strong><span>15 Records</span></li><li><span class="list-icon"><i data-lucide="smartphone"></i></span><strong>Mobile App</strong><span>8 Records</span></li></ul></section>
+        <section class="rail-card"><h2><i data-lucide="shield-check"></i>Privacy &amp; Security</h2><ul class="rail-list"><li><span class="list-icon"><i data-lucide="shield-check"></i></span><strong>End-to-end encrypted</strong><span></span></li><li><span class="list-icon"><i data-lucide="lock-keyhole"></i></span><strong>Private and confidential</strong><span></span></li></ul></section>
+      </div>
+
+      <div class="rail-panel" data-rail-panel="documents" hidden>
+        <section class="rail-card">
+          <h2><i data-lucide="cloud-cog"></i>Sync &amp; Storage</h2>
+          <p>All your health data is securely stored and synced across all your devices.</p>
+          <ul class="rail-list"><li><span class="list-icon"><i data-lucide="check"></i></span><strong>Last Sync</strong><span>Today, 10:30 AM</span></li><li><span class="list-icon"><i data-lucide="hard-drive"></i></span><strong>Storage Used</strong><span>1.24 GB / 10 GB</span></li></ul>
+          <div class="sync-progress"><span></span></div>
+          <button class="outline-button" type="button" data-message="Document sync settings opened."><i data-lucide="refresh-cw"></i>Manage Sync</button>
+        </section>
+        <section class="rail-card">
+          <h2>Document Categories</h2>
+          <div class="donut-wrap">
+            <div class="donut"><span>Total<strong>28</strong>Documents</span></div>
+            <div class="legend"><span><i></i>Lab Reports 12</span><span><i></i>Imaging 8</span><span><i></i>Prescriptions 15</span><span><i></i>History 9</span><span><i></i>Other 6</span></div>
+          </div>
+        </section>
+        <section class="rail-card">
+          <h2>Quick Upload Tips</h2>
+          <ul class="rail-list"><li><span class="list-icon"><i data-lucide="file-up"></i></span><strong>PDF, JPG, PNG, DOC, MP4 and MP3 supported</strong><span></span></li><li><span class="list-icon"><i data-lucide="download"></i></span><strong>Maximum 50MB per document</strong><span></span></li><li><span class="list-icon"><i data-lucide="clipboard-check"></i></span><strong>Keep documents organized for better analysis</strong><span></span></li></ul>
+        </section>
+      </div>
+    </aside>
+  </main>
+
+  <div class="vitals-modal" id="vitalsModal" hidden>
+    <div class="vitals-backdrop" data-close-vitals></div>
+    <section class="vitals-dialog vitals-design" role="dialog" aria-modal="true" aria-labelledby="vitalsTitle">
+      <header class="vitals-dialog-header">
+        <div class="vitals-dialog-title">
+          <span><i data-lucide="heart-pulse"></i></span>
+          <div><h2 id="vitalsTitle">Add Vitals</h2><p>Record your vital signs to track your health</p></div>
+        </div>
+        <button class="vitals-close" type="button" data-close-vitals aria-label="Close Add Vitals"><i data-lucide="x"></i></button>
+      </header>
+
+      <form class="vitals-form" id="vitalsForm">
+        <div class="vitals-record-time">
+          <label>Record Date &amp; Time</label>
+          <div class="vitals-record-time-fields">
+            <div class="vital-picker-field" id="vitalDateField">
+              <button class="vital-picker-trigger" id="vitalDateTrigger" type="button" aria-haspopup="dialog" aria-expanded="false">
+                <span id="vitalDateDisplay">22 May 2026</span><i data-lucide="calendar-days"></i>
+              </button>
+              <input id="vitalDate" name="recordDate" type="hidden" value="22 May 2026">
+              <div class="vital-date-calendar" id="vitalDateCalendar" role="dialog" aria-label="Choose record date" hidden></div>
+            </div>
+            <div class="vital-picker-field">
+              <button class="vital-picker-trigger" id="vitalTimeTrigger" type="button" aria-haspopup="dialog" aria-expanded="false">
+                <span><i data-lucide="clock-3"></i><b id="vitalTimeDisplay">10:30 AM</b></span><i data-lucide="clock"></i>
+              </button>
+              <input id="vitalTime" name="recordTime" type="hidden" value="10:30 AM">
+            </div>
+          </div>
+        </div>
+
+        <div class="vitals-grid">
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalBpSystolic"><i data-lucide="heart-pulse"></i>Blood Pressure</label><span>mmHg</span></div>
+            <div class="vital-split">
+              <input id="vitalBpSystolic" name="bpSystolic" type="number" min="40" max="300" value="118" aria-label="Systolic blood pressure" required>
+              <b>/</b>
+              <input id="vitalBpDiastolic" name="bpDiastolic" type="number" min="20" max="200" value="76" aria-label="Diastolic blood pressure" required>
+            </div>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalPulse"><i data-lucide="heart"></i>Heart Rate</label><span>bpm</span></div>
+            <input id="vitalPulse" name="pulse" type="number" min="20" max="250" value="72" required>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalTemperature"><i data-lucide="thermometer"></i>Temperature</label><span>°C</span></div>
+            <input id="vitalTemperature" name="temperature" type="number" min="30" max="45" step="0.1" value="36.6" required>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalRespiratoryRate"><i data-lucide="lungs"></i>Respiratory Rate</label><span>breaths/min</span></div>
+            <input id="vitalRespiratoryRate" name="respiratoryRate" type="number" min="5" max="80" value="16" required>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalOxygen"><i data-lucide="wind"></i>Oxygen Saturation</label><span>%</span></div>
+            <input id="vitalOxygen" name="oxygen" type="number" min="50" max="100" value="98" required>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalWeight"><i data-lucide="weight"></i>Weight</label><span>kg</span></div>
+            <input id="vitalWeight" name="weight" type="number" min="1" max="500" step="0.1" value="72" required>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalHeight"><i data-lucide="ruler"></i>Height</label><span>cm</span></div>
+            <input id="vitalHeight" name="height" type="number" min="30" max="250" step="0.1" value="175" required>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalBmi"><i data-lucide="user-round"></i>BMI</label><span>kg/m²</span></div>
+            <div class="vital-output-wrap"><output id="vitalBmi" name="bmi">23.5</output><span class="bmi-status" id="bmiStatus">Normal</span></div>
+          </div>
+
+          <div class="vital-field">
+            <div class="vital-field-head"><label for="vitalBloodSugar"><i data-lucide="droplets"></i>Blood Sugar (Fasting)</label><span>mg/dL</span></div>
+            <input id="vitalBloodSugar" name="bloodSugar" type="number" min="20" max="600" value="92" required>
+          </div>
+        </div>
+
+        <div class="vitals-notes">
+          <label for="vitalNotes">Notes (Optional)</label>
+          <div class="vitals-notes-box">
+            <textarea id="vitalNotes" name="notes" maxlength="300" placeholder="Add any additional notes about your health..."></textarea>
+            <span class="vitals-notes-count" id="vitalNotesCount">0/300</span>
+          </div>
+        </div>
+
+        <div class="vitals-form-actions">
+          <button class="outline-button" type="button" data-close-vitals>Cancel</button>
+          <button class="primary-button" type="submit"><i data-lucide="check"></i>Save Vitals</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div class="vital-clock-backdrop" id="vitalClockBackdrop" hidden>
+    <div class="vital-clock-dialog" id="vitalClockDialog" role="dialog" aria-modal="true" aria-labelledby="vitalClockTitle" tabindex="-1">
+      <div class="vital-clock-header">
+        <span class="vital-clock-kicker" id="vitalClockTitle">SELECT TIME</span>
+        <div class="vital-clock-time">
+          <button class="vital-clock-value active" id="vitalClockHour" type="button">10</button><span>:</span><button class="vital-clock-value" id="vitalClockMinute" type="button">30</button>
+        </div>
+        <div class="vital-clock-periods" aria-label="Choose AM or PM">
+          <button class="vital-clock-period active" data-vital-period="AM" type="button">AM</button>
+          <button class="vital-clock-period" data-vital-period="PM" type="button">PM</button>
+        </div>
+      </div>
+      <div class="vital-clock-body">
+        <p class="vital-clock-prompt" id="vitalClockPrompt">Choose hour</p>
+        <div class="vital-clock-face" id="vitalClockFace"><span class="vital-clock-hand" id="vitalClockHand"></span></div>
+      </div>
+      <div class="vital-clock-actions">
+        <button class="vital-clock-action" id="vitalClockCancel" type="button">CANCEL</button>
+        <button class="vital-clock-action" id="vitalClockOk" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <input id="fileInput" type="file" multiple hidden accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.mp3,.wav,.m4a,.mp4,.mov,.avi">
+  <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check"></i><span></span></div>
+
+  <script>
+    (() => {
+      const tabs = [...document.querySelectorAll("[data-tab]")];
+      const panels = [...document.querySelectorAll("[data-panel]")];
+      const railPanels = [...document.querySelectorAll("[data-rail-panel]")];
+      const sidebar = document.getElementById("patientSidebar");
+      const menuButton = document.getElementById("mobileMenu");
+      const toast = document.getElementById("toast");
+      const profileMenu = document.getElementById("profile");
+      const profileButton = document.getElementById("profileButton");
+      const fileInput = document.getElementById("fileInput");
+      const desktopSidebar = window.matchMedia("(min-width: 1121px)");
+      let toastTimer;
+      let activeRecordFilter = "all";
+      let activeDocumentFilter = "all";
+
+      const customSelects = [...document.querySelectorAll("select[data-custom-select]")];
+      const closeCustomSelects = (except = null) => {
+        customSelects.forEach((select) => {
+          const control = select.closest(".select-control");
+          if (control !== except) {
+            control.classList.remove("open");
+            control.querySelector(".select-trigger")?.setAttribute("aria-expanded", "false");
+          }
+        });
+      };
+
+      customSelects.forEach((select) => {
+        const control = select.closest(".select-control");
+        const trigger = document.createElement("button");
+        const menu = document.createElement("div");
+        const selectedOption = select.options[select.selectedIndex] || select.options[0];
+
+        control.classList.add("enhanced");
+        trigger.className = "select-trigger";
+        trigger.type = "button";
+        trigger.setAttribute("aria-haspopup", "listbox");
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.innerHTML = `<span>${selectedOption.textContent}</span><i data-lucide="chevron-down"></i>`;
+        menu.className = "select-menu";
+        menu.setAttribute("role", "listbox");
+
+        [...select.options].forEach((option) => {
+          const item = document.createElement("button");
+          const selected = option === selectedOption;
+          item.className = `select-option${selected ? " selected" : ""}`;
+          item.type = "button";
+          item.setAttribute("role", "option");
+          item.setAttribute("aria-selected", String(selected));
+          item.dataset.value = option.value;
+          item.innerHTML = `<span>${option.textContent}</span><i data-lucide="check"></i>`;
+          item.addEventListener("click", () => {
+            select.value = option.value;
+            trigger.querySelector("span").textContent = option.textContent;
+            menu.querySelectorAll(".select-option").forEach((candidate) => {
+              const isSelected = candidate === item;
+              candidate.classList.toggle("selected", isSelected);
+              candidate.setAttribute("aria-selected", String(isSelected));
+            });
+            control.classList.remove("open");
+            trigger.setAttribute("aria-expanded", "false");
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+            trigger.focus();
+          });
+          menu.appendChild(item);
+        });
+
+        control.insertBefore(trigger, select);
+        control.insertBefore(menu, select);
+
+        trigger.addEventListener("click", () => {
+          const open = !control.classList.contains("open");
+          closeCustomSelects(control);
+          control.classList.toggle("open", open);
+          trigger.setAttribute("aria-expanded", String(open));
+        });
+
+        trigger.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            closeCustomSelects(control);
+            control.classList.add("open");
+            trigger.setAttribute("aria-expanded", "true");
+            menu.querySelector(".select-option.selected, .select-option")?.focus();
+          }
+        });
+
+        menu.addEventListener("keydown", (event) => {
+          const options = [...menu.querySelectorAll(".select-option")];
+          const index = options.indexOf(document.activeElement);
+          if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            const offset = event.key === "ArrowDown" ? 1 : -1;
+            options[(index + offset + options.length) % options.length]?.focus();
+          } else if (event.key === "Escape") {
+            event.preventDefault();
+            control.classList.remove("open");
+            trigger.setAttribute("aria-expanded", "false");
+            trigger.focus();
+          }
+        });
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".select-control")) closeCustomSelects();
+      });
+
+      const renderIcons = () => window.lucide?.createIcons();
+
+      const syncMenuButton = () => {
+        const expanded = desktopSidebar.matches
+          ? !document.body.classList.contains("health-sidebar-collapsed")
+          : sidebar.classList.contains("open");
+        menuButton.setAttribute("aria-expanded", String(expanded));
+        menuButton.setAttribute(
+          "aria-label",
+          desktopSidebar.matches
+            ? (expanded ? "Collapse navigation" : "Expand navigation")
+            : (expanded ? "Close navigation" : "Open navigation")
+        );
+      };
+
+      const showToast = (message) => {
+        toast.querySelector("span").textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+      };
+
+      const openTab = (name, updateHash = true) => {
+        tabs.forEach((tab) => {
+          const active = tab.dataset.tab === name;
+          tab.classList.toggle("active", active);
+          tab.setAttribute("aria-selected", String(active));
+          tab.tabIndex = active ? 0 : -1;
+        });
+        panels.forEach((panel) => panel.hidden = panel.dataset.panel !== name);
+        railPanels.forEach((panel) => panel.hidden = panel.dataset.railPanel !== name);
+        if (updateHash) history.replaceState(null, "", `#${name}`);
+        if (!desktopSidebar.matches) sidebar.classList.remove("open");
+        syncMenuButton();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+
+      window.addEventListener("message", (event) => {
+        if (event.data?.type === "cliniflow-health-tab" && ["overview", "records", "analysis", "documents"].includes(event.data.tab)) {
+          openTab(event.data.tab, false);
+        }
+      });
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => openTab(tab.dataset.tab));
+        tab.addEventListener("keydown", (event) => {
+          if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+          event.preventDefault();
+          let next = index;
+          if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+          if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === "Home") next = 0;
+          if (event.key === "End") next = tabs.length - 1;
+          openTab(tabs[next].dataset.tab);
+          tabs[next].focus();
+        });
+      });
+
+      document.querySelectorAll("[data-open-tab]").forEach((button) => {
+        button.addEventListener("click", () => openTab(button.dataset.openTab));
+      });
+
+      document.querySelectorAll("[data-message]").forEach((button) => {
+        button.addEventListener("click", () => showToast(button.dataset.message));
+      });
+
+      menuButton.addEventListener("click", () => {
+        if (desktopSidebar.matches) {
+          sidebar.classList.remove("open");
+          document.body.classList.toggle("health-sidebar-collapsed");
+          syncMenuButton();
+          return;
+        }
+        const open = !sidebar.classList.contains("open");
+        sidebar.classList.toggle("open", open);
+        syncMenuButton();
+      });
+
+      desktopSidebar.addEventListener("change", () => {
+        sidebar.classList.remove("open");
+        syncMenuButton();
+      });
+
+      profileButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const open = !profileMenu.classList.contains("open");
+        profileMenu.classList.toggle("open", open);
+        profileButton.setAttribute("aria-expanded", String(open));
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".profile-menu")) {
+          profileMenu.classList.remove("open");
+          profileButton.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      const openFilePicker = () => fileInput.click();
+      document.querySelectorAll("[data-upload-trigger]").forEach((button) => button.addEventListener("click", openFilePicker));
+
+      const dropZone = document.getElementById("dropZone");
+      dropZone.addEventListener("click", openFilePicker);
+      dropZone.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openFilePicker();
+        }
+      });
+      ["dragenter", "dragover"].forEach((name) => dropZone.addEventListener(name, (event) => {
+        event.preventDefault();
+        dropZone.classList.add("dragging");
+      }));
+      ["dragleave", "drop"].forEach((name) => dropZone.addEventListener(name, (event) => {
+        event.preventDefault();
+        dropZone.classList.remove("dragging");
+      }));
+      dropZone.addEventListener("drop", (event) => {
+        const count = event.dataTransfer.files.length;
+        if (count) showToast(`${count} health file${count === 1 ? "" : "s"} ready to upload.`);
+      });
+      fileInput.addEventListener("change", () => {
+        const count = fileInput.files.length;
+        if (count) showToast(`${count} health file${count === 1 ? "" : "s"} selected successfully.`);
+      });
+
+      const recordRows = [...document.querySelectorAll("[data-record-type]")];
+      const applyRecordFilters = () => {
+        const query = document.getElementById("recordSearch").value.trim().toLowerCase();
+        recordRows.forEach((row) => {
+          const typeMatch = activeRecordFilter === "all" || row.dataset.recordType === activeRecordFilter;
+          const searchMatch = !query || row.dataset.recordName.includes(query);
+          row.hidden = !(typeMatch && searchMatch);
+        });
+      };
+      document.querySelectorAll("[data-record-filter]").forEach((button) => button.addEventListener("click", () => {
+        activeRecordFilter = button.dataset.recordFilter;
+        document.querySelectorAll("[data-record-filter]").forEach((item) => item.classList.toggle("active", item === button));
+        applyRecordFilters();
+      }));
+      document.getElementById("recordSearch").addEventListener("input", applyRecordFilters);
+
+      const vitalsModal = document.getElementById("vitalsModal");
+      const vitalsForm = document.getElementById("vitalsForm");
+      const vitalHeight = document.getElementById("vitalHeight");
+      const vitalWeight = document.getElementById("vitalWeight");
+      const vitalBmi = document.getElementById("vitalBmi");
+      const bmiStatus = document.getElementById("bmiStatus");
+      const vitalNotes = document.getElementById("vitalNotes");
+      const vitalNotesCount = document.getElementById("vitalNotesCount");
+
+      const updateVitalBmi = () => {
+        const heightMetres = Number(vitalHeight.value) / 100;
+        const bmi = heightMetres > 0 ? Number(vitalWeight.value) / (heightMetres * heightMetres) : 0;
+        const rounded = bmi ? bmi.toFixed(1) : "—";
+        vitalBmi.value = rounded;
+        vitalBmi.textContent = rounded;
+        bmiStatus.textContent = !bmi ? "—" : bmi < 18.5 ? "Low" : bmi < 25 ? "Normal" : bmi < 30 ? "High" : "Very High";
+      };
+
+      const vitalDateField = document.getElementById("vitalDateField");
+      const vitalDateTrigger = document.getElementById("vitalDateTrigger");
+      const vitalDateCalendar = document.getElementById("vitalDateCalendar");
+      const vitalDateInput = document.getElementById("vitalDate");
+      const vitalDateDisplay = document.getElementById("vitalDateDisplay");
+      const vitalMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const vitalDayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+      const vitalDateState = { month: 4, year: 2026, selected: new Date(2026, 4, 22) };
+
+      const formatVitalDate = (date) => `${String(date.getDate()).padStart(2, "0")} ${vitalMonthNames[date.getMonth()]} ${date.getFullYear()}`;
+      const sameVitalDate = (left, right) => left && right
+        && left.getFullYear() === right.getFullYear()
+        && left.getMonth() === right.getMonth()
+        && left.getDate() === right.getDate();
+      const closeVitalDatePicker = () => {
+        vitalDateField.classList.remove("is-open");
+        vitalDateCalendar.hidden = true;
+        vitalDateTrigger.setAttribute("aria-expanded", "false");
+      };
+      const renderVitalDatePicker = () => {
+        const firstDay = new Date(vitalDateState.year, vitalDateState.month, 1).getDay();
+        const daysInMonth = new Date(vitalDateState.year, vitalDateState.month + 1, 0).getDate();
+        const monthOptions = vitalMonthNames.map((month, index) => `<option value="${index}"${index === vitalDateState.month ? " selected" : ""}>${month}</option>`).join("");
+        const yearOptions = Array.from({ length: 11 }, (_, index) => 2020 + index)
+          .map((year) => `<option value="${year}"${year === vitalDateState.year ? " selected" : ""}>${year}</option>`).join("");
+        let days = vitalDayNames.map((day) => `<span class="vital-date-weekday">${day}</span>`).join("");
+        days += '<span class="vital-date-empty"></span>'.repeat(firstDay);
+        for (let day = 1; day <= daysInMonth; day += 1) {
+          const date = new Date(vitalDateState.year, vitalDateState.month, day);
+          days += `<button class="vital-date-day${sameVitalDate(date, vitalDateState.selected) ? " is-selected" : ""}" type="button" data-vital-date-day="${day}">${day}</button>`;
+        }
+        vitalDateCalendar.innerHTML = `
+          <div class="vital-date-head">
+            <button class="vital-date-nav" type="button" data-vital-date-prev aria-label="Previous month"><i data-lucide="chevron-left"></i></button>
+            <div class="vital-date-jump">
+              <select data-vital-date-month aria-label="Month">${monthOptions}</select>
+              <select data-vital-date-year aria-label="Year">${yearOptions}</select>
+            </div>
+            <button class="vital-date-nav" type="button" data-vital-date-next aria-label="Next month"><i data-lucide="chevron-right"></i></button>
+          </div>
+          <div class="vital-date-grid">${days}</div>`;
+        renderIcons();
+      };
+      const moveVitalMonth = (offset) => {
+        const next = new Date(vitalDateState.year, vitalDateState.month + offset, 1);
+        vitalDateState.year = next.getFullYear();
+        vitalDateState.month = next.getMonth();
+        renderVitalDatePicker();
+      };
+      vitalDateTrigger.addEventListener("click", () => {
+        const opening = !vitalDateField.classList.contains("is-open");
+        if (!opening) {
+          closeVitalDatePicker();
+          return;
+        }
+        vitalDateField.classList.add("is-open");
+        vitalDateCalendar.hidden = false;
+        vitalDateTrigger.setAttribute("aria-expanded", "true");
+        renderVitalDatePicker();
+      });
+      vitalDateCalendar.addEventListener("change", (event) => {
+        if (event.target.matches("[data-vital-date-month]")) vitalDateState.month = Number(event.target.value);
+        if (event.target.matches("[data-vital-date-year]")) vitalDateState.year = Number(event.target.value);
+        renderVitalDatePicker();
+      });
+      vitalDateCalendar.addEventListener("click", (event) => {
+        if (event.target.closest("[data-vital-date-prev]")) moveVitalMonth(-1);
+        if (event.target.closest("[data-vital-date-next]")) moveVitalMonth(1);
+        const dayButton = event.target.closest("[data-vital-date-day]");
+        if (!dayButton) return;
+        vitalDateState.selected = new Date(vitalDateState.year, vitalDateState.month, Number(dayButton.dataset.vitalDateDay));
+        const value = formatVitalDate(vitalDateState.selected);
+        vitalDateInput.value = value;
+        vitalDateDisplay.textContent = value;
+        closeVitalDatePicker();
+      });
+      document.addEventListener("click", (event) => {
+        if (!vitalDateField.contains(event.target)) closeVitalDatePicker();
+      });
+
+      const vitalClockBackdrop = document.getElementById("vitalClockBackdrop");
+      const vitalClockDialog = document.getElementById("vitalClockDialog");
+      const vitalClockFace = document.getElementById("vitalClockFace");
+      const vitalClockHand = document.getElementById("vitalClockHand");
+      const vitalClockHour = document.getElementById("vitalClockHour");
+      const vitalClockMinute = document.getElementById("vitalClockMinute");
+      const vitalClockPrompt = document.getElementById("vitalClockPrompt");
+      const vitalClockPeriods = [...document.querySelectorAll("[data-vital-period]")];
+      const vitalTimeTrigger = document.getElementById("vitalTimeTrigger");
+      const vitalTimeInput = document.getElementById("vitalTime");
+      const vitalTimeDisplay = document.getElementById("vitalTimeDisplay");
+      let vitalClockPhase = "hour";
+      let vitalClockHourValue = 10;
+      let vitalClockMinuteValue = 30;
+      let vitalClockPeriodValue = "AM";
+
+      const formatVitalTime = () => `${String(vitalClockHourValue).padStart(2, "0")}:${String(vitalClockMinuteValue).padStart(2, "0")} ${vitalClockPeriodValue}`;
+      const updateVitalClockHeader = () => {
+        vitalClockHour.textContent = String(vitalClockHourValue).padStart(2, "0");
+        vitalClockMinute.textContent = String(vitalClockMinuteValue).padStart(2, "0");
+        vitalClockHour.classList.toggle("active", vitalClockPhase === "hour");
+        vitalClockMinute.classList.toggle("active", vitalClockPhase === "minute");
+        vitalClockPrompt.textContent = vitalClockPhase === "hour" ? "Choose hour" : "Choose minutes";
+        vitalClockPeriods.forEach((button) => button.classList.toggle("active", button.dataset.vitalPeriod === vitalClockPeriodValue));
+      };
+      const renderVitalClockFace = () => {
+        vitalClockFace.querySelectorAll(".vital-clock-number").forEach((number) => number.remove());
+        const values = vitalClockPhase === "hour"
+          ? Array.from({ length: 12 }, (_, index) => index + 1)
+          : Array.from({ length: 12 }, (_, index) => index * 5);
+        const selectedValue = vitalClockPhase === "hour" ? vitalClockHourValue : vitalClockMinuteValue;
+        const startAngle = vitalClockPhase === "hour" ? -60 : -90;
+        values.forEach((value, index) => {
+          const angle = (index * 30 + startAngle) * Math.PI / 180;
+          const number = document.createElement("button");
+          number.className = "vital-clock-number";
+          number.type = "button";
+          number.textContent = vitalClockPhase === "minute" ? String(value).padStart(2, "0") : String(value);
+          number.style.left = `${50 + Math.cos(angle) * 39}%`;
+          number.style.top = `${50 + Math.sin(angle) * 39}%`;
+          number.classList.toggle("active", value === selectedValue);
+          number.addEventListener("click", () => {
+            if (vitalClockPhase === "hour") {
+              vitalClockHourValue = value;
+              vitalClockPhase = "minute";
+            } else {
+              vitalClockMinuteValue = value;
+            }
+            updateVitalClockHeader();
+            renderVitalClockFace();
+          });
+          vitalClockFace.append(number);
+        });
+        const selectedIndex = vitalClockPhase === "hour" ? vitalClockHourValue - 1 : Math.round(vitalClockMinuteValue / 5) % 12;
+        vitalClockHand.style.transform = `rotate(${selectedIndex * 30 + startAngle}deg)`;
+      };
+      const openVitalClock = () => {
+        closeVitalDatePicker();
+        vitalClockPhase = "hour";
+        updateVitalClockHeader();
+        renderVitalClockFace();
+        vitalClockBackdrop.hidden = false;
+        vitalTimeTrigger.setAttribute("aria-expanded", "true");
+        requestAnimationFrame(() => {
+          vitalClockBackdrop.classList.add("open");
+          vitalClockDialog.focus();
+        });
+      };
+      const closeVitalClock = () => {
+        vitalClockBackdrop.classList.remove("open");
+        vitalTimeTrigger.setAttribute("aria-expanded", "false");
+        setTimeout(() => {
+          vitalClockBackdrop.hidden = true;
+          vitalTimeTrigger.focus();
+        }, 160);
+      };
+      vitalTimeTrigger.addEventListener("click", openVitalClock);
+      vitalClockHour.addEventListener("click", () => {
+        vitalClockPhase = "hour";
+        updateVitalClockHeader();
+        renderVitalClockFace();
+      });
+      vitalClockMinute.addEventListener("click", () => {
+        vitalClockPhase = "minute";
+        updateVitalClockHeader();
+        renderVitalClockFace();
+      });
+      vitalClockPeriods.forEach((button) => button.addEventListener("click", () => {
+        vitalClockPeriodValue = button.dataset.vitalPeriod;
+        updateVitalClockHeader();
+      }));
+      document.getElementById("vitalClockCancel").addEventListener("click", closeVitalClock);
+      document.getElementById("vitalClockOk").addEventListener("click", () => {
+        const value = formatVitalTime();
+        vitalTimeInput.value = value;
+        vitalTimeDisplay.textContent = value;
+        closeVitalClock();
+      });
+      vitalClockBackdrop.addEventListener("click", (event) => {
+        if (event.target === vitalClockBackdrop) closeVitalClock();
+      });
+
+      const setVitalsModal = (open) => {
+        vitalsModal.hidden = !open;
+        document.body.classList.toggle("vitals-open", open);
+        if (open) {
+          updateVitalBmi();
+          requestAnimationFrame(() => vitalDateTrigger.focus());
+        } else {
+          closeVitalDatePicker();
+          if (!vitalClockBackdrop.hidden) {
+            vitalClockBackdrop.classList.remove("open");
+            vitalClockBackdrop.hidden = true;
+            vitalTimeTrigger.setAttribute("aria-expanded", "false");
+          }
+          document.querySelector("[data-open-vitals]").focus();
+        }
+      };
+
+      document.querySelectorAll("[data-open-vitals]").forEach((button) => {
+        button.addEventListener("click", () => setVitalsModal(true));
+      });
+      document.querySelectorAll("[data-close-vitals]").forEach((button) => {
+        button.addEventListener("click", () => setVitalsModal(false));
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        if (!vitalClockBackdrop.hidden) {
+          closeVitalClock();
+          return;
+        }
+        if (vitalDateField.classList.contains("is-open")) {
+          closeVitalDatePicker();
+          return;
+        }
+        if (!vitalsModal.hidden) setVitalsModal(false);
+      });
+      [vitalHeight, vitalWeight].forEach((input) => input.addEventListener("input", updateVitalBmi));
+      vitalNotes.addEventListener("input", () => {
+        vitalNotesCount.textContent = `${vitalNotes.value.length}/300`;
+      });
+
+      vitalsForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const values = Object.fromEntries(new FormData(vitalsForm));
+        const newRecord = document.createElement("article");
+        const selectedDate = vitalDateState.selected || new Date();
+        const recordDate = new Intl.DateTimeFormat("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }).format(selectedDate);
+
+        newRecord.className = "record-row";
+        newRecord.dataset.recordType = "vitals";
+        newRecord.dataset.recordName = "complete vital assessment blood pressure heart rate temperature oxygen weight bmi blood sugar";
+        newRecord.innerHTML = `
+          <span class="file-icon voice"><i data-lucide="heart-pulse"></i></span>
+          <span class="record-name"><strong>Complete Vital Assessment</strong><small>Vitals · ${values.bpSystolic}/${values.bpDiastolic} mmHg · ${values.pulse} bpm · ${values.temperature} °C · SpO₂ ${values.oxygen}%</small></span>
+          <span>${recordDate}</span>
+          <span class="type-badge">Vitals</span>
+          <span class="row-actions"><button type="button" aria-label="Open vital assessment"><i data-lucide="eye"></i></button></span>
+        `;
+        newRecord.querySelector("button").addEventListener("click", () => {
+          showToast(`Vitals: BMI ${vitalBmi.textContent}; RR ${values.respiratoryRate}/min; fasting sugar ${values.bloodSugar} mg/dL.`);
+        });
+
+        document.getElementById("recordList").prepend(newRecord);
+        recordRows.unshift(newRecord);
+        document.querySelector('[data-record-filter="vitals"]').click();
+        vitalsForm.reset();
+        vitalNotesCount.textContent = "0/300";
+        updateVitalBmi();
+        setVitalsModal(false);
+        renderIcons();
+        showToast("Vitals saved successfully.");
+      });
+
+      const documentRows = [...document.querySelectorAll("[data-document-type]")].filter((item) => item.classList.contains("document-row"));
+      const applyDocumentFilters = () => {
+        const query = document.getElementById("documentSearch").value.trim().toLowerCase();
+        const selectType = document.getElementById("documentType").value;
+        const type = activeDocumentFilter !== "all" ? activeDocumentFilter : selectType;
+        documentRows.forEach((row) => {
+          const typeMatch = type === "all" || row.dataset.documentType === type;
+          const searchMatch = !query || row.dataset.documentName.includes(query);
+          row.hidden = !(typeMatch && searchMatch);
+        });
+      };
+      document.querySelectorAll("[data-document-filter]").forEach((button) => button.addEventListener("click", () => {
+        activeDocumentFilter = button.dataset.documentFilter;
+        document.querySelectorAll("[data-document-filter]").forEach((item) => item.classList.toggle("active", item === button));
+        applyDocumentFilters();
+      }));
+      document.getElementById("documentSearch").addEventListener("input", applyDocumentFilters);
+      document.getElementById("documentType").addEventListener("change", applyDocumentFilters);
+
+      const chatInput = document.getElementById("chatInput");
+      const sendChat = () => {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        const bubble = document.createElement("div");
+        bubble.className = "chat-bubble user";
+        bubble.textContent = text;
+        document.getElementById("chatWindow").insertBefore(bubble, chatInput.closest(".chat-input"));
+        chatInput.value = "";
+        showToast("Your health question was added.");
+      };
+      document.getElementById("chatSend").addEventListener("click", sendChat);
+      chatInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") sendChat();
+      });
+
+      const requestedTab = location.hash.slice(1);
+      if (["overview", "records", "analysis", "documents"].includes(requestedTab)) openTab(requestedTab, false);
+      window.addEventListener("hashchange", () => {
+        const tabName = location.hash.slice(1);
+        if (["overview", "records", "analysis", "documents"].includes(tabName)) openTab(tabName, false);
+      });
+      syncMenuButton();
+      renderIcons();
+    })();
+  </script>
+</body>
+</html>

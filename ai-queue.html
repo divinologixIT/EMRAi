@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Divinexa AI Queue Management">
+  <title>AI Queue Management | Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ai-queue.css">
+  <link rel="stylesheet" href="assets/css/doctor-dashboard-sidebar.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body>
+  <aside class="doctor-sidebar" id="doctorSidebar" aria-label="Doctor portal navigation">
+    <a class="doctor-brand" href="doctor-dashboard.html" aria-label="Divinexa doctor dashboard">
+      <span class="brand-pulse"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+      <span><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>AI Doctor Panel</small></span>
+    </a>
+    <button class="doctor-sidebar-collapse" id="doctorSidebarCollapse" type="button" aria-label="Collapse doctor menu" aria-controls="doctorSidebar" aria-expanded="true"><i data-lucide="chevrons-left"></i></button>
+
+    <nav class="doctor-nav">
+      <a class="doctor-nav-link" href="doctor-dashboard.html"><i data-lucide="house"></i><span>Dashboard</span><i class="nav-chevron" data-lucide="chevron-right"></i></a>
+
+      <span class="doctor-nav-section">Clinical</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening multi-clinic overview"><i data-lucide="hospital"></i><span>Multi-Clinic Overview</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <a class="doctor-nav-link active" href="ai-queue.html" aria-current="page"><i data-lucide="bot"></i><span>AI Queue</span><span class="nav-count" id="sidebarQueueCount">14</span></a>
+      <a class="doctor-nav-link" href="doctor-prescription.html"><i data-lucide="file-heart"></i><span>AI Prescriptions</span><span class="nav-count">27</span></a>
+      <a class="doctor-nav-link" href="doctor-patients.html"><i data-lucide="user-round"></i><span>Patients</span><i class="nav-chevron" data-lucide="chevron-right"></i></a>
+      <button class="doctor-nav-link" type="button" data-message="Opening appointments"><i data-lucide="calendar-days"></i><span>Appointments</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening medical records"><i data-lucide="folder-heart"></i><span>Medical Records</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening lab and imaging"><i data-lucide="flask-conical"></i><span>Lab &amp; Imaging</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+
+      <span class="doctor-nav-section">Analytics &amp; Finance</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening analytics"><i data-lucide="chart-no-axes-combined"></i><span>Analytics</span><i class="nav-chevron" data-lucide="chevron-down"></i></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening revenue"><i data-lucide="circle-dollar-sign"></i><span>Revenue</span><i class="nav-chevron" data-lucide="chevron-down"></i></button>
+
+      <span class="doctor-nav-section">Communication</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening follow-ups"><i data-lucide="archive"></i><span>Follow-ups</span><span class="nav-count">11</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Checking drug interactions"><i data-lucide="pill"></i><span>Drug Interactions</span><span class="nav-count">6</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening messages"><i data-lucide="message-square"></i><span>Messages</span><span class="nav-count">8</span></button>
+      <button class="doctor-nav-link" type="button" data-message="Opening calendar"><i data-lucide="calendar-days"></i><span>Calendar</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+
+      <span class="doctor-nav-section">Others</span>
+      <button class="doctor-nav-link" type="button" data-message="Opening settings"><i data-lucide="settings"></i><span>Settings</span><i class="nav-chevron" data-lucide="chevron-right"></i></button>
+    </nav>
+
+    <section class="doctor-sidebar-profile" aria-label="Signed-in doctor">
+      <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=96&amp;h=96&amp;q=82" alt="">
+      <span><strong>Dr. John Smith</strong><small>MBBS, MD · Physician</small><em><i></i> Online</em></span>
+      <button type="button" aria-label="Sign out" data-message="Signed out of preview"><i data-lucide="log-out"></i></button>
+    </section>
+  </aside>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="app-shell">
+    <header class="doctor-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle doctor navigation" aria-controls="doctorSidebar" aria-expanded="true"><i data-lucide="menu"></i></button>
+      <label class="doctor-search">
+        <span class="sr-only">Search patient, symptoms, prescription, or report</span>
+        <i data-lucide="search"></i>
+        <input id="globalSearch" type="search" placeholder="Search patient, symptoms, prescription, report..." autocomplete="off">
+        <span class="search-shortcut">Ctrl + K</span>
+      </label>
+      <div class="topbar-spacer"></div>
+      <button class="voice-command" type="button" data-message="Voice command listening"><i data-lucide="mic"></i><span>Voice Command</span></button>
+      <button class="top-icon" type="button" aria-label="5 notifications" data-message="You have 5 new notifications"><i data-lucide="bell"></i><span class="top-badge">5</span></button>
+      <button class="top-icon" type="button" aria-label="3 unread messages" data-message="You have 3 unread messages"><i data-lucide="message-square"></i><span class="top-badge">3</span></button>
+      <div class="doctor-profile" id="doctorProfile">
+        <button class="doctor-profile-button" id="doctorProfileButton" type="button" aria-expanded="false">
+          <img class="doctor-avatar" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=82" alt="Dr. Arjun Mehta">
+          <span><strong>Dr. Arjun Mehta</strong><small>MBBS, MD - Physician</small></span>
+          <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="doctor-profile-menu" role="menu">
+          <button type="button" role="menuitem" data-message="Opening doctor profile">My Profile</button>
+          <button type="button" role="menuitem" data-message="Opening account settings">Account Settings</button>
+          <button type="button" role="menuitem" data-message="Signed out of preview">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="queue-page">
+      <section class="queue-page-head">
+        <div>
+          <p class="eyebrow"><i data-lucide="sparkles"></i> Intelligent patient flow</p>
+          <h1>AI Queue Management <i data-lucide="info"></i></h1>
+          <p>Prioritize patients, reduce waiting time, and keep every consultation moving.</p>
+        </div>
+        <div class="head-controls">
+          <button class="context-button clinic-button" type="button" data-message="Clinic selector opened"><i data-lucide="hospital"></i><span>Divinexa Multi-Clinic</span><i data-lucide="chevron-down"></i></button>
+          <button class="context-button" type="button" data-message="Date selector opened"><i data-lucide="calendar-days"></i><span>23 May 2026, Friday</span><i data-lucide="chevron-down"></i></button>
+          <span class="queue-running-pill" id="queueState"><i></i> Queue Running</span>
+          <button class="pause-button" id="pauseQueue" type="button"><i data-lucide="pause"></i><span>Pause Queue</span></button>
+        </div>
+      </section>
+
+      <section class="metric-grid" aria-label="Queue overview">
+        <article class="metric-card cyan">
+          <span class="metric-icon"><i data-lucide="users-round"></i></span>
+          <span><small>Waiting</small><strong id="waitingMetric">08</strong><em>Patients</em></span>
+        </article>
+        <article class="metric-card blue">
+          <span class="metric-icon"><i data-lucide="stethoscope"></i></span>
+          <span><small>In Consultation</small><strong>01</strong><em>Patient</em></span>
+        </article>
+        <article class="metric-card green">
+          <span class="metric-icon"><i data-lucide="circle-check-big"></i></span>
+          <span><small>Completed</small><strong>12</strong><em>Patients</em></span>
+        </article>
+        <article class="metric-card orange">
+          <span class="metric-icon"><i data-lucide="clock-3"></i></span>
+          <span><small>Delayed</small><strong id="delayedMetric">03</strong><em>Patients</em></span>
+        </article>
+        <article class="metric-card violet">
+          <span class="metric-icon"><i data-lucide="hourglass"></i></span>
+          <span><small>Average Wait</small><strong>14 min</strong><em>Today</em></span>
+        </article>
+      </section>
+
+      <section class="active-consultation-banner" id="activeConsultationBanner" aria-label="Current consultation and next patient">
+        <div class="consulting-summary">
+          <span class="summary-ribbon current-ribbon"><i data-lucide="stethoscope"></i><span>In Consultation</span></span>
+          <a class="summary-person" href="doctor-prescription.html">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&amp;fit=crop&amp;w=100&amp;h=100&amp;q=82" alt="">
+            <span><strong>Priya Das</strong><small>29 Y · Female · A-014</small><em>Follow-up Visit</em><small>Started: 09:18 AM · 12 min</small></span>
+          </a>
+          <span class="summary-type-icon"><i data-lucide="stethoscope"></i></span>
+        </div>
+
+        <a id="activePrescriptionLink" class="next-summary" href="doctor-prescription.html" aria-label="Open next patient prescription">
+          <span class="summary-ribbon next-ribbon"><i data-lucide="user-round-check"></i><span>Next Patient</span></span>
+          <img id="activePatientAvatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&amp;fit=crop&amp;w=100&amp;h=100&amp;q=82" alt="">
+          <span>
+            <strong id="activePatientName">Neha Patel</strong>
+            <small id="activePatientMeta">28 Y · Female · ID: A-016</small>
+            <em id="activeVisitType">Follow-up Visit</em>
+            <small>ETA: <b id="activePatientTime">6:28 PM</b> · In Queue</small>
+          </span>
+        </a>
+
+        <div class="queue-mini-stats" aria-label="Queue progress">
+          <span><i data-lucide="clipboard-list"></i><small>In Queue</small><strong>6</strong></span>
+          <span><i data-lucide="stethoscope"></i><small>Following</small><strong>2</strong></span>
+          <span><i data-lucide="circle-check-big"></i><small>Resolved</small><strong>12</strong></span>
+        </div>
+      </section>
+
+      <div class="queue-layout">
+        <section class="queue-card">
+          <div class="queue-tabs" role="tablist" aria-label="Queue views">
+            <button class="queue-tab active" type="button" role="tab" aria-selected="true" data-tab="live">Live Queue <span id="liveCount">6</span></button>
+            <button class="queue-tab" type="button" role="tab" aria-selected="false" data-tab="scheduled">Scheduled <span>4</span></button>
+            <button class="queue-tab" type="button" role="tab" aria-selected="false" data-tab="completed">Completed <span>12</span></button>
+            <button class="queue-tab" type="button" role="tab" aria-selected="false" data-tab="skipped">Skipped / No-show <span>2</span></button>
+          </div>
+
+          <div class="queue-toolbar">
+            <div class="filter-chips" role="group" aria-label="Filter live queue">
+              <button class="filter-chip active" type="button" data-filter="all">All</button>
+              <button class="filter-chip" type="button" data-filter="ready">Ready</button>
+              <button class="filter-chip" type="button" data-filter="urgent">Urgent</button>
+              <button class="filter-chip" type="button" data-filter="delayed">Delayed</button>
+              <button class="filter-chip" type="button" data-filter="follow-up">Follow-up</button>
+            </div>
+            <div class="queue-search-tools">
+              <label class="queue-search">
+                <i data-lucide="search"></i>
+                <input id="queueSearch" type="search" placeholder="Search patient, token..." autocomplete="off">
+                <span class="sr-only">Search queue</span>
+              </label>
+              <button class="filter-button" id="resetFilters" type="button"><i data-lucide="list-filter"></i> Filters</button>
+            </div>
+          </div>
+
+          <div class="queue-table-wrap">
+            <table class="queue-table">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Patient</th>
+                  <th>Visit Details</th>
+                  <th>Arrived</th>
+                  <th>Waiting</th>
+                  <th>AI Priority</th>
+                  <th>Status</th>
+                  <th><span class="sr-only">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody id="queueTableBody"></tbody>
+            </table>
+            <div class="queue-empty" id="queueEmpty" hidden>
+              <span><i data-lucide="search-x"></i></span>
+              <strong>No patients found</strong>
+              <p>Try another filter or search term.</p>
+              <button type="button" id="clearEmptyState">Clear filters</button>
+            </div>
+          </div>
+
+          <section class="recent-card">
+            <div class="section-title-row">
+              <div><h2>Recently Completed</h2><p>Returned to queue when follow-up is still needed</p></div>
+              <button type="button" data-message="Showing all completed patients">View all</button>
+            </div>
+            <div class="recent-patient" id="recentPatient">
+              <span class="token token-blue">A-014</span>
+              <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&amp;fit=crop&amp;w=96&amp;h=96&amp;q=80" alt="">
+              <span class="patient-copy"><strong>Priya Sharma</strong><small>29 Y · Female</small></span>
+              <span><strong>Follow-up Visit</strong><small>6:20 PM - 6:38 PM · 18 min</small></span>
+              <span class="status-pill status-completed">Completed</span>
+              <button class="return-button" id="returnToQueue" type="button"><i data-lucide="rotate-ccw"></i> Return to Queue</button>
+            </div>
+          </section>
+        </section>
+
+        <aside class="queue-side">
+          <section class="assistant-card">
+            <div class="side-card-title">
+              <span class="assistant-title-icon"><i data-lucide="bot"></i></span>
+              <div><h2>AI Queue Assistant</h2><p>Live recommendations</p></div>
+              <i class="sparkle-icon" data-lucide="sparkles"></i>
+            </div>
+
+            <div class="assistant-alert danger-alert">
+              <span><i data-lucide="triangle-alert"></i></span>
+              <p><strong>Urgent priority</strong>Move Token A-018 ahead because of breathing difficulty.</p>
+            </div>
+            <div class="assistant-alert warning-alert">
+              <span><i data-lucide="clock-3"></i></span>
+              <p><strong>Patient not arrived</strong>Token A-012 has not arrived; temporarily skip.</p>
+            </div>
+            <div class="assistant-alert info-alert">
+              <span><i data-lucide="timer"></i></span>
+              <p><strong>Consultation running late</strong>Current consultation is 18 minutes over.</p>
+            </div>
+            <div class="assistant-alert success-alert">
+              <span><i data-lucide="users-round"></i></span>
+              <p><strong>Two follow-up patients</strong>These may require less than 10 minutes.</p>
+            </div>
+
+            <button class="suggested-patient" id="suggestedPatient" type="button">
+              <span><small>Suggested next patient</small><strong>Sandeep Roy · A-018</strong></span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+            <div class="assistant-actions">
+              <button class="primary-action" id="applySuggestion" type="button"><i data-lucide="sparkles"></i> Apply Suggestion</button>
+              <button class="secondary-action" id="reviewQueue" type="button"><i data-lucide="list-checks"></i> Review Queue</button>
+            </div>
+          </section>
+
+        </aside>
+      </div>
+
+      <p class="auto-refresh"><i data-lucide="refresh-cw"></i> Queue auto refresh in <strong id="refreshCountdown">30</strong> sec</p>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span><i data-lucide="circle-check-big"></i></span>
+    <p id="toastMessage">Queue updated</p>
+    <button id="closeToast" type="button" aria-label="Dismiss notification"><i data-lucide="x"></i></button>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/ai-queue.js"></script>
+  <script src="assets/js/doctor-dashboard-sidebar.js"></script>
+</body>
+</html>

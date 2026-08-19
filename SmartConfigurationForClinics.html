@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Add doctors individually or import them from Excel for a Divinexa Clinic Plan.">
+  <title>Divinexa - Add Doctors</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/clinic-setup-for-clinics.css">
+  <link rel="stylesheet" href="assets/css/setup-tour-shell.css">
+  <link rel="stylesheet" href="assets/css/smart-configuration-for-clinics.css">
+  <link rel="stylesheet" href="assets/css/setup-form-controls.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="setup-tour-page clinic-doctor-page" data-setup-step="3">
+  <header class="topbar"></header>
+
+  <div class="page-shell">
+    <aside class="tour-sidebar" aria-label="Setup tour"></aside>
+
+    <main class="doctor-content">
+      <section class="panel doctor-intro" aria-labelledby="addDoctorsTitle">
+        <div>
+          <span class="step-pill">Step 3 of 4</span>
+          <h1 id="addDoctorsTitle">Add Doctors</h1>
+          <p>Add doctors one by one with their basic details, or upload your team from an Excel sheet.</p>
+        </div>
+        <div class="doctor-hero" aria-hidden="true">
+          <svg viewBox="0 0 240 135" fill="none">
+            <rect x="48" y="26" width="144" height="92" rx="17" fill="#E6F8F5"/>
+            <circle cx="120" cy="55" r="22" fill="#19AA9E"/>
+            <path d="M107 56h26M120 43v26" stroke="white" stroke-width="7" stroke-linecap="round"/>
+            <path d="M84 112c3-22 17-35 36-35s33 13 36 35" fill="white" stroke="#0A8E84" stroke-width="4"/>
+            <circle cx="56" cy="52" r="15" fill="#D8F4F0"/>
+            <path d="M36 94c2-16 10-27 20-27s19 11 21 27" fill="white" stroke="#62C7BE" stroke-width="3"/>
+            <circle cx="184" cy="52" r="15" fill="#D8F4F0"/>
+            <path d="M163 94c2-16 11-27 21-27s18 11 20 27" fill="white" stroke="#62C7BE" stroke-width="3"/>
+          </svg>
+        </div>
+      </section>
+
+      <div class="doctor-methods">
+        <section class="panel add-doctor-card" aria-labelledby="basicDoctorTitle">
+          <div class="card-heading">
+            <span class="heading-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="10" cy="8" r="4"></circle><path d="M3 21a7 7 0 0 1 14 0"></path><path d="M19 8v6M16 11h6"></path>
+              </svg>
+            </span>
+            <div><h2 id="basicDoctorTitle">Add Doctor — Basic Details</h2><p>Enter the minimum information needed to create a doctor profile.</p></div>
+          </div>
+
+          <form id="doctorForm">
+            <div class="doctor-field-grid">
+              <label class="field">
+                <span>Doctor Name <b>*</b></span>
+                <input id="doctorName" name="doctorName" required placeholder="e.g., Dr. Riya Sen" autocomplete="name">
+              </label>
+
+              <label class="field">
+                <span>Specialization <b>*</b></span>
+                <select id="doctorSpecialization" name="doctorSpecialization" required data-custom-select>
+                  <option value="">Select specialization</option>
+                  <option>General Physician</option>
+                  <option>Cardiologist</option>
+                  <option>Dermatologist</option>
+                  <option>Paediatrician</option>
+                  <option>Orthopaedic</option>
+                  <option>Gynaecologist</option>
+                  <option>ENT Specialist</option>
+                  <option>Other</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Medical Registration No. <b>*</b></span>
+                <input id="doctorRegistration" name="doctorRegistration" required placeholder="Enter registration number">
+              </label>
+
+              <label class="field">
+                <span>Mobile Number <b>*</b></span>
+                <span class="phone-control">
+                  <select id="doctorPhoneCode" name="doctorPhoneCode" aria-label="Country code" data-custom-select>
+                    <option>+91</option><option>+1</option><option>+44</option>
+                  </select>
+                  <input id="doctorPhone" name="doctorPhone" type="tel" required inputmode="tel" placeholder="Enter mobile number" autocomplete="tel">
+                </span>
+              </label>
+
+              <label class="field">
+                <span>Email Address <b>*</b></span>
+                <input id="doctorEmail" name="doctorEmail" type="email" required placeholder="doctor@example.com" autocomplete="email">
+              </label>
+
+              <label class="field">
+                <span>Qualification</span>
+                <input id="doctorQualification" name="doctorQualification" placeholder="e.g., MBBS, MD">
+              </label>
+
+              <label class="field">
+                <span>Experience (Years)</span>
+                <input id="doctorExperience" name="doctorExperience" type="number" min="0" max="70" placeholder="e.g., 8">
+              </label>
+
+              <label class="field">
+                <span>Assign Clinic <b>*</b></span>
+                <select id="doctorClinic" name="doctorClinic" required multiple data-custom-multiselect data-placeholder="Select clinics">
+                  <option>City Health Clinic</option>
+                  <option>Wellness Care Center</option>
+                  <option>LifePlus Clinic</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="doctor-form-actions">
+              <button class="button button-outline" id="clearDoctorForm" type="button">Clear</button>
+              <button class="button button-primary" type="submit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="4"></circle><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"></path></svg>
+                Add Doctor
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel excel-card" aria-labelledby="excelUploadTitle">
+          <div class="card-heading">
+            <span class="heading-symbol excel-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M8 13l4 5M12 13l-4 5"></path>
+              </svg>
+            </span>
+            <div><h2 id="excelUploadTitle">Upload Doctors from Excel</h2><p>Import several doctors together using the provided format.</p></div>
+          </div>
+
+          <div class="excel-dropzone" id="excelDropzone">
+            <span class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path></svg>
+            </span>
+            <strong>Drop your Excel file here</strong>
+            <p>or choose a file from your computer</p>
+            <button class="button button-outline" id="chooseExcelFile" type="button">Choose Excel File</button>
+            <input id="excelFileInput" type="file" accept=".xlsx,.xls,.csv" hidden>
+            <small>XLSX, XLS or CSV · maximum 5 MB</small>
+          </div>
+
+          <div class="selected-file" id="selectedFile" hidden>
+            <span class="file-type">XLS</span>
+            <span><strong id="selectedFileName"></strong><small id="selectedFileSize"></small></span>
+            <button id="removeSelectedFile" type="button" aria-label="Remove selected file">×</button>
+          </div>
+
+          <div class="excel-actions">
+            <button class="sample-button" id="downloadDoctorTemplate" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+              Download Sample Excel
+            </button>
+            <button class="button button-primary" id="importDoctors" type="button" disabled>Import Doctors</button>
+          </div>
+
+          <div class="column-guide">
+            <strong>Required columns</strong>
+            <span>Doctor Name</span><span>Specialization</span><span>Registration No.</span><span>Mobile</span><span>Email</span><span>Clinic</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel doctors-list-card" aria-labelledby="doctorsListTitle">
+        <div class="list-heading">
+          <div><h2 id="doctorsListTitle">Doctors Added</h2><p>Review doctors included in this clinic account.</p></div>
+          <span class="doctor-count"><strong id="doctorCount">0</strong> Doctors</span>
+        </div>
+        <div class="doctor-table-wrap">
+          <table class="doctor-table">
+            <thead><tr><th>Doctor</th><th>Specialization</th><th>Registration</th><th>Clinic</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="doctorRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <aside class="right-sidebar doctor-right-sidebar">
+      <section class="panel doctor-overview">
+        <div class="right-heading"><h2>Doctor Setup</h2><span id="doctorPlanLabel">Clinic Plan</span></div>
+        <div class="overview-list">
+          <div><span class="overview-icon">✓</span><span>Doctors Added</span><strong id="overviewDoctorCount">0</strong></div>
+          <div><span class="overview-icon">⌂</span><span>Clinic Locations</span><strong>3</strong></div>
+          <div><span class="overview-icon">↑</span><span>Excel Imports</span><strong id="importCount">0</strong></div>
+        </div>
+      </section>
+
+      <section class="panel doctor-guide">
+        <h2>Two Easy Ways</h2>
+        <ol>
+          <li><span>1</span><div><strong>Add individually</strong><small>Best for one or two doctors.</small></div></li>
+          <li><span>2</span><div><strong>Upload Excel</strong><small>Best for adding a full doctor team.</small></div></li>
+          <li><span>3</span><div><strong>Review details</strong><small>You can edit profiles later.</small></div></li>
+        </ol>
+      </section>
+
+      <section class="panel doctor-help">
+        <h2>Need Help?</h2>
+        <p>Download the sample file to see the correct Excel column format.</p>
+        <button class="button button-outline" id="doctorSupport" type="button">Chat with Support</button>
+      </section>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/setup-tour-common.js"></script>
+  <script src="assets/js/setup-form-controls.js"></script>
+  <script src="assets/js/smart-configuration-for-clinics.js"></script>
+</body>
+</html>

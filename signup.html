@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your Divinexa clinical staff management account">
+  <title>Create Account — Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/login.css">
+  <link rel="stylesheet" href="assets/css/signup.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="login-body signup-body">
+  <main class="login-layout signup-layout">
+    <section class="login-showcase signup-showcase" aria-labelledby="signupShowcaseTitle">
+      <div class="showcase-orb orb-one" aria-hidden="true"></div><div class="showcase-orb orb-two" aria-hidden="true"></div>
+      <div class="showcase-dots dots-top" aria-hidden="true"></div><div class="showcase-dots dots-middle" aria-hidden="true"></div>
+      <a class="login-brand" href="index.html" aria-label="Divinexa dashboard">
+        <span class="login-brand-icon" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Clinical Staff Management<br>SaaS Platform</small></span>
+      </a>
+      <div class="showcase-copy signup-copy">
+        <h1 id="signupShowcaseTitle">Create Your Account<br><span>Let’s Get You Started!</span></h1>
+        <i class="headline-rule" aria-hidden="true"></i>
+        <p>Join Divinexa and simplify your reception<br>operations, manage staff, appointments<br>and patients seamlessly.</p>
+      </div>
+      <ul class="login-features signup-features" aria-label="Divinexa benefits">
+        <li><span><i data-lucide="users-round"></i></span>Smart Reception Management</li>
+        <li><span><i data-lucide="calendar-clock"></i></span>Appointment &amp; Queue Tracking</li>
+        <li><span><i data-lucide="user-round-plus"></i></span>Staff &amp; Shift Management</li>
+        <li><span><i data-lucide="chart-no-axes-combined"></i></span>Reports &amp; Analytics</li>
+        <li><span><i data-lucide="shield-check"></i></span>Secure &amp; Reliable Platform</li>
+      </ul>
+      <div class="signup-reception-scene" aria-hidden="true"><img src="assets/images/signup-reception.png" alt=""></div>
+      <article class="login-metric signup-metric metric-signup-queue" aria-label="Patients in queue: 24"><span>Patients In Queue</span><strong>24</strong><small>Total</small><canvas data-values="11,12,17,12,16,13,17"></canvas><i data-lucide="users-round"></i></article>
+      <article class="login-metric signup-metric metric-signup-appointments" aria-label="Today's appointments: 18"><span>Today’s Appointments</span><strong>18</strong><small>Total</small><canvas data-values="9,11,16,10,14,11,13,12"></canvas><i data-lucide="calendar-check-2"></i></article>
+      <article class="login-metric signup-metric metric-signup-wait" aria-label="Average wait time: 18 minutes"><span>Avg. Wait Time</span><strong>18 <em>mins</em></strong><canvas data-values="8,15,10,17,11,14,9"></canvas><i data-lucide="clock-3"></i></article>
+    </section>
+
+    <section class="auth-panel signup-panel" aria-labelledby="signupTitle">
+      <div class="auth-card signup-card">
+        <div class="signup-avatar" aria-hidden="true"><i data-lucide="user-round-plus"></i></div>
+        <div class="auth-heading signup-heading"><h2 id="signupTitle">Create Your Account</h2><p>Fill in the details below to get started</p></div>
+        <form class="signup-form" id="signupForm" novalidate>
+          <div class="signup-row">
+            <div class="form-field"><label for="fullName">Full Name</label><div class="input-control"><i data-lucide="user-round"></i><input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Enter your full name" aria-describedby="fullNameError"></div><small class="field-error" id="fullNameError" aria-live="polite"></small></div>
+            <div class="form-field"><label for="signupEmail">Email Address</label><div class="input-control"><i data-lucide="mail"></i><input id="signupEmail" name="email" type="email" autocomplete="email" placeholder="Enter your email" aria-describedby="signupEmailError"></div><small class="field-error" id="signupEmailError" aria-live="polite"></small></div>
+          </div>
+          <div class="signup-row">
+            <div class="form-field"><label for="phoneNumber">Phone Number</label><div class="input-control"><i data-lucide="phone"></i><input id="phoneNumber" name="phone" type="tel" autocomplete="tel" placeholder="Enter your phone number" aria-describedby="phoneNumberError"></div><small class="field-error" id="phoneNumberError" aria-live="polite"></small></div>
+            <div class="form-field auth-date-field">
+              <label for="dateOfBirth">Date of Birth</label>
+              <div class="input-control auth-date-trigger" data-auth-date-picker>
+                <i data-lucide="calendar-days"></i>
+                <input id="dateOfBirth" name="dateOfBirth" type="text" inputmode="none" placeholder="dd/mm/yyyy" readonly aria-describedby="dateOfBirthError" aria-haspopup="dialog" aria-expanded="false">
+              </div>
+              <div class="auth-date-calendar" role="dialog" aria-label="Choose date of birth" hidden></div>
+              <small class="field-error" id="dateOfBirthError" aria-live="polite"></small>
+            </div>
+          </div>
+          <div class="form-field"><label for="signupPassword">Password</label><div class="input-control"><i data-lucide="lock-keyhole"></i><input id="signupPassword" name="password" type="password" autocomplete="new-password" placeholder="Create a password" aria-describedby="signupPasswordError"><button class="password-toggle" type="button" data-password-toggle="signupPassword" aria-label="Show password"><i data-lucide="eye"></i></button></div><small class="field-error" id="signupPasswordError" aria-live="polite"></small></div>
+          <div class="form-field"><label for="confirmPassword">Confirm Password</label><div class="input-control"><i data-lucide="lock-keyhole"></i><input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Confirm your password" aria-describedby="confirmPasswordError"><button class="password-toggle" type="button" data-password-toggle="confirmPassword" aria-label="Show password"><i data-lucide="eye"></i></button></div><small class="field-error" id="confirmPasswordError" aria-live="polite"></small></div>
+          <div class="form-field"><label id="roleLabel" for="role">Role</label><div class="input-control select-control role-select-control"><i data-lucide="briefcase-business"></i><select id="role" name="role" aria-describedby="roleError"><option value="">Select your role</option><option>Reception Supervisor</option><option>Front Desk Executive</option><option>Patient Coordinator</option><option>Clinical Staff</option><option>Administrator</option></select><i class="native-select-chevron" data-lucide="chevron-down"></i></div><small class="field-error" id="roleError" aria-live="polite"></small></div>
+          <label class="terms-control"><input id="termsAccepted" type="checkbox"><span aria-hidden="true"><i data-lucide="check"></i></span><span>I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a></span></label>
+          <small class="field-error terms-error" id="termsError" aria-live="polite"></small>
+          <button class="sign-in-button signup-button" id="createAccountButton" type="submit"><span>Create Account</span><i data-lucide="arrow-right"></i></button>
+        </form>
+        <div class="login-divider signup-divider"><span>or sign up with</span></div>
+        <div class="social-signup">
+          <button class="google-button" type="button" data-toast="Google signup is ready to connect."><span class="google-g">G</span>Sign up with Google</button>
+          <button class="google-button" type="button" data-toast="Microsoft signup is ready to connect."><span class="microsoft-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Sign up with Microsoft</button>
+        </div>
+        <p class="signup-login-link">Already have an account? <a href="login.html">Sign In</a></p>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check-big"></i><span></span></div>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/common-date-picker.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/signup.js"></script>
+</body>
+</html>

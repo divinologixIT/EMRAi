@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI-assisted doctor recommendations from Divinexa.">
+  <title>Divinexa - Recommended Doctors</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #10243f;
+      --muted: #677994;
+      --line: #dce8ea;
+      --soft: #f4fbfa;
+      --teal: #0a9b8f;
+      --teal-dark: #007f76;
+      --teal-light: #e9f8f6;
+      --gold: #ffb100;
+      --purple: #6857d9;
+      --shadow: 0 14px 38px rgba(25, 70, 76, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 4% 4%, rgba(22, 177, 164, 0.08), transparent 23%),
+        #fff;
+      font-family: "DM Sans", Arial, sans-serif;
+      font-size: 13px;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 1000;
+      top: 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 7px 22px rgba(25, 70, 76, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .page-shell {
+      width: min(1440px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .header-inner {
+      width: min(100% - 64px, 1360px);
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      margin-inline: auto;
+    }
+
+    .brand {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--teal-dark);
+    }
+
+    .brand-mark {
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #4dc6b9, #078b80);
+      box-shadow: 0 8px 18px rgba(10, 148, 136, 0.22);
+      transform: rotate(45deg);
+    }
+
+    .brand-mark svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 3;
+      transform: rotate(-45deg);
+    }
+
+    .brand-copy {
+      display: grid;
+      line-height: 1.02;
+    }
+
+    .brand-copy strong {
+      color: var(--teal-dark);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-copy small {
+      margin-top: 4px;
+      color: #44576a;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .main-nav {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(20px, 2.8vw, 46px);
+    }
+
+    .main-nav a {
+      position: relative;
+      padding: 28px 0;
+      color: #425368;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: 18px;
+      left: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--teal);
+      content: "";
+      opacity: 0;
+      transform: scaleX(0.25);
+      transition: 180ms ease;
+    }
+
+    .main-nav a:hover,
+    .main-nav a:focus-visible,
+    .main-nav a.active {
+      color: var(--teal-dark);
+    }
+
+    .main-nav a:hover::after,
+    .main-nav a:focus-visible::after,
+    .main-nav a.active::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .auth-button {
+      min-height: 43px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+      border: 1px solid #b8dedb;
+      border-radius: 9px;
+      color: var(--teal-dark);
+      background: #f9ffff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .auth-button.primary {
+      color: #fff;
+      border-color: var(--teal);
+      background: linear-gradient(135deg, #11a99c, #06867c);
+      box-shadow: 0 9px 20px rgba(5, 134, 124, 0.19);
+    }
+
+    .mobile-menu {
+      width: 43px;
+      height: 43px;
+      display: none;
+      place-items: center;
+      margin-left: auto;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .mobile-auth {
+      display: none;
+    }
+
+    .mobile-nav-overlay {
+      position: fixed;
+      z-index: 55;
+      inset: 0;
+      display: none;
+      background: rgba(13, 32, 44, 0.45);
+      backdrop-filter: blur(3px);
+    }
+
+    .mobile-nav-overlay.show {
+      display: block;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    .page-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 22px;
+      padding: 18px 0 28px;
+    }
+
+    .left-column {
+      min-width: 0;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 4px 18px rgba(25, 70, 76, 0.035);
+    }
+
+    .finder-card {
+      overflow: visible;
+    }
+
+    .progress-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .progress-tab {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      color: #51647f;
+      border-right: 1px solid #edf2f3;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .progress-tab:last-child {
+      border-right: 0;
+    }
+
+    .progress-tab b {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #aebbc8;
+      border-radius: 50%;
+      font-size: 9px;
+    }
+
+    .progress-tab.active {
+      color: var(--ink);
+      background: linear-gradient(180deg, #fff, #f9fcfc);
+    }
+
+    .progress-tab.active b {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .finder-body {
+      padding: 10px 18px 11px;
+    }
+
+    .concern-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 185px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .concern-field {
+      min-height: 43px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px;
+      border: 1px solid #d4e3e5;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .concern-field label {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .concern-field small {
+      display: block;
+      margin-bottom: 2px;
+      color: #74839a;
+      font-size: 9px;
+    }
+
+    .concern-field input {
+      width: 100%;
+      padding: 0;
+      color: var(--ink);
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 13px;
+    }
+
+    .mic-button {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      color: var(--teal-dark);
+      border: 0;
+      border-radius: 8px;
+      background: var(--teal-light);
+      cursor: pointer;
+    }
+
+    .mic-button svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .primary-button {
+      min-height: 43px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 17px;
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #18aa9d, #07877f);
+      box-shadow: 0 10px 22px rgba(7, 135, 126, 0.16);
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .primary-button svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .concern-row .primary-button {
+      height: 43px;
+      min-height: 43px;
+      align-self: center;
+    }
+
+    .concern-row .primary-button svg {
+      transform-origin: center;
+      animation: ai-sparkle 1.8s ease-in-out infinite;
+    }
+
+    .home-tools {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 9px;
+    }
+
+    .home-tool {
+      min-width: 0;
+      min-height: 49px;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 10px;
+      color: var(--ink);
+      border: 1px solid #dce8ea;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      text-align: left;
+      transition: 180ms ease;
+    }
+
+    .home-tool:hover,
+    .home-tool.active {
+      border-color: #82d1ca;
+      background: #f0faf8;
+      box-shadow: 0 8px 18px rgba(7, 134, 124, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .home-tool-icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--teal);
+      border-radius: 50%;
+      background: var(--teal-light);
+    }
+
+    .home-tool-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .home-tool strong,
+    .home-tool small {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .home-tool strong {
+      font-size: 11px;
+    }
+
+    .home-tool small {
+      margin-top: 3px;
+      color: #73839a;
+      font-size: 8.5px;
+    }
+
+    .home-tool-embed[hidden] {
+      display: none;
+    }
+
+    .home-tool-stage[hidden],
+    .external-ai-summary[hidden] {
+      display: none;
+    }
+
+    .home-tool-stage {
+      min-width: 0;
+      margin-top: 14px;
+    }
+
+    .home-tool-stage.has-summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .home-tool-embed {
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .home-tool-embed iframe {
+      width: 100%;
+      height: 180px;
+      display: block;
+      border: 0;
+      background: #fff;
+      transition: height 180ms ease;
+    }
+
+    .external-ai-summary {
+      min-width: 0;
+      position: sticky;
+      top: 88px;
+      padding: 16px;
+      border: 1px solid #d8e7e8;
+      border-radius: 11px;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(24, 73, 84, 0.08);
+    }
+
+    .external-summary-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: #008b82;
+      font-size: 15px;
+    }
+
+    .external-summary-title svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .external-summary-title small {
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .external-summary-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .external-summary-row {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .external-summary-row > span {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: #079b91;
+      border-radius: 50%;
+      background: #eaf8f6;
+    }
+
+    .external-summary-row svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .external-summary-row small,
+    .external-summary-row strong {
+      display: block;
+    }
+
+    .external-summary-row small {
+      color: #75879c;
+      font-size: 9px;
+    }
+
+    .external-summary-row strong {
+      margin-top: 2px;
+      color: #082a45;
+      font-size: 11px;
+    }
+
+    .external-summary-note {
+      margin: 13px 0 0;
+      padding: 11px;
+      color: #007e76;
+      border: 1px solid #b6e0dc;
+      border-radius: 8px;
+      background: #effaf8;
+      font-size: 9.5px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .analysis-banner {
+      min-height: 84px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      align-items: center;
+      gap: 18px;
+      margin-top: 15px;
+      padding: 14px 18px;
+      background: linear-gradient(110deg, #f5fcfb, #fff);
+    }
+
+    .analysis-copy,
+    .specialty-match {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .round-icon {
+      width: 39px;
+      height: 39px;
+      flex: 0 0 39px;
+      display: grid;
+      place-items: center;
+      color: var(--teal);
+      border-radius: 50%;
+      background: var(--teal-light);
+    }
+
+    .round-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .analysis-copy strong,
+    .analysis-copy small,
+    .specialty-match strong,
+    .specialty-match small {
+      display: block;
+    }
+
+    .analysis-copy strong {
+      color: var(--teal-dark);
+      font-size: 12px;
+    }
+
+    .analysis-copy small {
+      margin: 3px 0 6px;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .symptom-tags,
+    .doctor-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .symptom-tag,
+    .doctor-tag {
+      padding: 4px 9px;
+      color: #456078;
+      border-radius: 999px;
+      background: #eef5f5;
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .symptom-tag.teal {
+      color: var(--teal-dark);
+      background: #dff5f1;
+    }
+
+    .specialty-match {
+      justify-self: end;
+    }
+
+    .specialty-match small {
+      color: var(--muted);
+      font-size: 8.5px;
+    }
+
+    .specialty-match strong {
+      margin-top: 4px;
+      color: var(--teal-dark);
+      font-size: 13px;
+    }
+
+    .results-layout {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .filters {
+      align-self: start;
+      overflow: visible;
+      position: sticky;
+      top: 86px;
+    }
+
+    .filters-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .filters-header strong {
+      font-size: 15px;
+    }
+
+    .clear-filters {
+      padding: 0;
+      color: var(--teal-dark);
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+
+    .filter-body {
+      padding: 12px 15px 15px;
+    }
+
+    .filter-group + .filter-group {
+      margin-top: 18px;
+    }
+
+    .filter-group.has-dropdown {
+      position: relative;
+      z-index: 20;
+    }
+
+    .filter-group.has-dropdown.dropdown-open {
+      z-index: 150;
+    }
+
+    .filter-group.has-dropdown + .filter-group.has-dropdown {
+      margin-top: 12px;
+    }
+
+    .filter-group.has-dropdown .filter-title {
+      margin-bottom: 6px;
+    }
+
+    .filter-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .filter-title span {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .filter-chip {
+      min-height: 30px;
+      padding: 6px 10px;
+      color: #53677f;
+      border: 1px solid #d9e6e8;
+      border-radius: 7px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .filter-chip.active {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .check-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .check-item {
+      display: grid;
+      grid-template-columns: 16px 20px 1fr;
+      align-items: center;
+      gap: 7px;
+      color: #51647c;
+      font-size: 11px;
+    }
+
+    .check-item input {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--teal);
+    }
+
+    .check-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal);
+    }
+
+    .range {
+      width: 100%;
+      accent-color: var(--teal);
+    }
+
+    .outline-button {
+      min-height: 37px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 8px 13px;
+      color: var(--teal-dark);
+      border: 1px solid #63c1ba;
+      border-radius: 7px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .apply-filters {
+      width: 100%;
+      margin-top: 17px;
+    }
+
+    .doctor-list-header {
+      min-height: 43px;
+      display: grid;
+      grid-template-columns: 1fr auto 180px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .doctor-list-header h2 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .doctor-list-header > span {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .sort-field {
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      position: relative;
+      padding: 6px 9px 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .sort-field > span {
+      color: var(--muted);
+      font-size: 8px;
+      white-space: nowrap;
+    }
+
+    .sort-select > select {
+      display: none;
+    }
+
+    .sort-select {
+      min-width: 126px;
+      position: relative;
+      flex: 1;
+    }
+
+    .sort-trigger {
+      width: 100%;
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0;
+      color: var(--ink);
+      border: 0;
+      outline: 0;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .sort-trigger [data-ui-select-value] {
+      min-width: 0;
+      display: block;
+      overflow: hidden;
+      color: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sort-trigger svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+      transition: transform 160ms ease;
+    }
+
+    .sort-select.open .sort-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    .sort-trigger:focus-visible {
+      border-radius: 5px;
+      outline: 3px solid rgba(10, 148, 136, 0.18);
+      outline-offset: 3px;
+    }
+
+    .sort-menu {
+      width: 210px;
+      position: absolute;
+      z-index: 120;
+      top: calc(100% + 8px);
+      right: -9px;
+      overflow: hidden;
+      padding: 4px 0;
+      border: 1px solid #d2e1e3;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 20px 42px rgba(29, 63, 72, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-7px);
+      transition: opacity 150ms ease, transform 150ms ease, visibility 150ms ease;
+      visibility: hidden;
+    }
+
+    .sort-select.open .sort-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    .sort-option {
+      width: 100%;
+      min-height: 39px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 12px;
+      color: var(--ink);
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 11px;
+      text-align: left;
+    }
+
+    .sort-option:hover,
+    .sort-option:focus-visible {
+      color: var(--teal-dark);
+      outline: 0;
+      background: #f1faf9;
+    }
+
+    .sort-option.selected {
+      color: var(--teal);
+      background: linear-gradient(90deg, #eaf9f7, #f2fbfa);
+      font-weight: 800;
+    }
+
+    .sort-option svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0;
+      stroke-width: 2.5;
+    }
+
+    .sort-option.selected svg {
+      opacity: 1;
+    }
+
+    .filter-select {
+      width: 100%;
+      min-width: 0;
+      padding: 4px 8px;
+      border: 1px solid #d9e6e8;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .filter-select .sort-trigger {
+      min-height: 24px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    .filter-select .sort-menu {
+      width: 100%;
+      min-width: 200px;
+      top: calc(100% + 9px);
+      right: 0;
+      border-radius: 11px;
+    }
+
+    .filter-select .sort-option {
+      min-height: 43px;
+      padding: 9px 13px;
+      font-size: 13px;
+    }
+
+    .doctor-results {
+      display: grid;
+      gap: 9px;
+    }
+
+    .doctor-result {
+      min-height: 128px;
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr) 310px 34px;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(25, 70, 76, 0.035);
+    }
+
+    .doctor-result img {
+      width: 104px;
+      height: 104px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #f1f6f6;
+    }
+
+    .doctor-name-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .doctor-name-row h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .verified {
+      width: 15px;
+      height: 15px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .verified svg {
+      width: 10px;
+      height: 10px;
+      stroke-width: 3;
+    }
+
+    .doctor-subline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 5px;
+      color: #51647c;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+
+    .rating,
+    .location-line {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 6px;
+      color: #62758c;
+      font-size: 10px;
+    }
+
+    .rating svg {
+      width: 13px;
+      height: 13px;
+      color: var(--gold);
+      fill: var(--gold);
+    }
+
+    .location-line svg {
+      width: 11px;
+      height: 11px;
+    }
+
+    .doctor-tags {
+      margin-top: 7px;
+    }
+
+    .doctor-tag {
+      font-size: 9.5px;
+      font-weight: 600;
+    }
+
+    .doctor-meta-box {
+      min-width: 0;
+    }
+
+    .availability {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--teal-dark);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .time-chip {
+      padding: 4px 8px;
+      color: #32526e;
+      border-radius: 6px;
+      background: #e6f3fb;
+      font-size: 9.5px;
+    }
+
+    .fee-row {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .fee-row strong,
+    .fee-row small {
+      display: block;
+    }
+
+    .fee-row strong {
+      font-size: 15px;
+    }
+
+    .fee-row small {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 8.5px;
+    }
+
+    .visit-types {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+      color: #4f647d;
+      font-size: 9px;
+    }
+
+    .visit-types span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .visit-types svg {
+      width: 12px;
+      height: 12px;
+      color: var(--teal);
+    }
+
+    .doctor-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 11px;
+    }
+
+    .doctor-actions button {
+      min-height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .view-profile {
+      color: var(--teal-dark);
+      border: 1px solid #54bdb5;
+      background: #fff;
+    }
+
+    .book-now {
+      color: #fff;
+      border: 1px solid var(--teal);
+      background: linear-gradient(135deg, #18aa9d, #07877f);
+    }
+
+    .favorite {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      align-self: start;
+      padding: 0;
+      color: #7b8ea8;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .favorite svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .favorite.active {
+      color: var(--teal);
+    }
+
+    .favorite.active svg {
+      fill: currentColor;
+    }
+
+    .view-more-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .view-more-doctors {
+      min-width: 170px;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 18px;
+      color: #087f77;
+      border: 1px solid #70cbc4;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 800;
+      transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .view-more-doctors:hover {
+      color: #fff;
+      background: var(--teal);
+      box-shadow: 0 8px 18px rgba(10, 148, 136, 0.18);
+    }
+
+    .view-more-doctors svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .view-more-doctors:disabled {
+      color: #71869a;
+      border-color: #d6e4e6;
+      background: #f7fafb;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .right-column {
+      display: grid;
+      align-content: start;
+      gap: 18px;
+    }
+
+    .side-card {
+      padding: 18px;
+    }
+
+    .side-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .side-title h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .side-card > p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .health-summary-copy {
+      margin-top: 18px !important;
+      color: #415874 !important;
+    }
+
+    .side-subtitle {
+      margin: 24px 0 12px;
+      color: var(--teal-dark);
+      font-size: 13px;
+    }
+
+    .next-steps {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .next-steps li {
+      display: flex;
+      align-items: start;
+      gap: 9px;
+      color: #425874;
+      font-size: 11px;
+    }
+
+    .next-steps svg {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      color: var(--teal);
+    }
+
+    .quick-booking {
+      background: linear-gradient(155deg, #f7fcfb, #fff);
+    }
+
+    .booking-steps {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .booking-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .booking-step:not(:last-child)::after {
+      width: 1px;
+      height: 18px;
+      position: absolute;
+      top: 34px;
+      left: 17px;
+      border-left: 2px dotted #c9dcde;
+      content: "";
+    }
+
+    .booking-step b {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--teal-light);
+      font-size: 13px;
+    }
+
+    .booking-step strong,
+    .booking-step small {
+      display: block;
+    }
+
+    .booking-step strong {
+      font-size: 11px;
+    }
+
+    .booking-step small {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .book-appointment {
+      width: 100%;
+      margin-top: 19px;
+    }
+
+    .help-card {
+      min-height: 175px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(140deg, #fff, #f5f1ff);
+    }
+
+    .help-card::after {
+      width: 90px;
+      height: 90px;
+      position: absolute;
+      right: 16px;
+      bottom: 10px;
+      border: 11px solid rgba(104, 87, 217, 0.22);
+      border-top-color: transparent;
+      border-radius: 50%;
+      content: "";
+    }
+
+    .help-card h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .help-card p {
+      max-width: 165px;
+      margin: 8px 0 16px;
+      color: #53647d;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .help-card .outline-button {
+      position: relative;
+      z-index: 1;
+      color: var(--purple);
+      border-color: #9488e8;
+    }
+
+    .disclaimer {
+      grid-column: 1 / -1;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 2px;
+      color: #60738a;
+      border-radius: 9px;
+      background: #f7fbfb;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .disclaimer svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 100;
+      right: 22px;
+      bottom: 22px;
+      max-width: min(380px, calc(100vw - 44px));
+      padding: 13px 16px;
+      color: #fff;
+      border-radius: 9px;
+      background: #153b42;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(16px);
+      transition: 180ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes ai-sparkle {
+      0%,
+      100% {
+        opacity: 0.72;
+        transform: rotate(0deg) scale(0.88);
+      }
+      50% {
+        opacity: 1;
+        transform: rotate(12deg) scale(1.16);
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .main-nav {
+        gap: 15px;
+      }
+
+      .main-nav a:nth-child(5),
+      .main-nav a:nth-child(6) {
+        display: none;
+      }
+
+      .doctor-result {
+        grid-template-columns: 92px minmax(0, 1fr) 260px 30px;
+      }
+
+      .doctor-result img {
+        width: 92px;
+        height: 100px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .header-actions {
+        display: none;
+      }
+
+      .main-nav {
+        width: min(340px, 86vw);
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        position: fixed;
+        z-index: 70;
+        top: 0;
+        right: 0;
+        padding: 88px 27px 30px;
+        background: #fff;
+        box-shadow: -20px 0 45px rgba(13, 50, 57, 0.18);
+        transform: translateX(105%);
+        transition: transform 220ms ease;
+      }
+
+      .main-nav.open {
+        transform: translateX(0);
+      }
+
+      .main-nav a {
+        padding: 15px 7px;
+        border-bottom: 1px solid #edf3f4;
+        font-size: 14px;
+      }
+
+      .main-nav a::after {
+        display: none;
+      }
+
+      .main-nav .mobile-auth {
+        display: flex;
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .main-nav .mobile-auth a {
+        flex: 1;
+        justify-content: center;
+        padding: 12px;
+        border: 1px solid #b8dedb;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .main-nav .mobile-auth a:last-child {
+        color: #fff;
+        border-color: var(--teal);
+        background: var(--teal);
+      }
+
+      .mobile-menu {
+        display: grid;
+      }
+
+      .page-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .right-column {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .filters {
+        position: static;
+      }
+
+      .home-tool-stage.has-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .external-ai-summary {
+        position: static;
+        padding: 16px;
+        border-top: 1px solid #d8e7e8;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .header-inner,
+      .page-shell {
+        width: min(100% - 26px, 700px);
+      }
+
+      .progress-tabs {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-tab:not(.active) {
+        display: none;
+      }
+
+      .concern-row,
+      .analysis-banner,
+      .results-layout,
+      .right-column {
+        grid-template-columns: 1fr;
+      }
+
+      .home-tools {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .specialty-match {
+        justify-self: start;
+      }
+
+      .filters {
+        display: block;
+        position: static;
+      }
+
+      .doctor-list-header {
+        grid-template-columns: 1fr auto;
+      }
+
+      .doctor-list-header > span {
+        display: none;
+      }
+
+      .doctor-result {
+        grid-template-columns: 82px minmax(0, 1fr) 30px;
+      }
+
+      .doctor-result img {
+        width: 82px;
+        height: 92px;
+      }
+
+      .doctor-meta-box {
+        grid-column: 1 / -1;
+        padding-top: 8px;
+        border-top: 1px solid #edf2f3;
+      }
+
+      .favorite {
+        grid-column: 3;
+        grid-row: 1;
+      }
+
+      .right-column {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        min-width: 0;
+      }
+
+      .brand-copy strong {
+        font-size: 18px;
+      }
+
+      .home-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .doctor-list-header {
+        grid-template-columns: 1fr;
+      }
+
+      .sort-field {
+        width: 100%;
+      }
+
+      .doctor-result {
+        grid-template-columns: 74px minmax(0, 1fr) 28px;
+        gap: 9px;
+        padding: 9px;
+      }
+
+      .doctor-result img {
+        width: 74px;
+        height: 86px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .concern-row .primary-button svg {
+        animation: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+  <link rel="stylesheet" href="assets/css/mobile-nav-dropdown.css?v=20260818-1">
+  <script defer src="assets/js/mobile-nav-dropdown.js?v=20260818-1"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="home.html" aria-label="Divinexa home">
+        <span class="brand-mark"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Patient Portal</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+        <a href="home.html">Home</a>
+        <a class="active" href="doctors.html">Find Doctors</a>
+        <a href="schedule.html">My Schedule</a>
+        <a href="home.html#about">About Us</a>
+        <a href="mailto:support@cliniflow.example">Contact</a>
+        <span class="mobile-auth">
+          <a href="patient-login.html">Login</a>
+          <a href="patient-registration.html">Register</a>
+        </span>
+      </nav>
+      <div class="header-actions">
+        <a class="auth-button" href="patient-login.html">Login</a>
+        <a class="auth-button primary" href="patient-registration.html">Register</a>
+      </div>
+      <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Open navigation" aria-controls="mainNav" aria-expanded="false"><i data-lucide="menu"></i></button>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true"></div>
+
+  <main class="page-shell">
+    <div class="left-column">
+      <section class="card finder-card" aria-label="AI doctor search">
+        <div class="progress-tabs">
+          <div class="progress-tab active"><b>1</b><span>Describe Your Concern</span></div>
+          <div class="progress-tab"><b>2</b><span>AI Analysis</span></div>
+          <div class="progress-tab"><b>3</b><span>Recommended Doctors</span></div>
+        </div>
+        <div class="finder-body">
+          <div class="concern-row">
+            <div class="concern-field">
+              <label>
+                <small>Describe your symptoms or concern</small>
+                <input id="concernInput" type="text" value="I have fever and headache since 2 days">
+              </label>
+              <button class="mic-button" type="button" aria-label="Use voice search"><i data-lucide="mic"></i></button>
+            </div>
+            <button class="primary-button" id="analyseButton" type="button">Analyze with AI <i data-lucide="sparkles"></i></button>
+          </div>
+
+          <div class="home-tools" aria-label="AI search options from home">
+            <button class="home-tool" type="button" data-tool="Health Check">
+              <span class="home-tool-icon"><i data-lucide="heart-pulse"></i></span>
+              <span><strong>Health Check</strong><small>Quick health analysis</small></span>
+            </button>
+            <button class="home-tool" type="button" data-tool="Voice Search">
+              <span class="home-tool-icon"><i data-lucide="mic"></i></span>
+              <span><strong>Voice Search</strong><small>Speak your symptoms</small></span>
+            </button>
+            <button class="home-tool" type="button" data-tool="Upload Report">
+              <span class="home-tool-icon"><i data-lucide="file-up"></i></span>
+              <span><strong>Upload Report</strong><small>Lab reports, X-ray, etc.</small></span>
+            </button>
+            <button class="home-tool" type="button" data-tool="Prescription">
+              <span class="home-tool-icon"><i data-lucide="notebook-tabs"></i></span>
+              <span><strong>Prescription</strong><small>Upload prescription</small></span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="home-tool-stage" id="homeToolStage" hidden>
+        <div class="home-tool-embed" id="homeToolEmbed">
+          <iframe
+            id="homeToolFrame"
+            title="Divinexa AI health tool"
+            src="home.html?embed=tool&amp;tool=Voice%20Search#home"
+            allow="camera *; microphone *"
+            scrolling="no"
+          ></iframe>
+        </div>
+
+        <aside class="external-ai-summary" id="externalAiSummary" aria-label="AI health summary" hidden>
+          <h2 class="external-summary-title"><i data-lucide="sparkles"></i>AI Summary <small>(Live Preview)</small></h2>
+          <div class="external-summary-list">
+            <div class="external-summary-row"><span><i data-lucide="hospital"></i></span><div><small>Department</small><strong data-summary-field="department">General Physician</strong></div></div>
+            <div class="external-summary-row"><span><i data-lucide="file-plus-2"></i></span><div><small>Main Complaint</small><strong data-summary-field="complaint">Lower Back Pain</strong></div></div>
+            <div class="external-summary-row"><span><i data-lucide="clock-3"></i></span><div><small>Duration</small><strong data-summary-field="duration">For last 2–3 Days</strong></div></div>
+            <div class="external-summary-row"><span><i data-lucide="rabbit"></i></span><div><small>Onset</small><strong data-summary-field="onset">Suddenly</strong></div></div>
+            <div class="external-summary-row"><span><i data-lucide="zap"></i></span><div><small>Pain Nature</small><strong data-summary-field="nature">Sharp</strong></div></div>
+            <div class="external-summary-row"><span><i data-lucide="gauge"></i></span><div><small>Pain Score</small><strong data-summary-field="score">7 / 10</strong></div></div>
+            <div class="external-summary-row"><span><i data-lucide="person-standing"></i></span><div><small>Radiation</small><strong data-summary-field="radiation">To Left Leg</strong></div></div>
+          </div>
+          <p class="external-summary-note">Complete remaining details for better AI analysis and accurate doctor recommendations.</p>
+        </aside>
+      </div>
+
+      <section class="card analysis-banner">
+        <div class="analysis-copy">
+          <span class="round-icon"><i data-lucide="shield-check"></i></span>
+          <div>
+            <strong>AI Analysis Complete</strong>
+            <small>We found the most suitable specialists for your condition.</small>
+            <div class="symptom-tags"><span class="symptom-tag teal">Fever</span><span class="symptom-tag teal">Headache</span><span class="symptom-tag">+1 more</span></div>
+          </div>
+        </div>
+        <div class="specialty-match">
+          <span class="round-icon"><i data-lucide="stethoscope"></i></span>
+          <div><small>Recommended Specialty</small><strong id="recommendedSpecialty">General Physician</strong></div>
+        </div>
+      </section>
+
+      <div class="results-layout">
+        <aside class="card filters" id="filters">
+          <div class="filters-header"><strong>Filters</strong><button class="clear-filters" id="clearFilters" type="button">Clear All</button></div>
+          <div class="filter-body">
+            <div class="filter-group has-dropdown">
+              <div class="filter-title">Department</div>
+              <div class="sort-select filter-select" data-ui-select data-source="departmentFilter">
+                <button class="sort-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span data-ui-select-value>All Departments</span><i data-lucide="chevron-down"></i>
+                </button>
+                <span class="sort-menu" role="listbox">
+                  <button class="sort-option selected" type="button" role="option" aria-selected="true" data-ui-select-option="All Departments"><span>All Departments</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Medicine"><span>Medicine</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Surgery"><span>Surgery</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Pediatrics"><span>Pediatrics</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Women's Health"><span>Women's Health</span><i data-lucide="check"></i></button>
+                </span>
+                <select id="departmentFilter" aria-hidden="true" tabindex="-1">
+                  <option>All Departments</option><option>Medicine</option><option>Surgery</option><option>Pediatrics</option><option>Women's Health</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-group has-dropdown">
+              <div class="filter-title">Specialization</div>
+              <div class="sort-select filter-select" data-ui-select data-source="specializationFilter">
+                <button class="sort-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span data-ui-select-value>All Specializations</span><i data-lucide="chevron-down"></i>
+                </button>
+                <span class="sort-menu" role="listbox">
+                  <button class="sort-option selected" type="button" role="option" aria-selected="true" data-ui-select-option="All Specializations"><span>All Specializations</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="General Physician"><span>General Physician</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Cardiologist"><span>Cardiologist</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Dermatologist"><span>Dermatologist</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Pediatrician"><span>Pediatrician</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Neurologist"><span>Neurologist</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Orthopedic"><span>Orthopedic</span><i data-lucide="check"></i></button>
+                </span>
+                <select id="specializationFilter" aria-hidden="true" tabindex="-1">
+                  <option>All Specializations</option><option>General Physician</option><option>Cardiologist</option><option>Dermatologist</option><option>Pediatrician</option><option>Neurologist</option><option>Orthopedic</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-group has-dropdown">
+              <div class="filter-title">Sub Specialization</div>
+              <div class="sort-select filter-select" data-ui-select data-source="subSpecializationFilter">
+                <button class="sort-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span data-ui-select-value>All Sub Specializations</span><i data-lucide="chevron-down"></i>
+                </button>
+                <span class="sort-menu" role="listbox">
+                  <button class="sort-option selected" type="button" role="option" aria-selected="true" data-ui-select-option="All Sub Specializations"><span>All Sub Specializations</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Internal Medicine"><span>Internal Medicine</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Interventional Cardiology"><span>Interventional Cardiology</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Clinical Dermatology"><span>Clinical Dermatology</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Child Health"><span>Child Health</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Spine & Joint Care"><span>Spine &amp; Joint Care</span><i data-lucide="check"></i></button>
+                </span>
+                <select id="subSpecializationFilter" aria-hidden="true" tabindex="-1">
+                  <option>All Sub Specializations</option><option>Internal Medicine</option><option>Interventional Cardiology</option><option>Clinical Dermatology</option><option>Child Health</option><option>Spine &amp; Joint Care</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-group">
+              <div class="filter-title">Availability</div>
+              <div class="chip-row"><button class="filter-chip active" type="button">Any Time</button><button class="filter-chip" type="button">Today</button><button class="filter-chip" type="button">Tomorrow</button></div>
+            </div>
+            <div class="filter-group">
+              <div class="filter-title">Consultation Type</div>
+              <div class="check-list">
+                <label class="check-item"><input type="checkbox"><i data-lucide="hospital"></i><span>In Clinic</span></label>
+                <label class="check-item"><input type="checkbox"><i data-lucide="video"></i><span>Video Consult</span></label>
+                <label class="check-item"><input type="checkbox"><i data-lucide="house"></i><span>Home Visit</span></label>
+              </div>
+            </div>
+            <div class="filter-group">
+              <div class="filter-title">Experience <span>0 - 20+ Years</span></div>
+              <input class="range" type="range" min="0" max="20" value="14" aria-label="Minimum experience">
+            </div>
+            <div class="filter-group">
+              <div class="filter-title">Fees Range <span>₹0 - ₹2000+</span></div>
+              <input class="range" type="range" min="0" max="2000" value="1400" aria-label="Maximum fee">
+            </div>
+            <div class="filter-group">
+              <div class="filter-title">Gender</div>
+              <div class="chip-row"><button class="filter-chip active" type="button">All</button><button class="filter-chip" type="button">Male</button><button class="filter-chip" type="button">Female</button><button class="filter-chip" type="button">Other</button></div>
+            </div>
+            <button class="outline-button apply-filters" id="applyFilters" type="button"><i data-lucide="sliders-horizontal"></i>Apply Filters</button>
+          </div>
+        </aside>
+
+        <section class="doctor-list">
+          <div class="doctor-list-header">
+            <h2>Top Recommended Doctors</h2>
+            <span id="doctorResultsCount">120+ doctors found</span>
+            <div class="sort-field">
+              <span>Sort by:</span>
+              <div class="sort-select" data-ui-select data-source="sortDoctors">
+                <button class="sort-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span data-ui-select-value>Relevance</span><i data-lucide="chevron-down"></i>
+                </button>
+                <span class="sort-menu" role="listbox">
+                  <button class="sort-option selected" type="button" role="option" aria-selected="true" data-ui-select-option="Relevance"><span>Relevance</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Rating"><span>Rating</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Lowest Fee"><span>Lowest Fee</span><i data-lucide="check"></i></button>
+                  <button class="sort-option" type="button" role="option" aria-selected="false" data-ui-select-option="Availability"><span>Availability</span><i data-lucide="check"></i></button>
+                </span>
+                <select id="sortDoctors" aria-hidden="true" tabindex="-1"><option>Relevance</option><option>Rating</option><option>Lowest Fee</option><option>Availability</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="doctor-results" id="doctorResults">
+            <article class="doctor-result" data-rating="4.9" data-fee="800" data-department="Medicine" data-specialization="General Physician" data-sub-specialization="Internal Medicine">
+              <img src="https://images.unsplash.com/photo-1678695972687-033fa0bdbac9?auto=format&amp;fit=crop&amp;w=400&amp;q=82" alt="Dr. Ananya Sharma">
+              <div>
+                <div class="doctor-name-row"><h3>Dr. Ananya Sharma</h3><span class="verified"><i data-lucide="check"></i></span></div>
+                <div class="doctor-subline"><span>General Physician</span><span>•</span><span>15+ Years Exp.</span></div>
+                <div class="rating"><i data-lucide="star"></i><strong>4.9</strong><span>(120 reviews)</span></div>
+                <div class="location-line"><i data-lucide="map-pin"></i><span>Apollo Clinic, Salt Lake, Kolkata</span><span>• 3.2 km away</span></div>
+                <div class="doctor-tags"><span class="doctor-tag">Fever</span><span class="doctor-tag">Headache</span><span class="doctor-tag">Cold</span><span class="doctor-tag">+2 more</span></div>
+              </div>
+              <div class="doctor-meta-box">
+                <div class="availability"><span>Available Today</span><span class="time-chip">6:30 PM</span></div>
+                <div class="fee-row"><div><strong>₹800</strong><small>Consultation Fee</small></div><div class="visit-types"><span><i data-lucide="hospital"></i>In Clinic</span><span><i data-lucide="video"></i>Video Consult</span></div></div>
+                <div class="doctor-actions"><button class="view-profile" type="button">View Profile</button><button class="book-now" type="button">Book Now</button></div>
+              </div>
+              <button class="favorite" type="button" aria-label="Add Dr. Ananya Sharma to favorites"><i data-lucide="heart"></i></button>
+            </article>
+
+            <article class="doctor-result" data-rating="4.8" data-fee="900" data-department="Medicine" data-specialization="General Physician" data-sub-specialization="Internal Medicine">
+              <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=400&amp;q=82" alt="Dr. Rohan Verma">
+              <div>
+                <div class="doctor-name-row"><h3>Dr. Rohan Verma</h3><span class="verified"><i data-lucide="check"></i></span></div>
+                <div class="doctor-subline"><span>General Physician</span><span>•</span><span>12+ Years Exp.</span></div>
+                <div class="rating"><i data-lucide="star"></i><strong>4.8</strong><span>(98 reviews)</span></div>
+                <div class="location-line"><i data-lucide="map-pin"></i><span>Medica Superspeciality, New Town</span><span>• 4.7 km away</span></div>
+                <div class="doctor-tags"><span class="doctor-tag">Fever</span><span class="doctor-tag">Headache</span><span class="doctor-tag">Flu</span><span class="doctor-tag">+2 more</span></div>
+              </div>
+              <div class="doctor-meta-box">
+                <div class="availability"><span>Available Today</span><span class="time-chip">5:00 PM</span></div>
+                <div class="fee-row"><div><strong>₹900</strong><small>Consultation Fee</small></div><div class="visit-types"><span><i data-lucide="hospital"></i>In Clinic</span><span><i data-lucide="video"></i>Video Consult</span></div></div>
+                <div class="doctor-actions"><button class="view-profile" type="button">View Profile</button><button class="book-now" type="button">Book Now</button></div>
+              </div>
+              <button class="favorite" type="button" aria-label="Add Dr. Rohan Verma to favorites"><i data-lucide="heart"></i></button>
+            </article>
+
+            <article class="doctor-result" data-rating="4.7" data-fee="700" data-department="Medicine" data-specialization="General Physician" data-sub-specialization="Clinical Dermatology">
+              <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&amp;fit=crop&amp;w=400&amp;q=82" alt="Dr. Riya Mehta">
+              <div>
+                <div class="doctor-name-row"><h3>Dr. Riya Mehta</h3><span class="verified"><i data-lucide="check"></i></span></div>
+                <div class="doctor-subline"><span>General Physician</span><span>•</span><span>10+ Years Exp.</span></div>
+                <div class="rating"><i data-lucide="star"></i><strong>4.7</strong><span>(86 reviews)</span></div>
+                <div class="location-line"><i data-lucide="map-pin"></i><span>Belle Vue Clinic, Ballygunge</span><span>• 2.8 km away</span></div>
+                <div class="doctor-tags"><span class="doctor-tag">Fever</span><span class="doctor-tag">Headache</span><span class="doctor-tag">Viral Infection</span><span class="doctor-tag">+3 more</span></div>
+              </div>
+              <div class="doctor-meta-box">
+                <div class="availability"><span>Available Tomorrow</span><span class="time-chip">10:30 AM</span></div>
+                <div class="fee-row"><div><strong>₹700</strong><small>Consultation Fee</small></div><div class="visit-types"><span><i data-lucide="hospital"></i>In Clinic</span><span><i data-lucide="video"></i>Video Consult</span></div></div>
+                <div class="doctor-actions"><button class="view-profile" type="button">View Profile</button><button class="book-now" type="button">Book Now</button></div>
+              </div>
+              <button class="favorite" type="button" aria-label="Add Dr. Riya Mehta to favorites"><i data-lucide="heart"></i></button>
+            </article>
+
+            <article class="doctor-result" data-rating="4.6" data-fee="850" data-department="Medicine" data-specialization="General Physician" data-sub-specialization="Internal Medicine">
+              <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&amp;fit=crop&amp;w=400&amp;q=82" alt="Dr. Amit Patel">
+              <div>
+                <div class="doctor-name-row"><h3>Dr. Amit Patel</h3><span class="verified"><i data-lucide="check"></i></span></div>
+                <div class="doctor-subline"><span>General Physician</span><span>•</span><span>14+ Years Exp.</span></div>
+                <div class="rating"><i data-lucide="star"></i><strong>4.6</strong><span>(75 reviews)</span></div>
+                <div class="location-line"><i data-lucide="map-pin"></i><span>Narayana Hospital, Howrah</span><span>• 6.1 km away</span></div>
+                <div class="doctor-tags"><span class="doctor-tag">Fever</span><span class="doctor-tag">Cold</span><span class="doctor-tag">General Care</span></div>
+              </div>
+              <div class="doctor-meta-box">
+                <div class="availability"><span>Available Today</span><span class="time-chip">7:15 PM</span></div>
+                <div class="fee-row"><div><strong>₹850</strong><small>Consultation Fee</small></div><div class="visit-types"><span><i data-lucide="hospital"></i>In Clinic</span><span><i data-lucide="video"></i>Video Consult</span></div></div>
+                <div class="doctor-actions"><button class="view-profile" type="button">View Profile</button><button class="book-now" type="button">Book Now</button></div>
+              </div>
+              <button class="favorite" type="button" aria-label="Add Dr. Amit Patel to favorites"><i data-lucide="heart"></i></button>
+            </article>
+          </div>
+          <div class="view-more-row">
+            <button class="view-more-doctors" id="viewMoreDoctors" type="button">
+              View More Doctors <i data-lucide="chevron-down"></i>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer class="disclaimer"><i data-lucide="shield-check"></i><span>AI results are for guidance only. Please consult a qualified doctor for accurate diagnosis and treatment.</span></footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const toast = document.getElementById("toast");
+      const concernInput = document.getElementById("concernInput");
+      const homeToolStage = document.getElementById("homeToolStage");
+      const homeToolEmbed = document.getElementById("homeToolEmbed");
+      const homeToolFrame = document.getElementById("homeToolFrame");
+      const externalAiSummary = document.getElementById("externalAiSummary");
+      const externalSummaryFields = Object.fromEntries(
+        [...externalAiSummary.querySelectorAll("[data-summary-field]")]
+          .map((field) => [field.dataset.summaryField, field])
+      );
+      const mainNav = document.getElementById("mainNav");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const mobileNavOverlay = document.getElementById("mobileNavOverlay");
+      let pendingHomeTool = "Health Check";
+      const params = new URLSearchParams(window.location.search);
+      const incomingConcern = params.get("q");
+      const incomingSpecialty = params.get("specialty");
+      const concernToType = incomingConcern || concernInput.value;
+      let concernTypingTimer = null;
+      let concernIsTyping = false;
+      let toastTimer = null;
+
+      const renderIcons = () => window.lucide?.createIcons();
+
+      const showToast = (message) => {
+        window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add("show");
+        toastTimer = window.setTimeout(() => toast.classList.remove("show"), 2800);
+      };
+
+      const setMobileMenu = (open) => {
+        mainNav.classList.toggle("open", open);
+        mobileNavOverlay.classList.toggle("show", open);
+        document.body.classList.toggle("menu-open", open);
+        mobileMenu.setAttribute("aria-expanded", String(open));
+        mobileMenu.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+        mobileMenu.innerHTML = `<i data-lucide="${open ? "x" : "menu"}"></i>`;
+        renderIcons();
+      };
+
+      const startConcernTypewriter = () => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          concernInput.value = concernToType;
+          return;
+        }
+
+        concernInput.value = "";
+        concernIsTyping = true;
+        let characterIndex = 0;
+
+        const typeNextCharacter = () => {
+          if (!concernIsTyping) {
+            return;
+          }
+
+          characterIndex += 1;
+          concernInput.value = concernToType.slice(0, characterIndex);
+
+          if (characterIndex < concernToType.length) {
+            concernTypingTimer = window.setTimeout(typeNextCharacter, 52);
+          } else {
+            concernIsTyping = false;
+          }
+        };
+
+        concernTypingTimer = window.setTimeout(typeNextCharacter, 280);
+      };
+
+      concernInput.addEventListener("keydown", () => {
+        if (concernIsTyping) {
+          window.clearTimeout(concernTypingTimer);
+          concernIsTyping = false;
+        }
+      }, { once: true });
+
+      if (incomingSpecialty) {
+        document.getElementById("recommendedSpecialty").textContent = incomingSpecialty;
+      }
+
+      document.getElementById("analyseButton").addEventListener("click", () => {
+        const concern = concernInput.value.trim();
+        if (!concern) {
+          concernInput.focus();
+          showToast("Describe your symptoms or concern first.");
+          return;
+        }
+        showToast("AI analysis updated with your latest concern.");
+      });
+
+      concernInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("analyseButton").click();
+        }
+      });
+
+      const switchEmbeddedHomeTool = (tool) => {
+        pendingHomeTool = tool;
+        homeToolFrame.contentWindow?.postMessage({
+          type: "cliniflow-open-tool",
+          tool,
+        }, "*");
+      };
+
+      homeToolFrame.addEventListener("load", () => {
+        switchEmbeddedHomeTool(pendingHomeTool);
+      });
+
+      document.querySelectorAll(".home-tool").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".home-tool").forEach((tool) => tool.classList.remove("active"));
+          button.classList.add("active");
+          homeToolStage.hidden = false;
+          externalAiSummary.hidden = true;
+          homeToolStage.classList.remove("has-summary");
+          switchEmbeddedHomeTool(button.dataset.tool);
+          window.setTimeout(() => homeToolStage.scrollIntoView({ behavior: "auto", block: "nearest" }), 0);
+        });
+      });
+
+      window.addEventListener("message", (event) => {
+        if (event.source !== homeToolFrame.contentWindow) {
+          return;
+        }
+
+        if (event.data?.type === "cliniflow-tool-height") {
+          const nextHeight = Math.max(160, Math.min(6000, Number(event.data.height) || 180));
+          homeToolFrame.style.height = `${nextHeight}px`;
+          return;
+        }
+
+        if (event.data?.type === "cliniflow-health-summary") {
+          const visible = Boolean(event.data.visible);
+          const summary = event.data.summary || {};
+
+          Object.entries(externalSummaryFields).forEach(([key, field]) => {
+            if (summary[key]) {
+              field.textContent = summary[key];
+            }
+          });
+
+          externalAiSummary.hidden = !visible;
+          homeToolStage.classList.toggle("has-summary", visible);
+        }
+      });
+
+      const uiSelects = [...document.querySelectorAll("[data-ui-select]")];
+
+      const setUiSelectOpen = (select, open, focusSelected = false) => {
+        const trigger = select.querySelector(".sort-trigger");
+        const options = [...select.querySelectorAll(".sort-option")];
+        select.classList.toggle("open", open);
+        select.closest(".filter-group")?.classList.toggle("dropdown-open", open);
+        trigger.setAttribute("aria-expanded", String(open));
+
+        if (open && focusSelected) {
+          window.requestAnimationFrame(() => {
+            (options.find((option) => option.classList.contains("selected")) || options[0])?.focus();
+          });
+        }
+      };
+
+      const closeUiSelects = (except = null) => {
+        uiSelects.forEach((select) => {
+          if (select !== except) {
+            setUiSelectOpen(select, false);
+          }
+        });
+      };
+
+      const setUiSelectValue = (select, nextValue, notify = true) => {
+        const source = document.getElementById(select.dataset.source);
+        const value = select.querySelector("[data-ui-select-value]");
+        const options = [...select.querySelectorAll(".sort-option")];
+        const selectedOption = options.find((option) => option.dataset.uiSelectOption === nextValue) || options[0];
+
+        source.value = selectedOption.dataset.uiSelectOption;
+        value.textContent = selectedOption.querySelector("span").textContent;
+        options.forEach((option) => {
+          const selected = option === selectedOption;
+          option.classList.toggle("selected", selected);
+          option.setAttribute("aria-selected", String(selected));
+        });
+
+        if (notify) {
+          source.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      };
+
+      uiSelects.forEach((select) => {
+        const trigger = select.querySelector(".sort-trigger");
+        const menu = select.querySelector(".sort-menu");
+        const options = [...select.querySelectorAll(".sort-option")];
+
+        trigger.addEventListener("click", () => {
+          const shouldOpen = !select.classList.contains("open");
+          closeUiSelects(select);
+          setUiSelectOpen(select, shouldOpen);
+        });
+
+        trigger.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            closeUiSelects(select);
+            setUiSelectOpen(select, true, true);
+          }
+        });
+
+        options.forEach((option) => {
+          option.addEventListener("click", () => {
+            setUiSelectValue(select, option.dataset.uiSelectOption);
+            setUiSelectOpen(select, false);
+            trigger.focus();
+          });
+        });
+
+        menu.addEventListener("keydown", (event) => {
+          const currentIndex = options.indexOf(document.activeElement);
+          let nextIndex = currentIndex;
+
+          if (event.key === "ArrowDown") {
+            nextIndex = (currentIndex + 1) % options.length;
+          } else if (event.key === "ArrowUp") {
+            nextIndex = (currentIndex - 1 + options.length) % options.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = options.length - 1;
+          } else if (event.key === "Escape") {
+            event.preventDefault();
+            setUiSelectOpen(select, false);
+            trigger.focus();
+            return;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          options[nextIndex]?.focus();
+        });
+      });
+
+      if (incomingSpecialty) {
+        const specialtySelect = uiSelects.find((select) => select.dataset.source === "specializationFilter");
+        if (specialtySelect) {
+          setUiSelectValue(specialtySelect, incomingSpecialty, false);
+        }
+      }
+
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest("[data-ui-select]")) {
+          closeUiSelects();
+        }
+      });
+
+      const applyDoctorFilters = () => {
+        const department = document.getElementById("departmentFilter").value;
+        const specialization = document.getElementById("specializationFilter").value;
+        const subSpecialization = document.getElementById("subSpecializationFilter").value;
+        const doctors = [...document.querySelectorAll(".doctor-result")];
+        let visibleDoctors = 0;
+
+        doctors.forEach((doctor) => {
+          const matchesDepartment = department === "All Departments" || doctor.dataset.department === department;
+          const matchesSpecialization = specialization === "All Specializations" || doctor.dataset.specialization === specialization;
+          const matchesSubSpecialization = subSpecialization === "All Sub Specializations" || doctor.dataset.subSpecialization === subSpecialization;
+          const visible = matchesDepartment && matchesSpecialization && matchesSubSpecialization;
+          doctor.hidden = !visible;
+          visibleDoctors += Number(visible);
+        });
+
+        document.getElementById("doctorResultsCount").textContent = `${visibleDoctors} doctors found`;
+      };
+
+      document.querySelectorAll(".chip-row").forEach((row) => {
+        row.querySelectorAll(".filter-chip").forEach((button) => {
+          button.addEventListener("click", () => {
+            row.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.remove("active"));
+            button.classList.add("active");
+          });
+        });
+      });
+
+      document.getElementById("clearFilters").addEventListener("click", () => {
+        document.querySelectorAll(".check-item input").forEach((input) => {
+          input.checked = false;
+        });
+        document.querySelectorAll(".chip-row").forEach((row) => {
+          row.querySelectorAll(".filter-chip").forEach((chip, index) => chip.classList.toggle("active", index === 0));
+        });
+        document.querySelectorAll("#filters [data-ui-select]").forEach((select) => {
+          const firstOption = select.querySelector(".sort-option");
+          setUiSelectValue(select, firstOption.dataset.uiSelectOption, false);
+        });
+        applyDoctorFilters();
+        showToast("All filters cleared.");
+      });
+
+      document.getElementById("applyFilters").addEventListener("click", () => {
+        applyDoctorFilters();
+        showToast("Doctor filters applied.");
+      });
+
+      document.getElementById("sortDoctors").addEventListener("change", (event) => {
+        const list = document.getElementById("doctorResults");
+        const doctors = [...list.children];
+        if (event.target.value === "Rating") {
+          doctors.sort((a, b) => Number(b.dataset.rating) - Number(a.dataset.rating));
+        } else if (event.target.value === "Lowest Fee") {
+          doctors.sort((a, b) => Number(a.dataset.fee) - Number(b.dataset.fee));
+        }
+        doctors.forEach((doctor) => list.append(doctor));
+      });
+
+      document.getElementById("viewMoreDoctors").addEventListener("click", (event) => {
+        const button = event.currentTarget;
+        const list = document.getElementById("doctorResults");
+        const templates = [...list.querySelectorAll(".doctor-result")].slice(0, 2);
+        const additionalDoctors = [
+          { name: "Dr. Sneha Bose", rating: "4.8", fee: "750", time: "4:30 PM", availability: "Available Today" },
+          { name: "Dr. Arjun Sen", rating: "4.7", fee: "650", time: "11:45 AM", availability: "Available Tomorrow" },
+        ];
+
+        templates.forEach((template, index) => {
+          const profile = additionalDoctors[index];
+          const card = template.cloneNode(true);
+          card.dataset.rating = profile.rating;
+          card.dataset.fee = profile.fee;
+          card.querySelector(".doctor-name-row h3").textContent = profile.name;
+          card.querySelector(".rating strong").textContent = profile.rating;
+          card.querySelector(".availability span:first-child").textContent = profile.availability;
+          card.querySelector(".time-chip").textContent = profile.time;
+          card.querySelector(".fee-row strong").textContent = `₹${profile.fee}`;
+          card.querySelector("img").alt = profile.name;
+
+          const favorite = card.querySelector(".favorite");
+          favorite.classList.remove("active");
+          favorite.setAttribute("aria-label", `Add ${profile.name} to favorites`);
+          favorite.addEventListener("click", () => {
+            const active = favorite.classList.toggle("active");
+            favorite.setAttribute("aria-label", active ? "Remove doctor from favorites" : "Add doctor to favorites");
+          });
+
+          card.querySelector(".view-profile").addEventListener("click", () => showToast("Opening doctor profile."));
+          card.querySelector(".book-now").addEventListener("click", () => showToast("Choose an appointment time to continue."));
+          list.append(card);
+        });
+
+        button.disabled = true;
+        button.innerHTML = 'All Doctors Loaded <i data-lucide="check"></i>';
+        document.getElementById("doctorResultsCount").textContent = `${list.children.length} doctors shown`;
+        renderIcons();
+        showToast("More doctors loaded.");
+      });
+
+      document.querySelectorAll(".favorite").forEach((button) => {
+        button.addEventListener("click", () => {
+          const active = button.classList.toggle("active");
+          button.setAttribute("aria-label", active ? "Remove doctor from favorites" : "Add doctor to favorites");
+        });
+      });
+
+      document.querySelectorAll(".view-profile").forEach((button) => {
+        button.addEventListener("click", () => showToast("Opening doctor profile."));
+      });
+
+      document.querySelectorAll(".book-now, .book-appointment").forEach((button) => {
+        button.addEventListener("click", () => showToast("Choose an appointment time to continue."));
+      });
+
+      mobileMenu.addEventListener("click", () => setMobileMenu(!mainNav.classList.contains("open")));
+      mobileNavOverlay.addEventListener("click", () => setMobileMenu(false));
+      mainNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMobileMenu(false));
+      });
+
+      startConcernTypewriter();
+      renderIcons();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to the Divinexa clinical staff management platform">
+  <title>Sign In — Divinexa</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/login.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="login-body">
+  <main class="login-layout">
+    <section class="login-showcase" aria-labelledby="showcaseTitle">
+      <div class="showcase-orb orb-one" aria-hidden="true"></div>
+      <div class="showcase-orb orb-two" aria-hidden="true"></div>
+      <div class="showcase-dots dots-top" aria-hidden="true"></div>
+      <div class="showcase-dots dots-middle" aria-hidden="true"></div>
+
+      <a class="login-brand" href="index.html" aria-label="Divinexa dashboard">
+        <span class="login-brand-icon" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Clinical Staff Management<br>SaaS Platform</small></span>
+      </a>
+
+      <div class="showcase-copy">
+        <h1 id="showcaseTitle">Streamline Your<br>Reception Operations<br><span>Smart. Simple. Secure.</span></h1>
+        <i class="headline-rule" aria-hidden="true"></i>
+        <p>Divinexa helps you manage your reception,<br>staff, appointments and patients efficiently<br>all in one place.</p>
+      </div>
+
+      <ul class="login-features" aria-label="Divinexa benefits">
+        <li><span><i data-lucide="users-round"></i></span>Real-time Queue Management</li>
+        <li><span><i data-lucide="calendar-clock"></i></span>Staff &amp; Shift Management</li>
+        <li><span><i data-lucide="user-round-plus"></i></span>Patient Registration</li>
+        <li><span><i data-lucide="chart-no-axes-combined"></i></span>Reports &amp; Analytics</li>
+        <li><span><i data-lucide="shield-check"></i></span>Secure &amp; Reliable</li>
+      </ul>
+
+      <div class="reception-scene" aria-hidden="true">
+        <img src="assets/images/login-reception.png" alt="">
+      </div>
+
+      <article class="login-metric metric-appointments" aria-label="Today's appointments: 25">
+        <span>Today’s Appointments</span><strong>25</strong><small>Total</small>
+        <canvas data-values="12,18,10,24,13,21,16" data-color="#0aa89b"></canvas>
+        <i data-lucide="users-round"></i>
+      </article>
+      <article class="login-metric metric-wait" aria-label="Average wait time: 18 minutes">
+        <span>Average Wait Time</span><strong>18 <em>mins</em></strong>
+        <canvas data-values="12,10,24,9,20,12,19,13" data-color="#0aa89b"></canvas>
+        <i data-lucide="clock-3"></i>
+      </article>
+      <article class="login-metric metric-queue" aria-label="Patients in queue: 24">
+        <span>Patients in Queue</span><strong>24</strong>
+        <canvas data-values="8,18,12,7,15,11,18" data-color="#0aa89b"></canvas>
+        <i data-lucide="user-check"></i>
+      </article>
+    </section>
+
+    <section class="auth-panel" aria-labelledby="loginTitle">
+      <div class="auth-card">
+        <div class="auth-logo" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></div>
+        <div class="auth-heading">
+          <h2 id="loginTitle">Welcome Back!</h2>
+          <p>Sign in to continue to Divinexa</p>
+        </div>
+
+        <form class="login-form" id="loginForm" novalidate>
+          <div class="form-field">
+            <label for="loginId">Email or Phone ID</label>
+            <div class="input-control"><i data-lucide="user-round"></i><input id="loginId" name="loginId" type="text" autocomplete="username" placeholder="Enter your email or phone number" aria-describedby="loginIdError"></div>
+            <small class="field-error" id="loginIdError" aria-live="polite"></small>
+          </div>
+
+          <div class="form-field">
+            <label for="loginPassword">Password</label>
+            <div class="input-control"><i data-lucide="lock-keyhole"></i><input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" aria-describedby="passwordError"><button class="password-toggle" id="passwordToggle" type="button" aria-label="Show password"><i data-lucide="eye"></i></button></div>
+            <small class="field-error" id="passwordError" aria-live="polite"></small>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-control"><input id="rememberMe" type="checkbox"><span aria-hidden="true"><i data-lucide="check"></i></span>Remember me</label>
+            <button type="button" data-toast="Password recovery instructions requested.">Forgot Password?</button>
+          </div>
+
+          <button class="sign-in-button" id="signInButton" type="submit"><span>Sign In</span><i data-lucide="arrow-right"></i></button>
+        </form>
+
+        <div class="login-divider"><span>or continue with</span></div>
+
+        <button class="google-button" type="button" data-toast="Google sign-in is ready to connect."><span class="google-g">G</span>Sign in with Google</button>
+        <p class="admin-contact">Don’t have an account? <button type="button" onclick="window.location.href='signup.html'">Create Account</button></p>
+
+        <footer class="login-footer"><i data-lucide="shield-check"></i><span>Secure Login</span><b></b><span>Divinexa © 2024 All rights reserved.</span></footer>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="circle-check-big"></i><span></span></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/js/common-date-picker.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/login.js"></script>
+</body>
+</html>

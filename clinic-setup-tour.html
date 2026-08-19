@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Set up and manage multiple clinic locations for the Divinexa Clinic Plan.">
+  <title>Divinexa - Clinic Plan Setup</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/clinic-setup-for-clinics.css">
+  <link rel="stylesheet" href="assets/css/setup-tour-shell.css">
+  <link rel="stylesheet" href="assets/css/clinic-tour-sidebar-support.css">
+  <link rel="stylesheet" href="assets/css/setup-sidebar-guidance.css">
+  <link rel="stylesheet" href="assets/css/setup-form-controls.css">
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+</head>
+<body class="setup-tour-page clinic-plan-setup-page" data-setup-step="2">
+  <header class="topbar">
+    <div class="brand-panel">
+      <a class="brand" href="home2.html" aria-label="Divinexa home">
+        <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Prescription Platform</small></span>
+      </a>
+    </div>
+
+    <div class="topbar-main">
+      <div class="progress-block" aria-label="Tour progress: step 2 of 4">
+        <strong>Tour Progress</strong>
+        <span class="progress-track"><span class="progress-fill"></span></span>
+        <span class="progress-label">Step 2 of 4</span>
+      </div>
+
+      <div class="top-actions">
+        <a class="button button-outline" href="clinic-dashboard.html">Skip Tour</a>
+        <a class="button button-primary" id="nextStepLink" href="SmartConfigurationForClinics.html">Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+      </div>
+
+      <div class="profile-wrap">
+        <button class="profile-button" type="button" aria-label="Open profile menu">
+          <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path></svg></span>
+          <span class="profile-copy"><strong id="headerClinicName">City Health Clinic</strong><small>Clinic Plan</small></span>
+          <svg class="profile-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 10 4 4 4-4"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="tour-sidebar" aria-label="Setup tour">
+      <div class="side-card">
+        <strong class="side-card-title">Tour Steps</strong>
+        <nav class="steps-list" aria-label="Setup tour steps">
+          <button class="tour-step completed" type="button" data-tour-step="1" data-clinic-tour-step="1">
+            <span class="step-number">1</span>
+            <span><strong>Welcome</strong><small>Introduction to Divinexa</small></span>
+          </button>
+          <button class="tour-step active" type="button" data-tour-step="2" data-clinic-tour-step="2" aria-current="step">
+            <span class="step-number">2</span>
+            <span><strong>Clinic Setup</strong><small>Add and manage your clinics</small></span>
+          </button>
+          <button class="tour-step" type="button" data-tour-step="3" data-clinic-tour-step="3">
+            <span class="step-number">3</span>
+            <span><strong>Add Doctors</strong><small>Add doctors or upload Excel</small></span>
+          </button>
+          <button class="tour-step" type="button" data-tour-step="4" data-clinic-tour-step="4">
+            <span class="step-number">4</span>
+            <span><strong>Finish &amp; Dashboard</strong><small>You're all set!</small></span>
+          </button>
+        </nav>
+        <div class="clinic-tour-support">
+          <img src="assets/images/clinic-network-support.png" alt="">
+          <strong>Manage every clinic<br>from one place</strong>
+          <p>Connect your locations and keep your practice organized.</p>
+        </div>
+      </div>
+      <div class="side-card help-card">
+        <h3>Need Help?</h3>
+        <p>Our support team is here for you.</p>
+        <button class="button button-outline button-small" type="button" data-demo-action>Chat with Support</button>
+      </div>
+    </aside>
+
+    <main class="setup-content">
+      <section class="panel clinic-list-card" aria-labelledby="clinicListTitle">
+        <div class="section-heading">
+          <div>
+            <h1 id="clinicListTitle">Your Clinics</h1>
+            <p>Manage all your clinics from one place.</p>
+          </div>
+          <button class="button button-outline add-clinic-button" type="button" data-add-clinic>
+            <span aria-hidden="true">+</span> Add New Clinic
+          </button>
+        </div>
+
+        <div class="clinic-table" id="clinicRows" aria-live="polite"></div>
+        <p class="clinic-count" id="clinicCount">Showing 1 to 3 of 3 clinics</p>
+      </section>
+
+      <section class="panel clinic-form-card" id="clinicFormCard" aria-labelledby="clinicFormTitle">
+        <form id="clinicForm">
+          <div class="form-heading">
+            <span class="heading-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V7l7-4 7 4v14"></path><path d="M9 21v-4h6v4"></path><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01"></path></svg>
+            </span>
+            <h2 id="clinicFormTitle">Add New Clinic</h2>
+            <span class="heading-rule"></span>
+          </div>
+
+          <div class="form-workspace">
+            <ol class="form-stages" aria-label="Clinic information sections">
+              <li class="active"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V7l7-4 7 4v14"></path><path d="M9 21v-4h6v4"></path><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01"></path></svg></span><small>Basic Information</small></li>
+              <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.69 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.33 1.84.56 2.8.69A2 2 0 0 1 22 16.92z"></path></svg></span><small>Contact Details</small></li>
+              <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><small>Clinic Timings</small></li>
+              <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06-2.83 2.83-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21h-4v-.17a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06-2.83-2.83.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3v-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06 2.83-2.83.06.06A1.65 1.65 0 0 0 8.92 4a1.65 1.65 0 0 0 1-1.51V2h4v.49A1.65 1.65 0 0 0 15 4a1.65 1.65 0 0 0 1.82-.33l.06-.06 2.83 2.83-.06.06A1.65 1.65 0 0 0 19.4 9c.12.61.65 1.05 1.27 1.05H21v4h-.33c-.62 0-1.15.44-1.27 1z"></path></svg></span><small>Services &amp; Features</small></li>
+            </ol>
+
+            <div class="form-fields">
+              <fieldset>
+                <legend class="sr-only">Basic clinic information</legend>
+                <div class="field-grid">
+                  <label class="field">
+                    <span>Clinic Name <b>*</b></span>
+                    <input id="clinicName" name="clinicName" required placeholder="Enter clinic name">
+                  </label>
+                  <label class="field">
+                    <span>Clinic Type <b>*</b></span>
+                    <select id="clinicType" name="clinicType" required data-custom-select>
+                      <option value="">Select clinic type</option>
+                      <option>OPD</option>
+                      <option>Multi-Speciality</option>
+                      <option>Speciality Clinic</option>
+                      <option>Diagnostic Centre</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>Specialization</span>
+                    <input id="specialization" name="specialization" placeholder="e.g., General Physician, Cardiology">
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="contact-fields">
+                <legend class="sr-only">Contact details</legend>
+                <div class="field-grid">
+                  <label class="field">
+                    <span>Email <b>*</b></span>
+                    <input id="clinicEmail" name="clinicEmail" type="email" required placeholder="Enter clinic email">
+                  </label>
+                  <label class="field">
+                    <span>Phone Number <b>*</b></span>
+                    <span class="phone-control">
+                      <select id="phoneCode" name="phoneCode" aria-label="Country code" data-custom-select>
+                        <option>+91</option>
+                        <option>+1</option>
+                        <option>+44</option>
+                      </select>
+                      <input id="clinicPhone" name="clinicPhone" type="tel" required placeholder="Enter phone number">
+                    </span>
+                  </label>
+                  <label class="field address-field">
+                    <span>Address <b>*</b></span>
+                    <textarea id="clinicAddress" name="clinicAddress" required placeholder="Enter complete address"></textarea>
+                  </label>
+                  <label class="field">
+                    <span>City <b>*</b></span>
+                    <input id="clinicCity" name="clinicCity" required placeholder="Enter city">
+                  </label>
+                  <label class="field">
+                    <span>State <b>*</b></span>
+                    <select id="clinicState" name="clinicState" required data-custom-select>
+                      <option value="">Select state</option>
+                      <option>West Bengal</option>
+                      <option>Karnataka</option>
+                      <option>Haryana</option>
+                      <option>Maharashtra</option>
+                      <option>Delhi</option>
+                      <option>Tamil Nadu</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>Pincode <b>*</b></span>
+                    <input id="clinicPincode" name="clinicPincode" inputmode="numeric" required maxlength="6" placeholder="Enter pincode">
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="timing-fields">
+                <legend class="sr-only">Clinic timings</legend>
+                <div class="timing-grid">
+                  <label class="field">
+                    <span>Start Time</span>
+                    <input id="startTime" name="startTime" type="time" value="09:00" step="300" data-clock-picker>
+                  </label>
+                  <label class="field">
+                    <span>End Time</span>
+                    <input id="endTime" name="endTime" type="time" value="21:00" step="300" data-clock-picker>
+                  </label>
+                  <label class="field">
+                    <span>Break Time (Optional)</span>
+                    <select id="breakTime" name="breakTime" data-custom-select>
+                      <option value="">Select break time</option>
+                      <option>01:00 PM - 02:00 PM</option>
+                      <option>02:00 PM - 03:00 PM</option>
+                    </select>
+                  </label>
+                  <label class="check-field">
+                    <input id="open24Hours" name="open24Hours" type="checkbox">
+                    <span>24 Hours Open</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="service-fields">
+                <legend class="sr-only">Services and features</legend>
+                <div class="service-grid">
+                  <button class="service-toggle active" type="button" aria-pressed="true" data-service="OPD Services">
+                    <span>OPD Services</span><i aria-hidden="true"></i>
+                  </button>
+                  <button class="service-toggle active" type="button" aria-pressed="true" data-service="Online Appointments">
+                    <span>Online Appointments</span><i aria-hidden="true"></i>
+                  </button>
+                  <button class="service-toggle active" type="button" aria-pressed="true" data-service="AI Assistant">
+                    <span>AI Assistant</span><i aria-hidden="true"></i>
+                  </button>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="button button-outline" type="button" id="cancelClinic">Cancel</button>
+            <button class="button button-primary" type="submit"><span aria-hidden="true">▣</span> Save Clinic</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <aside class="right-sidebar">
+      <section class="panel benefits-card">
+        <h2>Why Add Multiple Clinics?</h2>
+        <ul>
+          <li><span>✓</span>Manage all your clinics from one dashboard</li>
+          <li><span>✓</span>Separate staff, patients &amp; prescriptions</li>
+          <li><span>✓</span>Clinic-wise reports and analytics</li>
+          <li><span>✓</span>Flexible settings for each location</li>
+        </ul>
+      </section>
+
+      <section class="panel manage-card">
+        <div class="manage-heading">
+          <span class="manage-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V7l7-4 7 4v14"></path><path d="M9 21v-4h6v4"></path><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01"></path></svg></span>
+          <div><h2>Manage Clinics Easily</h2><p>Quickly switch between your clinics from the dropdown below.</p></div>
+        </div>
+
+        <div class="clinic-switcher">
+          <button class="switcher-trigger" id="clinicSwitcher" type="button" aria-haspopup="listbox" aria-expanded="true">
+            <span class="switcher-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V7l7-4 7 4v14"></path><path d="M9 21v-4h6v4"></path><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01"></path></svg></span>
+            <span><strong id="activeClinicName">City Health Clinic</strong><small id="activeClinicCity">Kolkata, WB</small></span>
+            <span class="switcher-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 10 5 5 5-5"></path></svg></span>
+          </button>
+          <div class="switcher-menu" id="clinicSwitcherMenu" role="listbox" aria-label="Choose clinic"></div>
+        </div>
+      </section>
+
+      <section class="panel help-card">
+        <h2>Need Help?</h2>
+        <p>Our team is here to help you set up your clinics.</p>
+        <button class="button support-button" type="button" id="supportButton"><span aria-hidden="true">◌</span> Chat with Support</button>
+      </section>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/setup-tour-common.js"></script>
+  <script src="assets/js/setup-form-controls.js"></script>
+  <script src="assets/js/clinic-setup-for-clinics.js"></script>
+</body>
+</html>

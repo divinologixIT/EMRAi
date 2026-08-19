@@ -1,0 +1,2117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Divinexa is an AI-powered prescription management platform for doctors, clinics and healthcare organizations.">
+  <title>Divinexa — Smarter Prescriptions, Better Patient Care</title>
+  <link rel="icon" type="image/png" href="assets/images/divinexa-favicon.png?v=20260802">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #102445;
+      --muted: #5c6f89;
+      --brand: #0b968b;
+      --brand-dark: #06776f;
+      --brand-soft: #e8f8f6;
+      --brand-pale: #f4fcfb;
+      --line: #d7e8e9;
+      --surface: #ffffff;
+      --purple: #7657e8;
+      --yellow: #f5b200;
+      --brand-gradient: linear-gradient(135deg, #11a99c, #06867c);
+      --shadow: 0 13px 30px rgba(24, 75, 87, 0.10);
+      --soft-shadow: 0 7px 20px rgba(24, 75, 87, 0.07);
+      --container: 1280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: "DM Sans", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(calc(100% - 64px), var(--container));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid #e4eeee;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      min-height: 80px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--brand-dark);
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: var(--brand-gradient);
+      box-shadow: 0 8px 18px rgba(6, 134, 124, 0.22);
+      transform: rotate(45deg);
+    }
+
+    .brand-mark svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 3;
+      transform: rotate(-45deg);
+    }
+
+    .brand-copy {
+      display: grid;
+      line-height: 1.02;
+    }
+
+    .brand-copy strong {
+      font-size: 24px;
+      letter-spacing: -0.045em;
+    }
+
+    .brand-copy small {
+      margin-top: 5px;
+      color: #445a74;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .main-nav {
+      display: flex;
+      justify-content: center;
+      gap: clamp(25px, 3vw, 43px);
+    }
+
+    .main-nav a {
+      position: relative;
+      padding: 28px 0 24px;
+      color: #18253b;
+      font-size: 13px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .main-nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: 17px;
+      left: 0;
+      height: 2px;
+      content: "";
+      border-radius: 99px;
+      background: var(--brand);
+      opacity: 0;
+      transform: scaleX(0.35);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: var(--brand-dark);
+    }
+
+    .main-nav a:hover::after,
+    .main-nav a.active::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 9px 20px;
+      color: var(--brand-dark);
+      border: 1px solid #90d2cc;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 9px 20px rgba(5, 128, 118, 0.15);
+    }
+
+    .button.primary {
+      color: #fff;
+      border-color: transparent;
+      background: var(--brand-gradient);
+      box-shadow: 0 9px 20px rgba(6, 134, 124, 0.20);
+    }
+
+    .button svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .menu-toggle {
+      width: 42px;
+      height: 42px;
+      display: none;
+      place-items: center;
+      color: var(--brand-dark);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 338px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 46% 45%, rgba(31, 198, 181, 0.13), transparent 25%),
+        radial-gradient(circle at 92% 55%, rgba(31, 198, 181, 0.10), transparent 28%),
+        linear-gradient(105deg, #fbfefe, #f2fcfb 48%, #fbfefe);
+    }
+
+    .hero::before {
+      position: absolute;
+      width: 320px;
+      height: 260px;
+      left: -85px;
+      bottom: -185px;
+      content: "";
+      border: 1px solid rgba(11, 150, 139, 0.13);
+      border-radius: 52% 48% 55% 45%;
+      box-shadow:
+        0 0 0 25px rgba(11, 150, 139, 0.025),
+        0 0 0 50px rgba(11, 150, 139, 0.022),
+        0 0 0 75px rgba(11, 150, 139, 0.02);
+      transform: rotate(-15deg);
+    }
+
+    .hero::after {
+      position: absolute;
+      width: 350px;
+      height: 170px;
+      right: -95px;
+      bottom: -92px;
+      content: "";
+      border-radius: 50%;
+      background: rgba(27, 188, 172, 0.07);
+      box-shadow:
+        -40px -13px 0 rgba(27, 188, 172, 0.04),
+        -85px 5px 0 rgba(27, 188, 172, 0.028);
+      transform: rotate(-8deg);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      min-height: 338px;
+      display: grid;
+      grid-template-columns: minmax(400px, 1.25fr) minmax(260px, 0.82fr) minmax(250px, 0.85fr);
+      align-items: center;
+      gap: 18px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 5;
+      align-self: center;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      color: var(--brand-dark);
+      border: 1px solid #abdeda;
+      border-radius: 999px;
+      background: rgba(239, 251, 249, 0.94);
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .eyebrow svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(40px, 3vw, 48px);
+      line-height: 1.03;
+      letter-spacing: -0.052em;
+      white-space: nowrap;
+    }
+
+    .hero h1 .home-type-line {
+      display: block;
+    }
+
+    .hero h1 .home-type-accent {
+      margin-top: 5px;
+      color: #0c9a82;
+    }
+
+    #homeTypeAccent::after {
+      width: 3px;
+      height: 0.82em;
+      display: inline-block;
+      margin-left: 6px;
+      border-radius: 99px;
+      background: #0c9a82;
+      box-shadow: 0 0 10px rgba(12, 154, 130, 0.25);
+      vertical-align: -0.02em;
+      animation: home-caret-blink 760ms steps(1, end) infinite;
+      content: "";
+    }
+
+    #homeTypeAccent.finished::after {
+      opacity: 0;
+      animation: none;
+      transition: opacity 300ms ease;
+    }
+
+    @keyframes home-caret-blink {
+      0%,
+      48% {
+        opacity: 1;
+      }
+
+      49%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .hero-copy > p {
+      max-width: 390px;
+      margin: 0;
+      color: #233856;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 24px;
+    }
+
+    .hero-actions .button {
+      min-height: 42px;
+      padding-inline: 21px;
+    }
+
+    .hero-doctor {
+      position: relative;
+      height: 338px;
+      align-self: end;
+    }
+
+    .hero-doctor::before {
+      position: absolute;
+      width: 255px;
+      height: 285px;
+      right: 6px;
+      bottom: 0;
+      content: "";
+      border-radius: 48% 52% 50% 50% / 38% 40% 60% 62%;
+      background:
+        linear-gradient(145deg, rgba(39, 203, 184, 0.20), rgba(28, 173, 158, 0.07)),
+        repeating-linear-gradient(125deg, transparent 0 22px, rgba(5, 153, 140, 0.035) 23px 24px);
+      transform: rotate(-4deg);
+    }
+
+    .hero-doctor img {
+      position: absolute;
+      z-index: 2;
+      right: -4px;
+      bottom: 0;
+      width: 340px;
+      max-width: none;
+      filter: drop-shadow(0 11px 18px rgba(22, 75, 86, 0.11));
+    }
+
+    .doctor-plus {
+      position: absolute;
+      z-index: 4;
+      top: 126px;
+      left: -3px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--brand);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .doctor-plus svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 3;
+    }
+
+    .hero-decoration-dots {
+      position: absolute;
+      top: 17px;
+      left: -30px;
+      width: 45px;
+      height: 45px;
+      opacity: 0.45;
+      background-image: radial-gradient(#22b7aa 1.2px, transparent 1.2px);
+      background-size: 7px 7px;
+    }
+
+    .hero-demo {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+
+    .benefit-stack {
+      display: grid;
+      gap: 11px;
+    }
+
+    .benefit-card {
+      --card-delay: 0.12s;
+      min-height: 57px;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 11px;
+      border: 1px solid #e0ecee;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--soft-shadow);
+      opacity: 0;
+      animation: benefit-card-enter 0.7s cubic-bezier(0.2, 0.75, 0.25, 1) var(--card-delay) both;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .benefit-card:nth-child(2) {
+      --card-delay: 0.28s;
+    }
+
+    .benefit-card:nth-child(3) {
+      --card-delay: 0.44s;
+    }
+
+    .benefit-card:nth-child(4) {
+      --card-delay: 0.6s;
+    }
+
+    .benefit-card:hover {
+      border-color: #9fded8;
+      box-shadow: 0 14px 28px rgba(24, 75, 87, 0.13);
+    }
+
+    @keyframes benefit-card-enter {
+      from {
+        opacity: 0;
+        transform: translateY(-26px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .icon-bubble {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      color: var(--brand);
+      border-radius: 50%;
+      background: var(--brand-soft);
+    }
+
+    .icon-bubble svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2.4;
+    }
+
+    .benefit-card strong {
+      display: block;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .benefit-card small {
+      display: block;
+      margin-top: 3px;
+      color: #5f718a;
+      font-size: 9px;
+      line-height: 1.3;
+    }
+
+    .stats-overlap {
+      position: relative;
+      z-index: 12;
+      margin-top: -2px;
+    }
+
+    .stats-card {
+      min-height: 80px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: center;
+      padding: 0 25px;
+      border: 1px solid #dfeaec;
+      border-radius: 17px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 13px 30px rgba(28, 76, 88, 0.10);
+    }
+
+    .stat {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 43px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 22px;
+      border-right: 1px solid #dce8ea;
+    }
+
+    .stat:last-child {
+      border-right: 0;
+    }
+
+    .stat .icon-bubble {
+      width: 40px;
+      height: 40px;
+      background: #f1fbfa;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 17px;
+      letter-spacing: -0.035em;
+      white-space: nowrap;
+    }
+
+    .stat small {
+      display: block;
+      margin-top: 4px;
+      color: #51657e;
+      font-size: 8px;
+      white-space: nowrap;
+    }
+
+    .section {
+      position: relative;
+      padding-block: 35px;
+    }
+
+    .section-heading {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(24px, 2vw, 31px);
+      line-height: 1.1;
+      letter-spacing: -0.045em;
+    }
+
+    .section-heading h2 span {
+      color: var(--brand);
+    }
+
+    .section-heading p {
+      margin: 6px 0 0;
+      color: #596c85;
+      font-size: 9px;
+    }
+
+    .audience-section {
+      padding-top: 35px;
+      overflow: hidden;
+    }
+
+    .audience-section::before {
+      position: absolute;
+      top: 54px;
+      left: 23px;
+      width: 75px;
+      height: 75px;
+      content: "";
+      opacity: 0.50;
+      background-image: radial-gradient(#28b4a8 1.4px, transparent 1.4px);
+      background-size: 12px 12px;
+    }
+
+    .audience-section::after {
+      position: absolute;
+      width: 230px;
+      height: 110px;
+      right: -30px;
+      top: 60px;
+      content: "";
+      opacity: 0.28;
+      background: repeating-radial-gradient(ellipse at 100% 50%, transparent 0 9px, #20b2a5 10px 11px);
+      transform: rotate(-7deg);
+    }
+
+    .audience-grid {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 830px);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 18px auto 0;
+    }
+
+    .audience-card {
+      min-height: 172px;
+      padding: 16px 22px;
+      text-align: center;
+      border: 1px solid #cee4e5;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 21px rgba(25, 75, 87, 0.06);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .audience-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .audience-card .icon-bubble {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 10px;
+    }
+
+    .audience-card .icon-bubble svg {
+      width: 27px;
+      height: 27px;
+    }
+
+    .audience-card h3 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .audience-card p {
+      min-height: 39px;
+      margin: 8px 0 10px;
+      color: #344963;
+      font-size: 9px;
+      line-height: 1.45;
+    }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--brand-dark);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .text-link svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.8fr 1.48fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .info-panel {
+      min-height: 207px;
+      padding: 20px 23px;
+      border: 1px solid #d7e7e9;
+      border-radius: 9px;
+      background: linear-gradient(145deg, #f6fcfb, #fff);
+    }
+
+    .info-panel h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      letter-spacing: -0.025em;
+    }
+
+    .info-panel.about-copy h3 {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .info-panel h3 span {
+      color: var(--brand);
+    }
+
+    .about-copy p {
+      margin: 0 0 13px;
+      color: #304660;
+      font-size: 9px;
+      line-height: 1.62;
+    }
+
+    .button.small {
+      min-height: 40px;
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .button.small svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      align-items: center;
+      gap: 6px;
+      color: #334a64;
+      font-size: 8.5px;
+    }
+
+    .check-list svg {
+      width: 14px;
+      height: 14px;
+      color: var(--brand-dark);
+      fill: var(--brand-dark);
+      stroke: #fff;
+    }
+
+    .process-panel {
+      background: #fff;
+    }
+
+    .process-flow {
+      display: grid;
+      grid-template-columns: repeat(9, auto);
+      align-items: start;
+      justify-content: space-between;
+      gap: 4px;
+      margin-top: 20px;
+    }
+
+    .process-step {
+      width: 82px;
+      text-align: center;
+    }
+
+    .process-step .icon-bubble {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 8px;
+    }
+
+    .process-step .icon-bubble svg {
+      width: 23px;
+      height: 23px;
+    }
+
+    .process-step b {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .process-step small {
+      display: block;
+      margin-top: 6px;
+      color: #4f627b;
+      font-size: 9px;
+      font-weight: 500;
+      line-height: 1.32;
+    }
+
+    .info-panel.process-panel > h3 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .process-arrow {
+      padding-top: 14px;
+      color: var(--brand);
+      font-size: 18px;
+    }
+
+    .security-cta {
+      position: relative;
+      min-height: 130px;
+      display: grid;
+      grid-template-columns: 170px 1fr auto;
+      align-items: center;
+      gap: 20px;
+      margin-top: 17px;
+      padding: 10px 48px 10px 18px;
+      overflow: hidden;
+      color: #fff;
+      border-radius: 9px;
+      background: var(--brand-gradient);
+      box-shadow: 0 12px 25px rgba(6, 134, 124, 0.17);
+    }
+
+    .security-cta.reveal-ready {
+      opacity: 0;
+      transform: translateY(-34px);
+    }
+
+    .security-cta.reveal-ready.is-visible {
+      animation: security-cta-drop 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .security-cta::before,
+    .security-cta::after {
+      position: absolute;
+      content: "";
+      pointer-events: none;
+    }
+
+    .security-cta::before {
+      width: 210px;
+      height: 115px;
+      left: 2px;
+      bottom: -20px;
+      opacity: 0.22;
+      background:
+        radial-gradient(ellipse at center, transparent 0 24%, #7ce4da 25% 26%, transparent 27% 38%, #7ce4da 39% 40%, transparent 41% 53%, #7ce4da 54% 55%, transparent 56%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.13), transparent 46%);
+      animation: security-wave-left 8s ease-in-out infinite;
+    }
+
+    .security-cta::after {
+      width: 180px;
+      height: 100px;
+      right: -25px;
+      opacity: 0.14;
+      background: repeating-radial-gradient(ellipse at 100% 50%, transparent 0 11px, #fff 12px 13px);
+      animation: security-wave-right 9s ease-in-out infinite;
+    }
+
+    .security-visual {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+    }
+
+    .security-orbits {
+      width: 140px;
+      height: 70px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(132, 231, 221, 0.55);
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 0 12px rgba(255, 255, 255, 0.025),
+        0 0 0 12px rgba(255, 255, 255, 0.025);
+      animation: security-orbit-pulse 4.6s ease-in-out infinite;
+    }
+
+    .security-shield-image {
+      width: 92px;
+      height: 92px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 14px rgba(2, 86, 78, 0.24));
+      animation: security-shield-float 3.8s ease-in-out infinite;
+    }
+
+    .security-copy {
+      position: relative;
+      z-index: 2;
+    }
+
+    .security-copy strong {
+      display: block;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .security-copy small {
+      display: block;
+      margin-top: 7px;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .security-trust {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+      margin-top: 9px;
+    }
+
+    .security-trust span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255, 255, 255, 0.94);
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .security-trust span + span {
+      padding-left: 16px;
+      border-left: 1px solid rgba(255, 255, 255, 0.23);
+    }
+
+    .security-trust svg {
+      width: 14px;
+      height: 14px;
+      padding: 5px;
+      overflow: visible;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.13);
+      box-sizing: content-box;
+    }
+
+    .security-cta .button {
+      position: relative;
+      z-index: 2;
+      min-width: 190px;
+      color: var(--brand-dark);
+      border: 0;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .security-cta.is-visible .security-visual,
+    .security-cta.is-visible .security-copy,
+    .security-cta.is-visible > .button {
+      animation: security-child-drop 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .security-cta.is-visible .security-copy {
+      animation-delay: 120ms;
+    }
+
+    .security-cta.is-visible > .button {
+      animation-delay: 230ms;
+    }
+
+    @keyframes security-cta-drop {
+      from {
+        opacity: 0;
+        transform: translateY(-34px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes security-child-drop {
+      from {
+        opacity: 0;
+        transform: translateY(-18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes security-orbit-pulse {
+      0%,
+      100% {
+        box-shadow: inset 0 0 0 12px rgba(255, 255, 255, 0.025), 0 0 0 12px rgba(255, 255, 255, 0.025);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: inset 0 0 0 16px rgba(255, 255, 255, 0.045), 0 0 0 18px rgba(255, 255, 255, 0.035);
+        transform: scale(1.045);
+      }
+    }
+
+    @keyframes security-shield-float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    @keyframes security-wave-left {
+      0%,
+      100% {
+        transform: translateX(0) scale(1);
+      }
+
+      50% {
+        transform: translateX(10px) scale(1.06);
+      }
+    }
+
+    @keyframes security-wave-right {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(-14px);
+      }
+    }
+
+    .features-section {
+      padding-top: 22px;
+    }
+
+    .features-kicker {
+      width: fit-content;
+      margin: 0 auto 8px;
+      padding: 4px 10px;
+      color: var(--brand-dark);
+      border-radius: 999px;
+      background: var(--brand-soft);
+      font-size: 7px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .feature-card {
+      min-height: 142px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      align-content: start;
+      column-gap: 13px;
+      padding: 18px;
+      border: 1px solid #d9e8ea;
+      border-radius: 8px;
+      background: #fff;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-card .icon-bubble {
+      width: 46px;
+      height: 46px;
+      margin: 0;
+    }
+
+    .feature-card .icon-bubble.purple {
+      color: var(--purple);
+      background: #f0ecff;
+    }
+
+    .feature-card h3 {
+      margin: 4px 0 7px;
+      font-size: 13px;
+    }
+
+    .feature-card p {
+      grid-column: 2;
+      margin: 0;
+      color: #435871;
+      font-size: 10.5px;
+      line-height: 1.55;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr)) minmax(360px, 2.1fr);
+      align-items: center;
+      gap: 0;
+      margin-top: 20px;
+      padding: 10px 14px;
+      border: 1px solid #e1eeee;
+      border-radius: 8px;
+      background: linear-gradient(100deg, #effafa, #f8fdfd);
+    }
+
+    .trust-stat {
+      min-height: 67px;
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-right: 1px solid #d1e5e5;
+    }
+
+    .trust-stat .icon-bubble {
+      width: 46px;
+      height: 46px;
+    }
+
+    .trust-stat .icon-bubble.purple {
+      color: var(--purple);
+      background: #f0ecff;
+    }
+
+    .trust-stat strong {
+      display: block;
+      color: var(--brand-dark);
+      font-size: 18px;
+    }
+
+    .trust-stat small {
+      display: block;
+      margin-top: 4px;
+      color: #283e58;
+      font-size: 7px;
+      line-height: 1.45;
+    }
+
+    .testimonial {
+      min-height: 75px;
+      margin: 0 0 0 13px;
+      padding: 11px 14px;
+      border-radius: 7px;
+      background: #fff;
+    }
+
+    .testimonial p {
+      position: relative;
+      margin: 0;
+      padding-left: 22px;
+      color: #314760;
+      font-size: 8px;
+      line-height: 1.55;
+    }
+
+    .testimonial p::before {
+      position: absolute;
+      left: 0;
+      top: -7px;
+      content: "“";
+      color: var(--brand);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .testimonial-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 7px;
+      padding-left: 22px;
+    }
+
+    .testimonial-footer strong {
+      color: var(--brand-dark);
+      font-size: 7px;
+    }
+
+    .stars {
+      color: var(--yellow);
+      font-size: 13px;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .site-footer {
+      margin-top: 10px;
+      border-top: 1px solid #e1eaed;
+      background: #fff;
+    }
+
+    .site-footer .container {
+      width: min(1180px, calc(100% - 48px));
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.35fr repeat(3, 0.75fr) 1fr;
+      gap: 30px;
+      padding-block: 18px;
+    }
+
+    .footer-brand .brand {
+      min-width: 0;
+    }
+
+    .footer-brand .brand-mark {
+      width: 31px;
+      height: 31px;
+    }
+
+    .footer-brand .brand-mark svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .footer-brand .brand-copy strong {
+      font-size: 20px;
+    }
+
+    .footer-brand .brand-copy small {
+      font-size: 10px;
+    }
+
+    .footer-brand p {
+      max-width: 240px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .footer-column h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .footer-column a {
+      display: block;
+      margin-top: 7px;
+      color: #304773;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .payment-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .payment-logos span {
+      min-width: 43px;
+      padding: 7px 8px;
+      color: #154ab6;
+      border: 1px solid #dbe4ec;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0 17px;
+      color: #718096;
+      border-top: 1px solid #e7edef;
+      font-size: 10px;
+    }
+
+    /* Readable typography at browser 100% on common laptop displays. */
+    .eyebrow,
+    .section-kicker {
+      font-size: 11px;
+    }
+
+    .hero-copy > p {
+      font-size: 14px;
+    }
+
+    .benefit-card strong {
+      font-size: 12px;
+    }
+
+    .benefit-card small,
+    .stat small {
+      font-size: 10px;
+    }
+
+    .stat strong,
+    .trust-stat strong {
+      font-size: 19px;
+    }
+
+    .section-heading h2,
+    .features-title {
+      font-size: 30px;
+    }
+
+    .section-heading p,
+    .features-lead {
+      font-size: 12px;
+    }
+
+    .audience-card h3,
+    .info-panel h3 {
+      font-size: 16px;
+    }
+
+    .audience-card p,
+    .info-panel p,
+    .check-list li,
+    .feature-card p,
+    .testimonial p {
+      font-size: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 15px;
+    }
+
+    .text-link,
+    .process-step p,
+    .trust-stat small,
+    .testimonial strong,
+    .footer-nav a,
+    .copyright {
+      font-size: 11px;
+    }
+
+    .count-up {
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 1160px) {
+      .container {
+        width: min(calc(100% - 36px), 1080px);
+      }
+
+      .hero-grid {
+        grid-template-columns: minmax(300px, 1.08fr) minmax(255px, 0.85fr) minmax(250px, 0.82fr);
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero-demo {
+        grid-template-columns: 1fr;
+        gap: 9px;
+      }
+
+      .benefit-card {
+        grid-template-columns: 31px 1fr;
+        min-height: 53px;
+        padding: 7px;
+      }
+
+      .benefit-card .icon-bubble {
+        width: 30px;
+        height: 30px;
+      }
+
+      .benefit-card strong {
+        font-size: 8px;
+      }
+
+      .benefit-card small {
+        font-size: 6.5px;
+      }
+
+      .stat {
+        padding-inline: 12px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr 0.85fr;
+      }
+
+      .process-panel {
+        grid-column: 1 / -1;
+      }
+
+      .process-flow {
+        justify-content: space-around;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .feature-card {
+        min-height: 115px;
+      }
+
+      .trust-strip {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .testimonial {
+        grid-column: 1 / -1;
+        margin: 10px 0 0;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1.2fr repeat(2, 0.8fr) 1fr;
+      }
+
+      .footer-column.company {
+        display: none;
+      }
+    }
+
+    @media (max-width: 930px) {
+      .header-inner {
+        grid-template-columns: auto auto;
+        justify-content: space-between;
+      }
+
+      .menu-toggle {
+        display: grid;
+      }
+
+      .main-nav {
+        position: fixed;
+        z-index: 110;
+        top: 72px;
+        right: 18px;
+        left: 18px;
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .main-nav.open {
+        display: flex;
+      }
+
+      .main-nav a {
+        padding: 14px 6px;
+        border-bottom: 1px solid #edf3f4;
+        font-size: 12px;
+      }
+
+      .main-nav a::after {
+        display: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr 0.82fr;
+      }
+
+      .hero-demo {
+        display: none;
+      }
+
+      .stats-card {
+        grid-template-columns: repeat(3, 1fr);
+        padding-block: 8px;
+      }
+
+      .stat {
+        border-right: 0;
+      }
+
+      .stat:nth-child(n + 4) {
+        justify-self: center;
+      }
+
+      .audience-grid {
+        gap: 13px;
+      }
+
+      .security-cta {
+        grid-template-columns: 120px 1fr;
+        padding-right: 25px;
+      }
+
+      .security-orbits {
+        width: 110px;
+      }
+
+      .security-shield-image {
+        width: 82px;
+        height: 82px;
+      }
+
+      .security-visual {
+        grid-row: 1 / 3;
+      }
+
+      .security-cta .button {
+        justify-self: start;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(calc(100% - 22px), 650px);
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-grid {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        padding-top: 28px;
+      }
+
+      .hero h1 {
+        white-space: normal;
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .eyebrow,
+      .hero-actions {
+        margin-inline: auto;
+      }
+
+      .hero-copy > p {
+        margin-inline: auto;
+      }
+
+      .hero-doctor {
+        width: min(350px, 100%);
+        height: 330px;
+        margin-inline: auto;
+      }
+
+      .hero-doctor img {
+        right: 5px;
+      }
+
+      .doctor-plus {
+        left: 8px;
+      }
+
+      .stats-overlap {
+        margin-top: 12px;
+      }
+
+      .stats-card {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px;
+      }
+
+      .stat:nth-child(n + 4) {
+        justify-self: stretch;
+      }
+
+      .stat:last-child {
+        grid-column: 1 / -1;
+        justify-self: center;
+      }
+
+      .audience-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .audience-card {
+        min-height: 155px;
+      }
+
+      .process-panel {
+        grid-column: auto;
+      }
+
+      .process-flow {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .process-step {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+      }
+
+      .process-step .icon-bubble {
+        grid-row: 1 / 3;
+        margin: 0;
+      }
+
+      .process-arrow {
+        display: none;
+      }
+
+      .security-cta {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .security-trust {
+        justify-content: center;
+      }
+
+      .security-visual {
+        grid-row: auto;
+      }
+
+      .security-cta .button {
+        min-width: 0;
+        justify-self: stretch;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trust-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trust-stat {
+        border-right: 0;
+        border-bottom: 1px solid #d1e5e5;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 18px;
+      }
+
+      .footer-column,
+      .footer-brand {
+        width: 100%;
+        text-align: center;
+      }
+
+      .footer-brand p {
+        margin-inline: auto;
+      }
+
+      .payment-logos {
+        justify-content: center;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .hero-doctor {
+        height: 300px;
+      }
+
+      .hero-doctor img {
+        width: 300px;
+      }
+
+      .stats-card,
+      .feature-grid,
+      .trust-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .stat:last-child {
+        grid-column: auto;
+        justify-self: stretch;
+      }
+
+      .footer-nav {
+        gap: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .benefit-card {
+        opacity: 1;
+        animation: none !important;
+        transform: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/divinexa-brand.css">
+  <link rel="stylesheet" href="assets/css/mobile-nav-dropdown.css?v=20260818-1">
+  <script defer src="assets/js/mobile-nav-dropdown.js?v=20260818-1"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="home2.html" aria-label="Divinexa home">
+        <span class="brand-mark"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+        <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Prescription Platform</small></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+        <a class="active" href="home2.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="subscription.html">Subscription</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow"><i data-lucide="sparkles"></i>AI-Powered Prescription Management</span>
+          <h1><span class="home-type-line" id="homeTypeLead">Smarter Prescriptions.</span><span class="home-type-line home-type-accent" id="homeTypeAccent">Better Patient Care.</span></h1>
+          <p><span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span> is a next-generation prescribing platform for Doctors, Clinics and Healthcare Organizations.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="account-type.html?flow=trial">Get Started Free <i data-lucide="arrow-right"></i></a>
+            <a class="button" href="subscription.html">View Subscription Plans</a>
+          </div>
+        </div>
+
+        <div class="hero-doctor">
+          <span class="hero-decoration-dots" aria-hidden="true"></span>
+          <span class="doctor-plus" aria-hidden="true"><i data-lucide="plus"></i></span>
+          <img src="assets/images/prescription-doctor.png" alt="Doctor using Divinexa on a tablet">
+        </div>
+
+        <div class="hero-demo">
+          <div class="benefit-stack">
+            <article class="benefit-card">
+              <span class="icon-bubble"><i data-lucide="sparkles"></i></span>
+              <span><strong>AI Prescription Assistant</strong><small>Smart medicine suggestions</small></span>
+            </article>
+            <article class="benefit-card">
+              <span class="icon-bubble"><i data-lucide="shield-check"></i></span>
+              <span><strong>Drug Interaction &amp; Allergy Check</strong><small>More safety, fewer errors</small></span>
+            </article>
+            <article class="benefit-card">
+              <span class="icon-bubble"><i data-lucide="cloud"></i></span>
+              <span><strong>Cloud Based – Access Anywhere</strong><small>Use on web, tablet or mobile</small></span>
+            </article>
+            <article class="benefit-card">
+              <span class="icon-bubble"><i data-lucide="lock-keyhole"></i></span>
+              <span><strong>100% Secure &amp; Compliant</strong><small>HIPAA ready, data encrypted</small></span>
+            </article>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="stats-overlap">
+      <div class="container stats-card">
+        <div class="stat"><span class="icon-bubble"><i data-lucide="user-round-check"></i></span><span><strong class="count-up" data-count="10000" data-suffix="+" data-format="comma">10,000+</strong><small>Registered Doctors</small></span></div>
+        <div class="stat"><span class="icon-bubble"><i data-lucide="building-2"></i></span><span><strong class="count-up" data-count="2500" data-suffix="+" data-format="comma">2,500+</strong><small>Clinics &amp; Hospitals</small></span></div>
+        <div class="stat"><span class="icon-bubble"><i data-lucide="file-check-2"></i></span><span><strong class="count-up" data-count="5" data-suffix=" Million+">5 Million+</strong><small>Prescriptions Created</small></span></div>
+        <div class="stat"><span class="icon-bubble"><i data-lucide="clock-3"></i></span><span><strong class="count-up" data-count="99.9" data-decimals="1" data-suffix="%">99.9%</strong><small>Platform Uptime</small></span></div>
+        <div class="stat"><span class="icon-bubble"><i data-lucide="headphones"></i></span><span><strong>24/7</strong><small>Customer Support</small></span></div>
+      </div>
+    </div>
+
+    <section class="section audience-section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Who Can Use <span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span>?</h2>
+          <p>Flexible solutions for every healthcare provider</p>
+        </div>
+
+        <div class="audience-grid">
+          <article class="audience-card">
+            <span class="icon-bubble"><i data-lucide="user-round-check"></i></span>
+            <h3>For Doctors</h3>
+            <p>Create prescriptions faster, manage patients and grow your practice.</p>
+            <a class="text-link" href="#features">Learn More <i data-lucide="arrow-right"></i></a>
+          </article>
+          <article class="audience-card">
+            <span class="icon-bubble"><i data-lucide="building-2"></i></span>
+            <h3>For Clinics</h3>
+            <p>Manage multi-doctor practice, appointments and prescription templates.</p>
+            <a class="text-link" href="#features">Learn More <i data-lucide="arrow-right"></i></a>
+          </article>
+          <article class="audience-card">
+            <span class="icon-bubble"><i data-lucide="hospital"></i></span>
+            <h3>For Organizations</h3>
+            <p>Centralized prescribing solution for hospitals and large chains.</p>
+            <a class="text-link" href="#features">Learn More <i data-lucide="arrow-right"></i></a>
+          </article>
+        </div>
+
+        <div class="about-grid" id="about">
+          <article class="info-panel about-copy">
+            <h3>About <span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span></h3>
+            <p><span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span> is a comprehensive digital prescription platform that helps healthcare professionals deliver safer, faster and more effective patient care. Powered by AI and modern healthcare standards, it simplifies the complete prescription journey — from consultation to patient follow-up.</p>
+            <a class="button small" href="#features">Learn More About Us <i data-lucide="arrow-right"></i></a>
+          </article>
+
+          <article class="info-panel">
+            <h3>Key Features</h3>
+            <ul class="check-list">
+              <li><i data-lucide="circle-check-big"></i><span>AI powered medicine suggestions</span></li>
+              <li><i data-lucide="circle-check-big"></i><span>Drug interaction &amp; allergy alerts</span></li>
+              <li><i data-lucide="circle-check-big"></i><span>Ready-to-use prescription templates</span></li>
+              <li><i data-lucide="circle-check-big"></i><span>Patient history &amp; follow-up management</span></li>
+              <li><i data-lucide="circle-check-big"></i><span>Secure, cloud-based access</span></li>
+              <li><i data-lucide="circle-check-big"></i><span>Print &amp; share prescriptions instantly</span></li>
+            </ul>
+          </article>
+
+          <article class="info-panel process-panel" id="how-it-works">
+            <h3>How It Works?</h3>
+            <div class="process-flow">
+              <div class="process-step"><span class="icon-bubble"><i data-lucide="user-plus"></i></span><b>1. Register</b><small>Sign up in minutes</small></div>
+              <span class="process-arrow">→</span>
+              <div class="process-step"><span class="icon-bubble"><i data-lucide="notebook-tabs"></i></span><b>2. Create</b><small>Add patients &amp; start consultation</small></div>
+              <span class="process-arrow">→</span>
+              <div class="process-step"><span class="icon-bubble"><i data-lucide="microchip"></i></span><b>3. Get AI Suggestion</b><small>Smart medicine recommendations</small></div>
+              <span class="process-arrow">→</span>
+              <div class="process-step"><span class="icon-bubble"><i data-lucide="file-check-2"></i></span><b>4. Review &amp; Save</b><small>Approve &amp; generate prescription</small></div>
+              <span class="process-arrow">→</span>
+              <div class="process-step"><span class="icon-bubble"><i data-lucide="share-2"></i></span><b>5. Share</b><small>Print / Email / Patient portal</small></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="security-cta" id="subscription">
+          <div class="security-visual" aria-hidden="true">
+            <span class="security-orbits"><img class="security-shield-image" src="assets/images/divinexa-security-shield.png" alt=""></span>
+          </div>
+          <div class="security-copy">
+            <strong>Together, we can build a healthier tomorrow.</strong>
+            <small>Join thousands of doctors and clinics that trust <span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span>.</small>
+            <div class="security-trust" aria-label="Divinexa benefits">
+              <span><i data-lucide="users-round"></i>Trusted by Doctors</span>
+              <span><i data-lucide="shield-check"></i>Secure &amp; Compliant</span>
+              <span><i data-lucide="heart-pulse"></i>Better Patient Care</span>
+            </div>
+          </div>
+          <a class="button" href="subscription.html">View Subscription Plans <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section features-section" id="features">
+      <div class="container">
+        <div class="features-kicker">Powerful Features</div>
+        <div class="section-heading">
+          <h2>Everything You Need in <span>One Platform</span></h2>
+          <p>Designed to simplify prescription management and enhance patient care.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card"><span class="icon-bubble purple"><i data-lucide="file-signature"></i></span><h3>Smart Prescriptions</h3><p>Create accurate prescriptions faster with AI suggestions, drug interactions &amp; alerts.</p></article>
+          <article class="feature-card"><span class="icon-bubble"><i data-lucide="users"></i></span><h3>Patient Management</h3><p>Manage patient records, history, visits and follow-ups in one place.</p></article>
+          <article class="feature-card"><span class="icon-bubble purple"><i data-lucide="briefcase-medical"></i></span><h3>Templates &amp; Shortcuts</h3><p>Use templates and shortcuts to save time and ensure consistency.</p></article>
+          <article class="feature-card"><span class="icon-bubble"><i data-lucide="chart-no-axes-combined"></i></span><h3>Reports &amp; Analytics</h3><p>Get insights on prescriptions, patients and practice performance.</p></article>
+          <article class="feature-card"><span class="icon-bubble purple"><i data-lucide="lock-keyhole"></i></span><h3>Secure &amp; Compliant</h3><p>100% secure, HIPAA compliant with role-based access control.</p></article>
+          <article class="feature-card"><span class="icon-bubble"><i data-lucide="cloud"></i></span><h3>Cloud Access</h3><p>Access your data securely from anywhere, anytime, on any device.</p></article>
+        </div>
+
+        <div class="trust-strip">
+          <div class="trust-stat"><span class="icon-bubble"><i data-lucide="user-round"></i></span><span><strong class="count-up" data-count="1000" data-suffix="+" data-format="comma">1,000+</strong><small>Doctors<br>Trust <span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span></small></span></div>
+          <div class="trust-stat"><span class="icon-bubble purple"><i data-lucide="building-2"></i></span><span><strong class="count-up" data-count="250" data-suffix="+">250+</strong><small>Clinics &amp; Hospitals<br>Using <span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span></small></span></div>
+          <div class="trust-stat"><span class="icon-bubble"><i data-lucide="file-check-2"></i></span><span><strong class="count-up" data-count="1" data-suffix="M+">1M+</strong><small>Prescriptions<br>Generated</small></span></div>
+          <div class="trust-stat"><span class="icon-bubble"><i data-lucide="shield-check"></i></span><span><strong class="count-up" data-count="99.9" data-decimals="1" data-suffix="%">99.9%</strong><small>Uptime<br>Guaranteed</small></span></div>
+          <blockquote class="testimonial">
+            <p><span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span> has completely transformed the way we manage prescriptions and patient care. It’s fast, secure and so easy to use!</p>
+            <div class="testimonial-footer"><strong>— Dr. Neha Patel, Cardiologist</strong><span class="stars">★★★★★</span></div>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="home2.html">
+          <span class="brand-mark" aria-hidden="true"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
+          <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>AI Prescription Platform</small></span>
+        </a>
+        <p>AI-powered prescription management platform for doctors, clinics and healthcare organizations.</p>
+      </div>
+      <div class="footer-column"><h3>Platform</h3><a href="home2.html">Home</a><a href="subscription.html">Subscription</a><a href="#features">Features</a><a href="how-it-works.html">How It Works</a></div>
+      <div class="footer-column company"><h3>Company</h3><a href="about.html">About Us</a><a href="mailto:support@cliniflow.example">Contact</a><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a></div>
+      <div class="footer-column"><h3>Support</h3><a href="#">Help Center</a><a href="#">FAQ</a><a href="mailto:support@cliniflow.example">Contact Support</a><a href="mailto:support@cliniflow.example">support@cliniflow.com</a></div>
+      <div class="footer-column"><h3>We Accept</h3><div class="payment-logos"><span>VISA</span><span>●●</span><span>RuPay</span><span>UPI</span></div></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 <span class="inline-divinexa-wordmark"><img src="assets/images/divenxa-inline.png" alt="Divinexa"></span>. All rights reserved.</span><span>Made with ♥ for Better Healthcare</span></div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const renderIcons = () => window.lucide?.createIcons();
+      const mainNav = document.getElementById("mainNav");
+      const menuToggle = document.getElementById("menuToggle");
+      const homeTypeLead = document.getElementById("homeTypeLead");
+      const homeTypeAccent = document.getElementById("homeTypeAccent");
+      const securityCta = document.querySelector(".security-cta");
+
+      const setMenuOpen = (open) => {
+        mainNav.classList.toggle("open", open);
+        document.body.classList.toggle("menu-open", open);
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+        menuToggle.innerHTML = `<i data-lucide="${open ? "x" : "menu"}"></i>`;
+        renderIcons();
+      };
+
+      menuToggle.addEventListener("click", () => setMenuOpen(!mainNav.classList.contains("open")));
+      mainNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMenuOpen(false));
+      });
+
+      const counters = document.querySelectorAll(".count-up");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const startHeroTypewriter = () => {
+        const segments = [
+          { target: homeTypeLead, text: "Smarter Prescriptions." },
+          { target: homeTypeAccent, text: "Better Patient Care." },
+        ];
+
+        if (reduceMotion) {
+          homeTypeLead.textContent = segments[0].text;
+          homeTypeAccent.textContent = segments[1].text;
+          homeTypeAccent.classList.add("finished");
+          return;
+        }
+
+        segments.forEach(({ target }) => {
+          target.textContent = "";
+        });
+
+        let segmentIndex = 0;
+        let characterIndex = 0;
+
+        const typeNextCharacter = () => {
+          if (segmentIndex >= segments.length) {
+            window.setTimeout(() => homeTypeAccent.classList.add("finished"), 950);
+            return;
+          }
+
+          const segment = segments[segmentIndex];
+          characterIndex += 1;
+          segment.target.textContent = segment.text.slice(0, characterIndex);
+
+          if (characterIndex < segment.text.length) {
+            window.setTimeout(typeNextCharacter, 62);
+            return;
+          }
+
+          segmentIndex += 1;
+          characterIndex = 0;
+          window.setTimeout(typeNextCharacter, 220);
+        };
+
+        window.setTimeout(typeNextCharacter, 260);
+      };
+
+      const setupSecurityCtaReveal = () => {
+        if (!securityCta) {
+          return;
+        }
+
+        if (reduceMotion) {
+          securityCta.classList.add("is-visible");
+          return;
+        }
+
+        securityCta.classList.add("reveal-ready");
+
+        if (!("IntersectionObserver" in window)) {
+          requestAnimationFrame(() => securityCta.classList.add("is-visible"));
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              securityCta.classList.add("is-visible");
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.35 });
+
+        observer.observe(securityCta);
+      };
+
+      const renderCounter = (counter, value) => {
+        const decimals = Number(counter.dataset.decimals || 0);
+        const rounded = Number(value).toFixed(decimals);
+        const number = counter.dataset.format === "comma"
+          ? Number(rounded).toLocaleString("en-US", {
+              minimumFractionDigits: decimals,
+              maximumFractionDigits: decimals,
+            })
+          : rounded;
+        counter.textContent = `${number}${counter.dataset.suffix || ""}`;
+      };
+
+      const animateCounter = (counter) => {
+        if (counter.dataset.animated === "true") {
+          return;
+        }
+
+        counter.dataset.animated = "true";
+        const target = Number(counter.dataset.count);
+
+        if (reduceMotion) {
+          renderCounter(counter, target);
+          return;
+        }
+
+        const duration = 1300;
+        const startTime = performance.now();
+
+        const tick = (time) => {
+          const progress = Math.min((time - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          renderCounter(counter, target * eased);
+
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          }
+        };
+
+        requestAnimationFrame(tick);
+      };
+
+      if ("IntersectionObserver" in window) {
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.35 });
+
+        counters.forEach((counter) => counterObserver.observe(counter));
+      } else {
+        counters.forEach(animateCounter);
+      }
+
+      document.querySelectorAll(".socials a[href='#']").forEach((link) => {
+        link.addEventListener("click", (event) => event.preventDefault());
+      });
+
+      setupSecurityCtaReveal();
+      startHeroTypewriter();
+      renderIcons();
+    })();
+  </script>
+</body>
+</html>
