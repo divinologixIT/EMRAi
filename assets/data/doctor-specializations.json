@@ -1,0 +1,251 @@
+{
+  "version": "1.0.0",
+  "departments": [
+    {
+      "department": "General Medicine",
+      "description": "Primary care, adult medicine and common medical conditions",
+      "aliases": ["medicine", "physician", "primary care"],
+      "specializations": ["General Physician", "Internal Medicine Specialist", "Family Medicine Physician", "Hospital Medicine Specialist"]
+    },
+    {
+      "department": "Emergency Medicine",
+      "description": "Emergency, acute and trauma care",
+      "aliases": ["emergency", "casualty", "trauma"],
+      "specializations": ["Emergency Medicine Physician", "Trauma and Emergency Specialist", "Pre-Hospital Emergency Physician"]
+    },
+    {
+      "department": "Cardiology",
+      "description": "Heart and cardiovascular medicine",
+      "aliases": ["heart", "cardiac", "cardiovascular"],
+      "specializations": ["Cardiologist", "Interventional Cardiologist", "Cardiac Electrophysiologist", "Heart Failure Specialist", "Preventive Cardiologist", "Pediatric Cardiologist"]
+    },
+    {
+      "department": "Dermatology",
+      "description": "Skin, hair and nail disorders",
+      "aliases": ["skin", "hair", "nail"],
+      "specializations": ["Dermatologist", "Dermatosurgeon", "Cosmetic Dermatologist", "Pediatric Dermatologist", "Trichologist"]
+    },
+    {
+      "department": "Pediatrics",
+      "description": "Medical care for infants, children and adolescents",
+      "aliases": ["child", "children", "baby", "paediatrics"],
+      "specializations": ["Pediatrician", "Neonatologist", "Developmental Pediatrician", "Adolescent Medicine Specialist", "Pediatric Intensivist", "Pediatric Emergency Physician"]
+    },
+    {
+      "department": "Psychiatry",
+      "description": "Mental health, behavior and addiction care",
+      "aliases": ["mental health", "behavioral health", "addiction"],
+      "specializations": ["Psychiatrist", "Child and Adolescent Psychiatrist", "Addiction Psychiatrist", "Geriatric Psychiatrist", "Consultation-Liaison Psychiatrist", "Neuropsychiatrist"]
+    },
+    {
+      "department": "Neurology",
+      "description": "Brain, spinal cord and nervous system disorders",
+      "aliases": ["brain", "nerve", "stroke", "epilepsy"],
+      "specializations": ["Neurologist", "Pediatric Neurologist", "Epileptologist", "Stroke Specialist", "Movement Disorder Specialist", "Neuromuscular Specialist", "Headache Specialist", "Sleep Medicine Specialist"]
+    },
+    {
+      "department": "Neurosurgery",
+      "description": "Surgical treatment of brain, spine and nervous system disorders",
+      "aliases": ["brain surgery", "spine surgery", "neuro surgery"],
+      "specializations": ["Neurosurgeon", "Spine Neurosurgeon", "Pediatric Neurosurgeon", "Neurovascular Surgeon", "Functional Neurosurgeon", "Skull Base Surgeon"]
+    },
+    {
+      "department": "Orthopedics",
+      "description": "Bones, joints, muscles and musculoskeletal surgery",
+      "aliases": ["bone", "joint", "musculoskeletal", "orthopaedics"],
+      "specializations": ["Orthopedic Surgeon", "Joint Replacement Surgeon", "Orthopedic Spine Surgeon", "Hand and Upper Limb Surgeon", "Foot and Ankle Surgeon", "Pediatric Orthopedist", "Orthopedic Trauma Surgeon", "Musculoskeletal Tumor Surgeon"]
+    },
+    {
+      "department": "General Surgery",
+      "description": "General, abdominal and minimally invasive surgery",
+      "aliases": ["surgery", "laparoscopy", "abdominal surgery"],
+      "specializations": ["General Surgeon", "Laparoscopic Surgeon", "Bariatric Surgeon", "Colorectal Surgeon", "Hepatobiliary Surgeon", "Breast Surgeon", "Surgical Oncologist"]
+    },
+    {
+      "department": "Obstetrics and Gynecology",
+      "description": "Pregnancy, childbirth and reproductive health",
+      "aliases": ["obgyn", "ob gyn", "women health", "pregnancy", "gynaecology"],
+      "specializations": ["Obstetrician", "Gynecologist", "OB-GYN Specialist", "Maternal-Fetal Medicine Specialist", "Reproductive Medicine Specialist", "Gynecologic Oncologist", "Urogynecologist", "Menopause Specialist"]
+    },
+    {
+      "department": "ENT and Head-Neck Surgery",
+      "description": "Ear, nose, throat and head-neck disorders",
+      "aliases": ["ent", "ear", "nose", "throat", "otolaryngology"],
+      "specializations": ["ENT Specialist", "Otolaryngologist", "Pediatric ENT Specialist", "Head and Neck Surgeon", "Otologist and Neurotologist", "Rhinologist", "Laryngologist"]
+    },
+    {
+      "department": "Ophthalmology",
+      "description": "Eye disease, vision care and eye surgery",
+      "aliases": ["eye", "vision", "ophthalmic"],
+      "specializations": ["Ophthalmologist", "Cataract Surgeon", "Retina Specialist", "Cornea Specialist", "Glaucoma Specialist", "Pediatric Ophthalmologist", "Oculoplastic Surgeon", "Neuro-Ophthalmologist"]
+    },
+    {
+      "department": "Pulmonology",
+      "description": "Lung, airway and respiratory disorders",
+      "aliases": ["lung", "chest", "respiratory", "asthma"],
+      "specializations": ["Pulmonologist", "Chest Physician", "Interventional Pulmonologist", "Pediatric Pulmonologist", "Pulmonary Hypertension Specialist", "Sleep and Breathing Specialist"]
+    },
+    {
+      "department": "Gastroenterology and Hepatology",
+      "description": "Digestive system, liver and gastrointestinal care",
+      "aliases": ["gastro", "stomach", "digestive", "liver"],
+      "specializations": ["Gastroenterologist", "Hepatologist", "GI Endoscopist", "Interventional Gastroenterologist", "Pediatric Gastroenterologist", "Liver Transplant Physician"]
+    },
+    {
+      "department": "Nephrology",
+      "description": "Kidney disease, dialysis and renal medicine",
+      "aliases": ["kidney", "renal", "dialysis"],
+      "specializations": ["Nephrologist", "Dialysis Specialist", "Transplant Nephrologist", "Pediatric Nephrologist", "Hypertension and Kidney Specialist"]
+    },
+    {
+      "department": "Urology",
+      "description": "Urinary tract and male reproductive health",
+      "aliases": ["urinary", "prostate", "male health"],
+      "specializations": ["Urologist", "Andrologist", "Uro-Oncologist", "Pediatric Urologist", "Female Urology Specialist", "Reconstructive Urologist", "Kidney Stone Specialist"]
+    },
+    {
+      "department": "Endocrinology and Diabetes",
+      "description": "Hormones, diabetes, thyroid and metabolic disorders",
+      "aliases": ["hormone", "diabetes", "thyroid", "metabolism"],
+      "specializations": ["Endocrinologist", "Diabetologist", "Thyroid Specialist", "Pediatric Endocrinologist", "Reproductive Endocrinologist", "Metabolic Medicine Specialist"]
+    },
+    {
+      "department": "Rheumatology",
+      "description": "Autoimmune, inflammatory and connective-tissue disorders",
+      "aliases": ["arthritis", "autoimmune", "joint inflammation"],
+      "specializations": ["Rheumatologist", "Pediatric Rheumatologist", "Clinical Immunology and Rheumatology Specialist"]
+    },
+    {
+      "department": "Hematology",
+      "description": "Blood, bone marrow and clotting disorders",
+      "aliases": ["blood", "bone marrow", "clotting"],
+      "specializations": ["Hematologist", "Hemato-Oncologist", "Pediatric Hematologist", "Coagulation Specialist", "Bone Marrow Transplant Specialist"]
+    },
+    {
+      "department": "Oncology",
+      "description": "Cancer diagnosis, treatment and follow-up",
+      "aliases": ["cancer", "tumor", "chemotherapy"],
+      "specializations": ["Medical Oncologist", "Radiation Oncologist", "Surgical Oncologist", "Pediatric Oncologist", "Gynecologic Oncologist", "Head and Neck Oncologist"]
+    },
+    {
+      "department": "Radiology and Imaging",
+      "description": "Diagnostic imaging and image-guided procedures",
+      "aliases": ["xray", "ct", "mri", "ultrasound", "imaging"],
+      "specializations": ["Radiologist", "Interventional Radiologist", "Neuroradiologist", "Pediatric Radiologist", "Musculoskeletal Radiologist", "Breast Imaging Specialist", "Sonologist"]
+    },
+    {
+      "department": "Anesthesiology and Pain Medicine",
+      "description": "Anesthesia, perioperative care and pain management",
+      "aliases": ["anaesthesia", "anesthesia", "pain"],
+      "specializations": ["Anesthesiologist", "Cardiac Anesthesiologist", "Neuroanesthesiologist", "Pediatric Anesthesiologist", "Obstetric Anesthesiologist", "Pain Medicine Specialist"]
+    },
+    {
+      "department": "Critical Care Medicine",
+      "description": "Intensive care and life-threatening illness",
+      "aliases": ["icu", "intensive care", "critical illness"],
+      "specializations": ["Critical Care Specialist", "Intensivist", "Pediatric Intensivist", "Neurocritical Care Specialist", "Cardiac Critical Care Specialist"]
+    },
+    {
+      "department": "Pathology and Laboratory Medicine",
+      "description": "Laboratory diagnosis, tissue and molecular pathology",
+      "aliases": ["lab", "laboratory", "biopsy", "histopathology"],
+      "specializations": ["Pathologist", "Clinical Pathologist", "Histopathologist", "Cytopathologist", "Hematopathologist", "Molecular Pathologist", "Microbiologist"]
+    },
+    {
+      "department": "Infectious Diseases",
+      "description": "Complex infections, tropical disease and antimicrobial care",
+      "aliases": ["infection", "tropical medicine", "hiv", "fever"],
+      "specializations": ["Infectious Disease Specialist", "Tropical Medicine Specialist", "HIV Medicine Specialist", "Pediatric Infectious Disease Specialist", "Travel Medicine Specialist"]
+    },
+    {
+      "department": "Allergy and Clinical Immunology",
+      "description": "Allergies, asthma and immune-system disorders",
+      "aliases": ["allergy", "immune", "immunology"],
+      "specializations": ["Allergist and Immunologist", "Pediatric Allergist", "Clinical Immunologist"]
+    },
+    {
+      "department": "Dentistry",
+      "description": "Oral health, teeth, gums and maxillofacial care",
+      "aliases": ["dental", "tooth", "teeth", "oral"],
+      "specializations": ["Dentist", "Orthodontist", "Oral and Maxillofacial Surgeon", "Periodontist", "Endodontist", "Prosthodontist", "Pediatric Dentist", "Oral Medicine Specialist"]
+    },
+    {
+      "department": "Physical Medicine and Rehabilitation",
+      "description": "Restoring function after injury, illness or disability",
+      "aliases": ["pmr", "rehabilitation", "physiatry", "rehab"],
+      "specializations": ["Physical Medicine and Rehabilitation Specialist", "Physiatrist", "Neurorehabilitation Specialist", "Pediatric Rehabilitation Specialist", "Spinal Cord Rehabilitation Specialist"]
+    },
+    {
+      "department": "Plastic and Reconstructive Surgery",
+      "description": "Reconstructive, cosmetic, hand and burn surgery",
+      "aliases": ["plastic surgery", "cosmetic surgery", "reconstruction", "burn"],
+      "specializations": ["Plastic Surgeon", "Cosmetic Surgeon", "Reconstructive Surgeon", "Burn Surgeon", "Craniofacial Surgeon", "Microsurgeon"]
+    },
+    {
+      "department": "Cardiothoracic and Vascular Surgery",
+      "description": "Surgery of the heart, chest and blood vessels",
+      "aliases": ["heart surgery", "chest surgery", "vascular surgery"],
+      "specializations": ["Cardiothoracic Surgeon", "Cardiac Surgeon", "Thoracic Surgeon", "Vascular Surgeon", "Pediatric Cardiac Surgeon"]
+    },
+    {
+      "department": "Geriatric Medicine",
+      "description": "Comprehensive medical care for older adults",
+      "aliases": ["elderly", "senior", "aging"],
+      "specializations": ["Geriatrician", "Geriatric Medicine Specialist", "Geriatric Psychiatry Specialist"]
+    },
+    {
+      "department": "Palliative Medicine",
+      "description": "Symptom relief and supportive care for serious illness",
+      "aliases": ["palliative care", "supportive care", "end of life"],
+      "specializations": ["Palliative Medicine Specialist", "Hospice and Palliative Care Physician", "Pediatric Palliative Care Specialist"]
+    },
+    {
+      "department": "Sports and Exercise Medicine",
+      "description": "Sports injuries, exercise health and performance",
+      "aliases": ["sports", "exercise", "athlete"],
+      "specializations": ["Sports Medicine Physician", "Exercise Medicine Specialist", "Team Physician"]
+    },
+    {
+      "department": "Preventive and Public Health Medicine",
+      "description": "Disease prevention, population health and epidemiology",
+      "aliases": ["public health", "preventive medicine", "community medicine"],
+      "specializations": ["Preventive Medicine Specialist", "Public Health Physician", "Community Medicine Specialist", "Epidemiologist"]
+    },
+    {
+      "department": "Occupational Medicine",
+      "description": "Workplace health, safety and occupational disease",
+      "aliases": ["work health", "industrial medicine", "workplace"],
+      "specializations": ["Occupational Medicine Physician", "Industrial Health Physician", "Aviation Medicine Specialist"]
+    },
+    {
+      "department": "Nuclear Medicine",
+      "description": "Radioisotope imaging and targeted radionuclide therapy",
+      "aliases": ["pet scan", "radioisotope", "nuclear imaging"],
+      "specializations": ["Nuclear Medicine Physician", "Nuclear Imaging Specialist", "Radionuclide Therapy Specialist"]
+    },
+    {
+      "department": "Transfusion Medicine",
+      "description": "Blood banking, transfusion and apheresis medicine",
+      "aliases": ["blood bank", "transfusion", "apheresis"],
+      "specializations": ["Transfusion Medicine Specialist", "Blood Bank Specialist", "Apheresis Medicine Specialist"]
+    },
+    {
+      "department": "Clinical Genetics",
+      "description": "Inherited conditions, genomic diagnosis and counseling",
+      "aliases": ["genetics", "genomics", "inherited disease"],
+      "specializations": ["Clinical Geneticist", "Genetic Medicine Specialist", "Metabolic Genetics Specialist"]
+    },
+    {
+      "department": "Forensic Medicine",
+      "description": "Medical-legal investigation and forensic pathology",
+      "aliases": ["medicolegal", "forensic", "legal medicine"],
+      "specializations": ["Forensic Medicine Specialist", "Forensic Pathologist", "Medical Jurisprudence Specialist"]
+    },
+    {
+      "department": "Clinical Pharmacology",
+      "description": "Safe, effective and evidence-based medicine use",
+      "aliases": ["pharmacology", "drug safety", "therapeutics"],
+      "specializations": ["Clinical Pharmacologist", "Clinical Toxicologist", "Pharmacovigilance Physician"]
+    }
+  ]
+}

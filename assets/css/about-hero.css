@@ -1,0 +1,300 @@
+/* ============================================================
+   Divinexa — About Us: Mission / Vision Scroll Story
+   Apple-style scroll-scrubbed story, 2 clips / 2 text beats.
+   Scroll position drives a pre-extracted frame sequence drawn to
+   canvas (GSAP ScrollTrigger) — see about-hero.js.
+   ============================================================ */
+
+.ahero-section {
+  position: relative;
+  height: 340vh;
+  background: #ffffff;
+}
+
+@media (max-width: 1100px) and (min-width: 901px) {
+  .ahero-section {
+    height: 280vh;
+  }
+}
+
+.ahero-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #ffffff;
+  will-change: transform;
+}
+
+.ahero-visual {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Drawn very slightly oversized (102%, inset -1%) so the subtle camera
+   drift transform never reveals a gap at the edge. Only transform
+   animates here — GPU-composited, no layout/paint cost. */
+.ahero-canvas {
+  position: absolute;
+  inset: -1%;
+  width: 102%;
+  height: 102%;
+  display: block;
+  background: #ffffff;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Bottom fade: dissolves the lower edge of the frame into the page's
+   #ffffff background so the pin never ends on a visible horizontal seam.
+   Always present (not just at the very end) — the seam exists at every
+   scroll position, not only on release — and JS grows its height/opacity
+   further over the final ~10% of the sequence (see about-hero.js) right
+   before the pin releases. Sits above the canvas but below the text
+   layer, and stays clear of vertical-center text, so only the lower
+   portion of the scene ever washes out — top/middle stay sharp. */
+.ahero-bottom-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 34%;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at bottom center, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0) 78%),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, .25) 20%,
+      rgba(255, 255, 255, .65) 45%,
+      rgba(255, 255, 255, .93) 68%,
+      #ffffff 88%,
+      #ffffff 100%
+    );
+}
+
+/* Subtle, targeted white gradients — only where text sits (left for
+   Mission, right for Vision) — never a flat overlay across the whole
+   frame, so the animation stays bright and clean per spec. */
+.ahero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(255, 255, 255, .88) 0%, rgba(255, 255, 255, 0) 38%),
+    linear-gradient(to left, rgba(255, 255, 255, .88) 0%, rgba(255, 255, 255, 0) 38%);
+}
+
+.ahero-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.ahero-scene-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% + 25px));
+  width: min(480px, 42vw);
+  padding: 0 clamp(28px, 7vw, 90px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ahero-scene-text.side-left { left: 0; text-align: left; }
+.ahero-scene-text.side-right { right: 0; text-align: right; }
+
+.ahero-scene-text.is-interactive { pointer-events: auto; }
+
+.ahero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #0b968b;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ahero-eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: #0b968b;
+}
+
+.ahero-scene-text.side-right .ahero-eyebrow::before { order: 2; }
+.ahero-scene-text.side-right .ahero-eyebrow { flex-direction: row-reverse; }
+
+.ahero-accent-line {
+  width: 46px;
+  height: 3px;
+  margin: 18px 0 16px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #0b968b, #6fe8dc);
+}
+
+.ahero-scene-text.side-right .ahero-accent-line { margin-left: auto; }
+
+.ahero-scene-text h2 {
+  margin: 14px 0 14px;
+  color: #1b2229;
+  font-size: clamp(32px, 3.4vw, 46px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+}
+
+.ahero-scene-text p {
+  margin: 0;
+  max-width: 440px;
+  color: rgba(30, 41, 58, .64);
+  font-size: clamp(15px, 1.1vw, 17.5px);
+  line-height: 1.65;
+}
+
+.ahero-scene-text.side-right p { margin-left: auto; }
+
+/* ---------- chrome: progress bar ---------- */
+
+.ahero-chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.ahero-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(16, 34, 58, .08);
+}
+
+.ahero-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0b968b, #6fe8dc);
+  transform-origin: left;
+}
+
+/* ---------- Fallback (tablet-below / reduced-motion) experience ---------- */
+
+.ahero-fallback {
+  background: #ffffff;
+}
+
+.ahero-fallback[hidden] { display: none; }
+
+.ahero-fallback-scene {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ahero-fallback-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile always renders this fallback (about-hero.js routes narrow
+   viewports here directly, never the pinned canvas), so this is where
+   the mobile fitting fix actually lives for this page. Cover-fit against
+   a 16:9 clip on a narrow portrait screen crops deep into the doctor/
+   patient/UI, not just the edges. A first pass switched to contain-fit
+   but kept the scene at min-height:100svh, which just relocated the bug
+   — a small letterboxed clip floating inside a portrait-tall box with
+   huge white bars. Fixed properly here: the scene drops the forced full
+   height and the video becomes a normal-flow, aspect-ratio-sized block
+   instead of an absolutely-positioned overlay, so the section is only as
+   tall as its actual content (video + text stacked, minimal breathing
+   room) rather than a fixed viewport height with everything floating
+   inside it. Desktop-with-reduced-motion (the only other path that
+   reaches this fallback) is untouched and keeps cover-fit at full height.
+   Matches the 900px threshold about-hero.js itself uses to route mobile
+   into this fallback in the first place — no gap between the two. */
+@media (max-width: 900px) {
+  .ahero-fallback-scene {
+    min-height: 0;
+    display: block;
+    padding: 16px 0 28px;
+  }
+
+  .ahero-fallback-video {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    object-position: center center;
+  }
+
+  .ahero-fallback-scene .ahero-scrim {
+    display: none;
+  }
+
+  .ahero-fallback-text {
+    margin-top: 18px;
+  }
+}
+
+.ahero-fallback-text {
+  position: relative;
+  z-index: 2;
+  width: min(560px, 88vw);
+  margin-top: 15%;
+  padding: 0 20px 40px;
+  text-align: center;
+  color: #1b2229;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.ahero-fallback-scene.is-visible .ahero-fallback-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ahero-fallback-text .ahero-eyebrow { justify-content: center; }
+.ahero-fallback-text .ahero-eyebrow::before { display: none; }
+.ahero-fallback-text .ahero-accent-line { margin: 14px auto 12px; }
+
+.ahero-fallback-text h2 {
+  margin: 10px 0 10px;
+  font-size: clamp(26px, 7vw, 36px);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -.02em;
+  color: #1b2229;
+}
+
+.ahero-fallback-text p {
+  margin: 0 auto;
+  max-width: 460px;
+  color: rgba(30, 41, 58, .68);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ahero-canvas { will-change: auto; }
+}

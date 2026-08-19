@@ -1,0 +1,117 @@
+{
+  "countries": [
+    {
+      "country": "Bangladesh",
+      "code": "BD",
+      "states": [
+        {
+          "state": "Dhaka",
+          "districts": [
+            { "district": "Dhaka", "cities": ["Dhanmondi", "Gulshan", "Mirpur", "Uttara", "Savar", "Dhamrai", "Keraniganj"] },
+            { "district": "Gazipur", "cities": ["Gazipur Sadar", "Kaliakair", "Kapasia", "Kaliganj", "Sreepur"] },
+            { "district": "Narayanganj", "cities": ["Narayanganj Sadar", "Rupganj", "Sonargaon", "Araihazar"] }
+          ]
+        },
+        {
+          "state": "Chattogram",
+          "districts": [
+            { "district": "Chattogram", "cities": ["Chattogram", "Patiya", "Sitakunda", "Hathazari"] },
+            { "district": "Cox's Bazar", "cities": ["Cox's Bazar", "Chakaria", "Teknaf", "Ukhia"] },
+            { "district": "Cumilla", "cities": ["Cumilla", "Daudkandi", "Laksam"] }
+          ]
+        },
+        {
+          "state": "Khulna",
+          "districts": [
+            { "district": "Khulna", "cities": ["Khulna", "Dumuria", "Batiaghata"] },
+            { "district": "Jessore", "cities": ["Jessore", "Benapole", "Jhikargacha"] },
+            { "district": "Kushtia", "cities": ["Kushtia", "Kumarkhali", "Bheramara"] }
+          ]
+        },
+        {
+          "state": "Rajshahi",
+          "districts": [
+            { "district": "Rajshahi", "cities": ["Rajshahi", "Puthia", "Bagha"] },
+            { "district": "Bogra", "cities": ["Bogra", "Sherpur", "Shibganj"] },
+            { "district": "Pabna", "cities": ["Pabna", "Ishwardi", "Santhia"] }
+          ]
+        },
+        {
+          "state": "Barishal",
+          "districts": [
+            { "district": "Barishal", "cities": ["Barishal Sadar", "Bakerganj", "Babuganj", "Banaripara"] },
+            { "district": "Bhola", "cities": ["Bhola Sadar", "Char Fasson", "Lalmohan"] },
+            { "district": "Patuakhali", "cities": ["Patuakhali Sadar", "Kalapara", "Galachipa"] }
+          ]
+        },
+        {
+          "state": "Mymensingh",
+          "districts": [
+            { "district": "Mymensingh", "cities": ["Mymensingh Sadar", "Trishal", "Bhaluka", "Muktagacha"] },
+            { "district": "Jamalpur", "cities": ["Jamalpur Sadar", "Melandaha", "Sarishabari"] },
+            { "district": "Netrokona", "cities": ["Netrokona Sadar", "Kendua", "Durgapur"] }
+          ]
+        },
+        {
+          "state": "Rangpur",
+          "districts": [
+            { "district": "Rangpur", "cities": ["Rangpur Sadar", "Badarganj", "Mithapukur", "Pirganj"] },
+            { "district": "Dinajpur", "cities": ["Dinajpur Sadar", "Birampur", "Parbatipur"] },
+            { "district": "Kurigram", "cities": ["Kurigram Sadar", "Nageshwari", "Ulipur"] }
+          ]
+        },
+        {
+          "state": "Sylhet",
+          "districts": [
+            { "district": "Sylhet", "cities": ["Sylhet", "Beanibazar", "Golapganj"] },
+            { "district": "Moulvibazar", "cities": ["Moulvibazar", "Sreemangal", "Kulaura"] }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "India",
+      "code": "IN",
+      "states": [
+        {
+          "state": "West Bengal",
+          "districts": [
+            { "district": "Kolkata", "cities": ["Kolkata", "Salt Lake City", "New Town"] },
+            { "district": "North 24 Parganas", "cities": ["Barasat", "Barrackpore", "Bidhannagar"] },
+            { "district": "Howrah", "cities": ["Howrah", "Uluberia", "Bally"] }
+          ]
+        },
+        {
+          "state": "Delhi",
+          "districts": [
+            { "district": "New Delhi", "cities": ["New Delhi", "Connaught Place", "Chanakyapuri"] },
+            { "district": "South Delhi", "cities": ["Saket", "Hauz Khas", "Greater Kailash"] }
+          ]
+        },
+        {
+          "state": "Maharashtra",
+          "districts": [
+            { "district": "Mumbai City", "cities": ["Mumbai", "Colaba", "Dadar"] },
+            { "district": "Pune", "cities": ["Pune", "Pimpri-Chinchwad", "Lonavala"] },
+            { "district": "Nagpur", "cities": ["Nagpur", "Kamptee", "Umred"] }
+          ]
+        },
+        {
+          "state": "Karnataka",
+          "districts": [
+            { "district": "Bengaluru Urban", "cities": ["Bengaluru", "Yelahanka", "Electronic City"] },
+            { "district": "Mysuru", "cities": ["Mysuru", "Nanjangud", "Hunsur"] },
+            { "district": "Mangaluru", "cities": ["Mangaluru", "Ullal", "Moodbidri"] }
+          ]
+        },
+        {
+          "state": "Tamil Nadu",
+          "districts": [
+            { "district": "Chennai", "cities": ["Chennai", "Ambattur", "Sholinganallur"] },
+            { "district": "Coimbatore", "cities": ["Coimbatore", "Pollachi", "Mettupalayam"] }
+          ]
+        }
+      ]
+    }
+  ]
+}

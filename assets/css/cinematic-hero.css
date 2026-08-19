@@ -1,0 +1,348 @@
+/* ============================================================
+   Divinexa — Cinematic Scroll Hero
+   Apple-style scroll-scrubbed video story, 7 scenes.
+   ============================================================ */
+
+:root {
+  --cine-teal: #00a69a;
+  --cine-teal-dark: #007b73;
+  --cine-teal-light: #6fe8dc;
+  --cine-ink: #10223a;
+  --cine-white: #ffffff;
+}
+
+/* ---------- Pinned (desktop + mobile) experience ---------- */
+
+.cine-hero {
+  position: relative;
+  /* 18 weighted scene-units (scene 1 = 6 units, scenes 2-7 = 2 units each) at
+     ~214vh/unit — every scene runs slower, scene 1 still relatively longest. */
+  height: 3860vh;
+  background: var(--cine-white);
+}
+
+@media (max-width: 900px) {
+  /* Auto, not a large vh value — the mobile pin duration comes entirely
+     from ScrollTrigger's own `end: "+=4000"` (cinematic-hero.js), which
+     builds its own pin-spacer sized to that distance regardless of this
+     element's declared height. A large CSS height here was the actual
+     bug: it reserved far more scroll distance than the compact mobile
+     stage needed, so the pin held the (now small) visual on screen for
+     thousands of extra pixels of dead scroll after the story had already
+     finished. Before JS runs, this just wraps the stage in normal flow. */
+  .cine-hero {
+    height: auto;
+  }
+}
+
+.cine-stage {
+  position: relative;
+  width: 100%;
+  /* svh first: guarantees the pinned stage fits even with mobile browser
+     chrome (address bar, etc.) fully visible, so nothing is ever clipped.
+     dvh then overrides where supported, live-tracking the browser chrome
+     as it shows/hides — paired with ScrollTrigger's ignoreMobileResize
+     (see cinematic-hero.js) so that live-tracking never fights the pin. */
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--cine-white);
+  will-change: transform;
+}
+
+@media (max-width: 900px) {
+  /* The stage no longer fills the viewport on mobile — a contain-fit
+     16:9 frame inside a 100dvh box left huge white bars top and bottom.
+     Sized to roughly the frame's own aspect ratio plus a little room for
+     the overlaid text instead, so the animation fills nearly all of a
+     compact band. Pinning this shorter element works exactly the same
+     way — GSAP pins whatever box size the element actually has. */
+  .cine-stage {
+    height: min(64vh, 78vw);
+    min-height: 240px;
+  }
+}
+
+.cine-video-wrap {
+  position: absolute;
+  inset: 0;
+  perspective: 1200px;
+}
+
+/* The canvas is drawn slightly oversized (108%, inset -4%) so the subtle
+   camera drift/tilt transform below never reveals a gap at the edge. Only
+   transform/filter animate here — GPU-composited, no layout/paint cost. */
+.cine-canvas {
+  position: absolute;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  display: block;
+  background: var(--cine-white);
+  will-change: transform, filter;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.cine-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, 0) 36%),
+    linear-gradient(to left, rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, 0) 36%),
+    linear-gradient(to top, rgba(255, 255, 255, .4) 0%, rgba(255, 255, 255, 0) 26%),
+    linear-gradient(to bottom, rgba(255, 255, 255, .15) 0%, rgba(255, 255, 255, 0) 14%);
+}
+
+.cine-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.cine-scene-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(460px, 42vw);
+  padding: 0 clamp(24px, 5vw, 72px);
+  opacity: 0;
+  color: var(--cine-ink);
+}
+
+.cine-scene-text.side-left { left: 0; text-align: left; }
+.cine-scene-text.side-right { right: 0; text-align: right; }
+
+.cine-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 166, 154, .22);
+  background: rgba(232, 248, 246, .92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--cine-teal-dark);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.cine-scene-text h2 {
+  margin: 20px 0 14px;
+  color: var(--cine-ink);
+  font-size: clamp(28px, 3vw, 46px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+
+.cine-scene-text p {
+  margin: 0;
+  max-width: 420px;
+  color: rgba(16, 34, 58, .72);
+  font-size: clamp(14.5px, 1.05vw, 17px);
+  line-height: 1.6;
+}
+
+.cine-scene-text.side-right p { margin-left: auto; }
+
+/* chrome: progress bar, dots, scroll cue */
+
+.cine-chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.cine-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(16, 34, 58, .08);
+}
+
+.cine-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--cine-teal), var(--cine-teal-light));
+  transform-origin: left;
+}
+
+.cine-dots {
+  position: absolute;
+  right: clamp(18px, 3vw, 40px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cine-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(16, 34, 58, .18);
+  transition: background .25s ease, transform .25s ease, height .25s ease;
+}
+
+.cine-dot.is-active {
+  background: var(--cine-teal);
+  height: 20px;
+  border-radius: 3px;
+}
+
+.cine-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(20px, 4vh, 40px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(16, 34, 58, .55);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-align: center;
+  transition: opacity .4s ease;
+}
+
+.cine-scroll-cue i,
+.cine-scroll-cue svg {
+  width: 16px;
+  height: 16px;
+  animation: cineBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes cineBounce {
+  0%, 100% { transform: translateY(0); opacity: .6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.cine-scroll-cue.is-hidden { opacity: 0; }
+
+/* ---------- Fallback (mobile / reduced-motion) experience ---------- */
+
+.cine-fallback {
+  background: var(--cine-white);
+}
+
+.cine-fallback[hidden] { display: none; }
+
+.cine-fallback-scene {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.cine-fallback-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cine-fallback-text {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 20px 56px;
+  color: var(--cine-ink);
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.cine-fallback-scene.is-visible .cine-fallback-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cine-fallback-text h2 {
+  margin: 14px 0 10px;
+  font-size: clamp(24px, 7vw, 34px);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -.02em;
+}
+
+.cine-fallback-text p {
+  margin: 0;
+  max-width: 520px;
+  color: rgba(16, 34, 58, .75);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.cine-fallback-cta {
+  display: inline-flex;
+  margin-top: 20px;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (max-width: 900px) {
+  /* Desktop pins text to the left/right edge to sit in the negative space
+     beside the doctor. On a narrow phone that same rule either overlaps
+     the (now letterboxed, centered) frame or drifts into empty margin —
+     so text is recentered under the frame instead, independent of the
+     side-left/side-right class. cinematic-hero.js adds a matching
+     translateX(-50%) to its per-frame transform when isMobileMode. */
+  .cine-scene-text,
+  .cine-scene-text.side-left,
+  .cine-scene-text.side-right {
+    left: 50%;
+    right: auto;
+    width: 88vw;
+    padding: 10px 14px;
+    text-align: center;
+    border-radius: 16px;
+    /* The compact stage leaves the frame nearly full-bleed, so text now
+       sits directly over live scene content rather than the side
+       negative-space it has on desktop — a soft translucent panel keeps
+       it readable without a heavy flat overlay across the whole frame. */
+    background: rgba(255, 255, 255, .55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .cine-scene-text.side-right p,
+  .cine-scene-text.side-left p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cine-scene-text h2 {
+    margin: 8px 0 6px;
+    font-size: clamp(22px, 6vw, 28px);
+  }
+
+  .cine-scene-text p {
+    font-size: 13.5px;
+  }
+
+  .cine-eyebrow {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cine-scroll-cue i,
+  .cine-scroll-cue svg { animation: none; }
+}

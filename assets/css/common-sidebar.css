@@ -1,0 +1,173 @@
+/* Used by: appointments.html, BookingDetails.html, health-records.html, schedule.html */
+
+.common-patient-sidebar.side-nav.sidebar {
+  align-self: start;
+  min-width: 0;
+  min-height: calc(100vh - 68px);
+  display: flex;
+  position: sticky;
+  top: 68px;
+  flex-direction: column;
+  gap: 0;
+  padding: 16px 10px;
+  overflow: hidden;
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 1px solid #dce7eb;
+  border-radius: 0;
+  background: rgba(255, 255, 255, .97);
+  box-shadow: none;
+  transform-origin: left center;
+  transition:
+    opacity 220ms ease,
+    transform 340ms cubic-bezier(.22, 1, .36, 1),
+    padding 340ms cubic-bezier(.22, 1, .36, 1);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.common-patient-sidebar .side-nav-list {
+  display: grid;
+  gap: 5px;
+}
+
+.common-patient-sidebar .side-nav-link.side-link {
+  width: 100%;
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 9px;
+  color: #314663;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.common-patient-sidebar .side-nav-link.side-link:hover {
+  color: #007d75;
+  background: #eff9f8;
+  transform: translateX(2px);
+}
+
+.common-patient-sidebar .side-nav-link.side-link.active {
+  color: #007d75;
+  background: linear-gradient(90deg, #e3f5f3, #f6fbfb);
+  box-shadow: inset 3px 0 #07988c;
+}
+
+.common-patient-sidebar .side-nav-link svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  color: #007d75;
+  stroke-width: 2;
+}
+
+.common-patient-sidebar .assistant-box.assistant-card {
+  margin: 16px 0 0;
+  padding: 15px;
+  border: 1px solid #cce7e4;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(23, 184, 170, .13), transparent 38%),
+    #f9fefe;
+}
+
+.common-patient-sidebar .assistant-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #007d75;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.common-patient-sidebar .beta {
+  padding: 3px 7px;
+  border-radius: 999px;
+  color: #007d75;
+  background: #d9f4f1;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .05em;
+}
+
+.common-patient-sidebar .assistant-box p {
+  margin: 11px 0 14px;
+  color: #6b7c93;
+  font-size: 10.5px;
+  line-height: 1.65;
+}
+
+.common-patient-sidebar .assistant-button.primary-button {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: linear-gradient(120deg, #078d83, #10aaa0);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.common-patient-sidebar .assistant-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.common-patient-sidebar .side-logout {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: auto;
+  padding: 0 12px;
+  border-radius: 9px;
+  color: #314663;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.common-patient-sidebar .side-logout:hover {
+  color: #007d75;
+  background: #eff9f8;
+}
+
+.common-patient-sidebar .side-logout svg {
+  width: 17px;
+  height: 17px;
+  color: #07988c;
+}
+
+@media (max-width: 1120px) {
+  .common-patient-sidebar.side-nav.sidebar {
+    display: none;
+  }
+
+  .common-patient-sidebar.side-nav.sidebar.open {
+    width: 250px;
+    display: flex;
+    position: fixed;
+    z-index: 1100;
+    top: 68px;
+    bottom: 0;
+    left: 0;
+    padding: 14px 10px;
+    overflow-y: auto;
+    box-shadow: 12px 0 30px rgba(18, 56, 73, .15);
+  }
+}

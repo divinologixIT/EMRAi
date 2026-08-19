@@ -1,0 +1,87 @@
+/* Used by: individual-tour.html, individual-clinic-setup.html, clinic-setup-tour.html */
+
+.setup-sidebar-guidance {
+  padding: 24px 18px 26px;
+  border-top: 1px solid #edf3f5;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfefe 100%);
+  text-align: center;
+}
+
+.setup-sidebar-art {
+  height: 205px;
+  display: grid;
+  place-items: end center;
+  position: relative;
+  overflow: hidden;
+}
+
+.setup-sidebar-art img {
+  width: 214px;
+  height: 150px;
+  position: relative;
+  z-index: 2;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.setup-sidebar-clipboard {
+  width: 105px;
+  height: 137px;
+  position: absolute;
+  z-index: 1;
+  bottom: 18px;
+  left: 5px;
+  padding: 38px 18px 0;
+  border: 7px solid #b8d3ec;
+  border-radius: 10px;
+  background: linear-gradient(#ffffff, #f3f9fd);
+  box-shadow: 0 8px 18px rgba(35, 77, 105, .07);
+}
+
+.setup-sidebar-clipboard::before {
+  width: 44px;
+  height: 18px;
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  border: 5px solid #b8d3ec;
+  border-radius: 8px;
+  background: #e5eff8;
+  transform: translateX(-50%);
+}
+
+.setup-sidebar-clipboard i {
+  height: 7px;
+  display: block;
+  margin-bottom: 13px;
+  border-radius: 999px;
+  background: #d9e8f4;
+}
+
+.setup-sidebar-copy {
+  padding-top: 14px;
+}
+
+.setup-sidebar-copy strong {
+  color: var(--ink, #102651);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.setup-sidebar-copy p {
+  margin: 12px auto 0;
+  color: var(--muted, #60718f);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.tour-sidebar .help-card {
+  margin-top: 0;
+}
+
+@media (max-width: 860px) {
+  .setup-sidebar-guidance {
+    display: none;
+  }
+}

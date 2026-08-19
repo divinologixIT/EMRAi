@@ -1,0 +1,28 @@
+/* Offline mirror of clinical-options.json for pages opened directly with file:// */
+window.DIVINEXA_CHIEF_COMPLAINTS = [
+  {"value":"Fever","category":"General"},
+  {"value":"Cough","category":"Respiratory"},
+  {"value":"Headache","category":"Neurological"},
+  {"value":"Cold / Runny Nose","category":"Respiratory"},
+  {"value":"Sore Throat","category":"ENT"},
+  {"value":"Shortness of Breath","category":"Respiratory"},
+  {"value":"Chest Pain","category":"Cardiac / Respiratory"},
+  {"value":"Abdominal Pain","category":"Gastrointestinal"},
+  {"value":"Nausea","category":"Gastrointestinal"},
+  {"value":"Vomiting","category":"Gastrointestinal"},
+  {"value":"Diarrhea","category":"Gastrointestinal"},
+  {"value":"Constipation","category":"Gastrointestinal"},
+  {"value":"Dizziness","category":"Neurological"},
+  {"value":"Fatigue / Weakness","category":"General"},
+  {"value":"Body Ache","category":"General"},
+  {"value":"Back Pain","category":"Musculoskeletal"},
+  {"value":"Joint Pain","category":"Musculoskeletal"},
+  {"value":"Skin Rash","category":"Dermatology"},
+  {"value":"Itching","category":"Dermatology"},
+  {"value":"Palpitations","category":"Cardiac"},
+  {"value":"Burning Urination","category":"Urology"},
+  {"value":"Swelling","category":"General"},
+  {"value":"Anxiety","category":"Mental Health"},
+  {"value":"Sleep Difficulty","category":"Mental Health"},
+  {"value":"Loss of Appetite","category":"General"}
+];

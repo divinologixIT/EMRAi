@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <rect width="1200" height="360" fill="#eef4ee"/>
+  <path d="M0 54L190 15l162 51 190-37 204 42 202-53 252 38v111l-185 32-173-42-198 45-224-38-190 48L0 178z" fill="#e0efdf"/>
+  <path d="M0 250l155-44 172 28 185-35 157 49 184-26 165 42 182-18v114H0z" fill="#e4f0e2"/>
+  <path d="M-20 298c174-118 262-92 388-72s232-27 341-76 217-51 341-20 154 37 192 16" fill="none" stroke="#bbdce8" stroke-width="34" opacity=".88"/>
+  <g fill="none" stroke="#fff" stroke-linecap="round">
+    <path d="M-40 95C139 123 262 99 401 145s276 50 430-9 272-58 427-21" stroke-width="15"/>
+    <path d="M81-10c65 87 99 153 82 228s-7 111 28 157" stroke-width="12"/>
+    <path d="M428-20c-8 79 22 128 81 174s64 117 40 219" stroke-width="12"/>
+    <path d="M876-20c-50 80-45 150 12 207s72 108 57 193" stroke-width="12"/>
+    <path d="M1072-8c-16 90-10 164 37 208s60 93 57 168" stroke-width="9"/>
+    <path d="M-10 327c186-32 337-19 461 11s289 21 422-22 232-55 356-24" stroke-width="10"/>
+  </g>
+  <g fill="none" stroke="#cbd7d4" stroke-width="2">
+    <path d="M34 166l216-43 173 61 189-87 201 76 192-55 188 61"/>
+    <path d="M250 2l-27 117 47 115-19 127"/>
+    <path d="M670 0l-24 119 42 101-21 140"/>
+    <path d="M1018 0l-38 106 45 113-23 141"/>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#64736e">
+    <text x="65" y="105" font-size="15" font-weight="700">Central District</text>
+    <text x="350" y="260" font-size="14">Riverside</text>
+    <text x="770" y="92" font-size="14">Medical Quarter</text>
+    <text x="985" y="278" font-size="15" font-weight="700">City Centre</text>
+    <text x="580" y="322" font-size="13">Main Road</text>
+  </g>
+</svg>

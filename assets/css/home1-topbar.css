@@ -1,0 +1,234 @@
+/* Keep the home1 header aligned with the topbar used by home3.html. */
+body.find-doctors-reference {
+  overflow-x: clip;
+}
+
+body.find-doctors-reference > .page {
+  overflow: visible;
+}
+
+.site-header.home3-topbar {
+  position: sticky !important;
+  z-index: 1400;
+  top: 0;
+  border-bottom: 1px solid #e4eeee;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.home3-topbar .header-inner {
+  width: min(calc(100% - 64px), 1280px);
+  min-height: 80px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 34px;
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
+.home3-topbar .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 0;
+  color: #06776f;
+}
+
+.home3-topbar .main-nav {
+  display: flex;
+  align-items: initial;
+  justify-content: center;
+  gap: clamp(25px, 3vw, 43px);
+}
+
+.home3-topbar .main-nav a {
+  position: relative;
+  display: block;
+  height: auto;
+  min-height: 0;
+  padding: 28px 0 24px;
+  color: #18253b;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.home3-topbar .main-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 17px;
+  left: 0;
+  height: 2px;
+  display: block;
+  content: "";
+  border-radius: 99px;
+  background: #0b968b;
+  opacity: 0;
+  transform: scaleX(0.35);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.home3-topbar .main-nav a:hover,
+.home3-topbar .main-nav a:focus-visible,
+.home3-topbar .main-nav a.active {
+  color: #06776f;
+  background: transparent;
+}
+
+.home3-topbar .main-nav a:hover::after,
+.home3-topbar .main-nav a:focus-visible::after,
+.home3-topbar .main-nav a.active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.home3-topbar .menu-toggle {
+  width: 42px;
+  height: 42px;
+  display: none;
+  place-items: center;
+  padding: 0;
+  color: #06776f;
+  border: 1px solid #d7e8e9;
+  border-radius: 9px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.home3-topbar .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 0;
+}
+
+.home3-topbar .header-actions .button {
+  min-width: 0;
+  min-height: 43px;
+  padding-inline: 20px;
+  border-radius: 9px;
+}
+
+@media (max-width: 930px) {
+  .home3-topbar .header-inner {
+    width: min(calc(100% - 40px), 1280px);
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  /* Compact mobile header: the shared divinexa-brand.css rules (86px
+     desktop / 72px at <=900px, !important) are sized for pages with a
+     normal in-flow hero below. Here the header sits fixed on top of the
+     cinematic ScrollTrigger visual (scroll-hero-header.css) and every
+     extra pixel of header height is a pixel of the mobile frame it
+     covers, so this page gets its own tighter override — scoped to
+     .home3-topbar so no other page's header is affected. Matches equal
+     specificity + later cascade position to win over the !important
+     shared rules. */
+  .home3-topbar .header-inner {
+    min-height: 60px !important;
+  }
+
+  .home3-topbar .divinexa-brand-name {
+    position: static !important;
+    width: 130px !important;
+    height: 36px !important;
+    flex: 0 0 130px !important;
+    overflow: visible !important;
+    align-self: center !important;
+  }
+
+  /* Explicit height rather than "auto" — the header-inner grid row
+     (mobile-nav-dropdown.css) stretches this image to the full row
+     height otherwise, distorting the wordmark instead of keeping its
+     native ~3.6:1 aspect ratio. */
+  .home3-topbar .divinexa-brand-wordmark {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: 130px !important;
+    height: 36px !important;
+    max-width: 100% !important;
+    max-height: 36px !important;
+    object-fit: contain !important;
+    align-self: center !important;
+  }
+
+  .home3-topbar .brand-mark {
+    width: 40px !important;
+    height: 30px !important;
+  }
+
+  .home3-topbar .menu-toggle {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    border-color: rgba(11, 150, 139, .3);
+    background: rgba(255, 255, 255, .9);
+  }
+
+  .home3-topbar .header-actions {
+    display: none;
+  }
+
+  .home3-topbar #mainNav {
+    position: fixed;
+    z-index: 110;
+    top: 60px;
+    right: 18px;
+    left: 18px;
+    width: auto;
+    height: auto;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 16px;
+    overflow: visible;
+    border: 1px solid #d7e8e9;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 13px 30px rgba(24, 75, 87, 0.1);
+    transform: none;
+  }
+
+  .home3-topbar #mainNav.open {
+    display: flex;
+    transform: none;
+  }
+
+  .home3-topbar #mainNav a {
+    display: block;
+    height: auto;
+    min-height: 0;
+    padding: 14px 6px;
+    border-bottom: 1px solid #edf3f4;
+    border-radius: 0;
+    font-size: 12px;
+  }
+
+  .home3-topbar #mainNav a:last-child {
+    border-bottom: 0;
+  }
+
+  .home3-topbar #mainNav a::after {
+    display: none;
+  }
+
+  #mobileOverlay {
+    display: none !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .home3-topbar .header-inner {
+    width: min(calc(100% - 28px), 560px);
+  }
+}

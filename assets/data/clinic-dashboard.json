@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-07-26T21:05:00+05:30",
+  "refreshIntervalMs": 6000,
+  "kpis": [
+    { "key": "patients", "label": "Total Patients", "value": 2356, "format": "integer", "trend": 18 },
+    { "key": "appointments", "label": "Appointments", "value": 256, "format": "integer", "trend": 12 },
+    { "key": "consultations", "label": "Consultations", "value": 186, "format": "integer", "trend": 15 },
+    { "key": "prescriptions", "label": "AI Prescriptions", "value": 173, "format": "integer", "trend": 22 },
+    { "key": "revenue", "label": "Revenue (This Week)", "value": 248000, "format": "compactCurrency", "trend": 19 },
+    { "key": "timeSaved", "label": "Time Saved (AI)", "value": 755, "format": "duration", "trend": 28 }
+  ],
+  "clinics": [
+    { "name": "City Health Clinic", "branch": "Main", "patients": 128, "consultations": 110, "revenue": 145000, "growth": 21, "color": "teal" },
+    { "name": "Wellness Care Center", "branch": "", "patients": 64, "consultations": 58, "revenue": 72500, "growth": 16, "color": "purple" },
+    { "name": "HealthyLife Clinic", "branch": "", "patients": 38, "consultations": 33, "revenue": 41200, "growth": 11, "color": "orange" },
+    { "name": "Sunshine Clinic", "branch": "", "patients": 26, "consultations": 22, "revenue": 28600, "growth": 3, "color": "pink" }
+  ],
+  "consultationTrend": {
+    "labels": ["Mon", "", "Tue", "", "Wed", "", "Thu", "", "Fri", "", "Sat", "", "Sun"],
+    "values": [18, 34, 23, 41, 63, 52, 41, 51, 61, 54, 48, 59, 69],
+    "max": 100
+  },
+  "revenue": {
+    "total": 842300,
+    "trend": 23,
+    "series": [48, 63, 74, 55, 79, 62, 67, 41, 54, 71, 50, 66, 58, 76, 45, 65, 72, 56, 61, 82]
+  },
+  "demographics": {
+    "total": 2356,
+    "ageGroups": [
+      { "label": "0 - 18 Yrs", "percent": 18, "color": "#247bd4" },
+      { "label": "19 - 40 Yrs", "percent": 42, "color": "#079b91" },
+      { "label": "41 - 60 Yrs", "percent": 28, "color": "#399ac1" },
+      { "label": "60+ Yrs", "percent": 12, "color": "#8b68d6" }
+    ],
+    "male": 57,
+    "female": 43
+  },
+  "glance": {
+    "appointments": 12,
+    "prescriptions": 9,
+    "reports": 6,
+    "followups": 11,
+    "tasks": 7
+  }
+}

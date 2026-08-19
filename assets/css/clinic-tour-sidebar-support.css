@@ -1,0 +1,58 @@
+/* Used by: clinic-tour.html */
+
+.clinic-tour-support {
+  padding: 18px 14px 22px;
+  border-top: 1px solid #edf3f5;
+  background: linear-gradient(180deg, #ffffff, #fbfefe);
+  text-align: center;
+}
+
+.clinic-tour-support img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 1;
+  border: 1px solid #e2edef;
+  border-radius: 10px;
+  background: #eaf5f3;
+  object-fit: cover;
+}
+
+.clinic-tour-support strong {
+  display: block;
+  margin-top: 16px;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.clinic-tour-support p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.tour-sidebar .help-card {
+  margin-top: 0;
+  padding: 18px;
+  background: #fff;
+}
+
+.tour-sidebar .help-card h3 {
+  margin: 0 0 11px;
+  color: var(--ink, var(--navy));
+  font-size: 14px;
+}
+
+.tour-sidebar .help-card p {
+  margin: 0 0 15px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+@media (max-width: 860px) {
+  .clinic-tour-support {
+    display: none;
+  }
+}
