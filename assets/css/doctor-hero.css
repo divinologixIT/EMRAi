@@ -1,27 +1,35 @@
 /* ============================================================
    Divinexa — Doctor Journey Hero
    Apple-style scroll-scrubbed video story, 3 clips / 5 text beats.
-   Scroll position drives a pre-extracted frame sequence drawn to
-   canvas (GSAP ScrollTrigger) — see doctor-hero.js.
+
+   Two independent responsive systems sharing the same page slot:
+   - .desktop-scroll-animation (>=769px): pre-extracted frame sequence
+     drawn to canvas (GSAP ScrollTrigger) — landscape source footage.
+   - .mobile-scroll-animation (<=768px): real 9:16 <video> elements
+     scrubbed directly via GSAP ScrollTrigger — portrait source footage.
+   See doctor-hero.js for the gsap.matchMedia() split that initializes
+   (and cleans up) only the active one.
    ============================================================ */
 
-.dhero-section {
+.desktop-scroll-animation {
+  display: block;
   position: relative;
   height: 640vh;
   background: #ffffff;
 }
 
-@media (max-width: 900px) {
-  /* Auto, not a large vh value — the mobile pin duration comes entirely
-     from ScrollTrigger's own `end: "+=1800"` (doctor-hero.js), which
-     builds its own pin-spacer sized to that distance regardless of this
-     element's declared height. A large CSS height here was the actual
-     bug: it reserved far more scroll distance than the compact mobile
-     stage needed, so the pin held the (now small) visual on screen for
-     hundreds of extra pixels of dead scroll after the story had already
-     finished. Before JS runs, this just wraps the stage in normal flow. */
-  .dhero-section {
-    height: auto;
+.mobile-scroll-animation {
+  display: none;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .desktop-scroll-animation {
+    display: none;
+  }
+
+  .mobile-scroll-animation {
+    display: block;
   }
 }
 
@@ -34,20 +42,6 @@
   overflow: hidden;
   background: #ffffff;
   will-change: transform;
-}
-
-@media (max-width: 900px) {
-  /* The stage no longer fills the viewport on mobile — a contain-fit 16:9
-     frame inside a 100dvh box was the previous bug (huge white bars top
-     and bottom). Instead the stage is sized to the frame's own aspect
-     ratio plus a little room for the overlaid text, so the animation
-     fills nearly all of a compact band instead of floating inside a
-     portrait-tall one. Pinning this shorter element still works exactly
-     the same way — GSAP pins whatever box size the element actually has. */
-  .dhero-stage {
-    height: min(64vh, 78vw);
-    min-height: 240px;
-  }
 }
 
 .dhero-visual {
@@ -310,51 +304,204 @@
   .dhero-scroll-cue svg { animation: none; }
 }
 
-@media (max-width: 900px) {
-  /* Desktop pins text to the left/right edge beside the doctor. On a
-     narrow phone that collapses to an unreadably narrow column (42vw of
-     a 375px screen is ~157px) and sits off to one side of the now
-     letterboxed, centered frame instead of under it — so text is
-     widened and recentered, independent of the side-left/side-right
-     class. doctor-hero.js adds a matching translateX(-50%) to its
-     per-frame transform when isMobileMode. */
-  .dhero-scene-text,
-  .dhero-scene-text.side-left,
-  .dhero-scene-text.side-right {
-    left: 50%;
-    right: auto;
-    width: 88vw;
-    padding: 10px 14px;
-    text-align: center;
-    border-radius: 16px;
-    /* The compact stage leaves the frame nearly full-bleed, so text now
-       sits directly over live scene content rather than the side
-       negative-space it has on desktop — a soft translucent panel keeps
-       it readable without a heavy flat overlay across the whole frame. */
-    background: rgba(255, 255, 255, .55);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
+/* ============================================================
+   Mobile 9:16 scroll-scrubbed video experience (<=768px)
+   Independent from the desktop canvas system above — real <video>
+   elements, crossfaded and scrubbed via currentTime. See doctor-hero.js
+   initMobileExperience().
+   ============================================================ */
 
-  .dhero-scene-text.side-right p,
-  .dhero-scene-text.side-left p {
-    margin-left: auto;
-    margin-right: auto;
-  }
+.mhero-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  /* Never black: a video that isn't ready yet must never expose an
+     uninitialized/black element — the page's own white ground shows
+     through instead until the first frame is confirmed decodable
+     (see doctor-hero.js initMobileExperience) or during a crossfade. */
+  background: #ffffff;
+  will-change: transform;
+}
 
-  .dhero-scene-text h1,
-  .dhero-scene-text h2 {
-    margin: 8px 0 6px;
-    font-size: clamp(22px, 6vw, 28px);
-  }
+.mhero-visual {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
 
-  .dhero-scene-text p {
-    font-size: 13.5px;
-  }
+.mhero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;
+  visibility: visible;
+  will-change: opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
 
-  .dhero-cta {
-    margin-top: 14px;
-    padding: 10px 20px;
-    font-size: 13px;
-  }
+.mhero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, .38) 0%, rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, .55) 100%);
+}
+
+.mhero-white-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mhero-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.mhero-scene-text {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(56px, 11vh, 108px);
+  transform: translate(-50%, 16px);
+  width: min(420px, 86vw);
+  padding: 16px 20px;
+  border-radius: 18px;
+  text-align: center;
+  color: #fff;
+  background: rgba(10, 20, 30, .38);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mhero-scene-text.is-interactive {
+  pointer-events: auto;
+}
+
+.mhero-accent-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6fe8dc;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.mhero-accent-dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6fe8dc;
+}
+
+.mhero-scene-text h1,
+.mhero-scene-text h2 {
+  margin: 10px 0 8px;
+  color: #fff;
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -.02em;
+}
+
+.mhero-scene-text p {
+  margin: 0 auto;
+  max-width: 360px;
+  color: rgba(255, 255, 255, .82);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.mhero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #11a99c, #06867c);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 13px 30px rgba(11, 150, 139, .28);
+}
+
+.mhero-cta svg {
+  width: 15px;
+  height: 15px;
+}
+
+.mhero-chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.mhero-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, .18);
+}
+
+.mhero-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0b968b, #6fe8dc);
+  transform-origin: left;
+}
+
+.mhero-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(16px, 3vh, 28px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, .78);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-align: center;
+  transition: opacity .4s ease;
+}
+
+.mhero-scroll-cue i,
+.mhero-scroll-cue svg {
+  width: 15px;
+  height: 15px;
+  animation: dheroBounce 1.8s ease-in-out infinite;
+}
+
+.mhero-scroll-cue.is-hidden { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mhero-scroll-cue i,
+  .mhero-scroll-cue svg { animation: none; }
 }

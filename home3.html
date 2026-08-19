@@ -97,6 +97,14 @@
       color: var(--brand-dark);
     }
 
+    /* Mobile-only single-image logo (white over the hero video, teal once
+       the header goes solid) — see assets/js/doctor-hero.js setHeroHeader().
+       Hidden by default; the max-width: 768px block below swaps it in for
+       the .brand-mark/.brand-copy pair without touching the desktop mark. */
+    .mobile-header-logo {
+      display: none;
+    }
+
     .brand-mark {
       width: 44px;
       height: 44px;
@@ -1721,6 +1729,45 @@
       }
     }
 
+    /* Mobile header logo/icon — swapped white <-> teal by
+       assets/js/doctor-hero.js in lockstep with the same .hero-active
+       class scroll-hero-header.css already toggles from the real
+       ScrollTrigger boundary (never a scroll-pixel threshold). Scoped to
+       the same 768px breakpoint as the mobile hero itself; desktop's
+       .brand-mark/.brand-copy pair is untouched above it. */
+    @media (max-width: 768px) {
+      .brand-mark,
+      .brand-copy {
+        display: none;
+      }
+
+      .mobile-header-logo {
+        display: block;
+        height: 90px;
+        width: auto;
+      }
+
+      .site-header.scroll-hero-header {
+        transition:
+          background-color 0.25s ease,
+          box-shadow 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      /* Hero state: transparent header, so the toggle button itself must
+         not read as a solid white block over the video — a soft frosted
+         circle carries the white icon instead. !important needed to beat
+         mobile-nav-dropdown.css's own !important color/background on this
+         shared button (that file is used across many pages, so it isn't
+         touched here — this rule is more specific and scoped to
+         .hero-active only, so it wins without changing that file). */
+      .site-header.scroll-hero-header.hero-active .menu-toggle {
+        color: #fff !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        background: rgba(255, 255, 255, 0.16) !important;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
@@ -1752,6 +1799,7 @@
       <a class="brand" href="home2.html" aria-label="Divinexa home">
         <span class="brand-mark"><img class="divinexa-brand-mark" src="assets/images/divinexa-mark-web.png" alt=""></span>
         <span class="brand-copy"><strong class="divinexa-brand-name"><img class="divinexa-brand-wordmark" src="assets/images/divinexa-wordmark-web.png" alt="Divinexa"></strong><small>Prescription Platform</small></span>
+        <img class="mobile-header-logo" id="mobileHeaderLogo" src="assets/images/divinexa-header-logo-white.png" alt="Divinexa">
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
@@ -1781,7 +1829,7 @@
   </a>
 
   <main>
-    <section class="dhero-section" id="dheroSection" aria-label="How doctors join and work with Divinexa">
+    <section class="desktop-scroll-animation" id="dheroSection" aria-label="How doctors join and work with Divinexa">
       <div class="dhero-stage" id="dheroStage">
         <div class="dhero-visual" id="dheroVisual">
           <canvas class="dhero-canvas" id="dheroCanvas" aria-hidden="true"></canvas>
@@ -1827,9 +1875,57 @@
       </div>
     </section>
 
+    <section class="mobile-scroll-animation" id="mheroSection" aria-label="How doctors join and work with Divinexa">
+      <div class="mhero-stage" id="mheroStage">
+        <div class="mhero-visual" id="mheroVisual">
+          <video class="mhero-video" data-scene="0" muted playsinline preload="auto" aria-hidden="true"></video>
+          <video class="mhero-video" data-scene="1" muted playsinline preload="auto" aria-hidden="true"></video>
+          <video class="mhero-video" data-scene="2" muted playsinline preload="auto" aria-hidden="true"></video>
+          <div class="mhero-scrim"></div>
+        </div>
+
+        <div class="mhero-white-overlay" id="mheroWhiteOverlay" aria-hidden="true"></div>
+
+        <div class="mhero-text-layer">
+          <div class="mhero-scene-text" data-beat="0">
+            <h1>AI-Powered Healthcare, Built Around the Doctor</h1>
+            <p>From onboarding to intelligent prescriptions, one connected healthcare experience.</p>
+          </div>
+          <div class="mhero-scene-text" data-beat="1">
+            <span class="mhero-accent-dot">Doctor Registration</span>
+            <h2>Create Your Professional Identity</h2>
+            <p>Set up your doctor profile and clinic presence through one streamlined onboarding experience.</p>
+          </div>
+          <div class="mhero-scene-text" data-beat="2">
+            <span class="mhero-accent-dot">Verification &amp; Approval</span>
+            <h2>Verified. Approved. Ready.</h2>
+            <p>A structured verification workflow prepares your professional account for activation.</p>
+          </div>
+          <div class="mhero-scene-text" data-beat="3">
+            <span class="mhero-accent-dot">AI Prescription</span>
+            <h2>Intelligence at the Point of Care</h2>
+            <p>AI organizes clinical information and assists the doctor in preparing a prescription for review and approval.</p>
+          </div>
+          <div class="mhero-scene-text" data-beat="4">
+            <h2>One Connected Healthcare Journey</h2>
+            <p>From registration to prescription.</p>
+            <a class="mhero-cta" href="account-type.html?flow=trial">Get Started Free <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="mhero-chrome">
+          <div class="mhero-progress" aria-hidden="true"><span class="mhero-progress-fill" id="mheroProgressFill"></span></div>
+          <div class="mhero-scroll-cue" id="mheroScrollCue">
+            <span>Scroll to begin</span>
+            <i data-lucide="chevron-down"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="dhero-fallback" id="dheroFallback" aria-label="How doctors join and work with Divinexa" hidden>
       <div class="dhero-fallback-scene" data-scene="0">
-        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/1.mp4" muted loop playsinline aria-hidden="true"></video>
+        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/1.mp4" data-src-mobile="assets/video/hero/docreg-mobile/1.mp4" muted loop playsinline aria-hidden="true"></video>
         <div class="dhero-scrim"></div>
         <div class="dhero-fallback-text">
           <h1>AI-Powered Healthcare, Built Around the Doctor</h1>
@@ -1837,7 +1933,7 @@
         </div>
       </div>
       <div class="dhero-fallback-scene" data-scene="1">
-        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/1.mp4" muted loop playsinline aria-hidden="true"></video>
+        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/1.mp4" data-src-mobile="assets/video/hero/docreg-mobile/1.mp4" muted loop playsinline aria-hidden="true"></video>
         <div class="dhero-scrim"></div>
         <div class="dhero-fallback-text">
           <span class="dhero-accent-dot">Doctor Registration</span>
@@ -1846,7 +1942,7 @@
         </div>
       </div>
       <div class="dhero-fallback-scene" data-scene="2">
-        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/2.mp4" muted loop playsinline aria-hidden="true"></video>
+        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/2.mp4" data-src-mobile="assets/video/hero/docreg-mobile/2.mp4" muted loop playsinline aria-hidden="true"></video>
         <div class="dhero-scrim"></div>
         <div class="dhero-fallback-text">
           <span class="dhero-accent-dot">Verification &amp; Approval</span>
@@ -1855,7 +1951,7 @@
         </div>
       </div>
       <div class="dhero-fallback-scene" data-scene="3">
-        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/3.mp4" muted loop playsinline aria-hidden="true"></video>
+        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/3.mp4" data-src-mobile="assets/video/hero/docreg-mobile/3.mp4" muted loop playsinline aria-hidden="true"></video>
         <div class="dhero-scrim"></div>
         <div class="dhero-fallback-text">
           <span class="dhero-accent-dot">AI Prescription</span>
@@ -1864,7 +1960,7 @@
         </div>
       </div>
       <div class="dhero-fallback-scene dhero-fallback-final" data-scene="4">
-        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/3.mp4" muted loop playsinline aria-hidden="true"></video>
+        <video class="dhero-fallback-video" data-src="assets/video/hero/docreg/3.mp4" data-src-mobile="assets/video/hero/docreg-mobile/3.mp4" muted loop playsinline aria-hidden="true"></video>
         <div class="dhero-scrim"></div>
         <div class="dhero-fallback-text">
           <h2>One Connected Healthcare Journey</h2>
