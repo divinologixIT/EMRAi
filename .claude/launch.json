@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Users-USER-Desktop-PresLayout-htmlTemplate-EMRAi-EMRAi\\a8a8d15a-4e03-4c01-8a3a-b23b828293db\\scratchpad\\static-server.js"],
+      "port": 8977
+    }
+  ]
+}
