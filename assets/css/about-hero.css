@@ -26,6 +26,8 @@
   overflow: hidden;
   background: #ffffff;
   will-change: transform;
+  border: 0;
+  outline: 0;
   /* Chrome GPU-compositing seam fix: while pinned (position: fixed) this
      stage sits directly above the next section, and sub-pixel rounding on
      100vh combined with the transformed/composited children inside
@@ -40,6 +42,16 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  border: 0;
+  outline: 0;
+  /* No box-shadow fix needed here (or on .ahero-canvas below): both sit
+     inside .ahero-stage's own overflow:hidden, which would clip a
+     box-shadow before it could paint — only .ahero-stage's box-shadow
+     above (whose own ancestor, .ahero-section, has no overflow:hidden)
+     actually escapes clipping and does anything. .ahero-canvas's own
+     seam risk is covered a different way: it's drawn 1% oversized on
+     all four sides (inset: -1% below), so its bitmap content already
+     extends past this clip on every edge. */
 }
 
 /* Drawn very slightly oversized (102%, inset -1%) so the subtle camera
@@ -55,6 +67,8 @@
   will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0);
+  border: 0;
+  outline: 0;
 }
 
 /* Bottom fade: dissolves the lower edge of the frame into the page's
