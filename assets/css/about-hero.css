@@ -26,6 +26,14 @@
   overflow: hidden;
   background: #ffffff;
   will-change: transform;
+  /* Chrome GPU-compositing seam fix: while pinned (position: fixed) this
+     stage sits directly above the next section, and sub-pixel rounding on
+     100vh combined with the transformed/composited children inside
+     (.ahero-canvas, .ahero-visual — translateZ/translateY) can leave a
+     hairline gap at the very bottom edge. A box-shadow isn't clipped by
+     this element's own overflow:hidden and doesn't affect layout/pin
+     math, so it reliably papers over that seam with matching white. */
+  box-shadow: 0 2px 0 0 #ffffff;
 }
 
 .ahero-visual {
@@ -297,4 +305,96 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ahero-canvas { will-change: auto; }
+}
+
+/* ============================================================
+   Mobile (<=768px): premium white-based scroll-scrubbed video
+   story — about1.mp4 / about2.mp4, crossfaded and scrubbed via
+   currentTime. Independent of both the desktop canvas system above
+   and the older non-scrubbed .ahero-fallback (which still covers
+   the 769-900px tablet gap and reduced-motion/no-GSAP cases). See
+   about-hero.js initMobileScrollVideos().
+
+   Everything here is white-on-white by design — no black anywhere
+   (stage, videos, spacer) — so any unused edge around the 9:16
+   video reads as clean page background, never a letterboxed frame.
+   ============================================================ */
+
+.about-mobile-scroll {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+}
+
+.about-mobile-scroll[hidden] { display: none; }
+
+/* Defensive belt-and-suspenders: JS (matchMedia) is the real gate,
+   this just guarantees desktop/tablet never sees it even if JS
+   fails to load, mirroring the .mobile-scroll-animation pattern
+   used on the home page hero. */
+@media (min-width: 769px) {
+  .about-mobile-scroll { display: none !important; }
+}
+
+.about-mobile-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #ffffff;
+  will-change: transform;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.about-scroll-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #ffffff;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: opacity;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+#about-video-1 { opacity: 1; }
+
+/* Bottom dissolve: both source clips have their own light-grey studio
+   floor near the bottom of frame, which otherwise reads as a hard
+   rectangular edge against the page's pure white right where the stage
+   ends. This sits above both videos (last in DOM) and blends only the
+   lower ~20% — the doctor/environment area above is untouched. Present
+   at a baseline opacity throughout (not just at the very end), because
+   the seam exists at every scroll position, not only on release; JS
+   (about-hero.js render()) raises its opacity slightly further over the
+   final ~8% of scroll right before the pin releases. A plain gradient
+   overlay rather than a mask-image on the videos themselves — cheaper to
+   composite than masking two stacked <video> elements, and the effect
+   is identical since it's covering the same fixed lower slice either way. */
+.video-bottom-blend {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20%;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, .35) 35%,
+    rgba(255, 255, 255, .75) 70%,
+    #ffffff 100%
+  );
+  opacity: .82;
 }

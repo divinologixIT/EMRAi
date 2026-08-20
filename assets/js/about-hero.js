@@ -16,6 +16,7 @@
 
   const heroSection = document.getElementById("aheroSection");
   const fallbackSection = document.getElementById("aheroFallback");
+  const mobileScrollSection = document.getElementById("aboutMobileScroll");
   const siteHeader = document.querySelector(".site-header.scroll-hero-header");
   if (!heroSection || !fallbackSection) return;
 
@@ -26,8 +27,20 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hasGsap = !!(window.gsap && window.ScrollTrigger);
   const isNarrow = window.matchMedia("(max-width: 900px)").matches;
+  // Separate, tighter breakpoint than the tablet-gap `isNarrow` (900px)
+  // above — this is the premium scrubbed video experience; 769-900px
+  // (small tablets) still gets the older non-scrubbed stacked fallback.
+  const isMobileScrollBreakpoint = mobileScrollSection && window.matchMedia("(max-width: 768px)").matches;
 
-  if (reduceMotion || !hasGsap || isNarrow) {
+  // One-time routing decision, same as the rest of this file (no
+  // reactive hand-off between these three modes on resize — matches the
+  // existing canvas/fallback split's own behavior, not a new limitation).
+  if (reduceMotion || !hasGsap) {
+    initFallback();
+  } else if (isMobileScrollBreakpoint) {
+    heroSection.hidden = true;
+    initMobileScrollVideos();
+  } else if (isNarrow) {
     initFallback();
   } else {
     initPinnedExperience();
@@ -76,6 +89,240 @@
       video.src = video.dataset.src;
       video.load();
     }
+  }
+
+  /* ---------------- Mobile (<=768px): premium white-based video scrub ---------------- */
+  // One continuous virtual timeline (about1 + about2's real durations
+  // summed), a single ScrollTrigger, and a single RAF smoothing loop —
+  // same architecture as the home page's mobile doctor-journey hero (see
+  // doctor-hero.js initMobileExperience) but simplified to 2 clips / 1
+  // transition and entirely white-based per this section's own spec (no
+  // black anywhere; an unpainted/unready video just shows the white
+  // background underneath it, which is the deliberate safe fallback).
+  function initMobileScrollVideos() {
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+
+    mm.add("(max-width: 768px)", () => {
+      const section = mobileScrollSection;
+      const stage = document.getElementById("aboutMobileStage");
+      const v1 = document.getElementById("about-video-1");
+      const v2 = document.getElementById("about-video-2");
+      const bottomBlend = document.getElementById("aboutVideoBottomBlend");
+      if (!section || !stage || !v1 || !v2) return;
+
+      const videos = [v1, v2];
+      const SRC = ["assets/video/about/about1.mp4", "assets/video/about/about2.mp4"];
+      // Fractions of the total virtual duration (0-46% about1, 46-54%
+      // crossfade, 54-100% about2) — not a fixed-second window — per spec.
+      const TRANSITION_START = 0.46;
+      const TRANSITION_END = 0.54;
+      const EASE = gsap.parseEase("power1.inOut");
+      // Bottom white dissolve is present at its CSS baseline opacity (.82)
+      // throughout — both clips' own light-grey studio floor otherwise
+      // reads as a hard edge at every scroll position, not just the end.
+      // This only strengthens it slightly over the final stretch, right
+      // before the pin releases, matching the desktop hero's own
+      // end-of-scroll release. Computed directly here (no tween object),
+      // consistent with the rest of this render loop.
+      const BLEND_STRENGTHEN_START = 0.92;
+      const BLEND_BASELINE_OPACITY = .82;
+      const scrollDistance = () => window.innerHeight * 2.5;
+
+      let destroyed = false;
+      const ready = [false, false];
+      const durations = [0, 0];
+      let totalDuration = 0;
+      let boundary = 0; // durations[0] — real content boundary used for seeking
+
+      section.hidden = false;
+
+      function primeCompositor(video) {
+        video.play().then(() => video.pause()).catch(() => {});
+      }
+
+      function waitForMetadata(video) {
+        return new Promise((resolve) => {
+          if (video.readyState >= 1) { resolve(); return; }
+          video.addEventListener("loadedmetadata", resolve, { once: true });
+        });
+      }
+
+      // The single place currentTime is ever written. Clamps to the
+      // video's real decodable duration and skips the write when already
+      // within one sub-frame of the target, so a settled clip isn't
+      // re-seeked every RAF tick for no reason.
+      function safeSeek(video, time, isReady) {
+        if (!video || !isReady || video.readyState < 2) return;
+        const duration = video.duration;
+        if (!Number.isFinite(duration)) return;
+        const target = gsap.utils.clamp(0, Math.max(0, duration - 0.04), time);
+        if (Math.abs(video.currentTime - target) > 1 / 48) {
+          try { video.currentTime = target; } catch (e) { /* not seekable yet */ }
+        }
+      }
+
+      // src assigned and load() called exactly once per video, up front —
+      // never reassigned/reloaded again, never repeatedly seeked to a
+      // throwaway "preload" time in the render loop.
+      videos.forEach((video, i) => {
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "auto";
+        video.pause();
+        video.addEventListener(
+          "loadedmetadata",
+          () => { if (!destroyed) { ready[i] = true; durations[i] = video.duration; } },
+          { once: true }
+        );
+        video.src = SRC[i];
+        video.load();
+      });
+
+      // Computes both videos' opacity for this instant directly from the
+      // virtual timeline (no tweens created here) and seeks whichever
+      // video(s) are currently visible — both outgoing and incoming
+      // during the crossfade window, every call, not once at fade-start.
+      function updateSequence(virtualTime) {
+        const tStart = TRANSITION_START * totalDuration;
+        const tEnd = TRANSITION_END * totalDuration;
+
+        let o1 = 0, o2 = 0;
+
+        if (virtualTime <= tStart) {
+          o1 = 1;
+          safeSeek(v1, virtualTime, ready[0]);
+        } else if (virtualTime < tEnd) {
+          const raw = gsap.utils.clamp(0, 1, gsap.utils.mapRange(tStart, tEnd, 0, 1, virtualTime));
+          // Never fade about2 in over a frame it hasn't actually decoded
+          // yet — hold about1 fully visible until about2 confirms
+          // readyState >= 2, so the incoming clip is always either
+          // moving or not-yet-shown, never a blank/undecoded gap.
+          const v2Ready = ready[1] && v2.readyState >= 2;
+          const eased = v2Ready ? EASE(raw) : 0;
+          o1 = 1 - eased;
+          o2 = eased;
+          safeSeek(v1, virtualTime, ready[0]);
+          safeSeek(v2, virtualTime - boundary, ready[1]);
+        } else {
+          // Final leg, including the last stretch where about2 has
+          // already reached its own end — safeSeek's own clamp holds it
+          // at its last decodable frame (a natural end-of-timeline hold,
+          // no extra state needed) before the pin releases.
+          o2 = 1;
+          safeSeek(v2, virtualTime - boundary, ready[1]);
+        }
+
+        v1.style.opacity = o1;
+        v2.style.opacity = o2;
+      }
+
+      function render(progress) {
+        const p = gsap.utils.clamp(0, 1, progress);
+        updateSequence(p * totalDuration);
+
+        if (bottomBlend) {
+          const t = p > BLEND_STRENGTHEN_START
+            ? gsap.utils.mapRange(BLEND_STRENGTHEN_START, 1, 0, 1, p)
+            : 0;
+          bottomBlend.style.opacity = String(BLEND_BASELINE_OPACITY + t * (1 - BLEND_BASELINE_OPACITY));
+        }
+      }
+
+      // ---- Touch-following smoothness: ONE smoothing layer. `scrub`
+      // below is `true` (no built-in GSAP-side catch-up delay) so this
+      // RAF lerp is the only place smoothing happens — stacking a second
+      // delay on top of it is what reads as sluggish/disconnected from
+      // the finger. See doctor-hero.js for the same fix applied there. --
+      let targetProgress = 0;
+      let smoothProgress = 0;
+      let rafId = null;
+      const SMOOTH_FACTOR = 0.16;
+      const SETTLE_EPSILON = 0.0004;
+
+      function tick() {
+        smoothProgress += (targetProgress - smoothProgress) * SMOOTH_FACTOR;
+        render(smoothProgress);
+
+        if (Math.abs(targetProgress - smoothProgress) < SETTLE_EPSILON) {
+          smoothProgress = targetProgress;
+          render(smoothProgress);
+          rafId = null;
+          return;
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function kick() {
+        if (destroyed) return;
+        if (!rafId) rafId = requestAnimationFrame(tick);
+      }
+
+      let scrollTriggerInstance = null;
+      function createScrollTrigger() {
+        scrollTriggerInstance = ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: () => "+=" + scrollDistance(),
+          pin: stage,
+          anticipatePin: 1,
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => { targetProgress = self.progress; kick(); },
+          onRefresh: (self) => {
+            targetProgress = self.progress;
+            smoothProgress = targetProgress;
+            render(smoothProgress);
+          },
+        });
+      }
+
+      // Don't create the ScrollTrigger until both clips' metadata (and
+      // therefore real duration) is known — the pinned experience must
+      // never go live against an uninitialized video.
+      Promise.all(videos.map(waitForMetadata)).then(() => {
+        if (destroyed) return;
+        durations[0] = v1.duration;
+        durations[1] = v2.duration;
+        ready[0] = ready[1] = true;
+        totalDuration = durations[0] + durations[1];
+        boundary = durations[0];
+
+        videos.forEach((video) => primeCompositor(video));
+        safeSeek(v1, 0, true);
+        safeSeek(v2, 0, true);
+
+        render(0);
+        createScrollTrigger();
+      });
+
+      // gsap.matchMedia() reverts this automatically when the query
+      // stops matching (e.g. rotating a tablet past 768px), but the
+      // videos/RAF loop need explicit teardown.
+      return () => {
+        destroyed = true;
+        if (scrollTriggerInstance) {
+          scrollTriggerInstance.kill();
+          scrollTriggerInstance = null;
+        }
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = null;
+        videos.forEach((video, i) => {
+          video.pause();
+          video.removeAttribute("src");
+          video.load();
+          ready[i] = false;
+          durations[i] = 0;
+        });
+        section.hidden = true;
+        // No reactive hand-off to the canvas/fallback modes on resize —
+        // matches the rest of this file (see the one-time routing check
+        // above). Restore the desktop hero's visibility so the page
+        // isn't left blank if this does fire; a full reload is the
+        // reliable path back into the pinned canvas experience.
+        heroSection.hidden = false;
+      };
+    });
   }
 
   /* ---------------- Pinned, scroll-scrubbed experience (desktop/tablet) ---------------- */
