@@ -470,20 +470,25 @@
 
   /* ---------------- Mobile: pinned 9:16 video scrub ---------------- */
 
-  // A discrete scene state machine, not a continuous scroll-position
-  // crossfade. The previous approach faded the outgoing clip out and the
-  // incoming clip in purely as a function of scroll position — if the
-  // incoming video's frame wasn't decoded yet (a fresh seek across a scene
-  // boundary can take a real, variable amount of time), both clips could
-  // be partially transparent at once and the white/near-black stage behind
-  // them would show through as a black flash. Scene changes now only ever
-  // happen through requestSceneChange() below, which keeps the outgoing
-  // clip fully visible — holding its last good frame — until the incoming
-  // clip has actually confirmed a decodable frame at the right time, and
-  // only then runs a short, fixed-duration GSAP crossfade. Time-based, not
-  // scroll-linked, so it can't stall or reverse mid-fade.
+  // REWRITTEN — was a discrete scene state machine: only videos[activeIndex]
+  // ever received a currentTime update, and crossfades were driven by a
+  // fixed-duration GSAP opacity tween running in parallel while BOTH clips
+  // sat frozen on whichever single frame they'd been seeked to when the
+  // fade started. That's what read as a freeze/jump/wrong-frame at every
+  // scene boundary. Fixed architecture below:
+  //   - ONE continuous virtual timeline (seconds = sum of the three real
+  //     clip durations), not three independently-thirded scroll ranges.
+  //   - Every render tick recomputes opacity directly from progress (no
+  //     GSAP tweens created in onUpdate/RAF — see "DO NOT CREATE GSAP
+  //     TWEENS IN onUpdate" below) and calls safeSeek() on EVERY video
+  //     that's currently visible (opacity > 0) — during a crossfade that
+  //     is both the outgoing and incoming clip, every frame, for the
+  //     entire overlap window, not once at the start of the fade.
+  //   - Videos are loaded and metadata-waited ONCE up front; the
+  //     ScrollTrigger isn't created until all three durations are known.
+  //   - No repeated currentTime = 0.01 preload seeking and no video.load()
+  //     calls inside the render loop.
   function initMobileExperience() {
-    const SCENE_COUNT = 3;
     // A fixed pixel distance doesn't scale across phones (360x800 vs.
     // 430x932 etc.) — sized off the viewport's own height instead, so the
     // scroll-to-complete-the-story distance feels consistent everywhere.
@@ -492,17 +497,16 @@
     // chrome resizing the viewport keeps it correct without a manual
     // recalculation loop.
     const mobileScrollDistance = () => window.innerHeight * 3.5;
-    const CROSSFADE_SECONDS = 0.18;
-    // Used only for a clip whose real duration isn't known yet (metadata
-    // still loading) — timelinePosition() below switches to the real
-    // video.duration the instant it's available, so this only ever
-    // affects the earliest fraction of a second after activation.
-    const FALLBACK_SCENE_SECONDS = 10;
+    // ~1s of virtual timeline shared by each MOB(n) -> MOB(n+1) crossfade
+    // (clamped per-pair against the shorter clip's own duration so a very
+    // short clip can never get an overlap longer than itself).
+    const OVERLAP_SECONDS = 1.0;
     const SRC = [
       "assets/video/hero/docreg-mobile/1.mp4",
       "assets/video/hero/docreg-mobile/2.mp4",
       "assets/video/hero/docreg-mobile/3.mp4",
     ];
+    const EASE = gsap.parseEase("power1.inOut");
 
     const whiteOverlay = document.getElementById("mheroWhiteOverlay");
     const texts = Array.from(mobileSection.querySelectorAll(".mhero-scene-text"));
@@ -512,255 +516,154 @@
 
     let destroyed = false;
     const ready = videos.map(() => false); // metadata (duration) known
-    const loaded = videos.map(() => false); // src assigned, load() called
+    const durations = videos.map(() => 0); // real video.duration, filled in once ready
 
     // Same browsers-won't-paint-a-never-played-video quirk as before: a
     // muted play()+pause() the moment metadata is available establishes
     // the video's compositor layer once, up front, so later currentTime
     // seeks actually paint instead of silently staying on a black frame.
+    // This is a ONE-TIME init warm-up, not the prohibited pattern of
+    // calling play()/pause() to drive scroll-scrubbing — currentTime is
+    // the only thing that ever drives playback below.
     function primeCompositor(video) {
       video.play().then(() => video.pause()).catch(() => {});
     }
 
-    // Preload every scene up front rather than lazily on approach — only
-    // 3 short clips here, and preloading all of them (not just current +
-    // next) is what makes reverse scrolling (scene 3 -> 2 -> 1) hit an
-    // already-buffered video instead of a fresh, slow seek. src is set
-    // exactly once per video for the life of this breakpoint activation —
-    // never reassigned mid-scroll, and load() is never called again after
-    // this, since re-pointing src/reloading mid-scroll is itself a source
-    // of decode stalls and black frames.
-    function ensureLoaded(sceneIndex) {
-      if (sceneIndex < 0 || sceneIndex >= SCENE_COUNT || loaded[sceneIndex]) return;
-      loaded[sceneIndex] = true;
-      const video = videos[sceneIndex];
+    function waitForMetadata(video) {
+      return new Promise((resolve) => {
+        if (video.readyState >= 1) {
+          resolve();
+          return;
+        }
+        video.addEventListener("loadedmetadata", resolve, { once: true });
+      });
+    }
+
+    // Used only for the very first reveal (scene 0, below) — waits for an
+    // actually decodable frame (readyState >= 2) rather than just metadata,
+    // so the stage never shows an undecoded/blank video the instant its
+    // opacity is set to 1. Later scenes don't need this: updateSequence()
+    // already gates its own crossfade-in on the same readyState check.
+    function waitForFrame(video) {
+      return new Promise((resolve) => {
+        if (video.readyState >= 2) {
+          resolve();
+          return;
+        }
+        const events = ["loadeddata", "canplay"];
+        const done = () => {
+          events.forEach((ev) => video.removeEventListener(ev, done));
+          resolve();
+        };
+        events.forEach((ev) => video.addEventListener(ev, done, { once: true }));
+      });
+    }
+
+    // safeSeek: the single place currentTime is ever written. Clamps to
+    // the video's real decodable duration (never assumes exactly 10s) and
+    // skips the write entirely if already within one sub-frame of the
+    // target, so a settled clip isn't re-seeked every RAF tick for no
+    // reason.
+    function safeSeek(video, time, isReady) {
+      if (!video || !isReady || video.readyState < 2) return;
+      const duration = video.duration;
+      if (!Number.isFinite(duration)) return;
+      const target = gsap.utils.clamp(0, Math.max(0, duration - 0.04), time);
+      if (Math.abs(video.currentTime - target) > 1 / 48) {
+        try { video.currentTime = target; } catch (e) { /* not seekable yet */ }
+      }
+    }
+
+    // Src assigned and load() called exactly once per video, up front —
+    // never reassigned and never reloaded again for the life of this
+    // breakpoint activation (re-pointing src / reloading mid-scroll is
+    // itself a source of decode stalls and black frames).
+    videos.forEach((video, i) => {
+      video.muted = true;
+      video.playsInline = true;
+      video.preload = "auto";
+      video.pause();
       video.addEventListener(
         "loadedmetadata",
         () => {
           if (destroyed) return;
-          ready[sceneIndex] = true;
+          ready[i] = true;
+          durations[i] = video.duration;
           primeCompositor(video);
         },
         { once: true }
       );
-      video.src = SRC[sceneIndex];
+      video.src = SRC[i];
       video.load();
-    }
-    for (let i = 0; i < SCENE_COUNT; i++) ensureLoaded(i);
+    });
 
-    // ---- Scene state machine ----
-    let activeIndex = 0;
-    let transitioning = false;
-    let pendingIndex = 0;
-    let pendingLocalSeconds = 0;
-    let lastProgress = 0;
+    // ---- One continuous virtual timeline: length = sum of the three
+    // clips' real durations. Computed once metadata for all three has
+    // resolved (see boot() below) and never recomputed after — the
+    // ScrollTrigger itself isn't created until this is known, so nothing
+    // downstream ever has to guess with a fallback duration.
+    let totalDuration = 0;
+    let boundary1 = 0; // virtual second where MOB1 -> MOB2 is centered
+    let boundary2 = 0; // virtual second where MOB2 -> MOB3 is centered
 
-    // The three clips are one continuous virtual film, not three
-    // independently-thirded scroll ranges — total length is the sum of
-    // the clips' own durations (read live off video.duration, falling
-    // back to an estimate for any clip whose metadata hasn't loaded yet),
-    // and scroll progress (0-1) maps onto "which second of that film" is
-    // showing. Recomputed on every call rather than cached once: cheap
-    // arithmetic, and it self-corrects the moment each clip's real
-    // duration becomes known instead of ever locking in a wrong guess.
-    function sceneDuration(i) {
-      const d = videos[i].duration;
-      return ready[i] && isFinite(d) && d > 0 ? d : FALLBACK_SCENE_SECONDS;
-    }
+    // Computes each video's opacity for this instant directly from the
+    // virtual timeline position (no tweens) and seeks EVERY video that's
+    // currently visible — both outgoing and incoming during a crossfade —
+    // every single call. This is the core fix: previously only
+    // videos[activeIndex] was ever seeked.
+    function updateSequence(virtualTime) {
+      const d0 = durations[0], d1 = durations[1], d2 = durations[2];
+      const overlap1 = Math.min(OVERLAP_SECONDS, d0, d1);
+      const overlap2 = Math.min(OVERLAP_SECONDS, d1, d2);
+      const t1Start = boundary1 - overlap1 / 2, t1End = boundary1 + overlap1 / 2;
+      const t2Start = boundary2 - overlap2 / 2, t2End = boundary2 + overlap2 / 2;
 
-    function totalDuration() {
-      let sum = 0;
-      for (let i = 0; i < SCENE_COUNT; i++) sum += sceneDuration(i);
-      return sum;
-    }
+      let o0 = 0, o1 = 0, o2 = 0;
 
-    function timelinePosition(progress) {
-      const virtualTime = clamp01(progress) * totalDuration();
-      let acc = 0;
-      for (let i = 0; i < SCENE_COUNT; i++) {
-        const d = sceneDuration(i);
-        const isLast = i === SCENE_COUNT - 1;
-        if (virtualTime < acc + d || isLast) {
-          return { idx: i, localSeconds: Math.max(0, Math.min(d, virtualTime - acc)) };
-        }
-        acc += d;
-      }
-      // Unreachable — the isLast branch above always returns — kept only
-      // so this function can never silently fall through to undefined.
-      return { idx: SCENE_COUNT - 1, localSeconds: sceneDuration(SCENE_COUNT - 1) };
-    }
-
-    // Continuous fine scrub for whichever clip is already fully visible —
-    // no readiness gating needed here since it's already on-screen; a
-    // sub-frame stutter mid-scrub is normal video-scrub behavior, never a
-    // blank/black stage.
-    function scrubActive(localSeconds) {
-      const video = videos[activeIndex];
-      if (!ready[activeIndex]) return;
-      const duration = video.duration;
-      if (!duration || !isFinite(duration)) return;
-      const t = Math.max(0, Math.min(duration, localSeconds));
-      if (Math.abs(video.currentTime - t) > 0.02) {
-        try { video.currentTime = t; } catch (e) { /* not seekable yet */ }
-      }
-    }
-
-    // Seeks `video` to `time` and calls onReady only once a decodable
-    // frame at that position is confirmed — never fires early off a stale
-    // readyState left over from a previous position. Listens for all three
-    // of seeked/loadeddata/canplay (not just "seeked"): when the target
-    // time is the same as the video's current position (notably the very
-    // first reveal, seeking to time 0 on a video already at 0), some
-    // browsers treat it as a no-op and never fire "seeked" at all, which
-    // would otherwise hang this forever.
-    function seekAndReveal(video, time, onReady) {
-      if (destroyed) return;
-      const alreadyThere = Math.abs(video.currentTime - time) < 0.02;
-      if (alreadyThere && video.readyState >= 2) {
-        onReady();
-        return;
-      }
-
-      let settled = false;
-      const events = ["seeked", "loadeddata", "canplay"];
-      const cleanup = () => events.forEach((ev) => video.removeEventListener(ev, check));
-      const check = () => {
-        if (settled || destroyed) return;
-        if (video.readyState < 2) return; // frame not actually decodable yet — keep waiting
-        settled = true;
-        cleanup();
-        onReady();
-      };
-
-      events.forEach((ev) => video.addEventListener(ev, check));
-      try {
-        video.currentTime = time;
-      } catch (e) {
-        cleanup();
-        // Seek call itself failed (video not seekable yet) — wait for it
-        // to become ready instead of revealing a wrong/undecoded frame.
-        video.addEventListener(
-          "loadedmetadata",
-          () => { if (!destroyed) seekAndReveal(video, time, onReady); },
-          { once: true }
-        );
-        return;
-      }
-      // The seek may already have landed on a buffered/decoded frame
-      // synchronously (e.g. re-requesting the same position) — re-check
-      // readyState directly rather than waiting on an event that may
-      // never fire in that case.
-      check();
-    }
-
-    function crossfadeTo(targetIndex) {
-      if (destroyed) return;
-      const fromIndex = activeIndex;
-      const fromVideo = videos[fromIndex];
-      const toVideo = videos[targetIndex];
-
-      // Only one crossfade tween per video at a time — prevents opacity
-      // race conditions from overlapping transitions (e.g. a fast flick
-      // that changes target again before the previous fade finished).
-      gsap.killTweensOf([fromVideo, toVideo]);
-      if (fromIndex !== targetIndex) {
-        // True simultaneous crossfade (not an instant swap underneath a
-        // fade-out): at every instant their opacities sum to 1, so a real
-        // decoded frame is always at least partially on screen from both
-        // clips — never a black gap, and never a hard cut either.
-        gsap.to(toVideo, { opacity: 1, duration: CROSSFADE_SECONDS, ease: "none", overwrite: "auto" });
-        gsap.to(fromVideo, {
-          opacity: 0,
-          duration: CROSSFADE_SECONDS,
-          ease: "none",
-          overwrite: "auto",
-          onComplete: () => { if (!destroyed) fromVideo.pause(); },
-        });
+      if (virtualTime < t1End && virtualTime > t1Start) {
+        // MOB1 -> MOB2 crossfade. Local time for each clip falls out of
+        // the virtual timeline naturally (local0 = virtualTime, local1 =
+        // virtualTime - boundary1), so MOB2 is already a fraction of a
+        // second into its own motion the instant it starts appearing —
+        // never revealed and then snapped back to frame 0.
+        const raw = gsap.utils.clamp(0, 1, gsap.utils.mapRange(t1Start, t1End, 0, 1, virtualTime));
+        // Never fade MOB2 in over a frame it hasn't actually decoded yet —
+        // hold MOB1 fully visible until MOB2 confirms readyState >= 2, so
+        // the incoming clip is always either moving or not-yet-shown,
+        // never a black/blank gap.
+        const mob2Ready = ready[1] && videos[1].readyState >= 2;
+        const eased = mob2Ready ? EASE(raw) : 0;
+        o0 = 1 - eased;
+        o1 = eased;
+        safeSeek(videos[0], virtualTime, ready[0]);
+        safeSeek(videos[1], virtualTime - boundary1, ready[1]);
+      } else if (virtualTime <= t1Start) {
+        o0 = 1;
+        safeSeek(videos[0], virtualTime, ready[0]);
+      } else if (virtualTime < t2End && virtualTime > t2Start) {
+        // MOB2 -> MOB3 crossfade — same treatment.
+        const raw = gsap.utils.clamp(0, 1, gsap.utils.mapRange(t2Start, t2End, 0, 1, virtualTime));
+        const mob3Ready = ready[2] && videos[2].readyState >= 2;
+        const eased = mob3Ready ? EASE(raw) : 0;
+        o1 = 1 - eased;
+        o2 = eased;
+        safeSeek(videos[1], virtualTime - boundary1, ready[1]);
+        safeSeek(videos[2], virtualTime - boundary2, ready[2]);
+      } else if (virtualTime <= t2Start) {
+        o1 = 1;
+        safeSeek(videos[1], virtualTime - boundary1, ready[1]);
       } else {
-        gsap.set(toVideo, { opacity: 1 });
+        // Final leg, including the last stretch of scroll where MOB3 has
+        // already reached its own end — safeSeek's own clamp holds it at
+        // its last decodable frame instead of seeking past duration, so
+        // there's a natural end-of-timeline hold with no extra state.
+        o2 = 1;
+        safeSeek(videos[2], virtualTime - boundary2, ready[2]);
       }
 
-      activeIndex = targetIndex;
-      transitioning = false;
-
-      // If scroll kept moving while we were waiting/fading, chase the
-      // latest target immediately rather than waiting for another render
-      // tick — otherwise a fast flick could visibly lag the scrollbar.
-      const latest = timelinePosition(lastProgress);
-      if (latest.idx !== activeIndex) {
-        requestSceneChange(latest.idx, latest.localSeconds);
-      } else {
-        scrubActive(latest.localSeconds);
-      }
-    }
-
-    function attemptTransition() {
-      const targetIndex = pendingIndex;
-      const targetLocalSeconds = pendingLocalSeconds;
-      const video = videos[targetIndex];
-      ensureLoaded(targetIndex);
-
-      const proceed = () => {
-        if (destroyed) return;
-        // The desired scene may have changed again while this seek was
-        // in flight (user kept scrolling) — chase the newest target
-        // instead of committing to a now-stale one.
-        if (pendingIndex !== targetIndex) {
-          attemptTransition();
-          return;
-        }
-        crossfadeTo(targetIndex);
-      };
-
-      if (!ready[targetIndex]) {
-        video.addEventListener(
-          "loadedmetadata",
-          () => { if (!destroyed) attemptTransition(); },
-          { once: true }
-        );
-        return;
-      }
-
-      const duration = video.duration;
-      const time = isFinite(duration) ? Math.max(0, Math.min(duration, targetLocalSeconds)) : 0;
-      seekAndReveal(video, time, proceed);
-    }
-
-    // The only entry point that may change which scene is on screen. The
-    // currently-visible clip is never touched until the target clip has
-    // confirmed a real, decoded frame ready to show.
-    function requestSceneChange(targetIndex, targetLocalSeconds) {
-      pendingIndex = targetIndex;
-      pendingLocalSeconds = targetLocalSeconds;
-      if (transitioning) return; // already chasing a target; it'll pick up the latest one
-      transitioning = true;
-      attemptTransition();
-    }
-
-    function renderScenes(progress) {
-      const { idx, localSeconds } = timelinePosition(progress);
-      if (transitioning) {
-        // A transition is already resolving — just keep it pointed at the
-        // freshest target; the outgoing clip stays visible untouched.
-        pendingIndex = idx;
-        pendingLocalSeconds = localSeconds;
-      } else if (idx !== activeIndex) {
-        requestSceneChange(idx, localSeconds);
-      } else {
-        scrubActive(localSeconds);
-      }
-
-      // Apple-style white release at the very end, same as desktop, for a
-      // consistent handoff into the (white) section that follows. This is
-      // a separate overlay layer, independent of the video crossfade —
-      // never drives any video's opacity below the crossfade's own floor.
-      const RELEASE_START = 0.93;
-      if (progress > RELEASE_START) {
-        const t = clamp01((progress - RELEASE_START) / (1 - RELEASE_START));
-        whiteOverlay.style.opacity = String(t * t);
-      } else {
-        whiteOverlay.style.opacity = "0";
-      }
+      videos[0].style.opacity = o0;
+      videos[1].style.opacity = o1;
+      videos[2].style.opacity = o2;
     }
 
     function renderTexts(progress) {
@@ -792,52 +695,39 @@
     }
 
     function render(progress) {
-      lastProgress = progress;
-      renderScenes(progress);
+      updateSequence(clamp01(progress) * totalDuration);
       renderTexts(progress);
 
       if (progressFill) progressFill.style.width = (progress * 100).toFixed(2) + "%";
       if (scrollCue) scrollCue.classList.toggle("is-hidden", progress > 0.02);
-    }
 
-    // Do not create the ScrollTrigger (or run render() against real
-    // progress) until scene 0's first frame is confirmed decodable — the
-    // spec requirement that the pinned experience never becomes
-    // interactive over an empty/black stage. Text stays at its CSS
-    // default (opacity: 0) and the stage shows the page's own white
-    // background during this brief wait, never a black one.
-    function revealFirstFrame() {
-      if (destroyed) return;
-      if (!ready[0]) {
-        // Metadata (and therefore duration/seekability) not loaded yet —
-        // wait for it rather than seeking blind.
-        videos[0].addEventListener("loadedmetadata", revealFirstFrame, { once: true });
-        return;
+      // Apple-style white release at the very end, same as desktop, for a
+      // consistent handoff into the (white) section that follows —
+      // independent of the video crossfade opacities above.
+      const RELEASE_START = 0.93;
+      if (progress > RELEASE_START) {
+        const t = clamp01((progress - RELEASE_START) / (1 - RELEASE_START));
+        whiteOverlay.style.opacity = String(t * t);
+      } else {
+        whiteOverlay.style.opacity = "0";
       }
-      seekAndReveal(videos[0], 0, () => {
-        if (destroyed) return;
-        videos[0].style.opacity = "1";
-        activeIndex = 0;
-        render(0);
-        createScrollTrigger();
-      });
     }
-    revealFirstFrame();
 
     // ---- Touch-following smoothness ----
-    // ScrollTrigger's own progress is the raw scroll position — driving
-    // video.currentTime from it directly (even with `scrub` set, which
-    // only smooths a *tween's* playhead, not a bare onUpdate readout)
-    // reads every small touch-scroll jitter straight into the seek, which
-    // is what reads as "jerky" on a phone. Instead onUpdate only ever
-    // records targetProgress; a single RAF loop eases smoothProgress
-    // toward it every frame and that eased value is the only thing that
-    // ever drives the scene/video/text render. One RAF loop total for the
-    // whole mobile experience — it's what actually calls render().
+    // ONE smoothing layer only. ScrollTrigger's own `scrub: <number>` adds
+    // its own internal tween that takes that many seconds to catch up to
+    // the scrollbar — stacked on top of the RAF lerp below, the two delays
+    // compound (each one waiting on the other to settle), which read as a
+    // sluggish, laggy catch-up between finger and video. Fixed by setting
+    // `scrub: true` below (raw progress, no extra GSAP-side delay) and
+    // letting this RAF loop be the only place smoothing happens. Because
+    // it's the only layer now (nothing else adding delay on top of it),
+    // SMOOTH_FACTOR can be tuned purely for feel: lower = smoother/more
+    // float, higher = snappier/tighter to the finger. 0.12 favors smooth.
     let targetProgress = 0;
     let smoothProgress = 0;
     let rafId = null;
-    const SMOOTH_FACTOR = 0.08;
+    const SMOOTH_FACTOR = 0.12;
     const SETTLE_EPSILON = 0.0004;
 
     function tick() {
@@ -860,7 +750,7 @@
 
     // Tracked explicitly (not left to gsap.matchMedia()'s automatic
     // context capture) because this ScrollTrigger is created asynchronously
-    // — only once the first frame is confirmed ready — which happens
+    // — only once all three clips' metadata has resolved — which happens
     // *after* the synchronous mm.add() callback that GSAP's auto-tracking
     // watches has already returned. An auto-tracked trigger reverts itself
     // on breakpoint change for free; this one won't, so the cleanup below
@@ -874,7 +764,11 @@
         end: () => "+=" + mobileScrollDistance(),
         pin: "#mheroStage",
         anticipatePin: 1,
-        scrub: 0.8,
+        // true, not a number: no built-in GSAP-side catch-up delay — the
+        // RAF lerp above (SMOOTH_FACTOR) is the only smoothing layer. See
+        // "Touch-following smoothness" comment below for why stacking a
+        // second delay here was the cause of the laggy/slow scroll feel.
+        scrub: true,
         invalidateOnRefresh: true,
         onEnter: () => setHeroHeaderActive(true),
         onLeave: () => setHeroHeaderActive(false),
@@ -895,6 +789,37 @@
       return st;
     }
 
+    // Boot sequence: load all three videos once (above), wait for every
+    // one's metadata (and therefore real duration) before computing the
+    // virtual timeline or creating the ScrollTrigger — the pinned
+    // experience must never go live against an uninitialized video. Each
+    // clip's own first frame is also seeked once here (safeSeek, still
+    // invisible at opacity: 0 except scene 0) so the very first reveal and
+    // the first crossfade never have to pay for a fresh seek.
+    Promise.all(videos.map(waitForMetadata)).then(() => {
+      if (destroyed) return;
+
+      durations[0] = videos[0].duration;
+      durations[1] = videos[1].duration;
+      durations[2] = videos[2].duration;
+      ready[0] = ready[1] = ready[2] = true;
+      totalDuration = durations[0] + durations[1] + durations[2];
+      boundary1 = durations[0];
+      boundary2 = durations[0] + durations[1];
+
+      videos.forEach((video) => primeCompositor(video));
+      safeSeek(videos[1], 0, true);
+      safeSeek(videos[2], 0, true);
+
+      return waitForFrame(videos[0]);
+    }).then(() => {
+      if (destroyed) return;
+      safeSeek(videos[0], 0, true);
+      videos[0].style.opacity = "1";
+      render(0);
+      createScrollTrigger();
+    });
+
     // This ScrollTrigger is created asynchronously (see createScrollTrigger
     // above), so gsap.matchMedia() cannot auto-revert it — killed explicitly
     // here instead. Everything else this branch creates synchronously
@@ -907,13 +832,12 @@
       }
       if (rafId) cancelAnimationFrame(rafId);
       rafId = null;
-      gsap.killTweensOf(videos);
       videos.forEach((video, i) => {
         video.pause();
         video.removeAttribute("src");
         video.load();
-        loaded[i] = false;
         ready[i] = false;
+        durations[i] = 0;
       });
     };
   }
